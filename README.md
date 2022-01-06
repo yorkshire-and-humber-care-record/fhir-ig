@@ -2,7 +2,7 @@
 ### Yorkshire and Humber Care Record 
 
 
- - Clone
+ - Clone repo
  - Install Sushi and IG Builder
  - _updatePublisher
  - _genonceYHCR
