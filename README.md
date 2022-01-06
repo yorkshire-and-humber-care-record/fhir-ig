@@ -3,6 +3,7 @@
 
 
  - Clone repo
- - Install Sushi and IG Builder
- - _updatePublisher
- - _genonceYHCR
+ - Install Sushi https://fshschool.org/docs/sushi/installation/
+ - Install the FHIR IG Publisher tool https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation#IGPublisherDocumentation-QuickStart
+ - From the project directory run _updatePublisher
+ - From the project directory run _genonceYHCR
