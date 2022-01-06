@@ -16,7 +16,9 @@ var dirSTU3 = path.resolve(__dirname, '..') + '\\fsh-generated-STU3';
 var regexEscapedDirR4=dirR4.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 
 // Clean out and recreate the STU3 output folder
-fs.rmdirSync(dirSTU3, { recursive: true });
+  if (fs.existsSync(dirSTU3)) {
+     fs.rmdirSync(dirSTU3, { recursive: true });
+  }
 fs.mkdirSync(dirSTU3);
 
 // Go through all the R4 files output by fsh to the "fsh-generated" folder

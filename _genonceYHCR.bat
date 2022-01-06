@@ -22,10 +22,14 @@ call sushi "%CD%\fsh-tank"
 ECHO .
 ECHO .
 
+PAUSE
+
 REM Here we call a script that does conversion
 call node "%CD%\fsh-tank\convert-stu3"
 ECHO .
 ECHO .
+
+PAUSE
 
 ECHO Copying latest STU3 fsh outputs into IG input folder
 
