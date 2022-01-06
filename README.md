@@ -7,3 +7,4 @@
  - Install the FHIR IG Publisher tool https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation#IGPublisherDocumentation-QuickStart
  - From the project directory run _updatePublisher
  - From the project directory run _genonceYHCR
+ - Go to the "output" folder and view "index.html"
