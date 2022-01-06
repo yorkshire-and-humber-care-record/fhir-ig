@@ -8,3 +8,9 @@
  - From the project directory run _updatePublisher (a one off)
  - From the project directory run _genonceYHCR (the main build script)
  - Go to the "output" folder and view "index.html"
+
+To continue editing
+ - Examine the source in folder "fsh-tank/input/fsh"
+ - Edit using VS Code and the "FHIR Shorthand" extension from Mitre Health (mitre-health.vscode-language-fsh)
+ - Run _genonceYHCR to rebuild
+ 
