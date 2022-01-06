@@ -1,0 +1,43 @@
+Method for importing Care Connect definitions into fsh
+======================================================
+
+NB: The reason for doing this is purely so that we can reference the Care Connect artefacts in other fsh files that we want to write. Specifically:
+ - To make use of extensions
+ - To derive our profiles from existing Care Connect profiles
+ - To use the definitions for generating example instances (this is especially useful)
+
+In theory fsh might do all of this based on just referencing the external URLs, but for whatever reason it doesn't work with CareConnect
+(Maybe R4 vs STU3? Or maybe the way they are hosted?). So we import them locally.
+
+As long as the fsh content is "close enough" for these purposes then the exact details don't matter
+This is because in the publishing process then we swap back the Care Connect files for the originals!
+
+In other words the overall process is:
+ - Get a Care Connect artefact (STU3)
+ - Use go-fsh to reverse engineer it into fsh (R4) (and tweak it a bit to make it work with R4, "close enough")
+ - Write our own fsh files - and especially create example instances - which make use of these definitions
+ - Run sushi, which will generate our outputs, and will also generate a new "close enough" R4 version of the Care Connect artefact
+ - Before running the IG Publisher, use the node.js script to tweak our own generated files to be R3 compatible
+ - Before running the IG Publisher, overwrite the "round tripped" Care Connect artefacts with the original Care Connect files (STU3)
+
+This makes certain that we only use the imported and hacked around Care Connect artefacts for internally referencing and creating example instances within fsh. But the final published IG makes use of the 100% accurate and original Care Connect files.
+
+
+STEPS:
+
+Download and unzip the Care Connect artefacts from https://simplifier.net/careconnectprofiles (see handy "download" button in top right to get a zip file)
+For each Care Connect artefact that we are interested in then:
+ 1) Copy the Care Connect file into "fsh-tank/careconnect" folder - and make sure its filename matches that of the fsh generated output (as we use these files for the final overcopy step)
+ 2) Edit the Care Connect file to make sure it has an "id" (may need to add one at the top, eg matching the "name") 
+ 3) Use go-fsh (eg https://fshschool.org/FSHOnline/#/) to paste in the Care Connect code and reverse-engineer fsh code
+       - may need to put [] around targetProfile to convert to an R4 array
+       - and any other adjustments to make it work (typically R3 -> R4 changes)
+ 4) Create a fsh file in "fsh-tank/input/fsh/Care-Connect-fsh" and paste in the fsh code
+ 5) Make any minor tweaks to get it working with R4 (**REMEMBER** minor details can be overlooked as we will overcopy the results before publishing anyway!) 
+    eg
+      - Rename the artefact, removing "-" to quieten the build warnings
+      - Remove contextType and context attributes (they have different names in R4, not vital for our usage in fsh)
+      - Swap "binding.valueSetReference.reference" to "binding.valueSet" (another R4 rename)
+      - Look at any references and replace the URLs with the actual ids of other artefacts within the project
+ 6) VERY IMPORTANT - set the URL to the "official" Care Connect url for the artefact (rather than letting it auto-generate one in our own namespace)
+ 

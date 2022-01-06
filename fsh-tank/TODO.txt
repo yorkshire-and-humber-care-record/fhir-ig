@@ -1,0 +1,19 @@
+R4 conversion
+ - IMPORTANT - fix valueset attribute!
+ - Remove spurious security-category extension in structure definitions...
+ - Also fix profiles array
+ - Look at just adding the conceptmap files?
+
+  - Location.type - remove array -> STU3 single value
+
+PATIENT
+ - Add new summary text extension?
+
+
+
+ - Then Encounter (with Encounter Transport)
+
+And then onwards as needed (gets easier.. lots of basics in place...)
+
+
+
