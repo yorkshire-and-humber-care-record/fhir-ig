@@ -81,7 +81,7 @@ Description: "YHCR Location resource profile."
 * physicalType.coding.code 1..1 MS
 * physicalType.coding.display 1..1 MS
 * physicalType ^short = "Physical form of the location. Note reduced subset of location types that are supported"
-* physicalType from Yhcr-ServiceDeliveryLocationRoleType-1 (required)
+* physicalType from Yhcr-LocationPhysicalType-1 (required)
 
 
 // Position - optional. Currently there is no requirement to track exact geographical coordinates.
