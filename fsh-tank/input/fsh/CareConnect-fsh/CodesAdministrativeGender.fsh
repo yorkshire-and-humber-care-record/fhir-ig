@@ -31,6 +31,7 @@ Description: "The gender of a person used for administrative purposes."
 * AdministrativeGender#other "Other"
 * AdministrativeGender#unknown "Unknown"
 
+
 /*
 Instance: AdministrativeGenderConceptMap
 InstanceOf: ConceptMap
@@ -44,8 +45,8 @@ Usage: #definition
 * publisher = "HL7 UK"
 * description = "A Concept Map from ValueSet Administrative Gender to NHS Data Dictionary Person Stated Gender to aid interpretation."
 * copyright = "Copyright © 2016 HL7 UK"
-* sourceReference.reference = "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-AdministrativeGender-1"
-* targetReference.reference = "https://fhir.nhs.uk/STU3/ValueSet/NHSDataDictionary-PersonStatedGender-1"
+* sourceUri = "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-AdministrativeGender-1"
+* targetUri = "https://fhir.nhs.uk/STU3/ValueSet/NHSDataDictionary-PersonStatedGender-1"
 * group.source = "http://hl7.org/fhir/administrative-gender"
 * group.target = "https://fhir.nhs.uk/STU3/CodeSystem/NHSDataDictionary-PersonStatedGender-1"
 * group.element[0].code = #male
@@ -68,5 +69,4 @@ Usage: #definition
 * group.element[=].target.code = #X
 * group.element[=].target.display = "Not Known (not recorded)"
 * group.element[=].target.equivalence = #equivalent
-
 */

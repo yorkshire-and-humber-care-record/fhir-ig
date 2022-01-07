@@ -164,7 +164,7 @@ Description: "YHCR Location example - Site"
 * address.city = "York"
 * address.postalCode = "YO31 8HE"
 
-* managingOrganization = Reference(YhcrOrganisationExample)
+* managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
 // (partOf = not relevant)
@@ -188,7 +188,7 @@ Description: "YHCR Location example - Ward"
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "01234 345345"
 
-* managingOrganization = Reference(YhcrOrganisationExample)
+* managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
 * partOf = Reference(YhcrLocationSiteExample)
@@ -211,7 +211,7 @@ Description: "YHCR Location example - Room"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#DERM "Dermatology clinic"
 * physicalType.coding = http://hl7.org/fhir/location-physical-type#ro "Room"
 
-* managingOrganization = Reference(YhcrOrganisationExample)
+* managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
 * partOf = Reference(YhcrLocationWardExample)
@@ -256,9 +256,10 @@ Description: "YHCR Location example - Social Care Department"
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "01234 345345"
 
-* managingOrganization = Reference(YhcrOrganisationExample)
+* managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
-* partOf.reference = "location/ExampleCouncilSite"
-* partOf.display = "Leeds Social Services Main Centre"
+* partOf = Reference(YhcrLocationSiteExample)
+* partOf.display = "York Hospital"
+
 

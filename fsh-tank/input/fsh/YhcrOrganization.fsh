@@ -25,13 +25,14 @@ Description: "YHCR Organization resource profile."
 * active MS
 * active ^short = "Whether this organization is still active - must be both populated and understood if 'false'"
 
-// Type - mandatory, to identify the type of location
+// Type - useful, to identify the type of location
 // TODO - the code list can cover "Healthcare Provider", "Government", and "Other". So it should always be possible to populate,
 //    but... it does not seem all that useful. Is there a better list we could use?
 //    (Do we even REALLY need this type field? Or... would text be OK?. So leave the detail of how it is populated optional for now)
 //    (But... for now fix the valueset, as we definately don't want other random codes) 
 // *** What we want is the list from this dropdown! https://odsportal.digital.nhs.uk/Organisation/Search ***
-* type 1..1 MS
+// *** Could then potentially make it mandatory?
+* type 0..1 MS
 * type.coding ^short = "TBC: is there a better list of codes that could be used?"
 * type from http://hl7.org/fhir/ValueSet/organization-type (required)
 

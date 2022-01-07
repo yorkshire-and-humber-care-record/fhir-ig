@@ -46,10 +46,16 @@ fileArrayR4.forEach(function(filePathR4) {
             // Now look in more detail for specific R4 -> STU3 differences in each type of file
             var jsonObject = JSON.parse(fileData);
 
-            // Modify Structure Definitions
+            // Convert Structure Definitions
             if (jsonObject.resourceType == "StructureDefinition") {
               jsonObject = convertStructureDefinition(jsonObject);
             }
+
+            // Convert Location instances
+            if (jsonObject.resourceType == "Location") {
+              jsonObject = convertLocationInstance(jsonObject);
+            }
+
 
             // Reserialise the JSON
             fileData = JSON.stringify(jsonObject, null, 2)
@@ -111,6 +117,21 @@ function convertStructureDefinition(jsonObject) {
       }
 
   }); //Element
+
+  return jsonObject;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+function convertLocationInstance(jsonObject) {
+
+  // Convert the location "type" from an array (R4) to a single value (STU3)
+  if(jsonObject.type) {
+    jsonObject.type = jsonObject.type[0];
+  }
 
   return jsonObject;
 }
