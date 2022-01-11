@@ -1,10 +1,10 @@
 # Conformance
 
-This page considers the expectations for systems who wish to claim confirmance with this Implementation Guide. FHIR already provides guidance on this topic  and this should be consulted as it applies here also. See https://www.hl7.org/fhir/STU3/conformance-rules.html. 
+This page considers the expectations for systems who wish to claim confirmance with this Implementation Guide. FHIR already provides guidance on this topic  and this should be consulted as it applies here also. See <https://www.hl7.org/fhir/STU3/conformance-rules.html>. 
 
 However this page adds additional detail and clarification for Interweave implementations.
 
-## Conformance levels for data items
+## **Conformance levels for data items**
 
 Five basic levels of confirmance have been considered when developing these profiles:
 
@@ -47,8 +47,8 @@ Legacy implementations which provide data in this field are acceptable, as long 
 Excluded data items have a cardinality of 0, and therefore MUST NOT be populated. This is quite rare, as many unwanted data items can marked as "Discouraged" - to be tolerated and ignored. However a few items justify this stronger "Excluded" classification.
 
 
-## Binding Strengths for Coding
-When populating coded data, FHIR offers four levels of Binding Strength, as documented here: https://www.hl7.org/fhir/STU3/conformance-rules.html
+## **Binding Strengths for Coding**
+When populating coded data, FHIR offers four levels of Binding Strength, as documented here: <https://www.hl7.org/fhir/STU3/conformance-rules.html>
  - **Required** - This is the strongest Binding Strength, and is the most commonly used by Interweave. We take the view that to be useful then coding needs to be consistent. Where FHIR (as an international standard) offers weaker binding options, these are taken as a cue for us to consider and replace / refine the coding list - agreeing on a definitive list of codes to be used by this Implementation Guidance.
   - **Extensible / Preferred / Example** - These weaker Binding Strengths will generally only remain on "Optional" fields - indicating that not only is the field itself optional, but so also is whether and how to code it. Very occasionally they might be seen on a Must Support field - to indicate that text is the priority, and that coding is not considered important for this field. (This is rare and will be explained further in accompanying notes).
 

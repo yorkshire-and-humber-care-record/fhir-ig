@@ -77,6 +77,8 @@ menu:
   Guidance:
     Principles: principles.html
     Conformance: conformance.html
+    Building Blocks: building-blocks.html
+    Implementation Sequence: implementation-sequence.html
     Design Considerations: design-considerations.html
   Artifacts: artifacts.html
 
