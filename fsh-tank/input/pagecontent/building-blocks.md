@@ -50,7 +50,7 @@ When displaying a Codeable Concept to the user then a Data Consumer should attem
  
  2. The "coding.display" string from the coding entry marked as "userSelected"
 
- 3. The "coding.display" string from the first (and probably only) coding entry
+ 3. The "coding.display" string from the first (and probably only) other coding entry
 
  If none of these yield text to display then it is an error and cannot be displayed. 
 
@@ -68,9 +68,9 @@ For example, a Data Provider might offer an Encounter resource, with a "referenc
 
 **However complications can arise when the referenced item is NOT locally hosted.** 
 
-For example, an Encounter can also reference the Location where a patient is discharged to. This could be a wide variety of external places (including their own house), and it is not reasonable to suppose that a Data Provider will offer and maintain an up-to-date set of reference resources describing ALL of these external locations. Alternatives for this scenario therefore include:
- - Using a "Contained Resource". FHIR offers this mechanism to allow the referenced resource (eg Location in this example) to be incorporated within the main resource (eg Encounter). This allows the information to be captured and shared as a one-off - without the need to store and maintain it on an ongoing basis. The "reference" is then an internal URL, providing an internal pointer within the same FHIR Resource.
-  - "Display" text only. For example this might just say "Patient's home" - without any attempt to offer the full location dataset. Whilst obviously a less complete and informative solution, this may be adequate in some cases.
+For example, an Encounter can also reference the Location where a patient is discharged to. This could be a wide variety of external places (including their own house), and it is not necessarily reasonable to suppose that a Data Provider will always offer and maintain an up-to-date set of reference resources describing ALL of these external locations. Similar considerations may also apply to Organisations and Practitioners. Alternatives for this scenario therefore include:
+ - **Using a "Contained Resource".** FHIR offers this mechanism to allow the referenced resource (eg Location in this example) to be incorporated within the main resource (eg Encounter). This allows the information to be shared as a one-off - without the need to store and maintain it on an ongoing basis. The "reference" is then an internal URL, providing an internal pointer within the same FHIR Resource.
+  - **"Display" text only.** For example this might just say "Patient's home" - without any attempt to offer the full location resource. Whilst obviously a less complete and informative solution, this may be adequate in some cases.
   
   Another difficulty is if the reference is to a type of Resource which the Data Provider has not yet implemented. For example an Encounter can also reference the diagnosed Condition. But maybe the Condition resource is scheduled for a future project phase and has not yet been implemented.
 
@@ -93,7 +93,7 @@ For example, an Encounter can also reference the Location where a patient is dis
      - ***NB: A reference url MUST always be resolvable. That is, if provided then it MUST always be possible to "follow" it to retrive a FHIR resource.*** 
 
  - **identifier**
-   - Should be populated with the National identifier for Organisations and Practitioners. Thus providing quick identification without  having to follow the reference and retrieve the whole resource, as well as linking to the regionally downloaded national master data.
+   - Should be populated with the National identifier for Organisations and Practitioners. Thus providing quick identification without  having to follow the reference and retrieve the whole resource, as well as providing a way to search for the regionally downloaded national master data.
     - May be populated with other identifiers, if a use-case suggests this to be a useful optimisation
      - MUST always include a "system" for the identifier, so that it can be categorised and uniquely distinguished
 
