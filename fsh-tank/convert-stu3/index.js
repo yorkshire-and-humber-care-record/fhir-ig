@@ -49,6 +49,10 @@ fileArrayR4.forEach(function(filePathR4) {
             // Convert Structure Definitions
             if (jsonObject.resourceType == "StructureDefinition") {
               jsonObject = convertStructureDefinition(jsonObject);
+
+              if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-Encounter-Hospitalization") {
+                jsonObject = convertYhcrEncounterStructureDefinition(jsonObject);
+              }
             }
 
             // Convert Location instances
@@ -120,6 +124,53 @@ function convertStructureDefinition(jsonObject) {
 
   return jsonObject;
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertYhcrEncounterStructureDefinition(jsonObject) {
+ 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    // Convert "basedOn" to "incomingReferral"
+    if(objElement.id == "Encounter.basedOn")  {
+        objElement.id = "Encounter.incomingReferral";
+        objElement.path = "Encounter.incomingReferral";
+    }; // basedOn
+
+
+    // Convert "diagnosis.use" to "diagnosis.role"
+    if(objElement.id == "Encounter.diagnosis")  {
+      if(objElement.slicing) {
+        objElement.slicing.discriminator[0].path = "role";
+        //console.log(objElement);
+      }
+    } // Encounter.diagnosis
+
+    if(objElement.id == "Encounter.diagnosis.use")  {
+      objElement.id = "Encounter.diagnosis.role";
+      objElement.path = "Encounter.diagnosis.role";
+    }; // Encounter.diagnosis.use
+
+    if(objElement.id == "Encounter.diagnosis:chiefComplaint.use")  {
+      objElement.id = "Encounter.diagnosis:chiefComplaint.role";
+      objElement.path = "Encounter.diagnosis.role";
+    }; // Encounter.diagnosis.use
+
+
+    // Convert "reasonCode" to "reason"
+    if(objElement.id == "Encounter.reasonCode")  {
+      objElement.id = "Encounter.reason";
+      objElement.path = "Encounter.reason";
+    }; // reasonCode
+
+
+  }); //Element
+
+  return jsonObject;
+}
+
 
 
 

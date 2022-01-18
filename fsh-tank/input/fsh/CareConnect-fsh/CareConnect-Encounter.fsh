@@ -26,7 +26,7 @@ Description: "The encounter resource represents an encounter between a care prof
 * type.coding contains snomedCT 0..1
 * type.coding[snomedCT] ^binding.strength = #required
 * type.coding[snomedCT] ^binding.description = "A code from the SNOMED Clinical Terminology UK coding system that describes an encounter between a care professional and the patient (or patient's record)."
-* type.coding[snomedCT] ^binding.valueSet = "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-EncounterType-1"
+* type.coding[snomedCT] ^binding.valueSet = CareConnect-EncounterType-1
 * . ^slicing.discriminator.type = #value
 * . ^slicing.discriminator.path = "url"
 * . ^slicing.rules = #open
@@ -38,10 +38,11 @@ Description: "The encounter resource represents an encounter between a care prof
 * type.coding[snomedCT].display 1..
 * type.coding[snomedCT].display ^extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable"
 * type.coding[snomedCT].display ^extension.valueBoolean = true
+
 * subject only Reference(Group or CareConnect-Patient-1)
 * participant.individual only Reference(RelatedPerson or CareConnect-Practitioner-1)
-//NB: **** In R4 then "reason" becomes "reasonCode" ***
 
+//NB: **** In R4 then "reason" becomes "reasonCode" ***
 * reasonCode.coding ^slicing.discriminator.type = #value
 * reasonCode.coding ^slicing.discriminator.path = "system"
 * reasonCode.coding ^slicing.ordered = false
