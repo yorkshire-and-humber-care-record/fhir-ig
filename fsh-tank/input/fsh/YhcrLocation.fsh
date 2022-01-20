@@ -171,9 +171,9 @@ Description: "YHCR Location example - Site"
 
 
 // Ward //////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationWardExample
+Instance: YhcrLocationWardExample1
 InstanceOf: YhcrLocation
-Description: "YHCR Location example - Ward"
+Description: "YHCR Location example - Ward 1"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/local-location-identifier"
 * identifier[0].value = "XYZ456"
@@ -193,6 +193,31 @@ Description: "YHCR Location example - Ward"
 
 * partOf = Reference(YhcrLocationSiteExample)
 * partOf.display = "York Hospital"
+
+////////////////////////////////////
+Instance: YhcrLocationWardExample2
+InstanceOf: YhcrLocation
+Description: "YHCR Location example - Ward 2"
+
+* identifier[0].system = "https://fhir.nhs.uk/Id/local-location-identifier"
+* identifier[0].value = "ABC789"
+
+* status = http://hl7.org/fhir/location-status#active "Active"
+* name = "York Hospital: Ward 28"
+
+* mode = http://hl7.org/fhir/location-mode#instance "Instance"
+* type.coding = http://hl7.org/fhir/v3/RoleCode#ALL "Allergy clinic"
+* physicalType.coding = http://hl7.org/fhir/location-physical-type#wa "Ward"
+
+* telecom[0].system = #phone "Phone"
+* telecom[0].value = "05678 111222"
+
+* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+
+* partOf = Reference(YhcrLocationSiteExample)
+* partOf.display = "York Hospital"
+
 
 
 // Room //////////////////////////////////////////////////////////////////////////////////////////

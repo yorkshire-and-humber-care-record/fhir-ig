@@ -55,9 +55,13 @@ fileArrayR4.forEach(function(filePathR4) {
               }
             }
 
-            // Convert Location instances
+            // Convert various types of instances
             if (jsonObject.resourceType == "Location") {
               jsonObject = convertLocationInstance(jsonObject);
+            }
+
+            if (jsonObject.resourceType == "Encounter") {
+              jsonObject = convertEncounterInstance(jsonObject);
             }
 
 
@@ -183,6 +187,31 @@ function convertLocationInstance(jsonObject) {
   if(jsonObject.type) {
     jsonObject.type = jsonObject.type[0];
   }
+
+  return jsonObject;
+}
+
+function convertEncounterInstance(jsonObject) {
+
+  if(jsonObject.basedOn) {
+    jsonObject.incomingReferral = jsonObject.basedOn;
+    delete jsonObject.basedOn;
+  }
+
+  if(jsonObject.reasonCode) {
+    jsonObject.reason = jsonObject.reasonCode;
+    delete jsonObject.reasonCode;
+  }
+
+  if(jsonObject.diagnosis) jsonObject.diagnosis.forEach(function(objDiagnosis) {
+    objDiagnosis.role = objDiagnosis.use;
+    delete objDiagnosis.use;
+  });
+ 
+  if(jsonObject.appointment) {
+    jsonObject.appointment = jsonObject.appointment[0];
+  }
+
 
   return jsonObject;
 }

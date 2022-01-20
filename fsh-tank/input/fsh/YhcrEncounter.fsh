@@ -1,7 +1,10 @@
+Alias: $SCT = http://snomed.info/sct
+
 Profile: YhcrEncounter
 Parent: CareConnect-Encounter-1
 Id: Yhcr-Encounter
 Description: "YHCR Encounter resource profile."
+
 
 // Extension - Encounter Transport: Leave as optional
 // Other Extensions? - there seem to be other extensions in some versions of Care Connect?? Anyway, leave as optional
@@ -13,7 +16,7 @@ Description: "YHCR Encounter resource profile."
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"
 * identifier ^slicing.ordered = false
-* identifier ^slicing.rules = #openAtEnd
+* identifier ^slicing.rules = #open
 * identifier contains
     localIdentifier 0..1 MS
 
@@ -25,6 +28,7 @@ Description: "YHCR Encounter resource profile."
 * identifier[localIdentifier].period 0..0
 // Assigner assumed to match provenance of the Encounter
 * identifier[localIdentifier].assigner 0..0
+
 
 // Status: Already mandatory in FHIR, emphasise with Must Support
 * status MS
@@ -50,6 +54,7 @@ Description: "YHCR Encounter resource profile."
 
 // Priority: This provides useful information about whether it was emergency, routine, elective, etc
 * priority MS
+* priority from http://hl7.org/fhir/ValueSet/v3-ActPriority (required)
 
 // Subject: Every Encounter MUST be linked to a patient
 //     (It is appreciated that sometimes the identity of the patient may not be known, but the encounter cannot be shared regionally until this is established)
@@ -59,33 +64,23 @@ Description: "YHCR Encounter resource profile."
 // Episode of Care: Leave as optional for now. (A potential part of wider structure, see wider discussion)
 
 // Incoming Referal and Appointment: MS. If these exist, and if the Data Provider is able to publish the resources, then this must link to it
-// **NB - R4 change!
-//* incomingReferral MS
-* basedOn MS
+* basedOn MS   // R4 - STU3 has "incomingReferral"
 * appointment MS
 
 // Participant: We want exactly one "primary performer" who is the main contact responsible
 //   Where relevant an "admitter" and "discharger"
 //   And for simplicity suggest to classify anyone else simply as "participant"
-* participant ^slicing.discriminator.type = #value
-* participant ^slicing.discriminator.path = "type"
-* participant ^slicing.ordered = false
-* participant ^slicing.rules = #open
-* participant contains primary 1..1 MS
-                    and admitter 0..1 MS 
-                    and discharger 0..1 MS
-                    and otherParticipant 0..*
+// (Note: Tried to do this with slicing, but the "type" is an array! Too hard, will just have to be text...)
 
-* participant[primary].type = #PPRF (exactly)
-* participant[primary].individual 1..1 MS
+// Must be at least one participant - the Primary Performner
+* participant 1..* MS
+// Only one "type" per participant. Pick the main one. (Or list the whole participant several times)
+* participant.type 1..1 MS
+// Must actually reference someone, and for this type of encounter they must be a practitioner
+* participant.individual 1..1 MS
+* participant.individual only Reference(Yhcr-Practitioner)
+// Period is optional, may be useful if they were briefly involved, but most likely it matches the period of the encounter
 
-* participant[admitter].type = #ADM (exactly)
-* participant[admitter].individual 1..1 MS
-* participant[discharger].type = #DIS (exactly)
-* participant[discharger].individual 1..1 MS
-
-* participant[otherParticipant].type = #PART (exactly)
-* participant[otherParticipant].individual 1..1
 
 // Period: Mandatory. When the encounter occurred is vital to know.
 //      The start date/time is always mandatory, but as per the FHIR specification, the end date/time may be omitted if the encounter is ongoing
@@ -104,25 +99,23 @@ Description: "YHCR Encounter resource profile."
 * diagnosis MS
 * diagnosis.condition only Reference(Condition)
 * diagnosis.condition 1..1 MS
-//***************** R4 difference, STU3 - Role
-* diagnosis.use 1..1 MS
+* diagnosis.use 1..1 MS   //R4 - STU3 has "role"
 * diagnosis.rank 1..1 MS
 
 // And if provided then we want at least a "Chief Complaint" (plus any others such as comorbidities if relevant)
 * diagnosis ^slicing.discriminator.type = #value
-//***************** R4 difference, STU3 - Role
-* diagnosis ^slicing.discriminator.path = "use"
+* diagnosis ^slicing.discriminator.path = "use"  //R4 - STU3 has "role"
 * diagnosis ^slicing.ordered = false
 * diagnosis ^slicing.rules = #open
 * diagnosis contains chiefComplaint 0..1 MS
 
-//***************** R4 difference, STU3 - Role
-* diagnosis[chiefComplaint].use = #CC (exactly)
+* diagnosis[chiefComplaint].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint" (exactly)  //R4 - STU3 has "role"
 
 // Account: Excluded - we are not concerned with billing information
 * account 0..0
 
 // Hospitalization: Excluded. This contains important information, but a special Encounter profile will be created for it
+// ??? TODO - or do we allow it, for a self-contained option??
 * hospitalization 0..0
 
 // Location: Mandatory.
@@ -142,3 +135,85 @@ Description: "YHCR Encounter resource profile."
 
 // PartOf: Optional. Generally it is a flat structure, EXCEPT for pointing specifically at a hospitalisation encounter
 * partOf only Reference(Yhcr-Encounter-Hospitalization)
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Instance: YhcrEncounterExample
+InstanceOf: YhcrEncounter
+Description: "YHCR Encounter example"
+
+* identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier"
+* identifier[localIdentifier].value = "ABC-456-XYZ"
+
+* status = #finished
+* statusHistory[0].status = #planned 
+* statusHistory[0].period.start = "2021-11-04T14:25:00Z"
+* statusHistory[0].period.end = "2022-01-09T09:00:00Z"
+* statusHistory[1].status = #in-progress 
+* statusHistory[1].period.start = "2022-01-09T09:00:00Z"
+* statusHistory[1].period.end = "2022-01-11T14:30:00Z"
+* statusHistory[2].status = #finished 
+* statusHistory[2].period.start = "2022-01-11T14:30:00Z"
+
+// TODO - what goes in here? Is it actually the "in progress" period?
+* period.start = "2022-01-09T09:00:00Z" 
+* period.end = "2022-01-11T14:30:00Z"
+
+* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute"
+* type.coding[0] = $SCT#185212007 "Seen in hospital ward"  //TODO - for some reason not valid??
+* priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EL "elective"
+
+
+
+* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject.display = "Fred Bloggs"
+
+// TODO - add fuller references once we have these resources
+* basedOn.display = "2021-11-04: Dr Jones: Sore foot" // R4 - STU3 has "incomingReferral"
+* appointment.display = "2022-01-09: Foot surgery"
+
+
+* participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
+* participant[0].individual = Reference(YhcrPractitionerExample)
+* participant[0].individual.display = "Dr Jane Bloggs"
+* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+* participant[0].individual.identifier.value = "ABC123"
+
+* participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
+* participant[1].individual = Reference(YhcrPractitionerExample)
+* participant[1].individual.display = "Dr Jane Bloggs"
+* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+* participant[1].individual.identifier.value = "ABC123"
+
+* participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
+* participant[2].individual = Reference(YhcrPractitionerExample)
+* participant[2].individual.display = "Dr Jane Bloggs"
+* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+* participant[2].individual.identifier.value = "ABC123"
+
+* participant[3].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
+* participant[3].individual.display = "Bob Smithson"
+* participant[3].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+* participant[3].individual.identifier.value = "XYZ987"
+
+// TODO - add fuller references once we have these resources
+* diagnosis[0].condition.display = "Purple rash"
+* diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
+* diagnosis[0].rank = 1
+
+* reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
+
+* location[0].location = Reference(YhcrLocationWardExample1)
+* location[0].location.display = "Ward 27 - Dermatology clinic"
+* location[0].status = #completed
+* location[0].period.start = "2022-01-09T09:00:00Z"
+* location[0].period.end = "2022-01-09T10:30:00Z"
+
+* location[1].location = Reference(YhcrLocationWardExample2)
+* location[1].location.display = "Ward 28 - Allergy clinic"
+* location[1].status = #completed
+* location[1].period.start = "2022-01-09T10:30:00Z"
+* location[1].period.end = "2022-01-11T14:30:00Z"
+
+* partOf = Reference(YhcrEncounterHospitalizationExample)
