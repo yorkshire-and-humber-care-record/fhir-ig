@@ -2,10 +2,10 @@
   "resourceType": "CodeSystem",
   "id": "CareConnect-HumanLanguage-1",
   "url": "https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-HumanLanguage-1",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "name": "Care Connect Human Language",
   "status": "draft",
-  "date": "2017-08-01T00:00:00+00:00",
+  "date": "2019-03-01T00:00:00+00:00",
   "publisher": "HL7 UK",
   "description": "A CodeSystem that identifies the language used by a person.",
   "copyright": "Copyright © 2016 HL7 UK",
@@ -110,7 +110,7 @@
     },
     {
       "code": "bh",
-      "display": "Bihari"
+      "display": "Bihari languages"
     },
     {
       "code": "bi",
@@ -322,7 +322,7 @@
     },
     {
       "code": "ii",
-      "display": "Sichuan Yi"
+      "display": "Sichuan Yi; Nuosu"
     },
     {
       "code": "iu",
@@ -330,7 +330,7 @@
     },
     {
       "code": "ie",
-      "display": "Interlingue"
+      "display": "Interlingue; Occidental"
     },
     {
       "code": "ia",
@@ -481,10 +481,6 @@
       "display": "Maltese"
     },
     {
-      "code": "mo",
-      "display": "Moldavian"
-    },
-    {
       "code": "mn",
       "display": "Mongolian"
     },
@@ -530,7 +526,7 @@
     },
     {
       "code": "oc",
-      "display": "Occitan (post1500); Provencal"
+      "display": "Occitan (post1500)"
     },
     {
       "code": "oj",
@@ -566,7 +562,7 @@
     },
     {
       "code": "ps",
-      "display": "Pushto"
+      "display": "Pushto; Pashto"
     },
     {
       "code": "qu",
@@ -578,7 +574,7 @@
     },
     {
       "code": "ro",
-      "display": "Romanian"
+      "display": "Romanian; Moldavian; Moldovan"
     },
     {
       "code": "rn",
