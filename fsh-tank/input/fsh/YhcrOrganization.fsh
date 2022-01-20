@@ -76,6 +76,7 @@ Description: "YHCR Organization example"
 * active = true
 * name = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * type.coding = http://hl7.org/fhir/organization-type#prov "Healthcare Provider"
+* type.text = "TODO - this is not a good example, need to confirm a better code list"
 
 * address[0].line[0] = "York Hospital"
 * address[0].line[1] = "Wigginton Road"
