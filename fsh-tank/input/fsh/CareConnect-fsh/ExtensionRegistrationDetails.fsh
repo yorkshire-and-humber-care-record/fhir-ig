@@ -1,3 +1,6 @@
+//NB This extension is slighly out of date, however just left it for now as we don't even use it.
+// (As usual, the complication outputs are overwritten with the latest actual CareConnect files anyway)
+
 Extension: ExtensionCareConnectRegistrationDetails1
 Id: Extension-CareConnect-RegistrationDetails-1
 Description: "This extension is constrained to represent the additional registration information for a patient."

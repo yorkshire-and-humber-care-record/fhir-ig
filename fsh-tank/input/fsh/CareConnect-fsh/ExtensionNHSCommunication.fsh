@@ -14,7 +14,7 @@ Description: "This extension is constrained to support the communication prefere
 * . ^definition = "Communication preferences including a list of Languages which may be used for communication"
 * extension contains
     language 1..1 and
-    preferred 0..* and
+    preferred 0..1 and
     modeOfCommunication 0..* and
     communicationProficiency 0..1 and
     interpreterRequired 0..1
