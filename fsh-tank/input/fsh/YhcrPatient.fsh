@@ -15,20 +15,20 @@ Description: "YHCR Patient resource profile."
 // **TODO** - should we specify and give examples of tags??
 
 // There are a set of extensions defined by CareConnect, many of which are not particularly relevant for a regional record:
-// - registrationDetails, residentialStatus and treatmentCategory: deal with administrative and payment details. 
+// - ResidentialStatus and treatmentCategory: deal with administrative and payment details. 
 //     It is not a primary responsibility of the regional record to handle these. (Some are also gone in the new UK Core)
+// - DeathNotificationStatus: similarly, this is generally managed Nationally by PDS and not needed again here  
 // - patient-cadavericDonor: useful but seems unlikely to be relevant to ongoing regional care whilst they are still alive
 // - birthPlace: is similarly administrative and unlikely to often be relevant. 
 //     (Other items such as DocumentReferences and Encounters could provide specific maternity details if needed)
 // - nominatedPharmacy: generally not needed for current use-cases and should not be used unless certain that up-to-date (also gone in new UK Core)  
 
-///XXXXXXXX* extension[Extension-CareConnect-RegistrationDetails-1] ^short = "DISCOURAGED"
+* extension[Extension-CareConnect-TreatmentCategory-1] ^short = "DISCOURAGED"
 * extension[Extension-CareConnect-ResidentialStatus-1] ^short = "DISCOURAGED"
 * extension[$patient-cadavericDonor] ^short = "DISCOURAGED"
 * extension[birthPlace] ^short = "DISCOURAGED"
 * extension[Extension-CareConnect-NominatedPharmacy-1] ^short = "DISCOURAGED"
-
-//!!!TODO - new DeathNotificationStatus
+* extension[Extension-CareConnect-DeathNotificationStatus-1] ^short = "DISCOURAGED"
 
 
 // Then there are some extensions which may be useful if known, but are not essential - ie genuinely optional:
@@ -79,15 +79,14 @@ Description: "YHCR Patient resource profile."
 //   However here we also mandate a "given" name, plus note that prefix and suffix must be supported if relevant
 //   Also add notes about the verification performed against PDS
 * name[official] MS
+* name[official].use MS
 * name[official].family 1..1 MS
 * name[official].family ^short = "Family name (often called 'Surname'). NB: First 3 letters must match PDS"
 * name[official].given 1..* MS
 * name[official].given ^short = "Given names (not always 'first'). Includes middle names. NB: First letter (initial) must match PDS"
 * name[official].prefix 0..* MS
 * name[official].suffix 0..* MS
-
-//???* name[usual].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
-//???* name[other].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
+* name[official].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
 
 // Gender and DoB: Basics which we want to always capture
 * gender 1..1 MS
@@ -135,14 +134,16 @@ Description: "YHCR Patient resource profile."
 * contact.relationship MS
 * contact.name MS
 * contact.telecom MS
+* contact.name.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
+* contact.address.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the address based on the detailed elements."
+
 
 
 ///////////////////////////////////////
 // --- Removed fields ---
 ///////////////////////////////////////
-// Photo, animal, communication - note that these fields have already been removed by CareConnect
-
-//!!!!!!!!!!!!!!!!!!!!!!TODO - photo is back!!
+* photo 0..0
+//Animal, communication - note that these fields have already been removed by CareConnect
 
 
 ///////////////////////////////////////

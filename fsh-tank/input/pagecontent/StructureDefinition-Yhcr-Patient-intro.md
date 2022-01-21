@@ -30,10 +30,11 @@ Other fields are optional and may be populated if known - on the understanding t
 Several fields are marked as "discouraged" to indicate that they are preferably not used by new implementations. These include:
  - various administrative fields and extensions - that are either not relevant to current use-cases, or are better covered by National Systems, or have been deprecated in future versions of CareConnect.
   - the "text" summary of names and addresses. This formatting and presentation can be problematic, and the preference is to allow Data Consumers to generate their own presentation from the underlying detailed fields. 
-
+  - Photo - not relevant here, and adds size and complexity to the content
+  
   Other standard FHIR fields that have been entirely removed by CareConnect are:
    - Animal - not relevant here, and also deprecated in FHIR R4
-   - Photo - not relevant here, and adds size and complexity to the content
+ 
 
 
 
