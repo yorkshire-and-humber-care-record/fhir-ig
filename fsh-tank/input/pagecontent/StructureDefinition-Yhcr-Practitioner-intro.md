@@ -3,13 +3,20 @@ This profile sets minimum expectations for the Practitioner resource.
 
 
 ### **Practitioner coverage and references**
-- A Data Provider MUST offer Practitioner FHIR resources to represent its own practitioners
-   - When populating references to its own Practitioners then the "display" (name) and "reference" (url of local FHIR Resource) must be populated. In addition the SDS User Id must be populated in the "identifier" if the Pracitioner has one
- - If referencing an external practitioner then a Data Provider may:
-   1. Populate the reference "display" value with the external practitioner's name, and the "identifier" with their SDS User Id - thus allowing further regional master details to be searched for by Data Consumers if so desired. The "reference" url can then be omitted.
-   2. Populate the reference "display" value with the external practitioner's name, and the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information  about the practitioner. The "identifier" should also be populated with the SDS User Id if the Practitioner has one
-   3. As per (2), but populating the "reference" url with a pointer to a locally hosted Practitioner FHIR Resource. This may be relevant for external pracitioners who are frequently referenced and for whom the Data Provider therefore does maintain their own local reference data about this external practitioner.
- 
+
+**A Data Provider MUST offer Practitioner FHIR resources to represent its own practitioners**
+
+  - When populating references to its own Practitioners then the "display" (name) and "reference" (url of local FHIR Resource) must be populated. In addition the SDS User Id must be populated in the "identifier" if the Pracitioner has one
+
+**There can also be a need to reference practitioners outside of the Data Provider's own organisation** 
+
+When referencing an external practitioner then a Data Provider must always populate the reference "display" value with the external practitioner's name. Beyond this then as much additional information as possible about them should be provided. This could include:
+
+ - Populating the "identifier". If the practitioner has an SDS User Id then this should be included as an identifier. If they do not then it may still be useful to provide a local identifier - if this is useful over-and-above the "display" name to assist Data Consumers in identifying and refering to the practitioner
+ - Populating the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information about the external practitioner.
+ - Populating the "reference" url with a pointer to a locally hosted Practitioner FHIR Resource. This may be possible when refering to external practitioners who are frequently used and for which the Data Provider therefore actually does maintain their own local reference data.
+
+ ***To Confirm - how useful and widely used is the SDS User Id? Are there any other identifiers we should consider for practitioners?***
 
 
 ### **Mandatory fields**

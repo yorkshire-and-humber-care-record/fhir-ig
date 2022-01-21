@@ -24,14 +24,16 @@ Description: "YHCR Practitioner resource profile."
 * active MS
 * active ^short = "Whether this organization is still active - must be both populated and understood if 'false'"
 
-// Name: CareConnect already mandates there to be exactly one name.
+// Name: Mandates that we want there to be exactly one name.
 //   To some extent therefore the "use" is not so important
 //   However here we also mandate at least a "family" name, plus note that given name, prefix and suffix must be supported if relevant
-* name MS
+* name 1..1 MS
 * name.family 1..1 MS
 * name.given MS
 * name.prefix MS
 * name.suffix MS
+* name.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
+
 
 // Telcom: Leave as optional
 // It is very useful to provide a contact phone number and/or email if at all possible – to enable further enquiries about any information seen.
@@ -58,10 +60,9 @@ Description: "YHCR Practitioner resource profile."
 // Examples
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Site ////////////////////////////////////////////////////////////////////////////////
 Instance: YhcrPractitionerExample
 InstanceOf: YhcrPractitioner
-Description: "YHCR Practitioner example "
+Description: "YHCR Practitioner example"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
 * identifier[0].value = "ABC123"
