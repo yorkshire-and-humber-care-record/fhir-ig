@@ -155,5 +155,5 @@ Description: "YHCR Encounter Hospitalization example"
 
 * hospitalization.destination = Reference(YhcrLocationSocialCareDeptExample)
 * hospitalization.destination.display = "Leeds Social Services: Adult Services Department"
-* hospitalization.dischargeDisposition = CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation i.e. where care is provided' instead of 'Local Authority residential accommodation"
+* hospitalization.dischargeDisposition = CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation i.e. where care is provided"
 

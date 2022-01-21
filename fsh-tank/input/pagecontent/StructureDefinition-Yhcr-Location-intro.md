@@ -18,13 +18,10 @@ When a Data Provider is populating References to its own locations then the "dis
 
 This could be for referals and discharges, and refer to other external locations. Consideration also needs to be given to care provided outside of institutions. Therefore variants of location for "house" and "vehicle" are offered.
 
-If referencing an external location then a Data Provider may:
-   1. (Typical) Populate the reference "display" value with the external location's name, and the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information  about the external location.
-   2. As per (1), but populating the "reference" url with a 
-   pointer to a locally hosted Organisation FHIR Resource. This may be relevant when refering to locations which are frequently referenced and for which the Data Provider therefore does maintain their own local reference data about this external location.
-
-
-*NB: It is believed that this approach will cover all currently known use-cases, but providing a simple and meaningful shared model of locations is suprisingly complex. Please do get in touch if you have other use-cases which you feel require further development of this profile*
+When referencing an external location then a Data Provider must always populate the reference "display" value with the external location's name. Beyond this it is difficult to prescribe a single approach without considering the use-case, but opportunites for providing additional information include:
+ - Populating the "identifier". This is not always easy as there are many different types of location and no universal identifier scheme which can cover all of them. Certainly if the location has an ODS Site Code then this should be included as an identifier. If it does not then it may still be useful to provide a local identifier - if this is useful over-and-above the "display" name to assist Data Consumers in consistently processing the data
+ - Populating the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information  about the external location.
+ - Populating the "reference" url with a pointer to a locally hosted Organisation FHIR Resource. This may be possible when refering to external locations which are frequently used and for which the Data Provider therefore actually does maintain their own local reference data.
 
 
 ### **Mandatory fields**
