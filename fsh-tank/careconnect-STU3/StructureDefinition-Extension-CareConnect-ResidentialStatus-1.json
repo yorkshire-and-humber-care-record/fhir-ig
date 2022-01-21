@@ -40,7 +40,7 @@
       {
         "id": "Extension",
         "path": "Extension",
-        "short": "The residential status of the patient ",
+        "short": "The residential status of the patient",
         "definition": "The residential status of the patient. For example if this patient is a UK resident.",
         "min": 0,
         "max": "1",
@@ -230,7 +230,7 @@
         "id": "Extension.valueCodeableConcept:valueCodeableConcept",
         "path": "Extension.valueCodeableConcept",
         "sliceName": "valueCodeableConcept",
-        "short": "The residential status of the patient ",
+        "short": "The residential status of the patient",
         "definition": "The residential status of the patient. For example if this patient is a UK resident.",
         "comment": "A stream of bytes, base64 encoded",
         "min": 1,
@@ -282,7 +282,7 @@
       {
         "id": "Extension",
         "path": "Extension",
-        "short": "The residential status of the patient ",
+        "short": "The residential status of the patient",
         "definition": "The residential status of the patient. For example if this patient is a UK resident.",
         "max": "1"
       },
@@ -295,7 +295,7 @@
         "id": "Extension.valueCodeableConcept:valueCodeableConcept",
         "path": "Extension.valueCodeableConcept",
         "sliceName": "valueCodeableConcept",
-        "short": "The residential status of the patient ",
+        "short": "The residential status of the patient",
         "definition": "The residential status of the patient. For example if this patient is a UK resident.",
         "min": 1,
         "type": [

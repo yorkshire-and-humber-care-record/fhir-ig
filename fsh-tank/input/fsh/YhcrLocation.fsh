@@ -239,7 +239,7 @@ Description: "YHCR Location example - Room"
 * managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
-* partOf = Reference(YhcrLocationWardExample)
+* partOf = Reference(YhcrLocationWardExample1)
 * partOf.display = "York Hospital: Ward 27"
 
 

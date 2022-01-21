@@ -106,7 +106,7 @@ Description: "YHCR Encounter resource profile for Hospitalization."
 // AdmitSource: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
 * hospitalization.admitSource MS
-* hospitalization.admitSource from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SourceOfAdmission-1 (required)
+* hospitalization.admitSource from CareConnect-SourceOfAdmission-1 (required)
 
 // Readmission: MS. If it is known to be a readmission then the field should be included and populated with the single code value of “R” for “Readmission”
 //      Otherwise this field is omitted
@@ -126,7 +126,7 @@ Description: "YHCR Encounter resource profile for Hospitalization."
 // Discharge Disposition: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
 * hospitalization.dischargeDisposition MS
-* hospitalization.dischargeDisposition from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-DischargeDestination-1 (required)
+* hospitalization.dischargeDisposition from CareConnect-DischargeDestination-1 (required)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,9 +151,9 @@ Description: "YHCR Encounter Hospitalization example"
 * location[0].location.display = "York Hospital"
 
 * hospitalization.origin.display = "Patient's home"
-* hospitalization.admitSource = https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SourceOfAdmission-1#19 "Usual place of residence" 
+* hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
 
 * hospitalization.destination = Reference(YhcrLocationSocialCareDeptExample)
 * hospitalization.destination.display = "Leeds Social Services: Adult Services Department"
-* hospitalization.dischargeDisposition = https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation"
+* hospitalization.dischargeDisposition = CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation i.e. where care is provided' instead of 'Local Authority residential accommodation"
 

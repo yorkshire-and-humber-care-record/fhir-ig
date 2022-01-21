@@ -21,11 +21,15 @@ Description: "YHCR Patient resource profile."
 // - birthPlace: is similarly administrative and unlikely to often be relevant. 
 //     (Other items such as DocumentReferences and Encounters could provide specific maternity details if needed)
 // - nominatedPharmacy: generally not needed for current use-cases and should not be used unless certain that up-to-date (also gone in new UK Core)  
-* extension[Extension-CareConnect-RegistrationDetails-1] ^short = "DISCOURAGED"
+
+///XXXXXXXX* extension[Extension-CareConnect-RegistrationDetails-1] ^short = "DISCOURAGED"
 * extension[Extension-CareConnect-ResidentialStatus-1] ^short = "DISCOURAGED"
 * extension[$patient-cadavericDonor] ^short = "DISCOURAGED"
 * extension[birthPlace] ^short = "DISCOURAGED"
 * extension[Extension-CareConnect-NominatedPharmacy-1] ^short = "DISCOURAGED"
+
+//!!!TODO - new DeathNotificationStatus
+
 
 // Then there are some extensions which may be useful if known, but are not essential - ie genuinely optional:
 // - religiousAffiliation: optional
@@ -61,10 +65,6 @@ Description: "YHCR Patient resource profile."
 * identifier[nhsNumber].extension[nhsNumberVerificationStatus] ^short = "Verification status of the NHS Number - must be traced and verified"
 
 
-// CareConnect also allows, optionally, for any other local identifiers - this is fine as optional, so leave it alone
-// (Data Consumers should just ignore any other local identifiers which may be present)
-
-
 ///////////////////////////////////////
 // --- Core Demographics ---
 ///////////////////////////////////////
@@ -75,19 +75,19 @@ Description: "YHCR Patient resource profile."
 * active MS
 * active ^short = "Whether this patient's record is in active use - must be both populated and understood if 'false'"
 
-// Name: CareConnect already mandates there to be exactly one "usual" name, including a "family" name.
+// Name: CareConnect already mandates there to be exactly one "official" name, including a "family" name.
 //   However here we also mandate a "given" name, plus note that prefix and suffix must be supported if relevant
 //   Also add notes about the verification performed against PDS
-* name[usual] MS
-* name[usual].family 1..1 MS
-* name[usual].family ^short = "Family name (often called 'Surname'). NB: First 3 letters must match PDS"
-* name[usual].given 1..* MS
-* name[usual].given ^short = "Given names (not always 'first'). Includes middle names. NB: First letter (initial) must match PDS"
-* name[usual].prefix 0..* MS
-* name[usual].suffix 0..* MS
+* name[official] MS
+* name[official].family 1..1 MS
+* name[official].family ^short = "Family name (often called 'Surname'). NB: First 3 letters must match PDS"
+* name[official].given 1..* MS
+* name[official].given ^short = "Given names (not always 'first'). Includes middle names. NB: First letter (initial) must match PDS"
+* name[official].prefix 0..* MS
+* name[official].suffix 0..* MS
 
-* name[usual].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
-* name[other].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
+//???* name[usual].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
+//???* name[other].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
 
 // Gender and DoB: Basics which we want to always capture
 * gender 1..1 MS
@@ -142,6 +142,7 @@ Description: "YHCR Patient resource profile."
 ///////////////////////////////////////
 // Photo, animal, communication - note that these fields have already been removed by CareConnect
 
+//!!!!!!!!!!!!!!!!!!!!!!TODO - photo is back!!
 
 
 ///////////////////////////////////////
@@ -191,7 +192,7 @@ Description: "YHCR Patient example - Must Support"
 
 * active = true
 
-* name[0].use = #usual
+* name[0].use = #official "Official"
 * name[0].given[0] = "Jane"
 * name[0].family = "Bloggs"
 
@@ -223,9 +224,9 @@ Instance: YhcrPatientExample-Full
 InstanceOf: YhcrPatient
 Description: "YHCR Patient example - Full"
 
-* extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept =  CareConnect-EthnicCategory-1#A "British, Mixed British"
-* extension[Extension-CareConnect-ReligiousAffiliation-1].valueCodeableConcept =  http://snomed.info/sct#160549006 "Christian"
-* extension[Extension-CareConnect-NHSCommunication-1].extension[language].valueCodeableConcept =  CareConnect-HumanLanguage-1#bo "Tibetan"
+* extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept = CareConnect-EthnicCategory-1#A "British, Mixed British"
+* extension[Extension-CareConnect-ReligiousAffiliation-1].valueCodeableConcept = http://snomed.info/sct#160549006 "Christian"
+* extension[Extension-CareConnect-NHSCommunication-1].extension[language].valueCodeableConcept = CareConnect-HumanLanguage-1#bo "Tibetan"
 * extension[Extension-CareConnect-NHSCommunication-1].extension[preferred].valueBoolean =  true
 
 
@@ -233,13 +234,13 @@ Description: "YHCR Patient example - Full"
 * identifier[nhsNumber].system = "https://fhir.nhs.uk/Id/nhs-number"
 * identifier[nhsNumber].value = "123456789"
 
-* identifier[localIdentifier].system = "https://fhir.nhs.uk/Id/local-patient-identifier"
-* identifier[localIdentifier].value = "ABC-456-XYZ"
+//* identifier[localIdentifier].system = "https://fhir.nhs.uk/Id/local-patient-identifier"
+//* identifier[localIdentifier].value = "ABC-456-XYZ"
   //TODO - add a reference to the assigning organisation (once we have an organisation example)
 
 * active = true
 
-* name[0].use = #usual "Usual"
+* name[0].use = #official "Official"
 * name[0].given[0] = "Jane"
 * name[0].family = "Bloggs"
 * name[0].prefix = "Mrs"
