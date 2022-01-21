@@ -16,7 +16,6 @@ Description: "YHCR Organization resource profile."
 * identifier[odsOrganisationCode].value MS
 
 // Identifier (ODS Site Code) - **TODO** not sure exactly why this is also provided? Leave as optional for now
-// Identifier (Local) - Optional. OK if useful to the Data Provider, but we don't really need it, given the ODS code 
 
 
 // Active:  Assumption is that it is "true" if not populated
@@ -26,18 +25,13 @@ Description: "YHCR Organization resource profile."
 * active ^short = "Whether this organization is still active - must be both populated and understood if 'false'"
 
 // Type - useful, to identify the type of location
-// TODO - the code list can cover "Healthcare Provider", "Government", and "Other". So it should always be possible to populate,
-//    but... it does not seem all that useful. Is there a better list we could use?
-//    (Do we even REALLY need this type field? Or... would text be OK?. So leave the detail of how it is populated optional for now)
-//    (But... for now fix the valueset, as we definately don't want other random codes) 
-// *** What we want is the list from this dropdown! https://odsportal.digital.nhs.uk/Organisation/Search ***
-// *** Could then potentially make it mandatory?
+// List created based on the ODS dropdown list here: https://odsportal.digital.nhs.uk/Organisation/Search
 * type 0..1 MS
-* type.coding ^short = "TBC: is there a better list of codes that could be used?"
-* type from http://hl7.org/fhir/ValueSet/organization-type (required)
+* type.coding ^short = "Kind of organization (based on ODS organisation types)"
+* type from Yhcr-OrganisationType-1 (required)
 
 
-// Name - already mandatory in Care Connect
+// Name - make this mandatory, at a minimum we always want the organisation's name
 * name 1..1 MS
 // Alias - optional, but probably rarely used. One current name should be enough
 
@@ -75,8 +69,7 @@ Description: "YHCR Organization example"
 
 * active = true
 * name = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-* type.coding = http://hl7.org/fhir/organization-type#prov "Healthcare Provider"
-* type.text = "TODO - this is not a good example, need to confirm a better code list"
+* type.coding = Yhcr-OrganisationType-1#142 "NHS Trust"
 
 * address[0].line[0] = "York Hospital"
 * address[0].line[1] = "Wigginton Road"
