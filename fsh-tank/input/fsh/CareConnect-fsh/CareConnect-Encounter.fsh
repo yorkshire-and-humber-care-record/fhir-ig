@@ -76,9 +76,8 @@ Description: "The encounter resource represents an encounter between a care prof
 * reasonCode.coding[snomedCT].display ^extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable"
 * reasonCode.coding[snomedCT].display ^extension.valueBoolean = true
 
-//TODO - remove for now, until we have created these!
-// (Doesn't matter that much as they will be overcopied in the original json anyway)
-//* diagnosis.condition only Reference(CareConnect-Procedure-1 or CareConnect-Condition-1)
+
+* diagnosis.condition only Reference(CareConnect-Procedure-1 or CareConnect-Condition-1)
 
 * hospitalization.extension ^slicing.discriminator.type = #value
 * hospitalization.extension ^slicing.discriminator.path = "url"
