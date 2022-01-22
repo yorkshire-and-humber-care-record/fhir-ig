@@ -97,7 +97,7 @@ Description: "YHCR Encounter resource profile."
 
 // Diagnosis: Is Must Support, and if provided we want references only to a Condition, with role and ranking
 * diagnosis MS
-* diagnosis.condition only Reference(Condition)
+* diagnosis.condition only Reference(CareConnect-Condition-1)
 * diagnosis.condition 1..1 MS
 * diagnosis.use 1..1 MS   //R4 - STU3 has "role"
 * diagnosis.rank 1..1 MS

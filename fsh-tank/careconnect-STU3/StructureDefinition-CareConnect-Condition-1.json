@@ -1,0 +1,423 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "CareConnect-Condition-1",
+  "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1",
+  "version": "1.1.0",
+  "name": "CareConnect-Condition-1",
+  "status": "draft",
+  "date": "2018-11-05",
+  "publisher": "HL7 UK",
+  "contact": [
+    {
+      "name": "INTEROPen",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "admin@interopen.org",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "description": "This Condition resource records detailed information about conditions or diagnoses recognised by a clinician.",
+  "purpose": "CURATED BY INTEROPen see: http://www.interopen.org/careconnect-curation-methodology/ ",
+  "copyright": "Copyright © 2016 HL7 UK  Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.  HL7® FHIR® standard Copyright © 2011+ HL7  The HL7® FHIR® standard is used under the FHIR license. You may obtain a copy of the FHIR license at  https://www.hl7.org/fhir/license.html",
+  "fhirVersion": "3.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Condition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Condition.extension",
+        "path": "Condition.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.extension:episodisity",
+        "path": "Condition.extension",
+        "sliceName": "episodisity",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-ConditionEpisode-1"
+          }
+        ]
+      },
+      {
+        "id": "Condition.identifier.system",
+        "path": "Condition.identifier.system",
+        "min": 1
+      },
+      {
+        "id": "Condition.identifier.value",
+        "path": "Condition.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "Condition.identifier.assigner",
+        "path": "Condition.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
+          }
+        ]
+      },
+      {
+        "id": "Condition.verificationStatus",
+        "path": "Condition.verificationStatus",
+        "max": "0"
+      },
+      {
+        "id": "Condition.category",
+        "path": "Condition.category",
+        "short": "problem-list-item | encounter-diagnosis | presenting-complaint",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ConditionCategory"
+            }
+          ],
+          "strength": "extensible",
+          "valueSetReference": {
+            "reference": "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ConditionCategory-1"
+          }
+        }
+      },
+      {
+        "id": "Condition.category.coding.system",
+        "path": "Condition.category.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Condition.category.coding.code",
+        "path": "Condition.category.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Condition.category.coding.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Condition.category.coding.display",
+        "min": 1
+      },
+      {
+        "id": "Condition.code.coding",
+        "path": "Condition.code.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.code.coding:snomedCT",
+        "path": "Condition.code.coding",
+        "sliceName": "snomedCT",
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "description": "A code from the SNOMED Clinical Terminology UK",
+          "valueSetReference": {
+            "reference": "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ConditionCode-1"
+          }
+        }
+      },
+      {
+        "id": "Condition.code.coding:snomedCT.extension",
+        "path": "Condition.code.coding.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.code.coding:snomedCT.extension:snomedCTDescriptionID",
+        "path": "Condition.code.coding.extension",
+        "sliceName": "snomedCTDescriptionID",
+        "short": "Optional Extensions Element",
+        "definition": "Optional Extension Element - found in all resources.",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-coding-sctdescid"
+          }
+        ]
+      },
+      {
+        "id": "Condition.code.coding:snomedCT.system",
+        "path": "Condition.code.coding.system",
+        "min": 1,
+        "fixedUri": "http://snomed.info/sct"
+      },
+      {
+        "id": "Condition.code.coding:snomedCT.code",
+        "path": "Condition.code.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Condition.code.coding:snomedCT.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Condition.code.coding.display",
+        "min": 1
+      },
+      {
+        "id": "Condition.bodySite.coding",
+        "path": "Condition.bodySite.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.bodySite.coding:snomedCT",
+        "path": "Condition.bodySite.coding",
+        "sliceName": "snomedCT",
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "description": "A code from SNOMED Clinical Terminology UK",
+          "valueSetReference": {
+            "reference": "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-BodySite-1"
+          }
+        }
+      },
+      {
+        "id": "Condition.bodySite.coding:snomedCT.extension",
+        "path": "Condition.bodySite.coding.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.bodySite.coding:snomedCT.extension:snomedCTDescriptionID",
+        "path": "Condition.bodySite.coding.extension",
+        "sliceName": "snomedCTDescriptionID",
+        "short": "Optional Extensions Element",
+        "definition": "Optional Extension Element - found in all resources.",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-coding-sctdescid"
+          }
+        ]
+      },
+      {
+        "id": "Condition.bodySite.coding:snomedCT.system",
+        "path": "Condition.bodySite.coding.system",
+        "min": 1,
+        "fixedUri": "http://snomed.info/sct"
+      },
+      {
+        "id": "Condition.bodySite.coding:snomedCT.code",
+        "path": "Condition.bodySite.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Condition.bodySite.coding:snomedCT.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Condition.bodySite.coding.display",
+        "min": 1
+      },
+      {
+        "id": "Condition.subject",
+        "path": "Condition.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+          }
+        ]
+      },
+      {
+        "id": "Condition.context",
+        "path": "Condition.context",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
+          }
+        ]
+      },
+      {
+        "id": "Condition.asserter",
+        "path": "Condition.asserter",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
+          }
+        ]
+      },
+      {
+        "id": "Condition.stage.summary.coding",
+        "path": "Condition.stage.summary.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.stage.summary.coding:snomedCT",
+        "path": "Condition.stage.summary.coding",
+        "sliceName": "snomedCT",
+        "max": "1"
+      },
+      {
+        "id": "Condition.stage.summary.coding:snomedCT.extension",
+        "path": "Condition.stage.summary.coding.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition.stage.summary.coding:snomedCT.extension:snomedCTDescriptionID",
+        "path": "Condition.stage.summary.coding.extension",
+        "sliceName": "snomedCTDescriptionID",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-coding-sctdescid"
+          }
+        ]
+      },
+      {
+        "id": "Condition.stage.summary.coding:snomedCT.system",
+        "path": "Condition.stage.summary.coding.system",
+        "min": 1,
+        "fixedUri": "http://snomed.info/sct"
+      },
+      {
+        "id": "Condition.stage.summary.coding:snomedCT.code",
+        "path": "Condition.stage.summary.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Condition.stage.summary.coding:snomedCT.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Condition.stage.summary.coding.display",
+        "min": 1
+      },
+      {
+        "id": "Condition.stage.assessment",
+        "path": "Condition.stage.assessment",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ClinicalImpression"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
+          }
+        ]
+      },
+      {
+        "id": "Condition.note.author[x]",
+        "path": "Condition.note.author[x]",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+          }
+        ]
+      }
+    ]
+  }
+}
