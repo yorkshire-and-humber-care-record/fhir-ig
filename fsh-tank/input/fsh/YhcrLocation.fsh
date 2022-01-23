@@ -90,7 +90,6 @@ Description: "YHCR Location resource profile."
 //    Shows who the location "belongs" to. Although often the same as the provenance of the message, it might be different (eg if refering to a location elsewhere)
 //    (Should normally be known and easy to populate)
 * managingOrganization MS
-* managingOrganization only Reference(Yhcr-Organization)
 
 // Part Of - must support if relevant
 //   (The aim is to build a very simple structure with a maximum of 3 levels - that is easy for a data consumer to display - based on Rooms (optional), which belong to Wards, which belong to a Site. The purpose is to provide basic information about where a patient has been – not necessarily to build a complete and accurate model of the organisation structure.)
@@ -100,7 +99,6 @@ Description: "YHCR Location resource profile."
 //   For a House – not used
 * partOf MS
 * partOf ^short = "Another Location this one is physically part of. Must be provided for Ward->Site and Room->Ward to build the heirarchy"
-* partOf only Reference(Yhcr-Location)
 
 // Endpoint - removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)
 * endpoint 0..0
