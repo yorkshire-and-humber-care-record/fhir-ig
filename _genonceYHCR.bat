@@ -16,6 +16,8 @@ REM ****************************************************************************
 SET input_resources_path=%CD%\input\resources
 SET input_includes_path=%CD%\input\includes
 SET input_pagecontent_path=%CD%\input\pagecontent
+SET input_intro-notes_path=%CD%\input\intro-notes
+SET input_images_path=%CD%\input\images
 
 REM Run the sushi tool to process the fsh files and generate FHIR definition artefacts (initally R4)
 call sushi "%CD%\fsh-tank"
@@ -39,11 +41,19 @@ if exist "%input_includes_path%" rd /s /q "%input_includes_path%"
 if exist "%input_pagecontent_path%" rd /s /q "%input_pagecontent_path%"
 if exist "%input_pagecontent_path%" rd /s /q "%input_pagecontent_path%"
 
+if exist "%input_intro-notes_path%" rd /s /q "%input_intro-notes_path%"
+if exist "%input_intro-notes_path%" rd /s /q "%input_intro-notes_path%"
+
+if exist "%input_images_path%" rd /s /q "%input_images_path%"
+if exist "%input_images_path%" rd /s /q "%input_images_path%"
+
 
 REM Copy the new files that fish has just generated
 xcopy "%CD%\fsh-tank\fsh-generated-STU3\resources" "%input_resources_path%" /E /y /I /q
 xcopy "%CD%\fsh-tank\fsh-generated-STU3\includes" "%input_includes_path%" /E /y /I /q
 xcopy "%CD%\fsh-tank\input\pagecontent" "%input_pagecontent_path%" /E /y /I /q
+xcopy "%CD%\fsh-tank\input\intro-notes" "%input_intro-notes_path%" /E /y /I /q
+xcopy "%CD%\fsh-tank\input\images" "%input_images_path%" /E /y /I /q
 
 REM Overcopy the proper original Care Connect resources to replace our round-tripped fsh generated approximations
 xcopy "%CD%\fsh-tank\careconnect-STU3" "%input_resources_path%" /E /y /I /q

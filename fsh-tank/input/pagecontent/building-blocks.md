@@ -33,6 +33,7 @@ a) Capturing *exactly what the user entered*
 Looking at it another way, this means that:
  - There will almost always be at least a "coding" entry - based on the standard specified code list (eg SNOMED, ICD-10, NHS Data Dictionary, etc)
   - For a modern system where users are picking from standards-based code lists then this coding entry should be marked as "userSelected", and nothing more is required.
+   - Also if it is purely a system populated field then nothing more is required (eg essentially a fixed value to represent the type / category of an item)
   - If this standard coding is a mapping and users are actually picking from a different, local, code list then a SECOND coding should also be populated to capture this local code. This should be marked as "userSelected"
   - And/or if the user has entered further descriptive text this should also be populated into the "text" field.
 

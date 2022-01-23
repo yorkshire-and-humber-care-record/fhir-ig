@@ -3,7 +3,7 @@ This profile sets minimum expectations for the Patient resource to record basic 
 
 The important underlying principle is that this information identifies a patient for **regional sharing**. It is therefore not the aim to necessarily to record every patient as soon as they are **treated**, but only to populate those who have been confidently identified and with a quality of demographic information suitable for wider sharing.
 
-*NB: Whilst the term "Patient" is used by FHIR, the profile is equally relevant to a "citizen" or "client" in other contexts such as Social Care.*
+*NB: Whilst the term "Patient" is used by FHIR, the profile is equally relevant to a "citizen", "service user" or "client" in other contexts such as Social Care.*
 
 ### Mandatory fields
 Bearing in mind the above principle, the following fields are mandatory:

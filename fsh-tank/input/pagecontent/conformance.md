@@ -37,7 +37,7 @@ Providing a rich data set is obviously encouraged and may help to provide additi
 *Note: If the choice is made to populate an optional field, then it MUST, of course, be populated correctly and safely*
 
 ### 4. Discouraged
-The use of some optional fields is actively discouraged. These fields are not seen as relevant or useful, and are not expected to be used by Data Consumer applications.
+The use of some optional fields is actively discouraged. These fields are not seen as relevant or useful, and are not expected to be used by Data Consumer applications. They will not be included in testing scope.
 
 Legacy implementations which provide data in this field are acceptable, as long as they understand that it is unlikely to be used. New implementations are not recommended to spend time and effort attempting to populate it.
 
