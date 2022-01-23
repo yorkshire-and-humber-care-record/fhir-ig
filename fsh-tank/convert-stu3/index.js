@@ -50,7 +50,7 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "StructureDefinition") {
               jsonObject = convertStructureDefinition(jsonObject);
 
-              if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-Encounter-Hospitalization") {
+              if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-Encounter-VisitGrouping") {
                 jsonObject = convertYhcrEncounterStructureDefinition(jsonObject);
               }
             }
@@ -62,6 +62,17 @@ fileArrayR4.forEach(function(filePathR4) {
 
             if (jsonObject.resourceType == "Encounter") {
               jsonObject = convertEncounterInstance(jsonObject);
+            }
+
+            // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
+            if (jsonObject.contained) {
+              jsonObject.contained.forEach(function(jsonContained) {
+             
+                  if (jsonContained.resourceType == "Location") {
+                    jsonContained = convertLocationInstance(jsonContained);
+                  }
+
+                }) //foreach contained
             }
 
 

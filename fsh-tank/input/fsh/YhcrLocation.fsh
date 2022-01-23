@@ -221,7 +221,7 @@ InstanceOf: YhcrLocation
 Description: "YHCR Location example - House"
 
 * status = http://hl7.org/fhir/location-status#active "Active"
-* name = "Patient's home"
+* name = "42 Grove Street, LS21 1PF"
 
 * mode = http://hl7.org/fhir/location-mode#instance "Instance"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#PTRES "Patient's Residence"
