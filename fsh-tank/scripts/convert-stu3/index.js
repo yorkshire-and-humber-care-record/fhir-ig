@@ -11,8 +11,8 @@ var fs = require('fs');
 var path = require('path');
 var fileHelpers = require('./FileHelpers');
 
-var dirR4 = path.resolve(__dirname, '..') + '\\fsh-generated';
-var dirSTU3 = path.resolve(__dirname, '..') + '\\fsh-generated-STU3';
+var dirR4 = path.resolve(__dirname, '..\\..') + '\\fsh-generated';
+var dirSTU3 = path.resolve(__dirname, '..\\..') + '\\fsh-generated-STU3';
 var regexEscapedDirR4=dirR4.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 
 

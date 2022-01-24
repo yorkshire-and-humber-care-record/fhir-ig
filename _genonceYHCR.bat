@@ -18,16 +18,34 @@ SET input_includes_path=%CD%\input\includes
 SET input_pagecontent_path=%CD%\input\pagecontent
 SET input_intro-notes_path=%CD%\input\intro-notes
 SET input_images_path=%CD%\input\images
+SET original_cd=%CD%
 
 REM Run the sushi tool to process the fsh files and generate FHIR definition artefacts (initally R4)
 call sushi "%CD%\fsh-tank"
 ECHO .
 ECHO .
 
+
+REM Install any node dependency packages
+ECHO Installing node dependencies
+cd fsh-tank\scripts\convert-stu3
+echo %CD%
+call npm install
+cd %original_cd%
+
+cd fsh-tank\scripts\tweak-website
+echo %CD%
+call npm install
+cd %original_cd%
+ECHO .
+ECHO .
+
+
 REM Here we call a script that does conversion
-call node "%CD%\fsh-tank\convert-stu3"
+call node "%CD%\fsh-tank\scripts\convert-stu3"
 ECHO .
 ECHO .
+
 
 ECHO Copying latest STU3 fsh outputs into IG input folder
 
@@ -64,4 +82,11 @@ ECHO .
 ECHO .
 
 call "%CD%\_genonce"
+
+
+REM Here we call a script that tweaks the website to hide CareConnect content
+ECHO .
+ECHO .
+call node "%CD%\fsh-tank\scripts\tweak-website"
+
 
