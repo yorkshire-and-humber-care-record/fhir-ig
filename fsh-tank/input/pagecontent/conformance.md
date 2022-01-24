@@ -25,7 +25,7 @@ In more detail the implications are as follows:
    - Where this is not possible to demonstrate then the reason must be documented as part of the testing report, and the exception approved as part of regional governance signoff. (For example, if the data item is simply not captured by the Data Provider system)
   - A Data Consumer
     - MUST understand and be able to display this field, where relevant to the use-case.
-    - Note that this still leaves considerable flexibility about exactly how and where the field is displayed, how prominent, etc. Local assurance of Usability and Clinical Safety provide the final signoff here.
+    - Note that this still leaves considerable flexibility about exactly how and where the field is displayed, how prominent, etc. Local assurance of Usability and Clinical Safety provide the final signoff here. (See also guidance on best practices at <https://digital.nhs.uk/about-nhs-digital/our-work/nhs-digital-data-and-technology-standards/framework>)
     -  The starting assumption however is that these data items are the basic core fields which are expected to be displayed, and which the Data Provider is expecting Data Consumer users to be informed of.
 
 
