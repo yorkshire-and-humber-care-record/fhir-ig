@@ -53,6 +53,10 @@ fileArrayR4.forEach(function(filePathR4) {
               if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-Encounter-VisitGrouping") {
                 jsonObject = convertYhcrEncounterStructureDefinition(jsonObject);
               }
+
+              if(jsonObject.id == "Yhcr-DocumentReference") {
+                jsonObject = convertYhcrDocumentReferenceStructureDefinition(jsonObject);
+              }
             }
 
             // Convert various types of instances
@@ -185,6 +189,29 @@ function convertYhcrEncounterStructureDefinition(jsonObject) {
 
   return jsonObject;
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertYhcrDocumentReferenceStructureDefinition(jsonObject) {
+ 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    // Convert "date" to "indexed"
+    if(objElement.id == "DocumentReference.date")  {
+        objElement.id = "DocumentReference.indexed";
+        objElement.path = "DocumentReference.indexed";
+    }; // basedOn
+
+
+  }); //Element
+
+  return jsonObject;
+}
+
+
 
 
 

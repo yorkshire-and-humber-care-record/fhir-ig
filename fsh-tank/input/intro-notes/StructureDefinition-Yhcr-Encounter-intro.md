@@ -47,9 +47,7 @@ In the ideal world there would be further level of grouping - one that goes beyo
 The diagram below summarises the above discussion - ie core Encounters, single Visit Grouping Encounter, and aspiriational Episode of Care.
 
 
- ![Encounter Structure](.\EncounterStructure.png)
-
- <br>
+<img src=".\EncounterStructure.png" alt="Encounter Structure" style="clear:both; float:none">
  
 
 
