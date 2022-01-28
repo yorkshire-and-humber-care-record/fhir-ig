@@ -68,6 +68,10 @@ fileArrayR4.forEach(function(filePathR4) {
               jsonObject = convertEncounterInstance(jsonObject);
             }
 
+            if (jsonObject.resourceType == "DocumentReference") {
+              jsonObject = convertDocumentReferenceInstance(jsonObject);
+            }
+
             // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
             if (jsonObject.contained) {
               jsonObject.contained.forEach(function(jsonContained) {
@@ -248,6 +252,23 @@ function convertEncounterInstance(jsonObject) {
  
   if(jsonObject.appointment) {
     jsonObject.appointment = jsonObject.appointment[0];
+  }
+
+
+  return jsonObject;
+}
+
+
+function convertDocumentReferenceInstance(jsonObject) {
+
+  // Convert the "date" field into "indexed"
+  if(jsonObject.date) {
+    jsonObject.indexed = jsonObject.date;
+    delete jsonObject.date;
+  }
+
+  if(jsonObject.context && jsonObject.context.encounter) {
+    jsonObject.context.encounter = jsonObject.context.encounter[0];
   }
 
 

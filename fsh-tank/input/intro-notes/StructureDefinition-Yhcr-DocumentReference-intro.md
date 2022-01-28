@@ -61,7 +61,7 @@ The DocumentReference this offers three different ways to transmit the document 
     For example the “content” section of a DocumentReference would look like:
 
 >
-> "content": [{​​​​​
+>     "content": [{​​​​​
 >
 >            "attachment": {​​​​​
 >
@@ -84,13 +84,14 @@ The DocumentReference this offers three different ways to transmit the document 
     This replaces the content in the DocumentReference with a link. For example:
 
 >
->"content": [{​​​​​​​​​​​​
+>    "content": [{​​​​​​​​​​​​
 >
 >            "attachment": {​​​​​​​​​​​​
 >                "contentType": "text/html",
 >                "url": "https://my.server.com/documents/21f51e78-a46d-402c-aa22-dd43e0fec530"
 >            }​​​​​​​​​​​​
 >        }​​​​​​​​​​​​
+>
 >    ]
 
  
@@ -114,6 +115,7 @@ Note that InterWeave Connect offers a proxy service to avoid the need for point-
 >                "url": "https://my.server.com/fhirpath/Binary/21f51e78-a46d-402c-aa22-dd43e0fec530"
 >            }​​​​​​​​​​​​
 >        }​​​​​​​​​​​​
+>
 >    ]
 
  

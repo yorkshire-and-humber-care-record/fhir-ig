@@ -1,3 +1,5 @@
+Alias: $SCT = http://snomed.info/sct
+
 Profile: YhcrDocumentReference
 Parent: CareConnect-DocumentReference-1
 Id: Yhcr-DocumentReference
@@ -78,3 +80,40 @@ Description: "YHCR DocumentReference resource profile."
 * content MS
 * content.attachment MS
 * content.attachment.contentType 1..1 MS
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Examples
+////////////////////////////////////////////////////////////////////////////////////////
+
+Instance: YhcrDocumentReferenceExample
+InstanceOf: YhcrDocumentReference
+Description: "YHCR Document Reference example"
+
+
+* status = http://hl7.org/fhir/document-reference-status#current "Current"
+* docStatus = http://hl7.org/fhir/composition-status#final "Final"
+
+* type = $SCT#8237010000001 "Discharge Letter"
+
+* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject.display = "Fred Bloggs"
+
+* date = "2022-01-09T00:00:00Z"  // "indexed" in STU3
+
+* author = Reference(YhcrPractitionerExample)
+* author.display = "Dr Jane Bloggs"
+* author.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+* author.identifier.value = "ABC123"
+
+// And then we have the "context" structure with numerous fields:
+//  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
+
+* context.encounter = Reference(YhcrEncounterSelfContainedExample)
+* context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
+
+// And finally the actual content. This and the attachment are already mandatory in FHIR, and we also need the content type
+* content.attachment.contentType = #text/html
+* content.attachment.url = "https://my.server.com/documents/21f51e78-a46d-402c-aa22-dd43e0fec530"
+

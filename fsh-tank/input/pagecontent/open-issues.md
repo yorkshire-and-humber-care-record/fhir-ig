@@ -20,6 +20,16 @@ This page captures topics of ongoing discussion. Contributions and insights are 
    What is the best identifier (or set of identifiers) to capture about practitioners?
 
 
+## **Document Reference**
+ - **Type and Class** - For "type" we are currently using a SNOMED reference 24501000000105, as recommended by DADA. CareConnect uses a SNOMED reference that doesn't seem to have any members? However there is also recent PRSB work, see <https://theprsb.org/standards/documentnaming/>. There is the further question of whether it is necessary to also populate the "class", and if so what to use.
+
+ - **Document ids** - Suggestion is that the "masterIdentifier" and "identifier" are not generally needed, but confirm
+
+ - **Relates To** - Current assumption that it will not usually be necessary to link documents like this - unless there is knowledge of use-cases and/or systems where it is important.
+
+ - **Additional Context fields** - Comments are invited on whether there are use-cases and need for any of the other optional "context" fields
+
+
 ## **Encounter**
  - **Class and Type** - CareConnect provides reasonable lists for these, but do we need to extend them? Or is there a better list anywhere else?
 
