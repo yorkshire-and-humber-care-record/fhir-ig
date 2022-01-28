@@ -2,6 +2,7 @@ Profile: YhcrLocation
 Parent: CareConnect-Location-1
 Id: Yhcr-Location
 Description: "YHCR Location resource profile."
+* ^status = #draft
 
 // Identifier (ODS) - CareConnect already defines a special identifier for ODS Site Code
 // We can't make this mandatory as some locations are not part of an ODS Site (eg patient's house). 

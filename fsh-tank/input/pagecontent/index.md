@@ -17,6 +17,16 @@ The aim is not only to define a useful constrained standard, but also to capture
 
 **Comments and consultation are welcomed. It is vital that these data standards are widely accepted and are seen as a practical and implementable approach. We are actively seeking and welcome input to ensure this is the case.**
 
+
+## Status and Approvals
+The profiles in this implementation guide are categorised by status as follows:
+ 1. **Draft: Work In Progress** - this is initial work, shared for consultation but still subject to discussion and change
+ 2. **Draft: For Review** - the draft is stable and ready for wider review. May still be subject to change based on review comments
+ 3. **Active: Approved** - the profile has been approved for use by the regional Technical Design Authority
+ 4. **Active: Implemented** - the profile has been proven in at least one successful implementation
+
+
+
 ## How to read this guide
 The top menu bar provides access to the following main sections:
  - **Guidance** - it is strongly recommended to start with the "guidance" section and to read through these articles which explain the rationale and other key concepts
@@ -25,6 +35,19 @@ The top menu bar provides access to the following main sections:
 
 Within each artefact then a suggested approach would be:
  - **Read the introductory text.** This provides useful background explanation and rationale, plus offers a simple descriptive summary of which fields are required and why
+
+<img src=".\HowToIntroText.png" alt="Intro Text" style="clear:both; float:none">
+
+
   - **Review the "Differential Table".** This highlights the changes that have been made to further tighten the CareConnect profile. This includes the red highlighter markings to indicate all "Must Support" fields
+
+<img src=".\HowToDifferential.png" alt="Intro Text" style="clear:both; float:none">
+
+
   - **Review the "Snapshot Table".** This gives a more complete view of the entire resource, including any optional fields
+
+<img src=".\HowToSnapshot.png" alt="Intro Text" style="clear:both; float:none">
+
    - Back at the top of the page, **look at the "Examples" tab.** This contains example instances - to illustrate what the data might actually look like in practice.
+
+   <img src=".\HowToExamples.png" alt="Intro Text" style="clear:both; float:none">

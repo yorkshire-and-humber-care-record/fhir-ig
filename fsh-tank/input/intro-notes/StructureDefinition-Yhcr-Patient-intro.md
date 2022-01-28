@@ -1,3 +1,6 @@
+      Status: Draft - Work In Progress
+
+
 ## Introduction
 This profile sets minimum expectations for the Patient resource to record basic demographics and other administrative information about an individual patient. 
 

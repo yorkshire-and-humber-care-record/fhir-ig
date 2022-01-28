@@ -2,6 +2,7 @@ Profile: YhcrPractitioner
 Parent: CareConnect-Practitioner-1
 Id: Yhcr-Practitioner
 Description: "YHCR Practitioner resource profile."
+* ^status = #draft
 
 // Extension - NHS Communication
 // Leave alone as optional. 

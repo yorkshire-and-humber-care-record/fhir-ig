@@ -3,8 +3,8 @@ Alias: $patient-cadavericDonor = http://hl7.org/fhir/StructureDefinition/patient
 Profile: YhcrPatient
 Parent: CareConnect-Patient-1
 Id: Yhcr-Patient
-
 Description: "YHCR Patient resource profile."
+* ^status = #draft
 
 
 ///////////////////////////////////////

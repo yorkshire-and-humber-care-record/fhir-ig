@@ -1,3 +1,6 @@
+      Status: Draft - For Review
+
+
 ## Introduction
 This profile sets minimum expectations for the Location resource, to record information on locations where care is provided.
 

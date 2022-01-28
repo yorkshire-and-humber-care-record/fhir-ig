@@ -4,7 +4,7 @@ Profile: YhcrEncounter
 Parent: CareConnect-Encounter-1
 Id: Yhcr-Encounter
 Description: "YHCR Encounter resource profile."
-
+* ^status = #draft
 
 // Extensions
 // - Encounter Transport:  (contains more detail of type, period, reason - as far as I can see free text?)

@@ -1,3 +1,5 @@
+      Status: Draft - Work In Progress
+
 ## **Introduction**
 This profile sets minimum expectations for the Encounter resource.
 
@@ -34,7 +36,7 @@ This is driven by the practical needs of Data Consumers, who need to be able to 
 
 Despite this, the concept of a "visit" or "hospitalisation" is widely recognised and agreed to be useful. For example an initial Emergency Encounter progresses into an Inpatient Encounter.
 
-***A single level of heirarchy is therefore supported, based on the use of special type of "Visit Grouping" Encounter which links together underlying Encounters which comprise part of the same "visit" or "stay". A separate Encounter profile is provided to support this "visit grouping".***
+***A single level of heirarchy is therefore supported, based on the use of special type of "Visit Grouping" Encounter which links together underlying Encounters which comprise part of the same "visit" or "stay". A separate [Visit Grouping Encounter profile](StructureDefinition-Yhcr-Encounter-VisitGrouping.html) is provided to support this.***
 
 Use of this grouping structure is optional, but encouraged where applicable.
  - If grouping is used, then the "hospitalization" information about admission and discharge should be held at the grouping level
@@ -135,7 +137,7 @@ Fields in the Hospitalization structure are as follows:
       - Optional if discharged to a residential address
    - **Discharge Disposition** - Useful information about the type of place the patient has been discharged to (eg home, other NHS hospital, care home, etc))
 
-    *Note that Origin and Destination are likely to be external locations - please refer to guidance on the Location profile about use of References. For example the use of a Contained Resource may be appropriate.*
+    *Note that Origin and Destination are likely to be external locations - please refer to guidance on the [Location profile](StructureDefinition-Yhcr-Location.html) about use of References. For example the use of a Contained Resource may be appropriate.*
 
 
  - **Optional**

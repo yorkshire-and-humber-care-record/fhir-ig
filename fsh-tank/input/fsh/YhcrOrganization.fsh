@@ -2,6 +2,7 @@ Profile: YhcrOrganization
 Parent: CareConnect-Organization-1
 Id: Yhcr-Organization
 Description: "YHCR Organization resource profile."
+* ^status = #draft
 
 
 // There are a couple of Care Connect extensions that we don't currently really need

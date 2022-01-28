@@ -2,6 +2,7 @@ Profile: YhcrEncounterVisitGrouping
 Parent: CareConnect-Encounter-1
 Id: Yhcr-Encounter-VisitGrouping
 Description: "YHCR Encounter resource profile  to group other encounters into a 'visit'"
+* ^status = #draft
 
 // This is a higher-level encounter used to group other encounters together. 
 // The aim is to capture skeletal information which does not duplicate that already covered by the more detailed Encounter records

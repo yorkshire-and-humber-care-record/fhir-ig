@@ -1,3 +1,5 @@
+      Status: Draft - Work In Progress
+
 ## **Introduction**
 This profile sets minimum expectations for the DocumentReference resource.
 
@@ -62,15 +64,11 @@ The DocumentReference this offers three different ways to transmit the document 
 
 >
 >     "content": [{​​​​​
->
 >            "attachment": {​​​​​
->
 >                "contentType": "text/html",
 >            "data":"PGRpdiB4123ucz0iaHR0cDovL123dy53My5vcmcvMTk5OS94aHRtbCI ... etc..."
->
 >            }​​​​​​​​​​​​
->        }​​​​​​​​​​​​
->     ]
+>        }​​​​​​​​​​​​]
 
  
    This embedded approach is often suitable for messaging, where a relevant document is being specifically sent (eg Ambulance Transfer of Care). However for online query it has the significant disadvantage of making the DocumentReference resources very large  - as the whole document is transferred even when just viewing the list of documents available. Typically there may be many documents about a patient, but only one or two which are relevant for the user to actually view. It is very inefficient (and slow) to transfer the entirety of the documents when a user is only perusing the list.
@@ -84,15 +82,12 @@ The DocumentReference this offers three different ways to transmit the document 
     This replaces the content in the DocumentReference with a link. For example:
 
 >
->    "content": [{​​​​​​​​​​​​
->
+>     "content": [{​​​​​​​​​​​​
 >            "attachment": {​​​​​​​​​​​​
 >                "contentType": "text/html",
 >                "url": "https://my.server.com/documents/21f51e78-a46d-402c-aa22-dd43e0fec530"
 >            }​​​​​​​​​​​​
->        }​​​​​​​​​​​​
->
->    ]
+>        }​​​​​​​​​​​​]
 
  
 This is clearly much more efficient. This list of DocumentReferences contains only metadata about the documents, and if the user wants to open the document then it is a case of following the link to download it. This performs a simple binary download of the document bytes – as would be provided by hosting the document on any standard web server.
@@ -114,9 +109,7 @@ Note that InterWeave Connect offers a proxy service to avoid the need for point-
 >                "contentType": "text/html",
 >                "url": "https://my.server.com/fhirpath/Binary/21f51e78-a46d-402c-aa22-dd43e0fec530"
 >            }​​​​​​​​​​​​
->        }​​​​​​​​​​​​
->
->    ]
+>          }​​​​​​​​​​​​]
 
  
     
