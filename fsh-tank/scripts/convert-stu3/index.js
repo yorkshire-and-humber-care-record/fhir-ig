@@ -57,6 +57,11 @@ fileArrayR4.forEach(function(filePathR4) {
               if(jsonObject.id == "Yhcr-DocumentReference") {
                 jsonObject = convertYhcrDocumentReferenceStructureDefinition(jsonObject);
               }
+
+              if(jsonObject.id == "Yhcr-Appointment") {
+                jsonObject = convertYhcrAppointmentStructureDefinition(jsonObject);
+              }
+
             }
 
             // Convert various types of instances
@@ -208,6 +213,39 @@ function convertYhcrDocumentReferenceStructureDefinition(jsonObject) {
         objElement.id = "DocumentReference.indexed";
         objElement.path = "DocumentReference.indexed";
     }; // basedOn
+
+
+  }); //Element
+
+  return jsonObject;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertYhcrAppointmentStructureDefinition(jsonObject) {
+ 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    // Convert "reasonCode" to "reason"
+    if(objElement.id == "Appointment.reasonCode")  {
+        objElement.id = "Appointment.reason";
+        objElement.path = "Appointment.reason";
+    };
+
+  // Convert "reasonReference" to "indication"
+    if(objElement.id == "Appointment.reasonReference")  {
+      objElement.id = "Appointment.indication";
+      objElement.path = "Appointment.indication";
+    };
+  
+    // Convert "basedOn" to "incomingReferral"
+    if(objElement.id == "Appointment.basedOn")  {
+      objElement.id = "Appointment.incomingReferral";
+      objElement.path = "Appointment.incomingReferral";
+    };
+      
 
 
   }); //Element
