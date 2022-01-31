@@ -33,7 +33,7 @@ Whilst the primary goal is to support Direct Care, an important secondary goal i
 
 We have therefore been bold in specifying coding standards where we feel they are important. (Noting, once again, that this Principle is tempered by 6 and 7 below).
 
-## Principle 6: Pick Your Battles
+## Principle 6: Focus on Important Fields
 Despite some of the preceeding principles, we do want to make it as easy as possible for Data Providers to be onboarded - as well as to avoid unnecessarily excluding any existing FHIR implementations which already do things in a particular way.
 
 A key question when developing the profiles is therefore *"Is this field important to us?"*
