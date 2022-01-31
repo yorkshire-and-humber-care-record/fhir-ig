@@ -35,7 +35,14 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
  - **Reason** -  a long list of SNOMED codes to describe different types of problems which may have led to the Encounter. Confirm if this is a good list? The right level of detail? Covering relevant care settings? Also may not be needed if extensive information already in the Appointment or Referral?
 
- 
 
+## **Appointment**
+ - **Service Category, Service Type, and Specialty** - review the various FHIR standard lists provided and their suitabilty in different scenarios. (Is there anything better, eg in NHS Data Dictionary?) Do we need all three of these, and if so exactly what is the distinction? (Noting also that Care Connect has linked the Service Category codes to SDS Job Roles, which seems slightly at odds with the original FHIR field definition - is this helpful and how best to use?) Also consider the implications of multiple vs single values?
+
+  - **Reason** -  as-per Encounter. Is this a useful list of SNOMED codes?
+
+ - **Subject (participant)** - the Appointment does not have a Subject field! So we are referencing the Patient as a "participant". But double check exactly how this will work for practical purposes such as patient-centric searching.
+
+  - **Appointment Cancellation Reason** - how useful is this field and when will it be used? It is free text - is that OK?
  
   

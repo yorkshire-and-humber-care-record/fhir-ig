@@ -245,7 +245,7 @@ RuleSet: EncounterMainFieldsExampleRuleset
 * subject.display = "Fred Bloggs"
 
 // TODO - add fuller references once we have these resources
-* basedOn.display = "04/11/2021: Dr Jones: Sore arm" // R4 - STU3 has "incomingReferral"
+* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 * appointment = Reference(YhcrAppointmentExample)
 * appointment.display = "09/01/2022: 09:00-09:30: Dermatology"
 

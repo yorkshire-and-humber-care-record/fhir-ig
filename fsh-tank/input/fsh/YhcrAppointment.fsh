@@ -96,17 +96,18 @@ Description: "YHCR Appointment resource profile."
 // Start and End: Must always be populated unless the appointment is still only at status “proposed” (or cancelled)
 // (It turns out that this validation is built into FHIR! So originally we favoured not giving the end and 
 //  instead saying the "minutesDuration" as a more natural way of expressing it. But that fails FHIR validation!)
+//  Capture "minutes duration" too as can be useful to just show easily how long the appointment is.
+//     And may also be useful if it is expected to be a shorter time-slot within an overall period of time
 * start MS
 * end MS
-// minutesDuration: Optional. Can be useful to just show easily how long the appointment is.
-//  May also be useful if it is expected to be a shorter time-slot within an overall period of time
+* minutesDuration MS
+
 
 
 // Slot: Discouraged
 * slot ^short = "DISCOURAGED - Relevant to a scheduling system, but less so to a regional shared record"
 
-// Created: Mandatory - basic information about when it was created
-* created 1..1 MS
+// Created: optional - basic information about when it was created
 
 // Comment - leave optional. Key point is to use with care, as it may be viewed by the patient
 //  (Note: R4 has an extra field "patientInstruction", but "comment" has to cover this too in STU3)
@@ -201,7 +202,7 @@ Description: "YHCR Appointment example"
 * comment = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
 // TODO - add this to the example later when we have created some referrals
-* basedOn.display = "2021-11-04: Dr Jones: Sore arm" // R4 - STU3 has "incomingReferral"
+* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
 * participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
 * participant[0].actor = Reference(YhcrPatientExample-MustSupport) 
