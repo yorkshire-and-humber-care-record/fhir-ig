@@ -245,8 +245,9 @@ RuleSet: EncounterMainFieldsExampleRuleset
 * subject.display = "Fred Bloggs"
 
 // TODO - add fuller references once we have these resources
-* basedOn.display = "2021-11-04: Dr Jones: Sore foot" // R4 - STU3 has "incomingReferral"
-* appointment.display = "2022-01-09: Foot surgery"
+* basedOn.display = "04/11/2021: Dr Jones: Sore arm" // R4 - STU3 has "incomingReferral"
+* appointment = Reference(YhcrAppointmentExample)
+* appointment.display = "09/01/2022: 09:00-09:30: Dermatology"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"

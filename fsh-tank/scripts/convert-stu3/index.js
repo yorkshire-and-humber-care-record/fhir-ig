@@ -77,6 +77,10 @@ fileArrayR4.forEach(function(filePathR4) {
               jsonObject = convertDocumentReferenceInstance(jsonObject);
             }
 
+            if (jsonObject.resourceType == "Appointment") {
+              jsonObject = convertAppointmentInstance(jsonObject);
+            }
+
             // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
             if (jsonObject.contained) {
               jsonObject.contained.forEach(function(jsonContained) {
@@ -309,6 +313,28 @@ function convertDocumentReferenceInstance(jsonObject) {
     jsonObject.context.encounter = jsonObject.context.encounter[0];
   }
 
+
+  return jsonObject;
+}
+
+
+function convertAppointmentInstance(jsonObject) {
+
+  if(jsonObject.basedOn) {
+    jsonObject.incomingReferral = jsonObject.basedOn;
+    delete jsonObject.basedOn;
+  }
+
+  if(jsonObject.reasonCode) {
+    jsonObject.reason = jsonObject.reasonCode;
+    delete jsonObject.reasonCode;
+  }
+
+  if(jsonObject.reasonReference) {
+    jsonObject.indication = jsonObject.reasonReference;
+    delete jsonObject.reasonReference;
+  }
+ 
 
   return jsonObject;
 }

@@ -93,12 +93,14 @@ Description: "YHCR Appointment resource profile."
 // Supporting Information: Discouraged. A pointer to almost any other information
 * supportingInformation ^short = "DISCOURAGED - very broad, and so difficult for a consumer to handle"
 
-// Start: Must always be populated unless the appointment is still only at status “proposed”
+// Start and End: Must always be populated unless the appointment is still only at status “proposed” (or cancelled)
+// (It turns out that this validation is built into FHIR! So originally we favoured not giving the end and 
+//  instead saying the "minutesDuration" as a more natural way of expressing it. But that fails FHIR validation!)
 * start MS
-// End: Leave optional. Generally should not be used in favour of populating “start” and “minutesDuration”.
-//    May however be used to indicate that the appointment is within a general timeslot ie 10 mins between 9:00 and 11:00
-// MinutesDuration: Should always be populated to indicate how long the appointment is
-* minutesDuration MS
+* end MS
+// minutesDuration: Optional. Can be useful to just show easily how long the appointment is.
+//  May also be useful if it is expected to be a shorter time-slot within an overall period of time
+
 
 // Slot: Discouraged
 * slot ^short = "DISCOURAGED - Relevant to a scheduling system, but less so to a regional shared record"
@@ -147,6 +149,7 @@ Description: "YHCR Appointment resource profile."
     location 0..1 MS and
     primaryPerformer 0..1 MS
 
+// TODO - but... how do we find this by NHS Number. (Could include the id here, but is that enough?)
 * participant[subject].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" (exactly)
 * participant[subject].actor 1..1 MS
 * participant[subject].actor only Reference(Patient)
@@ -158,3 +161,62 @@ Description: "YHCR Appointment resource profile."
 * participant[primaryPerformer].type =  http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer" (exactly)
 * participant[primaryPerformer].actor 1..1 MS
 * participant[primaryPerformer].actor only Reference(Practitioner)
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// EXAMPLES
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+Instance: YhcrAppointmentExample
+InstanceOf: YhcrAppointment
+Description: "YHCR Appointment example"
+
+
+* extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
+* extension[Extension-CareConnect-AppointmentCancellationReason-1].valueString = "Unable to attend due to prior engagement"
+
+* identifier[0].system = "https://yhcr.org/Id/local-appointment-identifier"
+* identifier[0].value = "REWQ54321" 
+
+* status = http://hl7.org/fhir/appointmentstatus#booked "Booked"
+
+// Service Category: leave optional
+* serviceType = http://hl7.org/fhir/service-type#168 "Dermatology"
+// Specialty: leave optional
+* appointmentType = http://hl7.org/fhir/v2/0276#FOLLOWUP "A follow up visit from a previous appointment"
+
+* reasonCode = $SCT#299007 "Paraffinoma of skin" // R4 - STU3 has "reason"
+
+// TODO - add fuller references once we have these resources
+* reasonReference[0].display = "Purple rash" // R4 - STU3 has "indication"
+
+* description = "Outpatient dermatology clinic"
+
+* start = "2022-01-09T09:00:00Z"
+* end = "2022-01-09T09:30:00Z"
+* minutesDuration = 30
+
+* created = "2021-12-05T00:00:00Z"
+
+* comment = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
+
+// TODO - add this to the example later when we have created some referrals
+* basedOn.display = "2021-11-04: Dr Jones: Sore arm" // R4 - STU3 has "incomingReferral"
+
+* participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
+* participant[0].actor = Reference(YhcrPatientExample-MustSupport) 
+* participant[0].actor.display = "Fred Bloggs"
+* participant[0].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
+
+* participant[1].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" 
+* participant[1].actor = Reference(YhcrLocationWardExample1)
+* participant[1].actor.display = "York Hospital: Ward 27 - Dermatology clinic"
+* participant[1].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
+
+* participant[2].type = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
+* participant[2].actor = Reference(YhcrPractitionerExample)
+* participant[2].actor.display = "Dr Jane Bloggs"
+* participant[2].actor.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+* participant[2].actor.identifier.value = "ABC123"
+* participant[2].status = http://hl7.org/fhir/participationstatus#tentative "Tentative" 
+
