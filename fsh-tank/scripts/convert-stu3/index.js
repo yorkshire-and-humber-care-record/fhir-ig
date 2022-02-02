@@ -123,6 +123,23 @@ function convertStructureDefinition(jsonObject) {
     }
   }
 
+
+  // For extensions then "context" is done differently
+  if(jsonObject.type == "Extension") {
+    if(jsonObject.context) {
+
+      jsonObject.contextType = "resource";
+
+      var newContextArray = new Array()
+      jsonObject.context.forEach(function (objContext) {
+        newContextArray.push(objContext.expression);
+      })
+      jsonObject.context = newContextArray;
+
+    }
+  }
+
+
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
 

@@ -78,6 +78,7 @@ menu:
     Principles: principles.html
     Conformance: conformance.html
     Implementation Sequence: implementation-sequence.html
+    Base Fields: base-fields.html
     Building Blocks: building-blocks.html
     Open Issues: open-issues.html
   Artifacts: artifacts.html
