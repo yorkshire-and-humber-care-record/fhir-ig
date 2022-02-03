@@ -10,10 +10,13 @@ Organisations are consistently identified across the region by their ODS code, a
 ### **Organisation coverage and references**
  - A Data Provider MUST offer Organisation FHIR resources to represent its own organisation(s)
    - When populating references to its own organisation(s) then all three of "display" (name), "identifier" (ODS Code) and "reference" (url of local FHIR Resource) must be populated
- - If referencing an external organisation then a Data Provider may:
-   1. (Typical) Populate the reference "display" value with the external organisation's name, and the "identifier" with the ODS code - thus allowing further regional master details to be searched for by Data Consumers if so desired. The "reference" url can then be omitted.
-   2. As per (1), but in addition populating the "reference" url with a pointer to a locally hosted Organisation FHIR Resource. This may be relevant when refering to partner organisations - who are frequently referenced and for whom the Data Provider therefore does maintain their own local reference data about this external organisation.
-   3. (Rare) As per (1), but in addition populating the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information  about the organisation, if this is felt to be necessary.
+
+ - If referencing an external organisation then the widely accepted use of ODS codes is an important advantge. A Data Provider may therefore typically:
+   - Populate the reference "display" value with the external organisation's name, and the "identifier" with the ODS code - thus allowing further regional master details to be searched for by Data Consumers if so desired. The "reference" url can then be omitted.
+
+
+     *(It would also be possible to populate the "reference" with a link to either a Contained Resource, or to a locally hosted replica of an Organisation Resource for this external organisation. However the widespread use of ODS codes as an identifier which already allows full master details to be retrieved means that this seems unlikely to be necessary)*
+   
 
 ### **Mandatory fields**
 The following fields are mandatory:

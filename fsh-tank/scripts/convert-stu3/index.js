@@ -150,6 +150,10 @@ function convertStructureDefinition(jsonObject) {
           objType.targetProfile = objType.targetProfile[0];
         }
 
+        if(objType.profile) {
+          objType.profile = objType.profile[0];
+        }
+
         // Also remove an R4 "type" extension that we don't need
         if(objType.extension) delete objType.extension;
 

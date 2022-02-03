@@ -9,27 +9,42 @@ This profile sets minimum expectations for the Practitioner resource.
 
 **A Data Provider MUST offer Practitioner FHIR resources to represent its own practitioners**
 
-  - When populating references to its own Practitioners then the "display" (name) and "reference" (url of local FHIR Resource) must be populated. In addition the SDS User Id must be populated in the "identifier" if the Pracitioner has one
+  - When populating references to its own Practitioners then the "display" (name) and "reference" (url of local FHIR Resource) must be populated. In addition any relevant SDS, other professional ID, or failing that local identifier must be populated in the "identifier" 
 
 **There can also be a need to reference practitioners outside of the Data Provider's own organisation** 
 
-When referencing an external practitioner then a Data Provider must always populate the reference "display" value with the external practitioner's name. Beyond this then as much additional information as possible about them should be provided. This could include:
+ - When referencing an external practitioner then a Data Provider MUST always populate the reference "display" value with the external practitioner's name. 
 
- - Populating the "identifier". If the practitioner has an SDS User Id then this should be included as an identifier. If they do not then it may still be useful to provide a local identifier - if this is useful over-and-above the "display" name to assist Data Consumers in identifying and refering to the practitioner
- - Populating the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information about the external practitioner.
- - Populating the "reference" url with a pointer to a locally hosted Practitioner FHIR Resource. This may be possible when refering to external practitioners who are frequently used and for which the Data Provider therefore actually does maintain their own local reference data.
+ - In addition the "identifier" SHOULD also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted), but some practitioners will have an SDS User Id (which should be used in preference), and most will have at least some other professional id which can be populated  to more definitively identify them. Or failing that a local id.
 
- ***To Confirm - how useful and widely used is the SDS User Id? Are there any other identifiers we should consider for practitioners?***
+   *(Note also that these practitioner identifiers are less useful than ODS codes, as there is no obvious single master data source which can be used to easily retrieve further details based upon an id)*
+
+
+ - Beyond this then the "reference" url MAY be populated with a pointer to further information about the Practitioner - either in Contained Resource, or pointing to a locally hosted replica of a Practitioner Resource for this external practitioner. This is only useful if there is information beyond their name avaiable to convey - for example, contact details or qualifications.
+ 
+
 
 
 ### **Mandatory fields**
 1. **Name** - This is essential to indicate who the practitioner is. Only a single name is supported by Care Connect, and for this profile then at a minimum the Family Name is mandatory. (Note that in addition, Given Name, Prefix, and Suffix are considered "Must Support") 
 
+2. **Identifier**: Must be populated to formally identify the practitioner. Care Connect highlights the SDS User Id and SDS Role Profile identifiers, however this does not provide complete coverage. Additional professional codes which may be used include:
+
+    - https://fhir.hl7.org.uk/id/gmp-number (General Medical Practitioner)
+    - https://fhir.hl7.org.uk/id/gmc-number (General Medical Council / Consultant Code)
+    - https://fhir.hl7.org.uk/id/nmc-number (Nursing and Midwifery Council)
+    - https://fhir.hl7.org.uk/id/gphc-number (General Pharmaceautical Council Code)
+    - https://fhir.hl7.org.uk/id/hcpc-number (Health and Care Professional Council Code)
+
+
+    Or as a last resort if no other professional identifier:
+    - https://yhcr.org/Id/local-practitioner-identifier (Local identifier)
 
 ### **Must Support fields**
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known:
 1. **Active** - Essential if not active. Good practice to always populate anyway.
-2. **Identifier**: SDS User Id - Must be populated if the practitioner has an SDS User Id, to formally identify them
+
+3. **Qualifications** - These are useful if known, to provide information above-and-beyond just the identity of the practitioner - ie also about their professional status and qualifications. See further discussion below.
 
 
 ### **Optional fields**
@@ -38,7 +53,6 @@ Other fields are optional and may be populated if known - on the understanding t
 2. **Telecom** - It is very useful to provide a contact phone number and/or email if at all possible – to enable further enquiries about any information seen. However caution is needed, as these contact details may be widely seen throughout the region. Only work details suitable for receiving external enquires should be included. Specifically home phone numbers should not be shared.
 3. **Gender** - May be provided if known, but is not essential
 4. **Communication preferences** - A Care Connect extension containing several fields for details about preferred languages and other modes of communication. Optional, as in general it is assumed that the employing organisation will make any necessary provisions and so largely not relevant for regional sharing. (Note that CareConnect have defined an extension to be used in preference to the standard FHIR field)
-5. **Qualifications** - May be useful if known, but not essential for regional sharing. (Envisaged that it will often not be easy to include)
 
 
 ### **Discouraged or Removed fields**
@@ -48,7 +62,9 @@ Other fields are optional and may be populated if known - on the understanding t
 
 
 
-### **Further notes on Practitioner vs PractitionerRole**
+### **Further notes on Practitioner vs PractitionerRole, and Qualifications**
 "PractitionerRole" describes the practitioner in the context of an actual role they are fulfilling, and so is in many ways a more useful concept than the basic "Practitioner" FHIR Resource. It provides extra information about the nature of the role, explicitly captures contact details relevant to that role (as opposed to personal / home details), and caters for individuals who do more than one role.
 
 HOWEVER the PractitionerRole resource is little used in FHIR STU3. This has been addressed in FHIR R4, which allows use of a PractitionerRole throughout as an alternative to Practitioner. However for now, in STU3, use of the Practitioner resource is the main requirement - and really the only option.
+
+The best substitute in the Practitioner resource appears to be the "qualifications" section - with the opportunity here to provide information about the practitioner's professional status and qualifications. Thus at least indicating the kind of role they are likely to perform. This must therefore be populated if possible (accepting that for some Data Provider systems this may not be known).

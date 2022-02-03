@@ -8,15 +8,28 @@ Description: "YHCR Practitioner resource profile."
 // Leave alone as optional. 
 // In general it is assumed that the employing organisation will make any necessary provisions, and so largely not relevant for regional sharing
 
-// Identifier (sdsUserId) - CareConnect already defines a special identifier for the SDS user id
-// Must Support - if they have an SDS User Id. 
-// (It is possible that there might be practiioners - in voluntary sector etc - who don't have one?)
-* identifier[sdsUserID] 1..1 MS
-* identifier[sdsUserID].system MS
-* identifier[sdsUserID].value MS
 
-// Identifier (SDS Role Profile Id) - **TODO** not sure exactly why this is also provided? Leave as optional for now
-// Identifier (Local) - Optional. OK if useful to the Data Provider, but we don't really need it, given the SDS code 
+// Identifiers - mandatory to provide at least one identifier (but a lot of choice about which one!) 
+* identifier 1..* MS
+* identifier ^short = "A identifier for the person as this agent. Note that although CareConnect defines slices for SDS ids, use of other professional ids is also possible - see notes"
+* identifier.system 1..1 MS
+* identifier.value 1..1 MS
+
+// Care Connect already defines slices for:
+//   https://fhir.nhs.uk/Id/sds-user-id (SDS User Id)
+//   https://fhir.nhs.uk/Id/sds-role-profile-id (SDS Role Profile Id)
+
+// However these SDS ids are far from universally applicable.
+// Therefore other valid and useful ids which could be used include:
+// (It would be nice to update the slices to include these properly, but I can't work out how or if possible...)
+//   https://fhir.hl7.org.uk/id/gmp-number (General Medical Practitioner)
+//   https://fhir.hl7.org.uk/id/gmc-number (General Medical Council / Consultant Code)
+//   https://fhir.hl7.org.uk/id/nmc-number (Nursing and Midwifery Council)
+//   https://fhir.hl7.org.uk/id/gphc-number (General Pharmaceautical Council Code)
+//   https://fhir.hl7.org.uk/id/hcpc-number (Health and Care Professional Council Code)
+
+// Or failing any of these then as a last resort:
+//   https://yhcr.org/Id/local-practitioner-identifier
 
 
 // Active:  Assumption is that it is "true" if not populated
