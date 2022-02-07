@@ -45,10 +45,9 @@ Description: "YHCR Appointment resource profile."
 * identifier[localIdentifier].system = "https://yhcr.org/Id/local-appointment-identifier" (exactly)
 * identifier[localIdentifier].value 1..1
 * identifier[localIdentifier].value ^short = "The Local Appointment Identifier"
-// Period assumed to match that of the Encounter
+// Period assumed to match that of the Appointment
 * identifier[localIdentifier].period 0..0
-// Assigner assumed to match provenance of the Encounter
-* identifier[localIdentifier].assigner 0..0
+
 
 
 // Status: already mandatory in FHIR
@@ -190,7 +189,7 @@ Description: "YHCR Appointment example"
 * extension[Extension-CareConnect-AppointmentCancellationReason-1].valueString = "Unable to attend due to prior engagement"
 
 * identifier[0].system = "https://yhcr.org/Id/local-appointment-identifier"
-* identifier[0].value = "REWQ54321" 
+* identifier[0].value = "APPT-Q54321" 
 
 * status = http://hl7.org/fhir/appointmentstatus#booked "Booked"
 

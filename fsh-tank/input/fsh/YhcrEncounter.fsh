@@ -250,7 +250,7 @@ RuleSet: EncounterMainFieldsExampleRuleset
 
 
 * identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier"
-* identifier[localIdentifier].value = "ABC-456-XYZ"
+* identifier[localIdentifier].value = "ENC-456-XYZ"
 
 * status = #finished
 * statusHistory[+].status = #in-progress 
