@@ -6,6 +6,7 @@ Id: Yhcr-Patient
 Description: "YHCR Patient resource profile."
 * ^status = #draft
 
+* insert YhcrBaseFieldsRuleset
 
 ///////////////////////////////////////
 // --- EXTENSIONS ---
@@ -185,6 +186,19 @@ Instance: YhcrPatientExample-MustSupport
 InstanceOf: YhcrPatient
 Description: "YHCR Patient example - Must Support"
 
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Patient"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+* meta.versionId = "YhcrPatientExampleMustSupport-v1.0.0"
+
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+// (name.given + name.family)
+* extension[Extension-Yhcr-TextSummary].valueString = "Fred Bloggs"
+
+
+
 * extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept =  CareConnect-EthnicCategory-1#A "British, Mixed British"
 
 * identifier[nhsNumber].extension[nhsNumberVerificationStatus].valueCodeableConcept = CareConnect-NHSNumberVerificationStatus-1#01 "Number present and verified"
@@ -224,6 +238,20 @@ Description: "YHCR Patient example - Must Support"
 Instance: YhcrPatientExample-Full
 InstanceOf: YhcrPatient
 Description: "YHCR Patient example - Full"
+
+
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Patient"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+* meta.versionId = "YhcrPatientExampleFull-v1.0.0"
+
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+// (name.given + name.family)
+* extension[Extension-Yhcr-TextSummary].valueString = "Jane Bloggs"
+
+
 
 * extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept = CareConnect-EthnicCategory-1#A "British, Mixed British"
 * extension[Extension-CareConnect-ReligiousAffiliation-1].valueCodeableConcept = http://snomed.info/sct#160549006 "Christian"

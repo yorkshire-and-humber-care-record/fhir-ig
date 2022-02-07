@@ -42,7 +42,17 @@ Several fields are marked as "discouraged" to indicate that they are preferably 
   
   Other standard FHIR fields that have been entirely removed by CareConnect are:
    - Animal - not relevant here, and also deprecated in FHIR R4
- 
+
+
+### **Summary Text**
+
+    name.given + name.family
+  
+    Example: 
+    "Fred Bloggs"
+
+
+
 ### **Notes on "active" and "deceased" flags**
 There are several flags regarding the overall status of a patient, with further guidance on their use as follows:
 

@@ -51,7 +51,16 @@ Other fields are optional and may be populated if known - on the understanding t
  - **Relates To** - This is a potentially useful field that may be used to record relationships between documents. However it is not used as-yet, and there is unlikely to be any behaviour in consumer systems to honour it. Please get in touch for further discussion if planning to use it.
   - **Content - Related** - This provides the opportunity to link to other types of resources – in addition to Encounters. It is anticipated that additional guidance on the use of this field may be added in future, based on specific document types and use-cases. Please get in touch if planning to use this field meanwhile.
    - **Security Label** - This field is not used and will not be honoured. All data published to the Interweave Exchange will be shared with other participants. (It is possible that additional security mechanisms may be added in future, however this would be subject to further consultation at the time). 
- 
+
+
+### **Summary Text**
+
+    Date + Type
+  
+    Example: 
+    "09/01/2022 : Discharge Letter"
+
+
 
 ### **Approaches to document content**
 The DocumentReference this offers three different ways to transmit the document content and it is important to understand the details of this. The sections below cover each option in turn.

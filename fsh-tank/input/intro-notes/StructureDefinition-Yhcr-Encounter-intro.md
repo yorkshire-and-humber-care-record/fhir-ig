@@ -145,3 +145,13 @@ Fields in the Hospitalization structure are as follows:
 
  - **Discouraged**
    - **Diet Preferences, Special Courtesy, Special Arrangement** - additional details that are relevant internally for planning the patient's stay, but not so relevant for external sharing.
+
+
+### **Summary Text**
+
+    Period.start - Period.end : Class description: Type description
+  
+    Example: 
+    "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+
+

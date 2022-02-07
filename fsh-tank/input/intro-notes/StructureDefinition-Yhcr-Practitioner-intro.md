@@ -62,6 +62,15 @@ Other fields are optional and may be populated if known - on the understanding t
 
 
 
+### **Summary Text**
+
+    name.given + name.family
+  
+    Example: 
+    "Jane Bloggs"
+
+
+
 ### **Further notes on Practitioner vs PractitionerRole, and Qualifications**
 "PractitionerRole" describes the practitioner in the context of an actual role they are fulfilling, and so is in many ways a more useful concept than the basic "Practitioner" FHIR Resource. It provides extra information about the nature of the role, explicitly captures contact details relevant to that role (as opposed to personal / home details), and caters for individuals who do more than one role.
 

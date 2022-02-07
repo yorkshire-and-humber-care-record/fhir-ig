@@ -42,3 +42,12 @@ Other fields are optional and may be populated if known - on the understanding t
  - **Part Of** - Discouraged. We are expecting a simple, flat structure based on ODS codes. (Any modelling of ODS hierarchy could be done separately and does not need to be built into the resources).
  - **Contact** - Discouraged. These administrative contact details would need to be kept up-to-date, and do not appear particularly relevant to maintain or exchange.
  - **Endpoint** - Removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)
+
+
+
+### **Summary Text**
+
+    Name
+  
+    Example: 
+    "York and Scarborough Teaching Hospitals NHS Foundation Trus"

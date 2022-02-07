@@ -110,6 +110,20 @@ Description: "A short text string to summarise the resource. Intended to be used
 * ^context[=].expression = "Appointment" //R3 is just context
 * ^context[+].type = #element   
 * ^context[=].expression = "Encounter" 
+* ^context[+].type = #element   
+* ^context[=].expression = "DocumentReference" 
+* ^context[+].type = #element   
+* ^context[=].expression = "Location" 
+* ^context[+].type = #element   
+* ^context[=].expression = "Organization" 
+* ^context[+].type = #element   
+* ^context[=].expression = "Practitioner" 
+* ^context[+].type = #element   
+* ^context[=].expression = "Patient" 
+* ^context[+].type = #element   
+* ^context[=].expression = "Condition" 
+* ^context[+].type = #element   
+* ^context[=].expression = "Procedure" 
 
 * . ..1
 * . ^short = "A short summary string eg for display in References"

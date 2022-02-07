@@ -55,6 +55,16 @@ Other fields are optional and may be populated if known - on the understanding t
  - **Operational Status** - Discouraged. As noted in the FHIR spec this is only relevant for beds / rooms, to indicate if they are undergoing housekeeping etc – relevant for a local care system, but not for tracking in a regional care record.
   - **Endpoint** - Removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)
 
+
+### **Summary Text**
+
+    Name + Type
+  
+    Example: 
+    "York Hospital: Ward 27: Dermatology clinic"
+
+
+
 ### **Further notes on Location "Type"**
 We always want to know what type of services are typically provided at the location - as this is useful (primarily for direct care) to help understand why the patient may have been going there. The standard code list has some very generic entries eg "Hospital", "Community Location", "Community Service Centre", "Patient's Residence". These should cover most eventualities at a high level, plus there are some useful more specific entries focused on healthcare.
 

@@ -6,6 +6,8 @@ Id: Yhcr-Encounter
 Description: "YHCR Encounter resource profile."
 * ^status = #draft
 
+* insert YhcrBaseFieldsRuleset
+
 // Extensions
 // - Encounter Transport:  (contains more detail of type, period, reason - as far as I can see free text?)
 // - Outcome of attendance: (simple list of discharged, another appointment given, another appointment needed)
@@ -204,6 +206,18 @@ Instance: YhcrEncounterSelfContainedExample
 InstanceOf: YhcrEncounter
 Description: "YHCR Encounter example - self-contained"
 
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Encounter"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
+* meta.versionId = "YhcrEncounterExample-v1.0.0"
+
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+// (Period.start - Period.end : Class description: Type description)
+* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+
+
 * contained[0] = YhcrLocationHouseDischargeExample
 
 * insert EncounterMainFieldsExampleRuleset
@@ -215,12 +229,25 @@ Instance: YhcrEncounterWithVisitGroupingExample
 InstanceOf: YhcrEncounter
 Description: "YHCR Encounter example - with Visit Grouping"
 
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Encounter"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
+* meta.versionId = "YhcrEncounterWithVisitGroupigExample-v1.0.0"
+
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+// (Period.start - Period.end : Class description: Type description)
+* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+
+
 * insert EncounterMainFieldsExampleRuleset
 * partOf = Reference(YhcrEncounterVisitGroupingExample)
 
 
 //////////////////////////////////////////////////////////////////////////////////
 RuleSet: EncounterMainFieldsExampleRuleset
+
 
 * identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier"
 * identifier[localIdentifier].value = "ABC-456-XYZ"
@@ -247,7 +274,7 @@ RuleSet: EncounterMainFieldsExampleRuleset
 // TODO - add fuller references once we have these resources
 * basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 * appointment = Reference(YhcrAppointmentExample)
-* appointment.display = "09/01/2022: 09:00-09:30: Dermatology"
+* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
@@ -315,6 +342,20 @@ Instance: YhcrLocationHouseDischargeExample
 InstanceOf: YhcrLocation
 Description: "YHCR Location example - House for discharge"
 Usage: #inline
+
+
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* meta.versionId = "YhcrLocationExampleHouseDischarge-v1.0.0"
+
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+// (Name + Type)
+* extension[Extension-Yhcr-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
+
+
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "42 Grove Street, LS21 1PF"

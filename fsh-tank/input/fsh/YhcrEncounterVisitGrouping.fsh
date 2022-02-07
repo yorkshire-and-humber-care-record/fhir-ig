@@ -4,6 +4,8 @@ Id: Yhcr-Encounter-VisitGrouping
 Description: "YHCR Encounter resource profile  to group other encounters into a 'visit'"
 * ^status = #draft
 
+* insert YhcrBaseFieldsRuleset
+
 // This is a higher-level encounter used to group other encounters together. 
 // The aim is to capture skeletal information which does not duplicate that already covered by the more detailed Encounter records
 //  – with focus on the “Hospitalization” fields which add overarching details of the visit
@@ -104,6 +106,21 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 Instance: YhcrEncounterVisitGroupingExample
 InstanceOf: YhcrEncounterVisitGrouping
 Description: "YHCR Encounter Visit Grouping example"
+
+
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-EncounterVisitGrouping"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
+* meta.versionId = "YhcrEncounterExample-v1.0.0"
+
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+// (Period.start - Period.end : Class description: Type description)
+* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of Encounters that comprise a visit : "
+
+
+
 
 * contained[0] = YhcrLocationHouseDischargeExample
 
