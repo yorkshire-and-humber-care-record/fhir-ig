@@ -29,7 +29,7 @@ FHIR defines structures such as the Resource and DomainResource which provide a 
 
  - **meta.lastUpdated** (Mandatory)
 
-	This is important and useful information
+	This is important and useful information. (It is mandatory to include in all except Contained resources, where FHIR does not allow it)
 
 
  - **meta.profile** (Must Support)

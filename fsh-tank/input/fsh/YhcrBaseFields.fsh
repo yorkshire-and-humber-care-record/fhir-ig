@@ -35,7 +35,8 @@ RuleSet: YhcrBaseFieldsRuleset
 
 // Last Updated
 //   Mandatory - this is important and useful information
-* meta.lastUpdated 1..1 MS
+//   HOWEVER can only mark as MS, because FHIR does not permit it to be populated in Contained resources
+* meta.lastUpdated MS
 
 // Profile
 //   All resources must conform to a Profile and should state it here. Also note that it’s an array and multiple profiles can be specified (e.g. Care Connect AND Interweave)
