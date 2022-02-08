@@ -26,12 +26,16 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 2. **Body Site** - snomed coding for the affected body part. Important to provide if possible and relevant
 
-3. **Context** - a link to the  Encounter or Episode when the condition was first asserted. Will not be relevant to all Conditions (eg historical lists), but should be populated if applicable. Should link to the lowest level possible in any hierarchy, thus providing maximum detail about where the condition was noted
+3. **Context** - a link to the  Encounter when the condition was first asserted. Will not be relevant to all Conditions (eg historical lists), but should be populated if applicable. Should link to the lowest level possible in any hierarchy, thus providing maximum detail about where the condition was noted. 
+
+   *Note: Do not link to an Episode of Care, as this is deprecated in FHIR R4*
 
 4. **Onset and Abatement** - these are important to provide if at all possible. 
     - Onset might be omitted if genuinely not known (eg a long-standing historical condition), but should normally be populated
    - Abatement is obviously only relevant if the condition has actually abated – in which case useful and important to populate
    - Note that in both cases there are a variety of options for how to express this (eg datetime, age, period, etc). These do seem relevant for accurately conveying what is known - with the implication that Data Consumers will need corresponding flexibility in displaying this information.
+
+   *Note: Do not use abatementBoolean, as this is deprecated in FHIR R4*
 
 
 5. **Asserter** - Required to populate if known. The main purpose would be to provide details of a Practitioner who can give more information about the condition. Therefore it should not be populated with details of purely admin staff who may have keyed in the data. If the asserter is not populated then an unknown Practitioner should be assumed.

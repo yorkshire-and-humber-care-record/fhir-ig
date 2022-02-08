@@ -21,7 +21,7 @@ The following mandatory fields are defined in order to properly describe a Proce
 
 4. **Subject** - every Procedure must be linked to a Patient (not a Group)
 
-5. **Performed** - when the Procedure was performed. This is made somewhat more complicated by FHIR offering the choice between a DateTime or a Period, but one or the other must be populated.
+5. **Performed** - when the Procedure was performed. A DateTime is easier to deal with and thus prefered, however Period may also be valid for some types of procedure.
 
 
 
@@ -31,6 +31,8 @@ In addition the following fields are "Must Support" - ie they must be populated 
 1. **Identifier** - a Local Id should be provided, such that could be quoted if manually getting in touch to find out more
 
 2. **Context** - A reference to the Encounter where the procedure was performed. This is likely to be very useful and should be provided if at all possible. (Noting however the introductory comments that this may be impossible if the linkage is lost within a clinical coding system). Should link to the lowest level possible in any hierarchy, thus providing maximum detail about where the condition was noted
+
+   *Note: Do not link to an Episode of Care, as this is deprecated in FHIR R4*
 
 3. **Outcome** - A short and simple list of “successful”, “unsuccessful”, “partially successful”. Must be populated when relevant and known. (Accepting that for some types of procedure then this may be impossible if there is no simple definition of “success”)
 
@@ -49,7 +51,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
   - **Part Of** - Could be useful to describe if the procedure is part of a wider overall procedure, or involved in an observation or medication administration
 
-  - **Not Done / Not Done Reason** - Somewhat overlaps with status codes such as "suspended" or "aborted", but provides the possibility of adding additional coding to explain why
+  - **Not Done / Not Done Reason** - Somewhat overlaps with status codes such as "suspended" or "aborted", but provides the possibility of adding additional coding to explain why. *(Note: FHIR R4 concurs, and remodels this into a single field called "Status Reason")*
 
   - **Performer** - Useful to provide if known, although it may be more relevant in some scenarios than others. For example some procedures are quite transactional and the person in overall charge of the care may be more useful as a contact.
       - Note: The “OnBehalfOf” reference is not essential – as this will also be covered by the Provenance tags

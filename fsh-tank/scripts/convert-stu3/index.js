@@ -62,6 +62,14 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = convertYhcrAppointmentStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Yhcr-Condition") {
+                jsonObject = convertYhcrConditionStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Yhcr-Procedure") {
+                jsonObject = convertYhcrProcedureStructureDefinition(jsonObject);
+              }
+
             }
 
             // Convert various types of instances
@@ -79,6 +87,14 @@ fileArrayR4.forEach(function(filePathR4) {
 
             if (jsonObject.resourceType == "Appointment") {
               jsonObject = convertAppointmentInstance(jsonObject);
+            }
+
+            if (jsonObject.resourceType == "Procedure") {
+              jsonObject = convertProcedureInstance(jsonObject);
+            }
+
+            if (jsonObject.resourceType == "Condition") {
+              jsonObject = convertConditionInstance(jsonObject);
             }
 
             // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
@@ -281,6 +297,52 @@ function convertYhcrAppointmentStructureDefinition(jsonObject) {
 
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertYhcrConditionStructureDefinition(jsonObject) {
+ 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    // Convert "encounter" to "context"
+    if(objElement.id == "Condition.encounter")  {
+        objElement.id = "Condition.context";
+        objElement.path = "Condition.context";
+    };
+
+  // Convert "recordedDate" to "assertedDate"
+    if(objElement.id == "Condition.recordedDate")  {
+      objElement.id = "Condition.assertedDate";
+      objElement.path = "Condition.assertedDate";
+    };
+       
+
+
+  }); //Element
+
+  return jsonObject;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertYhcrProcedureStructureDefinition(jsonObject) {
+ 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    // Convert "encounter" to "context"
+    if(objElement.id == "Procedure.encounter")  {
+        objElement.id = "Procedure.context";
+        objElement.path = "Procedure.context";
+    };
+
+
+  }); //Element
+
+  return jsonObject;
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -356,6 +418,40 @@ function convertAppointmentInstance(jsonObject) {
     delete jsonObject.reasonReference;
   }
  
+
+  return jsonObject;
+}
+
+
+
+function convertConditionInstance(jsonObject) {
+
+  if(jsonObject.encounter) {
+    jsonObject.context = jsonObject.encounter;
+    delete jsonObject.encounter;
+  }
+
+  if(jsonObject.recordedDate) {
+    jsonObject.assertedDate = jsonObject.recordedDate;
+    delete jsonObject.recordedDate;
+  }
+
+  //Clinical status is just a simple code (not codableconcept) in STU3
+  if(jsonObject.clinicalStatus) {
+    jsonObject.clinicalStatus = jsonObject.clinicalStatus.coding[0].code;
+  }
+
+  return jsonObject;
+}
+
+
+function convertProcedureInstance(jsonObject) {
+
+  if(jsonObject.encounter) {
+    jsonObject.context = jsonObject.encounter;
+    delete jsonObject.encounter;
+  }
+
 
   return jsonObject;
 }

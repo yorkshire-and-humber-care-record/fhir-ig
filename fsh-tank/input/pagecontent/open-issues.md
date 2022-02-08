@@ -78,6 +78,8 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 ## **Procedure**
 
  - **Condition and Code** - FHIR provides example lists for both of these, need feedback on whether they are appropriate and achievable. 
+
+  - **Follow Up codes** - FHIR provides an example list, but it is quite short - need feedback on whether they are appropriate, (or sources of alternatives). 
  
  - **Performed** - it seems important to know when a Procedure is performed, but FHIR complicates with a choice between datetime and period. It would be simpler to restrict to a single datetime only, but this could exclude valid use-cases which do need a period? Otherwise a Data Consumers will need to cope with both (including for timelines)?
 

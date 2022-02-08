@@ -50,18 +50,18 @@ Description: "YHCR Condition resource profile."
 
 // Code (mandatory)
 //  Essential to provide to describe what the condition actually is.
-//  (To confirm the list...)
 * code 1..1 MS
-// TODO - make binding Required(?)
+* code from http://hl7.org/fhir/ValueSet/condition-code (required)
+
 
 
 // Body Site: (MS)
 //     Snomed coding for the affected body part. Important to provide if possible and relevant
-//     (TODO - note that it could be a list)
+//     (Note that it could be a list)
 * bodySite MS
-// * bodySite from TODO (required)
+* bodySite from http://hl7.org/fhir/ValueSet/body-site (required)
 * bodySite.coding[snomedCT] 1..1 MS
-// * bodySite.coding[snomedCT] from TODO (required)
+* bodySite.coding[snomedCT] from http://hl7.org/fhir/ValueSet/body-site (required)
 
 
 // Subject: Is already mandatory. Essential reference to the patient (only)
@@ -74,31 +74,25 @@ Description: "YHCR Condition resource profile."
 // Context: (MS)
 //   Will not be relevant to all Conditions (eg historical lists), 
 //   but should be populated if there is a relevant Encounter to link the Condition to.
-// TODO - R4??????????* context MS
-// ??? Tighten to Encounter only (see what it is in R4)
+* encounter MS  // R4 encounter -> STU3 Context
+* encounter only Reference(CareConnect-Encounter-1)
 
-
-/*
-//TODO - LOOKS LIKE DIFFERENT IN R4????????
 
 // Onset and Abatement: (MS)
 //   Important to provide if at all possible –
 //   For Onset the only reason for not providing would be if the onset is genuinely not known (eg a long-standing historical condition)
 //   For Abatement then obviously only relevant if it IS in abatment
 //   There are a number of choices - date, age, etc. They all seem relevant, in which case assumption must be that a consumer can display all
-//   TODO - however do we need a timeline date?
-
-
-* onset MS
-* abatement MS
+//   To consider... do we need a timeline date?
+* onset[x] MS
+* abatement[x] MS
+// Note that abatementBoolean is deprecated in FHIR R4
 
 // Asserted Date: (Mandatory)
 //   Vital information about when the condition was noted. 
 //   Provides essential guidance for a viewer about the recency and thus likely relevance / accuracy of historical records
-* assertedDate 1..1 MS
+* recordedDate 1..1 MS   // R4 recordedDate -> STU3 assertedDate
 
-
-*/
 
 // Asserter: (MS)
 //   Required to populate if known.
@@ -129,8 +123,6 @@ Description: "YHCR Condition resource profile."
 
 
 
-/********************* TODO - finish off - *************************************************************
-
 Instance: YhcrConditionExample
 InstanceOf: YhcrCondition
 Description: "YHCR Condition example"
@@ -145,32 +137,31 @@ Description: "YHCR Condition example"
 * meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
 * meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Code description + clinical status)
-* extension[Extension-Yhcr-TextSummary].valueString = "TODO"
+* extension[Extension-Yhcr-TextSummary].valueString = "Paraffinoma of skin: Active"
 
 
 
 * identifier[localIdentifier].system = "https://yhcr.org/Id/local-condition-identifier"
 * identifier[localIdentifier].value = "COND-456-XYZ"
 
-* clinicalStatus = #active //TODO - system, value etc
+//* clinicalStatus = http://hl7.org/fhir/condition-clinical#active "Active"
+* clinicalStatus = #active 
 
-//* code.coding[0] = TODO Look up a code
-//* bodySite.coding[0] = TODO Look up a code
+* code.coding[0] = $SCT#299007 "Paraffinoma of skin" 
+* bodySite.coding[0] =  $SCT#2059009 "Skin of ear lobule"
 
 * subject = Reference(YhcrPatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
-// TODO - R4??????????
-* context = Reference(YhcrEncounterSelfContainedExample)
-* context.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+* encounter = Reference(YhcrEncounterSelfContainedExample) // R4 encounter -> STU3 context
+* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
-* onseDateTime = "2020-04-01T00:00:00Z"   //R4??????? TODO - look at other options for this
-* abatementBoolean = false   //R4?????
-* assertedDate = "2022-01-09T09:00:00Z"  //R4?????
+* onsetDateTime = "2020-04-01T00:00:00Z"   
+* abatementString = "During summer holidays 2021"
+* recordedDate = "2020-06-09T09:00:00Z"  //recordedDate -> STU3 assertedDate
 
 * asserter = Reference(YhcrPractitionerExample)
 * asserter.display = "Dr Jane Bloggs"
 * asserter.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * asserter.identifier.value = "ABC123"
 
-*/
