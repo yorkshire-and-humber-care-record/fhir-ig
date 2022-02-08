@@ -19,21 +19,7 @@ Description: "YHCR Encounter resource profile."
 // This is a business identifier for the Encounter.
 // The value for a local identifier must be populated and contain the internal id for this Encounter on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "system"
-* identifier ^slicing.ordered = false
-* identifier ^slicing.rules = #open
-* identifier contains
-    localIdentifier 0..1 MS
-
-* identifier[localIdentifier].system 1..1 MS
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier" (exactly)
-* identifier[localIdentifier].value 1..1
-* identifier[localIdentifier].value ^short = "The Local Encounter Identifier"
-// Period assumed to match that of the Encounter
-* identifier[localIdentifier].period 0..0
-// Assigner assumed to match provenance of the Encounter
-* identifier[localIdentifier].assigner 0..0
+* insert Ruleset-AddLocalIdentifier(encounter)
 
 
 // Status: Already mandatory in FHIR, emphasise with Must Support
@@ -54,6 +40,8 @@ Description: "YHCR Encounter resource profile."
 * class 1..1 MS
 //* class from http://hl7.org/fhir/ValueSet/v3-ActEncounterCode (required)
 * class from Yhcr-EncounterClass-1 (required)
+* insert Ruleset-RawCodingWithSystemCodeDisplay(class)
+
 * classHistory 0..0
 
 // Type: Make mandatory, and tighten coding based on the Care Connect list
@@ -61,25 +49,30 @@ Description: "YHCR Encounter resource profile."
 //      (eg in establishment, in own home, by telephone, etc)
 * type 1..1 MS
 * type from CareConnect-EncounterType-1 (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(type)
 * type.coding[snomedCT] 1..1 MS
 * type.coding[snomedCT] from CareConnect-EncounterType-1 (required)
 
 // Priority: This provides useful information about whether it was emergency, routine, elective, etc
 * priority MS
 * priority from http://hl7.org/fhir/ValueSet/v3-ActPriority (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(priority)
 
 // Subject: Every Encounter MUST be linked to a patient
 //     (It is appreciated that sometimes the identity of the patient may not be known, but the encounter cannot be shared regionally until this is established)
 * subject 1..1 MS 
 // We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
+* insert Ruleset-ReferencePatient(subject)
 * subject ^short = "The patient (NOT group) present at the encounter"
 
 // Episode of Care: Leave as optional for now. (A potential part of wider structure, see wider discussion)
 
 // Incoming Referal and Appointment: MS. If these exist, and if the Data Provider is able to publish the resources, then this must link to it
 * basedOn MS   // R4 - STU3 has "incomingReferral"
+* insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
 * appointment MS
+* insert Ruleset-ReferenceWithAtLeastDisplay(appointment)
 
 // Participant: We want exactly one "primary performer" who is the main contact responsible
 //   Where relevant an "admitter" and "discharger"
@@ -91,9 +84,11 @@ Description: "YHCR Encounter resource profile."
 // Only one "type" per participant. Pick the main one. (Or list the whole participant several times)
 * participant.type 1..1 MS
 * participant.type from http://hl7.org/fhir/ValueSet/encounter-participant-type (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(participant.type)
 // Must actually reference someone, and for this type of encounter they must be a practitioner
 * participant.individual 1..1 MS
 * participant.individual only Reference(CareConnect-Practitioner-1)
+* insert Ruleset-ReferenceExternalPractitioner(participant.individual) // Will normally be internal, but occaisonally maybe not
 // Period is optional, may be useful if they were briefly involved, but most likely it matches the period of the encounter
 
 
@@ -114,8 +109,10 @@ Description: "YHCR Encounter resource profile."
 * diagnosis MS
 * diagnosis.condition only Reference(CareConnect-Condition-1)
 * diagnosis.condition 1..1 MS
+* insert Ruleset-ReferenceWithAtLeastDisplay(diagnosis.condition)
 * diagnosis.use 1..1 MS   //R4 - STU3 has "role"
 * diagnosis.use from http://hl7.org/fhir/ValueSet/diagnosis-role (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(diagnosis.use)
 * diagnosis.rank 1..1 MS
 
 // And if provided then we want at least a "Chief Complaint" (plus any others such as comorbidities if relevant)
@@ -144,6 +141,7 @@ Description: "YHCR Encounter resource profile."
 * location 1..* MS
 * location ^short = "Location the encounter takes place (at Ward level)"
 * location.location MS
+* insert Ruleset-ReferenceInternalLocation(location.location)
 * location.status 1..1 MS
 * location.period 1..1 MS
 
@@ -153,7 +151,7 @@ Description: "YHCR Encounter resource profile."
 
 // PartOf: Optional. Generally it is a flat structure, EXCEPT for pointing specifically at a VisitGrouping encounter
 * partOf only Reference(Yhcr-Encounter-VisitGrouping)
-
+* insert Ruleset-ReferenceWithDisplayAndReference(partOf)
 
 
 
@@ -172,11 +170,13 @@ RuleSet: HospitalizationRuleset
 
 // Origin: Useful to provide if possible, especially if transfered from another institution
 * hospitalization.origin ^short = "The location from which the patient came before admission. Useful to provide if possible, in particular to reference a 'site' if transfered from another institution."
+* insert Ruleset-ReferenceExternalLocation(hospitalization.origin)
 
 // AdmitSource: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
 * hospitalization.admitSource MS
 * hospitalization.admitSource from CareConnect-SourceOfAdmission-1 (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.admitSource)
 
 // Readmission: Optional.
 //      If it is known to be a readmission then the field can be included and populated with the single code value of “R” for “Readmission”
@@ -190,11 +190,13 @@ RuleSet: HospitalizationRuleset
 // Destination: Important to provide if known, especially if transfered to another institution, but also to support discharge planning
 * hospitalization.destination MS
 * hospitalization.destination ^short = "Location to which the patient is discharged. Important to provide if known to support discharge planning, and/or to reference a 'site' if transfered to another institution."
+* insert Ruleset-ReferenceExternalLocation(hospitalization.destination)
 
 // Discharge Disposition: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
 * hospitalization.dischargeDisposition MS
 * hospitalization.dischargeDisposition from CareConnect-DischargeDestination-1 (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.dischargeDisposition)
 
 
 
@@ -243,6 +245,7 @@ Description: "YHCR Encounter example - with Visit Grouping"
 
 * insert EncounterMainFieldsExampleRuleset
 * partOf = Reference(YhcrEncounterVisitGroupingExample)
+* partOf.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of Encounters that comprise a visit"
 
 
 //////////////////////////////////////////////////////////////////////////////////

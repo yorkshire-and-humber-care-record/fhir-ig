@@ -31,7 +31,7 @@ Description: "YHCR Organization resource profile."
 * type 0..1 MS
 * type.coding ^short = "Kind of organization (based on ODS organisation types)"
 * type from Yhcr-OrganisationType-1 (required)
-
+* insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Name - make this mandatory, at a minimum we always want the organisation's name
 * name 1..1 MS

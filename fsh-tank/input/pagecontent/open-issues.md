@@ -27,6 +27,8 @@ This page captures topics of ongoing discussion. Contributions and insights are 
  
    Meanwhile we have the "Qualifications" information on the Practitioner resource which, whilst not quite as good, could offer a reasonable (and straightforward) alternative. This has therefore been marked as "Must Support". The question however is - how realistic and widely supported is the capture of these practitioner qualifications in Data Provider systems?
 
+   Also - should this be free text, or is there an accepted list of qualifications that could be used?
+
 
 ## **Document Reference**
  - **Type and Class** - For "type" we are currently using a SNOMED reference 24501000000105, as recommended by DADA. CareConnect uses a SNOMED reference that doesn't seem to have any members? However there is also recent PRSB work, see <https://theprsb.org/standards/documentnaming/>. There is the further question of whether it is necessary to also populate the "class", and if so what to use.

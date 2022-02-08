@@ -52,7 +52,7 @@ Description: "YHCR Location resource profile."
 // If a code is provided then it must be from the original FHIR list, or from an extension code that is curated and added to the regional list
 * type from Yhcr-ServiceDeliveryLocationRoleType-1 (required)
 * type ^short = "Type of function performed. Useful to indicate the type of activity that is likely to have happened there."
-
+* insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Telecom - required to provide if at all possible, as this is extremely useful if external clinicians want to get in touch to find out more
 // If provided then need at least the "system" and "value"
@@ -80,11 +80,9 @@ Description: "YHCR Location resource profile."
 // Define a cut-down subset of the FHIR example list for our purposes
 * physicalType 1..1 MS
 * physicalType.coding 1..1 MS
-* physicalType.coding.system 1..1 MS
-* physicalType.coding.code 1..1 MS
-* physicalType.coding.display 1..1 MS
 * physicalType ^short = "Physical form of the location. Note reduced subset of location types that are supported"
 * physicalType from Yhcr-LocationPhysicalType-1 (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(physicalType)
 
 
 // Position - optional. Currently there is no requirement to track exact geographical coordinates.
@@ -93,6 +91,7 @@ Description: "YHCR Location resource profile."
 //    Shows who the location "belongs" to. Although often the same as the provenance of the message, it might be different (eg if refering to a location elsewhere)
 //    (Should normally be known and easy to populate)
 * managingOrganization MS
+* insert Ruleset-ReferenceOrganization(managingOrganization)
 
 // Part Of - must support if relevant
 //   (The aim is to build a very simple structure with a maximum of 3 levels - that is easy for a data consumer to display - based on Rooms (optional), which belong to Wards, which belong to a Site. The purpose is to provide basic information about where a patient has been – not necessarily to build a complete and accurate model of the organisation structure.)
@@ -102,6 +101,7 @@ Description: "YHCR Location resource profile."
 //   For a House – not used
 * partOf MS
 * partOf ^short = "Another Location this one is physically part of. Must be provided for Ward->Site and Room->Ward to build the heirarchy"
+* insert Ruleset-ReferenceInternalLocation(partOf)
 
 // Endpoint - removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)
 * endpoint 0..0
@@ -154,6 +154,8 @@ Description: "YHCR Location example - Site"
 
 * managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
 
 // (partOf = not relevant)
 
@@ -192,6 +194,8 @@ Description: "YHCR Location example - Ward 27"
 
 * managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
 
 * partOf = Reference(YhcrLocationSiteExample)
 * partOf.display = "York Hospital"
@@ -230,6 +234,8 @@ Description: "YHCR Location example - Ward 28"
 
 * managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
 
 * partOf = Reference(YhcrLocationSiteExample)
 * partOf.display = "York Hospital"
@@ -269,6 +275,8 @@ Description: "YHCR Location example - Room"
 
 * managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
 
 * partOf = Reference(YhcrLocationWardExample1)
 * partOf.display = "York Hospital: Ward 27"
@@ -343,6 +351,8 @@ Description: "YHCR Location example - Social Care Department"
 
 * managingOrganization = Reference(YhcrOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
 
 * partOf = Reference(YhcrLocationSiteExample)
 * partOf.display = "York Hospital"

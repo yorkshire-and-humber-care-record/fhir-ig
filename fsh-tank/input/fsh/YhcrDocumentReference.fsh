@@ -22,6 +22,7 @@ Description: "YHCR DocumentReference resource profile."
 // Much discussion about this, and DADA proposed list of SNOMED codes selected for now
 * type MS
 * type from YhcrDocumentType (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Class - leave optional for now, pending further discussion
 // This is a higher level categorisation, initially concluded that not needed as well as "type"
@@ -30,6 +31,7 @@ Description: "YHCR DocumentReference resource profile."
 // Subject - mandatory, and must refer to a patient
 * subject 1..1 MS
 * subject only Reference(CareConnect-Patient-1)
+* insert Ruleset-ReferencePatient(subject)
 
 // Created - leave optional
 // This is a potentially useful field, but note that deprecated in R4
@@ -43,6 +45,7 @@ Description: "YHCR DocumentReference resource profile."
 // But explain in words what we want
 * author    MS
 * author ^short = "Who and/or what authored the document. NB: For most use-cases this should contain a single practitioner who is the main contact for any further questions"
+* insert Ruleset-ReferenceWithAtLeastDisplay(author)
 
 // Authenticator - leave optional
 // More likely to be relevant for internal records rather than external sharing, but may be used if desired
@@ -62,14 +65,15 @@ Description: "YHCR DocumentReference resource profile."
 
 // And then we have the "context" structure with numerous fields:
 //  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
-
 * context.encounter MS
+* insert Ruleset-ReferenceWithAtLeastDisplay(context.encounter)
+
 //  Period (MS) A document may related to a period of time (eg a care plan for the coming 6 months). 
 //     Where this is the case then this field must be populated
 * context.period MS
 
 // Source Patient Info - version-specific snapshot of the patient. Should usually be known and useful to populate
-* context.sourcePatientInfo MS
+//   Leave optional
 
 // Context.Event (leave optional). A complex list of codes, many to do with billing but also others.
 //   As FHIR notes, there is overlap with Type - for our purposes suggest Type and link to Encounter

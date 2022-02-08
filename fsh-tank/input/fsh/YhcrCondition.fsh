@@ -17,19 +17,7 @@ Description: "YHCR Condition resource profile."
 // This is a business identifier for the Condition.
 // The value for a local identifier must be populated and contain the internal id for this Condition on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "system"
-* identifier ^slicing.ordered = false
-* identifier ^slicing.rules = #open
-* identifier contains
-    localIdentifier 0..1 MS
-
-* identifier[localIdentifier].system 1..1 MS
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-condition-identifier" (exactly)
-* identifier[localIdentifier].value 1..1
-* identifier[localIdentifier].value ^short = "The Local Condition Identifier"
-// Period assumed to match that of the Condition
-* identifier[localIdentifier].period 0..0
+* insert Ruleset-AddLocalIdentifier(condition)
 
 
 // Clinical Status: (Mandatory)
@@ -52,7 +40,7 @@ Description: "YHCR Condition resource profile."
 //  Essential to provide to describe what the condition actually is.
 * code 1..1 MS
 * code from http://hl7.org/fhir/ValueSet/condition-code (required)
-
+* insert Ruleset-CodingWithSystemCodeDisplay(code)
 
 
 // Body Site: (MS)
@@ -60,23 +48,23 @@ Description: "YHCR Condition resource profile."
 //     (Note that it could be a list)
 * bodySite MS
 * bodySite from http://hl7.org/fhir/ValueSet/body-site (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(bodySite)
 * bodySite.coding[snomedCT] 1..1 MS
 * bodySite.coding[snomedCT] from http://hl7.org/fhir/ValueSet/body-site (required)
-
 
 // Subject: Is already mandatory. Essential reference to the patient (only)
 * subject MS 
 //   We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
 * subject ^short = "Who has the condition? (A patient, NOT group)"
-
+* insert Ruleset-ReferencePatient(subject)
 
 // Context: (MS)
 //   Will not be relevant to all Conditions (eg historical lists), 
 //   but should be populated if there is a relevant Encounter to link the Condition to.
 * encounter MS  // R4 encounter -> STU3 Context
 * encounter only Reference(CareConnect-Encounter-1)
-
+* insert Ruleset-ReferenceWithAtLeastDisplay(encounter)
 
 // Onset and Abatement: (MS)
 //   Important to provide if at all possible –
@@ -100,7 +88,7 @@ Description: "YHCR Condition resource profile."
 //   Could maybe also be the patient etc - perhaps more discussion about the implications of this?
 //   Useful to say that if not provided then an unknown Practitioner may be assumed
 * asserter MS
-
+* insert Ruleset-ReferenceWithAtLeastDisplay(asserter)
 
 // Stage: (Optional)
 //    Clearly not applicable to all conditions, but useful where it is applicable (eg cancer)

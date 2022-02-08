@@ -135,3 +135,112 @@ Description: "A short text string to summarise the resource. Intended to be used
 * valueString ^definition = "A short summary string eg for display in References"
 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Additional Rulesets to tighten up Local Id, CodeableConcept and Reference usage
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RuleSet: Ruleset-AddLocalIdentifier(type)
+
+* identifier ^slicing.discriminator.type = #value
+* identifier ^slicing.discriminator.path = "system"
+* identifier ^slicing.ordered = false
+* identifier ^slicing.rules = #open
+* identifier contains
+    localIdentifier 0..1 MS
+
+* identifier[localIdentifier].system 1..1 MS
+* identifier[localIdentifier].system = "https://yhcr.org/Id/local-{type}-identifier" (exactly)
+* identifier[localIdentifier].value 1..1 MS
+* identifier[localIdentifier].value ^short = "The Local {type} Identifier"
+// Period assumed to match that of the entity
+* identifier[localIdentifier].period 0..0
+
+
+
+RuleSet: Ruleset-CodingWithSystemCodeDisplay(path)
+// Don't have to provide coding
+// But if we do then properly populated with system, code, AND display text
+* {path}.coding.system 1..1
+* {path}.coding.code 1..1
+* {path}.coding.display 1..1
+
+
+RuleSet: Ruleset-RawCodingWithSystemCodeDisplay(path)
+// For raw coding, not in a CodeableConcept
+// Properly populate with system, code, AND display text
+* {path}.system 1..1
+* {path}.code 1..1
+* {path}.display 1..1
+
+
+RuleSet: Ruleset-ReferenceWithAtLeastDisplay(path)
+* {path}.display 1..1 
+* {path}.display ^short = "As a minimum explain in words"
+* {path}.reference 0..1 
+* {path}.reference ^short = "Preferably reference a resource"
+* {path}.identifier 0..1 
+* {path}.identifier ^short = "If relevant could include a local id"
+
+
+RuleSet: Ruleset-ReferenceWithDisplayAndReference(path)
+* {path}.display 1..1 
+* {path}.display ^short = "Description of the referenced resource"
+* {path}.reference 1..1 
+* {path}.reference ^short = "Reference to a resource"
+* {path}.identifier 0..1 
+* {path}.identifier ^short = "If relevant could include a local id"
+
+
+RuleSet: Ruleset-ReferencePatient(path)
+* {path}.display 1..1 
+* {path}.display ^short = "The patient's name"
+* {path}.reference 1..1 
+* {path}.reference ^short = "Reference to Patient Resource"
+* {path}.identifier 0..1 
+* {path}.identifier ^short = "Ideally also include NHS Number"
+
+
+RuleSet: Ruleset-ReferenceInternalLocation(path)
+* {path}.display 1..1 
+* {path}.display ^short = "Description of the location"
+* {path}.reference 1..1 
+* {path}.reference ^short = "Reference to internal Location Resource"
+* {path}.identifier 0..1 
+* {path}.identifier ^short = "Ideally also include a local id"
+
+
+RuleSet: Ruleset-ReferenceExternalLocation(path)
+* {path}.display 1..1 
+* {path}.display ^short = "Description of the location"
+* {path}.reference 0..1 
+* {path}.reference ^short = "Reference to Location Resource if relevant/possible (could be Contained)"
+* {path}.identifier 0..1 
+* {path}.identifier ^short = "Ideally also include a local id"
+
+
+RuleSet: Ruleset-ReferenceInternalPractitioner(path)
+* {path}.display 1..1 
+* {path}.display ^short = "The practitioner's name"
+* {path}.reference 1..1 
+* {path}.reference ^short = "Reference to internal Practitioner Resource"
+* {path}.identifier 1..1 
+* {path}.identifier ^short = "Include a practitioner id"
+
+
+RuleSet: Ruleset-ReferenceExternalPractitioner(path)
+* {path}.display 1..1 
+* {path}.display ^short = "The practitioner's name"
+* {path}.reference 0..1 
+* {path}.reference ^short = "Reference to Practitioner Resource if relevant/possible"
+* {path}.identifier 1..1 
+* {path}.identifier ^short = "Include a practitioner id to formally identify"
+
+
+RuleSet: Ruleset-ReferenceOrganization(path)
+* {path}.display 1..1 
+* {path}.display ^short = "The organisation name"
+* {path}.reference 0..1 
+* {path}.reference ^short = "Reference to Organisation Resource if relevant/possible"
+* {path}.identifier 1..1 
+* {path}.identifier ^short = "The ODS code to formally identify"

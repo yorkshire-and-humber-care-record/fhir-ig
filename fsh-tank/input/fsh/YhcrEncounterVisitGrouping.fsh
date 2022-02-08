@@ -18,21 +18,7 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 // This is a business identifier for the Encounter.
 // The value for a local identifier must be populated and contain the internal id for this Encounter on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "system"
-* identifier ^slicing.ordered = false
-* identifier ^slicing.rules = #open
-* identifier contains
-    localIdentifier 0..1 MS
-
-* identifier[localIdentifier].system 1..1 MS
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier" (exactly)
-* identifier[localIdentifier].value 1..1
-* identifier[localIdentifier].value ^short = "The Local Encounter Identifier"
-// Period assumed to match that of the Encounter
-* identifier[localIdentifier].period 0..0
-// Assigner assumed to match provenance of the Encounter
-* identifier[localIdentifier].assigner 0..0
+* insert Ruleset-AddLocalIdentifier(encounter)
 
 // Status: Already mandatory in FHIR, emphasise with Must Support
 * status MS
@@ -44,6 +30,8 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 * class 1..1 MS
 //* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute" (exactly)
 * class = Yhcr-EncounterClass-1#VISITGROUPING "Grouping of Encounters that comprise a visit" (exactly)
+* insert Ruleset-RawCodingWithSystemCodeDisplay(class)
+
 * classHistory 0..0
 
 // Type and Priority: Are captured in the underlying encounters
@@ -54,6 +42,7 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 * subject 1..1 MS 
 // We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
+* insert Ruleset-ReferencePatient(subject)
 * subject ^short = "The patient (NOT group) present at the encounter"
 
 // Episode of Care: Leave as optional for now. (A potential part of wider structure, see wider discussion)
@@ -84,6 +73,7 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 //   Leave status and period as optional - but usually expect an single entry for a single site
 * location 1..* MS
 * location.location MS
+* insert Ruleset-ReferenceInternalLocation(location.location)
 * location ^short = "Location the encounter takes place (at Site level for the overall visit)"
 
 
@@ -116,8 +106,8 @@ Description: "YHCR Encounter Visit Grouping example"
 
 * meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
 * meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-// (Period.start - Period.end : Class description: Type description)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of Encounters that comprise a visit : "
+// (Period.start - Period.end : Class description)
+* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of Encounters that comprise a visit"
 
 
 

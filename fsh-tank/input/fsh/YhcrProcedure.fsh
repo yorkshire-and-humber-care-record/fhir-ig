@@ -17,19 +17,7 @@ Description: "YHCR Procedure resource profile."
 // This is a business identifier for the Procedure.
 // The value for a local identifier must be populated and contain the internal id for this Procedure on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "system"
-* identifier ^slicing.ordered = false
-* identifier ^slicing.rules = #open
-* identifier contains
-    localIdentifier 0..1 MS
-
-* identifier[localIdentifier].system 1..1 MS
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-procedure-identifier" (exactly)
-* identifier[localIdentifier].value 1..1
-* identifier[localIdentifier].value ^short = "The Local Procedure Identifier"
-// Period assumed to match that of the Condition
-* identifier[localIdentifier].period 0..0
+* insert Ruleset-AddLocalIdentifier(procedure)
 
 
 // Definition: Leave optional
@@ -57,12 +45,14 @@ Description: "YHCR Procedure resource profile."
 //   A simple and short list of SNOMED codes to describe the overall category of procedure eg “Surgical Procedure”, “Diagnostic Procedure”
 * category 1..1 MS
 * category from http://hl7.org/fhir/ValueSet/procedure-category (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(category)
 	
 
 // Code: Mandatory
 //   Essential information about what the procedure actually was.
 * code 1..1 MS
 * code from http://hl7.org/fhir/ValueSet/procedure-code (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(code)
 * code.coding[snomedCT] 1..1 MS
 * code.coding[snomedCT] from http://hl7.org/fhir/ValueSet/procedure-code (required)
 
@@ -72,13 +62,14 @@ Description: "YHCR Procedure resource profile."
 //   We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
 * subject ^short = "Who the procedure was performed on. (A patient, NOT group)"
-
+* insert Ruleset-ReferencePatient(subject)
 
 // Context: (MS)
 //   A reference to the Encounter where the procedure was performed.
 //   This is likely to be very useful and should be provided if at all possible. .
 * encounter MS  // R4 encounter -> STU3 Context
 * encounter only Reference(CareConnect-Encounter-1)
+* insert Ruleset-ReferenceWithAtLeastDisplay(encounter)
 
 // Performed: (Mandatory) (But difficult to specify this for a choice!)
 //  performedDateTime is easier to deal with, and would be simpler to exclude performedPeriod, but perhaps over-simplistic.
@@ -107,6 +98,7 @@ Description: "YHCR Procedure resource profile."
 //   (Accepting that for some types of procedure then this may be impossible if there is no simple definition of “success”)
 * outcome MS
 * outcome from http://hl7.org/fhir/ValueSet/procedure-outcome (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(outcome)
 
 // Report (leave optional)
 //  Could be useful, but unlikely to be available in early implementations? 
@@ -119,6 +111,7 @@ Description: "YHCR Procedure resource profile."
 //  for example, it allows community teams to see that follow up care is needed
 * followUp MS
 * followUp from http://hl7.org/fhir/ValueSet/procedure-followup (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(followUp)
 
 // Note (Optional)
 * note ^short = "Additional information about the Procedure. NB: Any notes may be shared widely across the region, including being viewed by the patient themselves"
@@ -130,7 +123,9 @@ Description: "YHCR Procedure resource profile."
 * focalDevice MS
 * focalDevice.action MS
 * focalDevice.action from http://hl7.org/fhir/ValueSet/device-action (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(focalDevice.action)
 * focalDevice.manipulated MS
+* insert Ruleset-ReferenceWithAtLeastDisplay(focalDevice.manipulated)
 
 // Used Code and Used Reference (discouraged)
 * usedCode ^short = "DISCOURAGED: relevant to stock control within an organisation, but less so for a regional record"

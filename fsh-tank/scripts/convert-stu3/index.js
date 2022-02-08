@@ -202,12 +202,13 @@ function convertYhcrEncounterStructureDefinition(jsonObject) {
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
 
-    // Convert "basedOn" to "incomingReferral"
-    if(objElement.id == "Encounter.basedOn")  {
-        objElement.id = "Encounter.incomingReferral";
-        objElement.path = "Encounter.incomingReferral";
-    }; // basedOn
 
+    // Convert "basedOn" to "incomingReferral"
+    if(objElement.id.includes("Encounter.basedOn"))  {
+      objElement.id = objElement.id.replace("Encounter.basedOn", "Encounter.incomingReferral");
+      objElement.path = objElement.id;
+    };
+      
 
     // Convert "diagnosis.use" to "diagnosis.role"
     if(objElement.id == "Encounter.diagnosis")  {
@@ -217,22 +218,29 @@ function convertYhcrEncounterStructureDefinition(jsonObject) {
       }
     } // Encounter.diagnosis
 
-    if(objElement.id == "Encounter.diagnosis.use")  {
-      objElement.id = "Encounter.diagnosis.role";
-      objElement.path = "Encounter.diagnosis.role";
-    }; // Encounter.diagnosis.use
+
+    if(objElement.id.includes("Encounter.diagnosis.use"))  {
+      objElement.id = objElement.id.replace("Encounter.diagnosis.use", "Encounter.diagnosis.role");
+      objElement.path = objElement.id;
+    };
 
     if(objElement.id == "Encounter.diagnosis:chiefComplaint.use")  {
       objElement.id = "Encounter.diagnosis:chiefComplaint.role";
       objElement.path = "Encounter.diagnosis.role";
     }; // Encounter.diagnosis.use
 
+    //NB! This one is slighlty different due to the slicing!
+    if(objElement.id.includes("Encounter.diagnosis:chiefComplaint.use"))  {
+      objElement.id = objElement.id.replace("Encounter.diagnosis:chiefComplaint.use", "Encounter.diagnosis:chiefComplaint.role");
+      objElement.path = objElement.path.replace("Encounter.diagnosis.use", "Encounter.diagnosis.role");
+    };
+
 
     // Convert "reasonCode" to "reason"
-    if(objElement.id == "Encounter.reasonCode")  {
-      objElement.id = "Encounter.reason";
-      objElement.path = "Encounter.reason";
-    }; // reasonCode
+    if(objElement.id.includes("Encounter.reasonCode"))  {
+      objElement.id = objElement.id.replace("Encounter.reasonCode", "Encounter.reason");
+      objElement.path = objElement.id;
+  };
 
 
   }); //Element
@@ -250,10 +258,11 @@ function convertYhcrDocumentReferenceStructureDefinition(jsonObject) {
   jsonObject.differential.element.forEach(function(objElement) {
 
     // Convert "date" to "indexed"
-    if(objElement.id == "DocumentReference.date")  {
-        objElement.id = "DocumentReference.indexed";
-        objElement.path = "DocumentReference.indexed";
-    }; // basedOn
+    if(objElement.id.includes("DocumentReference.date"))  {
+      objElement.id = objElement.id.replace("DocumentReference.date", "DocumentReference.indexed");
+      objElement.path = objElement.id;
+  };
+
 
 
   }); //Element
@@ -270,21 +279,21 @@ function convertYhcrAppointmentStructureDefinition(jsonObject) {
   jsonObject.differential.element.forEach(function(objElement) {
 
     // Convert "reasonCode" to "reason"
-    if(objElement.id == "Appointment.reasonCode")  {
-        objElement.id = "Appointment.reason";
-        objElement.path = "Appointment.reason";
+    if(objElement.id.includes("Appointment.reasonCode"))  {
+        objElement.id = objElement.id.replace("Appointment.reasonCode", "Appointment.reason");
+        objElement.path = objElement.id;
     };
 
   // Convert "reasonReference" to "indication"
-    if(objElement.id == "Appointment.reasonReference")  {
-      objElement.id = "Appointment.indication";
-      objElement.path = "Appointment.indication";
+  if(objElement.id.includes("Appointment.reasonReference"))  {
+    objElement.id = objElement.id.replace("Appointment.reasonReference", "Appointment.indication");
+      objElement.path = objElement.id;
     };
   
     // Convert "basedOn" to "incomingReferral"
-    if(objElement.id == "Appointment.basedOn")  {
-      objElement.id = "Appointment.incomingReferral";
-      objElement.path = "Appointment.incomingReferral";
+    if(objElement.id.includes("Appointment.basedOn"))  {
+      objElement.id = objElement.id.replace("Appointment.basedOn", "Appointment.incomingReferral");
+      objElement.path = objElement.id;
     };
       
 
@@ -305,17 +314,17 @@ function convertYhcrConditionStructureDefinition(jsonObject) {
   jsonObject.differential.element.forEach(function(objElement) {
 
     // Convert "encounter" to "context"
-    if(objElement.id == "Condition.encounter")  {
-        objElement.id = "Condition.context";
-        objElement.path = "Condition.context";
+    if(objElement.id.includes("Condition.encounter"))  {
+      objElement.id = objElement.id.replace("Condition.encounter", "Condition.context");
+      objElement.path = objElement.id;
     };
+      
 
-  // Convert "recordedDate" to "assertedDate"
-    if(objElement.id == "Condition.recordedDate")  {
-      objElement.id = "Condition.assertedDate";
-      objElement.path = "Condition.assertedDate";
-    };
-       
+  // Convert "recordedDate" to "assertedDate"      
+  if(objElement.id.includes("Condition.recordedDate"))  {
+    objElement.id = objElement.id.replace("Condition.recordedDate", "Condition.assertedDate");
+    objElement.path = objElement.id;
+  };
 
 
   }); //Element
@@ -331,12 +340,13 @@ function convertYhcrProcedureStructureDefinition(jsonObject) {
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
 
-    // Convert "encounter" to "context"
-    if(objElement.id == "Procedure.encounter")  {
-        objElement.id = "Procedure.context";
-        objElement.path = "Procedure.context";
-    };
 
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Procedure.encounter"))  {
+      objElement.id = objElement.id.replace("Procedure.encounter", "Procedure.context");
+      objElement.path = objElement.id;
+    };     
+    
 
   }); //Element
 

@@ -34,22 +34,8 @@ Description: "YHCR Appointment resource profile."
 // This is a business identifier for the Appointment.
 // The value for a local identifier must be populated and contain the internal id for this Appointment on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* identifier ^slicing.discriminator.type = #value
-* identifier ^slicing.discriminator.path = "system"
-* identifier ^slicing.ordered = false
-* identifier ^slicing.rules = #open
-* identifier contains
-    localIdentifier 0..1 MS
-
-* identifier[localIdentifier].system 1..1 MS
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-appointment-identifier" (exactly)
-* identifier[localIdentifier].value 1..1
-* identifier[localIdentifier].value ^short = "The Local Appointment Identifier"
-// Period assumed to match that of the Appointment
-* identifier[localIdentifier].period 0..0
-
-
-
+* insert Ruleset-AddLocalIdentifier(appointment)
+ 
 // Status: already mandatory in FHIR
 * status MS
 
@@ -65,6 +51,7 @@ Description: "YHCR Appointment resource profile."
 //    Tighten up to use the FHIR list (is this OK?)
 * serviceType 1..* MS
 * serviceType from http://hl7.org/fhir/ValueSet/service-type (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(serviceType)
 
 // Specialty: leave optional. Further describes the type of service / person so useful if known, 
 // although the list seems very acute-focused. Overall, confusing between this and Service Category.
@@ -72,17 +59,21 @@ Description: "YHCR Appointment resource profile."
 // Appointment Type: MS and tighten the list. A simple list of “Routine”, “Emergency”, etc
 * appointmentType MS
 * appointmentType from http://hl7.org/fhir/ValueSet/v2-0276 (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(appointmentType)
+
 
 // Reason: MS The reason for making the appointment – ie a list of SNOMED codes for various medical problems.
 // Does not look very “social care” friendly – an extended or alternative list may be needed if we decide that appointments are relevant to social care?
 // NB "reasonCode" (R4) -> "reason" (STU3)
 * reasonCode MS
 * reasonCode from http://hl7.org/fhir/ValueSet/encounter-reason (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 // Indication: A reference to further detail about either the Condition or Procedure which is the reason for the appointment
 //  May not always be available, but should be populated if these resources are supported and relevant
 // NB "reasonReference" (R4) -> "indication" (STU3)
 * reasonReference MS
+* insert Ruleset-ReferenceWithAtLeastDisplay(reasonReference)
 
 // Priority - discouraged
 * priority ^short = "DISCOURAGED - More applicable to internal scheduling"
@@ -118,6 +109,7 @@ Description: "YHCR Appointment resource profile."
 // Useful to provide if relevant and available
 // NB "basedOn" (R4) -> "incomingReferral" (STU3)
 * basedOn MS
+* insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
 
 // RequestedPeriod: Discouraged
 * requestedPeriod ^short = "DISCOURAGED - Relevant to a scheduling system, but less so to a regional shared record"
@@ -136,6 +128,8 @@ Description: "YHCR Appointment resource profile."
 // To the normal valueset extend with the standard codes for SBJ (subject) and LOC (location)
 * participant.type 1..1 MS
 * participant.type from Yhcr-AppointmentParticipationType-1 (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(participant.type)
+
 // We also need an actor, and FHIR insists on a status. Leave the other bits optional ("required", "period") 
 * participant.actor 1..1 MS
 * participant.status MS
@@ -155,15 +149,17 @@ Description: "YHCR Appointment resource profile."
 * participant[subject].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" (exactly)
 * participant[subject].actor 1..1 MS
 * participant[subject].actor only Reference(Patient)
+* insert Ruleset-ReferencePatient(participant[subject].actor)
 
 * participant[location].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" (exactly)
 * participant[location].actor 1..1 MS
 * participant[location].actor only Reference(Location)
+* insert Ruleset-ReferenceInternalLocation(participant[location].actor)
 
 * participant[primaryPerformer].type =  http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer" (exactly)
 * participant[primaryPerformer].actor 1..1 MS
 * participant[primaryPerformer].actor only Reference(Practitioner)
-
+* insert Ruleset-ReferenceInternalPractitioner(participant[primaryPerformer].actor)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -133,6 +133,7 @@ Description: "YHCR Patient resource profile."
 // Whilst it is difficult to mandate any of this due to varying circumstances, indicate Must Support the key details
 * contact MS
 * contact.relationship MS
+* insert Ruleset-CodingWithSystemCodeDisplay(contact.relationship)
 * contact.name MS
 * contact.telecom MS
 * contact.name.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
