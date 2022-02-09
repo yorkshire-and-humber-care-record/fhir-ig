@@ -34,10 +34,10 @@ Description: "YHCR Encounter resource profile."
 
 // Class: Make mandatory, MS, and tighten the coding.
 //      This is an essential field to categorise the encounter (eg emergency, inpatient, ambulatory, etc)
-//      (Use our own list in case we want to add to it - including to allow VisitGrouping)
+//      (Use our own list in case we want to add to it - including to allow Encounter Grouping)
 //      However Class History we do not want.
 //      Each encounter should be of exactly one class. If the class changes then this is modelled as a separate encounter
-* class 1..1 MS
+* class 1..1 MS //(R4 is already 1..1, so need to hack this in via script)
 //* class from http://hl7.org/fhir/ValueSet/v3-ActEncounterCode (required)
 * class from Yhcr-EncounterClass-1 (required)
 * insert Ruleset-RawCodingWithSystemCodeDisplay(class)
@@ -102,8 +102,9 @@ Description: "YHCR Encounter resource profile."
 // In some systems it is used to indicate exactly how long a patient was in the consulting room (eg for billing), but this is not relevant here.
 * length ^short = "DISCOURAGED: This duplicates information that is already available via the Period"
 
-// Reason: Leave it alone as optional for now
-// *** More consultation needed. Potentially a simplified code-list might be used ***
+// Reason: MS
+//   Capture the reason for the encounter (see documentation notes on code lists)
+* reasonCode MS  //R4 reasonCode -> STU3 reason
 
 // Diagnosis: Is Must Support, and if provided we want references only to a Condition, with role and ranking
 * diagnosis MS
@@ -127,11 +128,8 @@ Description: "YHCR Encounter resource profile."
 // Account: Excluded - we are not concerned with billing information
 * account 0..0
 
-// Hospitalization: MS as this is important information that must be included somewhere
-//   It could either be here (for a totally self-contained encounter)
-//   OR at the top level VisitGrouping
-* hospitalization MS
-* insert HospitalizationRuleset
+// Hospitalization: Excluded from here. Instead it must be put in the overarching EncounterGrouping
+* hospitalization 0..0
 
 // Location: Mandatory.
 //   The location provides essential information about where the encounter took place. 
@@ -149,8 +147,10 @@ Description: "YHCR Encounter resource profile."
 //  This is covered via the provenance tags
 * serviceProvider ^short = "DISCOURAGED: This is instead covered via the provenance tags"
 
-// PartOf: Optional. Generally it is a flat structure, EXCEPT for pointing specifically at a VisitGrouping encounter
-* partOf only Reference(Yhcr-Encounter-VisitGrouping)
+// PartOf: Mandatory - based on decision to always put the hospitalization in separate EncounterGrouping.
+// Generally it is a flat structure, EXCEPT for pointing specifically at an Encounter Grouping
+* partOf 1..1 MS
+* partOf only Reference(Yhcr-EncounterGrouping)
 * insert Ruleset-ReferenceWithDisplayAndReference(partOf)
 
 
@@ -158,78 +158,12 @@ Description: "YHCR Encounter resource profile."
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// Hospitalization Ruleset
-////////////////////////////////////////////////////////////////////////////////////////
-RuleSet: HospitalizationRuleset
-
-// PreAdmissionIdentifier: Leave as optional (TODO confirm exactly what it is for)
-
-// Extensions - these seem useful, make MS
-* hospitalization.extension[Extension-CareConnect-AdmissionMethod-1] MS
-* hospitalization.extension[Extension-CareConnect-DischargeMethod-1] MS
-
-// Origin: Useful to provide if possible, especially if transfered from another institution
-* hospitalization.origin ^short = "The location from which the patient came before admission. Useful to provide if possible, in particular to reference a 'site' if transfered from another institution."
-* insert Ruleset-ReferenceExternalLocation(hospitalization.origin)
-
-// AdmitSource: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
-//   (Also tighten the code list)
-* hospitalization.admitSource MS
-* hospitalization.admitSource from CareConnect-SourceOfAdmission-1 (required)
-* insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.admitSource)
-
-// Readmission: Optional.
-//      If it is known to be a readmission then the field can be included and populated with the single code value of “R” for “Readmission”
-
-// Diet Preferences and others: Discouraged. This information would be relevant for a hospital EPR (to inform management of the patient’s stay), but adds unnecessary complexity to the Hospitalisation linkage for a regional shared record. 
-//     (If needed then could be captured other ways eg via flags, observations, care plan, etc)
-* hospitalization.dietPreference ^short = "DISCOURAGED: Relevant for managing the patient's stay, but less so for regional sharing"
-* hospitalization.specialCourtesy ^short = "DISCOURAGED: Relevant for managing the patient's stay, but less so for regional sharing"
-* hospitalization.specialArrangement ^short = "DISCOURAGED: Relevant for managing the patient's stay, but less so for regional sharing"
-
-// Destination: Important to provide if known, especially if transfered to another institution, but also to support discharge planning
-* hospitalization.destination MS
-* hospitalization.destination ^short = "Location to which the patient is discharged. Important to provide if known to support discharge planning, and/or to reference a 'site' if transfered to another institution."
-* insert Ruleset-ReferenceExternalLocation(hospitalization.destination)
-
-// Discharge Disposition: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
-//   (Also tighten the code list)
-* hospitalization.dischargeDisposition MS
-* hospitalization.dischargeDisposition from CareConnect-DischargeDestination-1 (required)
-* insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.dischargeDisposition)
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrEncounterSelfContainedExample
+Instance: YhcrEncounterExample
 InstanceOf: YhcrEncounter
-Description: "YHCR Encounter example - self-contained"
-
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Encounter"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
-* meta.versionId = "YhcrEncounterExample-v1.0.0"
-
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-// (Period.start - Period.end : Class description: Type description)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
-
-
-* contained[0] = YhcrLocationHouseDischargeExample
-
-* insert EncounterMainFieldsExampleRuleset
-* insert EncounterHospitalizationExampleRuleset
-
-///////////////////////////////////////////////////////////////////
-
-Instance: YhcrEncounterWithVisitGroupingExample
-InstanceOf: YhcrEncounter
-Description: "YHCR Encounter example - with Visit Grouping"
+Description: "YHCR Encounter example"
 
 //(Note - important to put our profile first, or else the website won't recognise it!)
 * meta.lastUpdated = "2022-02-01T09:37:00Z"
@@ -242,14 +176,6 @@ Description: "YHCR Encounter example - with Visit Grouping"
 // (Period.start - Period.end : Class description: Type description)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
-
-* insert EncounterMainFieldsExampleRuleset
-* partOf = Reference(YhcrEncounterVisitGroupingExample)
-* partOf.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of Encounters that comprise a visit"
-
-
-//////////////////////////////////////////////////////////////////////////////////
-RuleSet: EncounterMainFieldsExampleRuleset
 
 
 * identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier"
@@ -323,50 +249,8 @@ RuleSet: EncounterMainFieldsExampleRuleset
 * location[1].period.end = "2022-01-11T14:30:00Z"
 
 
-
-/////////////////////////////////////////////////////////////////////////////////
-
-RuleSet: EncounterHospitalizationExampleRuleset
-
-* hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#11 "Waiting list"
-* hospitalization.extension[Extension-CareConnect-DischargeMethod-1].valueCodeableConcept =  CareConnect-DischargeMethod-1#1 "Patient discharged on clinical advice or with clinical consent"
-
-* hospitalization.origin = Reference(YhcrLocationHouseDischargeExample)
-* hospitalization.origin.display = "42 Grove Street, LS21 1PF"
-* hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
-
-* hospitalization.destination = Reference(YhcrLocationSocialCareDeptExample)
-* hospitalization.destination.display = "Leeds Social Services: Adult Services Department"
-* hospitalization.dischargeDisposition = CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation i.e. where care is provided"
-
-
-/////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationHouseDischargeExample
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - House for discharge"
-Usage: #inline
-
-
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
-
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-// (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
+* partOf = Reference(YhcrEncounterGroupingExample)
+* partOf.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of related Encounters"
 
 
 
-* status = http://hl7.org/fhir/location-status#active "Active"
-* name = "42 Grove Street, LS21 1PF"
-
-* mode = http://hl7.org/fhir/location-mode#instance "Instance"
-* type.coding = http://hl7.org/fhir/v3/RoleCode#PTRES "Patient's Residence"
-* physicalType.coding = http://hl7.org/fhir/location-physical-type#ho "House"
-
-* address[0].line[0] = "42 Grove Street"
-* address[0].line[1] = "Northville"
-* address[0].city = "Overtown"
-* address[0].district = "West Yorkshire"
-* address[0].postalCode = "LS21 1PF"

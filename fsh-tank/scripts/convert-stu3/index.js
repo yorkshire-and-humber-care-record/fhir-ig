@@ -50,7 +50,7 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "StructureDefinition") {
               jsonObject = convertStructureDefinition(jsonObject);
 
-              if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-Encounter-VisitGrouping") {
+              if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-EncounterGrouping") {
                 jsonObject = convertYhcrEncounterStructureDefinition(jsonObject);
               }
 
@@ -209,6 +209,12 @@ function convertYhcrEncounterStructureDefinition(jsonObject) {
       objElement.path = objElement.id;
     };
       
+
+    // Make class mandatory. (It already is in R4, so not considered a "differential" otherwise!)
+    if(objElement.id == "Encounter.class")  {
+      objElement.min = 1;
+    } // Encounter.diagnosis
+    
 
     // Convert "diagnosis.use" to "diagnosis.role"
     if(objElement.id == "Encounter.diagnosis")  {

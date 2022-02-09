@@ -36,17 +36,18 @@ This is driven by the practical needs of Data Consumers, who need to be able to 
 
 Despite this, the concept of a "visit" or "hospitalisation" is widely recognised and agreed to be useful. For example an initial Emergency Encounter progresses into an Inpatient Encounter.
 
-***A single level of heirarchy is therefore supported, based on the use of special type of "Visit Grouping" Encounter which links together underlying Encounters which comprise part of the same "visit" or "stay". A separate [Visit Grouping Encounter profile](StructureDefinition-Yhcr-Encounter-VisitGrouping.html) is provided to support this.***
+A two-level heirarchy is therefore defined, based on the use of special type of Grouping Encounter which holds the "hospitalization" information about admission and discharge, and links together underlying Encounters which comprise part of the same "visit" or "stay". A separate [Encounter Grouping profile](StructureDefinition-Yhcr-EncounterGrouping.html) is provided to support this.
 
-Use of this grouping structure is optional, but encouraged where applicable.
- - If grouping is used, then the "hospitalization" information about admission and discharge should be held at the grouping level
- - If grouping is not used, then each encounter should be stand-alone and contain any relevant "hospitalization" information (even if this leads to some duplication)
+***Use of this two-level Encounter Grouping heirarchy is mandated for consistency in all cases.***  
+
+This also caters for the scenario where an Encounter is initially thought to be standalone, but later develops into a set of related Encounters. With the grouping structure already in place, it becomes straightforward to add additional Encounters as-and-if they occur.
+
 
 
 ### **Relationship to Episode of Care**
 In the ideal world there would be further level of grouping - one that goes beyond modelling a visit to a single organisation, and links together a whole cross-care-setting pathway. This would involve multiple visits to different organisations, and would be represented by the Episode of Care. In the short term at least, however, this is seen as aspirational. Currently there is no obvious mechanism to identify and link encounters across organisational boundaries. 
 
-The diagram below summarises the above discussion - ie core Encounters, single Visit Grouping Encounter, and aspiriational Episode of Care.
+The diagram below summarises the above discussion - ie core Encounters, single Grouping Encounter, and aspiriational Episode of Care.
 
 
 <img src=".\EncounterStructure.png" alt="Encounter Structure" style="clear:both; float:none">
@@ -80,7 +81,7 @@ A significant set of mandatory fields are defined in order to properly describe 
 
 1. **Status** - this is already mandatory in FHIR. As noted above the use of "planned" is discouraged - use Appointment instead for this.
 2. **Status History** - this is seen as important - to understand the timeline of the Encounter. (If there is only a single status then simply replicate it here, so it should always be possible to populate). 
-3. **Class** - this provides a basic categorisation, ie Emergency, Inpatient, Ambulatory. Should always be known, and vital for meaningful display purposes. We have defined a custom code list which, for now, simply replicates the standard list provided by Care Connect. However it enables the possiblity of extending the list to cover a wider range of care settings if this is found to be necessary (please get in touch).
+3. **Class** - this provides a basic categorisation, ie Emergency, Inpatient, Ambulatory. Should always be known, and vital for meaningful display purposes. We have defined a custom code list which, for now, simply replicates the standard list provided by Care Connect and adds a code to identify an "Encounter Grouping". However it also enables the possiblity of extending the list to cover a wider range of care settings if this is found to be necessary (please get in touch).
 4. **Type** -  fundamental information based on several sets of SNOMED codes which describes the type of clinic or setting where the encounter occurred.
 5. **Subject** - every encounter must be linked to a Patient (not a Group)
 6. **Participant** - it is required to include EXACTLY ONE practitioner who has the "type" of "Primary Performer". This should be the main person responsible - someone who it would be useful to contact if further information is desired. (If this person changed during the course of the encounter then please pick just ONE to finally hold this key role, and demote the others to "participant")
@@ -93,6 +94,8 @@ A significant set of mandatory fields are defined in order to properly describe 
 
 7. **Location** - the location provides essential information about where the encounter took place. The intent is to provide information down to the “ward” level. It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
 
+8. **Part of** - as described above this must be used to point to an overarching "EncounterGrouping" Encounter. No other complex structures or nesting are permitted.
+
 
 ### **Must Support fields**
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known. These largely relate to providing additional "clinical" detail about the Encounter - including links to related FHIR Resources such as the originating Appointment, the Condition, etc. These build up the rich dataset around an Encounter and are important to provide, but may not yet be available for an initial Encounter implementation.
@@ -101,15 +104,14 @@ In addition the following fields are "Must Support" - ie they must be populated 
 2. **Priority**: This provides useful information about whether it was emergency, routine, elective, etc
 3. **Appointment**: Link to the originating Appointment, if relevant
 4. **Incoming Referral**: Link to the originating Referral, if relevant
-5. **Reason**: A long list of SNOMED codes to describe different types of problems which may have led to the Encounter. (TODO - confirm if this is a good list? the right level of detail? covering relevant care settings? Also may not be needed if extensive information already in the Appointment or Referral?)
+5. **Reason**: A long list of SNOMED codes to describe different reasons which may have led to the Encounter. (Note that this may duplicate to some extent information provided in a linked Appointment and/or Referral, but is seen as useful to pull through onto the Encounter itself also).
 6. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
-7. **Hospitalization**: As discussed above, this must be provided either here (self contained) or in a linked "VisitGrouping" Encounter. The Hospitalization structure contains multiple fields - see below for further detail.
 
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
  - **Care Connect Extensions** - these cover Encounter Transport, Outcome of Attendance, and Emergency Care Discharge Status. May be useful if relevant and known
- - **Part of** - as described above this may optionally be used to point to an overarching "VisitGrouping" Encounter. No other complex structures or nesting are permitted.
+
 
 
 ### **Discouraged or Removed fields**
@@ -117,34 +119,8 @@ Other fields are optional and may be populated if known - on the understanding t
   - **Length** - the period is already provided, so this appears to be duplication. In other countries then the exact length might be important for billing purposes, but this is not relevant here.
   - **Account** - for billing purposes, not relevant.   
   - **Service Provider** - duplicates information already available in the provenance tags
+- **Hospitalization**: As discussed above, this must be provided instead as part of a linked "Encounter Grouping". 
 
-
-
-### **Hospitalization Structure**
-Within the Encounter sits the "Hospitalization" structure. This must be provided either here (self-contained), or in an overarching "Visit Grouping" Encounter. This structure provides information about the admission and discharge. Therefore it is particularly important for a regional shared record - as this defines the touchpoints with other care providers.
-
-Fields in the Hospitalization structure are as follows:
-
- - **Must Support**
-   - **Admission Method** - this CareConnect extension provides a useful list of codes about the method of admission (eg Planned, A&E, transfer, etc)
-   - **Discharge Method** - this CareConnect extension provides a useful list of codes about the method of discharge (eg clinical discharge, self-discharge, deceased, etc)
-   - **Origin** - Information about the location which the patient arrived from (if relevant / known)
-      - Required at the “site” level if arriving from another institution
-      - Optional if arriving from a residential address
-   - **Admit Source** - Useful information about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
-   - **Destination** - Information about the location which the patient is discharged to (if relevant / known)
-      - Required at the “site” level if discharged to another institution
-      - Optional if discharged to a residential address
-   - **Discharge Disposition** - Useful information about the type of place the patient has been discharged to (eg home, other NHS hospital, care home, etc))
-
-    *Note that Origin and Destination are likely to be external locations - please refer to guidance on the [Location profile](StructureDefinition-Yhcr-Location.html) about use of References. For example the use of a Contained Resource may be appropriate.*
-
-
- - **Optional**
-   - **Readmission** - flag may be provided if known and relevant
-
- - **Discouraged**
-   - **Diet Preferences, Special Courtesy, Special Arrangement** - additional details that are relevant internally for planning the patient's stay, but not so relevant for external sharing.
 
 
 ### **Summary Text**

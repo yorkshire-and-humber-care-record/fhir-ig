@@ -20,4 +20,4 @@ Description: "Additional Encounter Class codes"
 * ^name = "YhcrEncounterClass"
 * ^content = #complete
 
-* #VISITGROUPING "Grouping of Encounters that comprise a visit"
+* #ENCOUNTERGROUPING "Grouping of related Encounters"
