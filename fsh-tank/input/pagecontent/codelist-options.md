@@ -151,7 +151,7 @@ This is the same field and same considerations as Encounter Reason.
   > ***Proposed to pre-adopt the UK Core mandated approach, incorporating additional reference sets for Social Care. This is also well-aligned with PRSB***
 
 
-## Procedure Follow Up
+## **Procedure Follow Up**
 
 This could be especially relevant for Community and Social Care, to understand if there are any follow-up actions once a patient leaves the initial care setting
  - All of the FHIR-based standards use the same "example" FHIR list of 10 SNOMED codes. This is not a great list, and is very surgery focused
@@ -159,7 +159,7 @@ This could be especially relevant for Community and Social Care, to understand i
 
   > ***Proposed to tentatively adopt the FHIR example list, acknowledging that although not great it appears to be the only option. Remain open to potential extension or replacement in future***
 
-## Organisation Type
+## **Organisation Type**
 
  - All of the FHIR-based standards use the same "example" list of approx 10 organisation types including "insurance company" etc - it is not a very useful list
  - PRSB does not really have this concept
@@ -170,7 +170,7 @@ This could be especially relevant for Community and Social Care, to understand i
   > ***Tentatively adopt the list rekeyed from the ODS website, subject to a better list being advised***
 
 
-## Location Type
+## **Location Type**
 
  - All of the FHIR-based standards mandate the same "extensible" list of location types. It is an OK list, although with some inconsistencies and variation in detail (eg several options for a hospital, and a lot more detail about acute care clinics than anything else).
  - PRSB uses the NHSDD "Activity Location Type Code". This is at first-glance a much clearer and more holistic list - although perhaps lacking in detail for locations below the "site" level
@@ -178,7 +178,7 @@ This could be especially relevant for Community and Social Care, to understand i
   > ***Given that the FHIR list is mandated then there is not much choice. Remain open to requests for extending with additional values***
 
 
-## DocumentReference Class
+## **DocumentReference Class**
 
  - All of the FHIR-based standards use the same "example" list, based on a short set of high-level LOINC codes. It looks a reasonable list.
  - PRSB has a single concept called "class" that probably straddles both FHIR Class and Type. Only "Free Text" is specificed. (Although see also notes below about Document Reference Type)
@@ -187,7 +187,7 @@ This could be especially relevant for Community and Social Care, to understand i
 
 
 
-## DocumentReference Type
+## **DocumentReference Type**
 
  - FHIR STU3 and R4 use the same "prefered" list, based on a long list of LOINC codes. Much of the list consists of very detailed specification of various diagnostic report documents, but there are also some more general entries included too.
  - CareConnect replaces this with SNOMED refset **999000391000000109: Correspondence document type simple reference**. However... this does not appear to have any members?
