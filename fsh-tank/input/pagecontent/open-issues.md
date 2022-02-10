@@ -79,7 +79,7 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
 ## **Procedure**
 
- - **Condition and Code** - FHIR provides example lists for both of these, need feedback on whether they are appropriate and achievable. 
+ - **Category and Code** - FHIR provides example lists for both of these, need feedback on whether they are appropriate and achievable. 
 
   - **Follow Up codes** - FHIR provides an example list, but it is quite short - need feedback on whether they are appropriate, (or sources of alternatives). 
  
