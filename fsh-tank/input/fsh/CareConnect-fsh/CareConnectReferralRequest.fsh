@@ -1,11 +1,8 @@
 Profile: CareConnectReferralRequest1
 
-////TODO - when CarePlan ready
-
-
 // !!!!NB!!!
 // Referral Request does not exist in R4!
-// Substitute for ServiceRequest, which replaces it.
+// Substitute by basing this on ServiceRequest, which replaces it.
 // (It is 90% similar, and although there are some significant changes it is close enough for what we need here)
 // This is just for us to compile our profiles against. Before publishing this is all swapped back to the "real" STU3 definitions
 Parent: ServiceRequest
@@ -33,7 +30,7 @@ Description: "Used to record and send details about a request for referral servi
 * identifier.system 1..
 * identifier.value 1..
 * identifier.assigner only Reference(CareConnect-Organization-1)
-///////////////TODO* basedOn only Reference(CareConnect-CarePlan-1 or CareConnect-ProcedureRequest-1 or CareConnect-ReferralRequest-1)
+* basedOn only Reference(CareConnect-CarePlan-1 or CareConnect-ProcedureRequest-1 or CareConnect-ReferralRequest-1)
 * replaces only Reference(CareConnect-ReferralRequest-1)
 
 // Renamed to "requisition" in R4

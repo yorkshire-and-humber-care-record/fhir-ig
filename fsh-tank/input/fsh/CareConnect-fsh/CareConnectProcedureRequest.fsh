@@ -2,7 +2,7 @@ Profile: CareConnectProcedureRequest1
 
 // !!!!NB!!!
 // Procedure Request does not exist in R4!
-// Substitute for ServiceRequest, which replaces it.
+// Substitute by basing this on ServiceRequest, which replaces it.
 // (It is 90% similar, and although there are some significant changes it is close enough for what we need here)
 // This is just for us to compile our profiles against. Before publishing this is all swapped back to the "real" STU3 definitions
 
