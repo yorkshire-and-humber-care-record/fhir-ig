@@ -129,7 +129,7 @@ Description: "YHCR Document Reference example"
 // And then we have the "context" structure with numerous fields:
 //  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
 
-* context.encounter = Reference(YhcrEncounterSelfContainedExample)
+* context.encounter = Reference(YhcrEncounterExample)
 * context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
 
 // And finally the actual content. This and the attachment are already mandatory in FHIR, and we also need the content type

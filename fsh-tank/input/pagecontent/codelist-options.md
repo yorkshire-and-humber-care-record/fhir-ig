@@ -75,8 +75,8 @@ This is an important field that covers what everyone really wants to know about 
 This provides information about the purpose of the Encounter. (There are some subtleties here - eg the reason is why you came, the Service Type is the clinic you want to, and the diagnosis is what was learned).
 
  - FHIR STU3 and CareConnect both suggest a "preferred" list based on two SNOMED refsets:
-  - **404684003: Clinical Finding** - this is a huge heirarchy of every imaginable kind of medical problem
-  - **71388002: Procedure** - another huge heirarchy of every imaginable clinical procedure
+   - **404684003: Clinical Finding** - this is a huge heirarchy of every imaginable kind of medical problem
+   - **71388002: Procedure** - another huge heirarchy of every imaginable clinical procedure
   (The two together offer over 100,000 codes)
 
  - FHIR R4 and UK Core build upon this by adding two additional SNOMED refsets to this list. This is significant because they broaden the coverage to emergency and social care scenarios:

@@ -141,7 +141,7 @@ Description: "YHCR Condition example"
 * subject = Reference(YhcrPatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
-* encounter = Reference(YhcrEncounterSelfContainedExample) // R4 encounter -> STU3 context
+* encounter = Reference(YhcrEncounterExample) // R4 encounter -> STU3 context
 * encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * onsetDateTime = "2020-04-01T00:00:00Z"   
