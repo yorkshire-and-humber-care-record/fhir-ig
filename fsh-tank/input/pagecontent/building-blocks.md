@@ -96,7 +96,7 @@ For example, an Encounter can also reference the Location where a patient is dis
  - **identifier**
    - Should be populated with the National identifier for Organisations and Practitioners. Thus providing quick identification without  having to follow the reference and retrieve the whole resource, as well as providing a way to search for the regionally downloaded national master data.
     - May be populated with other identifiers, if a use-case suggests this to be a useful optimisation
-     - MUST always include a "system" for the identifier, so that it can be categorised and uniquely distinguished
+    - MUST always include a "system" for the identifier, so that it can be categorised and uniquely distinguished
 
  - **display**
    - Should ALWAYS be populated with a short summary description of the referenced resource
@@ -108,9 +108,27 @@ For example, an Encounter can also reference the Location where a patient is dis
       - Or if the Data Provider has not yet implemented the target Resource Type
     - Despite the above, this "display" text should NOT be totally relied on by Data Consumers
       - They must be robust and able to cope with Data Providers who are less mature and unable to populate "display" text
-       - Depending on use-case the fallback option will be EITHER to indicate there is a link with no further information about what it might contain OR to automatically pre-follow the link and retrieve further information to generate a summary for display
+      - Depending on use-case the fallback option will be EITHER to indicate there is a link with no further information about what it might contain OR to automatically pre-follow the link and retrieve further information to generate a summary for display
 
 
 
+## **Local Identifiers**
 
+FHIR offers the "id" field, to contain a unique identifier for each resource (often a guid). 
 
+However most FHIR Resources also offer an "identifier" field to capture a more meaningful and/or business-related identifier. 
+
+In some cases there is an obvious recognised identifier to use, for example:
+ - NHS Number for patients
+ - ODS Code for organisations
+
+However in many cases there is no such widely recognised identifier. Still, it can be useful to provide a local identifier - that helps to identify the item and may, for example, be useful to quote in enquiries and correspondence.
+
+The pattern for this is established by Care Connect, which has chosen to use a single code system to denote a local identifier for a particular type of resource from ANY source. For example on the patient ***https://fhir.nhs.uk/Id/local-patient-identifier***. This has the advantage of making local identifiers consistent to find, as well as enabling their use to be defined in a Profile via "slicing".
+
+Building on this approach we have defined similar code systems for other types of FHIR Resource.
+
+A downside of this approach is that the local identifiers from different sources may overlap. We therefore propose a simple mitigation, based on prefixing the identifier with the organisation's ODS code (with a period as separator)
+
+> Example:
+>  The organisation with ODS code "ABC" has an item with an identifier "12345". The local identifier to be used in FHIR Resources is therefore "**ABC.12345**"

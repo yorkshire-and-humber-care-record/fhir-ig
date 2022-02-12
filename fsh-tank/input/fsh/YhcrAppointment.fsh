@@ -105,10 +105,10 @@ Description: "YHCR Appointment resource profile."
 //  (Note: R4 has an extra field "patientInstruction", but "comment" has to cover this too in STU3)
 * comment ^short = "Additional comments. NB: It must be assumed that this comment will be widely viewed across the region, including by the patient themselves"
 
-// Incoming referral: A reference to the Referral which led to the appointment.
-// Useful to provide if relevant and available
+// Incoming referral: Optional
+// A reference to the Referral which led to the appointment. Useful to provide if relevant and available
+// Could have been MS, HOWEVER leave optional for now due to significant changes to ReferralRequest coming in R4
 // NB "basedOn" (R4) -> "incomingReferral" (STU3)
-* basedOn MS
 * insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
 
 // RequestedPeriod: Discouraged
@@ -202,8 +202,8 @@ Description: "YHCR Appointment example"
 
 * comment = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
-// TODO - add this to the example later when we have created some referrals
-* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+// For now take this out, as referral downgraded to optional (due to R4 changes)
+//* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
 * participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
 * participant[0].actor = Reference(YhcrPatientExample-MustSupport) 

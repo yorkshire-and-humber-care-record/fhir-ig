@@ -46,7 +46,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
     - *See also the Practitioner and Location resources for further advice on approaches to populating references*
 
 
-8. **Reason, Indication, and Incoming Referral** - these all provide valuable additional "clinical" background to the appointment. Noting that they include references to other FHIR resources (Contition, Procedure, Referral) which can obviously only be populated once actually implemented.
+8. **Reason and Indication** - these provide valuable additional "clinical" background to the appointment. Noting that they include references to other FHIR resources (Condition, Procedure) which can obviously only be populated once actually implemented.
 
 9. **Delivery Channel (Care Connect Extension)** - simple and useful field to indicate whether in-person, telephone, or video
 
@@ -62,6 +62,8 @@ Other fields are optional and may be populated if known - on the understanding t
    *(Note that FHIR R4 introduces an additional field "patientInstruction" for this purpose)*
 
  - **Additional Participants** - other participant type codes in the list may optionally be used to reference other FHIR Resource types ie RelatedPerson, Device, Healthcare Service. However it must not be assumed that a data consumer will necessarily have the ability to display anything more than the provided “display” text on the reference about these.
+
+ - **Incoming Referral**: Link to the originating Referral, if relevant and implemented. This could be very useful information. However FHIR makes significant changes from the STU3 "ReferralRequest" to the R4 "ServiceRequest", and so we are reluctant to mandate implementation at this stage
 
 
 ### **Discouraged or Removed fields**

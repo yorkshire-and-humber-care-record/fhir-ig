@@ -103,13 +103,13 @@ In addition the following fields are "Must Support" - ie they must be populated 
 1. **Identifier** - a Local Id should be provided, such that could be quoted if manually getting in touch to find out more
 2. **Priority**: This provides useful information about whether it was emergency, routine, elective, etc
 3. **Appointment**: Link to the originating Appointment, if relevant
-4. **Incoming Referral**: Link to the originating Referral, if relevant
-5. **Reason**: A long list of SNOMED codes to describe different reasons which may have led to the Encounter. (Note that this may duplicate to some extent information provided in a linked Appointment and/or Referral, but is seen as useful to pull through onto the Encounter itself also).
-6. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
+4. **Reason**: A long list of SNOMED codes to describe different reasons which may have led to the Encounter. (Note that this may duplicate to some extent information provided in a linked Appointment and/or Referral, but is seen as useful to pull through onto the Encounter itself also).
+5. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
 
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
+ - **Incoming Referral**: Link to the originating Referral, if relevant and implemented. This could be very useful information. However FHIR makes significant changes from the STU3 "ReferralRequest" to the R4 "ServiceRequest", and so we are reluctant to mandate implementation at this stage
  - **Care Connect Extensions** - these cover Encounter Transport, Outcome of Attendance, and Emergency Care Discharge Status. May be useful if relevant and known
 
 

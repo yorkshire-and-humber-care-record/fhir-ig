@@ -68,11 +68,16 @@ Description: "YHCR Encounter resource profile."
 
 // Episode of Care: Leave as optional for now. (A potential part of wider structure, see wider discussion)
 
-// Incoming Referal and Appointment: MS. If these exist, and if the Data Provider is able to publish the resources, then this must link to it
-* basedOn MS   // R4 - STU3 has "incomingReferral"
-* insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
+// Appointment: MS. If these exist, and if the Data Provider is able to publish the resources, then this must link to it
 * appointment MS
 * insert Ruleset-ReferenceWithAtLeastDisplay(appointment)
+
+// Incoming referral: Optional
+// A reference to the Referral which led to the appointment. Useful to provide if relevant and available
+// Could have been MS, HOWEVER leave optional for now due to significant changes to ReferralRequest coming in R4
+// NB "basedOn" (R4) -> "incomingReferral" (STU3)
+* insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
+
 
 // Participant: We want exactly one "primary performer" who is the main contact responsible
 //   Where relevant an "admitter" and "discharger"
@@ -191,8 +196,11 @@ Description: "YHCR Encounter example"
 * subject = Reference(YhcrPatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
-// TODO - add fuller references once we have these resources
-* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+
+// For now take this out, as referral downgraded to optional (due to R4 changes)
+//* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+
+// TODO - add fuller references once we have an Appointment example
 * appointment = Reference(YhcrAppointmentExample)
 * appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 

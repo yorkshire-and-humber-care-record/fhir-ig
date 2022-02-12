@@ -44,7 +44,7 @@ This is relatively uncontroversial and basically refers to the "setting".
 
 
 ## **Encounter Type**
-This is a tricky field, as the FHIR definition is not all that clear. However it seems to be mostly about the "physical" mechanism / location of the encounter. (With some clues however about the type of service provided).
+This is a tricky field, as the FHIR definition is not all that clear. However it seems to be mostly about "where" the encounter took place.
  - FHIR provides a very sketchy "example" list with four random values
  - CareConnect and UK Core replace this with a much better list. This is still only an "example" in CareConnect, but is tightened to be mandated as "extensible" in UKCore. This list is based on the following SNOMED reference sets:
    - **185316007: Indirect Encounter** - this lists mechanisms such as email, video link, letter, etc

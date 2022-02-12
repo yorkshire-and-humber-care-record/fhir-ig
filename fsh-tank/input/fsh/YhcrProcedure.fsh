@@ -27,6 +27,7 @@ Description: "YHCR Procedure resource profile."
 // Based On: Leave optional
 //   Useful to describe the Care Plan, Referral or ProcedureRequest that led to this Procedure
 //   Again suspect this will may be available for early implementations. 
+//   Also there are significant changes to ReferralRequest and ProcedureRequest in R4
 //   Do we need to support all three options? Return to in future based on further consultation
 
 // Part Of: Leave optional

@@ -29,7 +29,7 @@ FHIR defines structures such as the Resource and DomainResource which provide a 
 
  - **meta.lastUpdated** (Mandatory)
 
-	This is important and useful information. (It is mandatory to include in all except Contained resources, where FHIR does not allow it)
+	This is important and useful information. (This is marked as "Must Support" but is mandatory to include in all except Contained resources, where FHIR does not allow it)
 
 
  - **meta.profile** (Must Support)
@@ -46,7 +46,7 @@ FHIR defines structures such as the Resource and DomainResource which provide a 
 
  - **meta.tag**	(Mandatory)
    
-   The following tags will be used. Both are mandatory and MUST include descriptive text that is a proper readable description and not simply a repeat of the code
+   The following tags will be used. Both are mandatory and MUST include descriptive text that is a proper readable description and not simply a repeat of the code. (This is marked as "Must Support" but is mandatory to include in all except Contained resources)
 
     - https://yhcr.nhs.uk/Source -  Data provider identifier as per the Participant Registry
     - https://yhcr.nhs.uk/Provenance - Originating organisation ODS code
