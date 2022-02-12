@@ -6,7 +6,7 @@ Id: Yhcr-DocumentReference
 Description: "YHCR DocumentReference resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 // Leave optional:
 // masterIdentifier (version specific, eg correlate with document system)
@@ -98,18 +98,10 @@ InstanceOf: YhcrDocumentReference
 Description: "YHCR Document Reference example"
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-DocumentReference"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-DocumentReference-1"
-* meta.versionId = "YhcrDocumentReferenceExample-v1.0.0"
+* insert Ruleset-ExampleMetaForHospital(DocumentReference)
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Date + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 : Discharge Letter"
-
-
 
 * status = http://hl7.org/fhir/document-reference-status#current "Current"
 * docStatus = http://hl7.org/fhir/composition-status#final "Final"

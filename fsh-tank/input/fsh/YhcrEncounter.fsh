@@ -6,7 +6,7 @@ Id: Yhcr-Encounter
 Description: "YHCR Encounter resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 // Extensions
 // - Encounter Transport:  (contains more detail of type, period, reason - as far as I can see free text?)
@@ -165,21 +165,12 @@ Instance: YhcrEncounterExample
 InstanceOf: YhcrEncounter
 Description: "YHCR Encounter example"
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Encounter"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
-* meta.versionId = "YhcrEncounterWithVisitGroupigExample-v1.0.0"
+* insert Ruleset-ExampleMetaForHospital(Encounter)
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Period.start - Period.end : Class description: Type description)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
-
-
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier"
-* identifier[localIdentifier].value = "ENC-456-XYZ"
+* insert Ruleset-ExampleLocalId(encounter, RCB.ENC-456-XYZ)
 
 * status = #finished
 * statusHistory[+].status = #in-progress 

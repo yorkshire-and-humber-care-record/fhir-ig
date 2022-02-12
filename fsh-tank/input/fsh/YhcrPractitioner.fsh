@@ -4,7 +4,7 @@ Id: Yhcr-Practitioner
 Description: "YHCR Practitioner resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 // Extension - NHS Communication
 // Leave alone as optional. 
@@ -86,29 +86,19 @@ Instance: YhcrPractitionerExample
 InstanceOf: YhcrPractitioner
 Description: "YHCR Practitioner example"
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Practitioner"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
-* meta.versionId = "YhcrPractitionerExample-v1.0.0"
+* insert Ruleset-ExampleMetaForHospital(Practitioner)
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (name.given + name.family)
 * extension[Extension-Yhcr-TextSummary].valueString = "Jane Bloggs"
 
-
-
 * identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
 * identifier[0].value = "ABC123"
-
 
 * active = true
 * name[0].given[0] = "Jane"
 * name[0].family = "Bloggs"
 * name[0].prefix = "Dr"
 * name[0].suffix = "RCOG"
-
 
 * telecom[0].system = #phone "Phone"
 * telecom[0].use = #work "Work"

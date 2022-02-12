@@ -5,7 +5,7 @@
 // This ruleset defines the use of base fields - ie from the Resource, Resource.meta, and DomainResource
 // It is intended to be inserted into all other YHCR profiles
 
-RuleSet: YhcrBaseFieldsRuleset
+RuleSet: Ruleset-YhcrBaseFields
 
 //////////////
 // Resource
@@ -37,12 +37,14 @@ RuleSet: YhcrBaseFieldsRuleset
 //   Mandatory - this is important and useful information
 //   HOWEVER can only mark as MS, because FHIR does not permit it to be populated in Contained resources
 * meta.lastUpdated MS
+* meta.lastUpdated ^short = "MANDATORY except in Contained Resources. When the resource version last changed."
 
 // Profile
 //   All resources must conform to a Profile and should state it here. Also note that it’s an array and multiple profiles can be specified (e.g. Care Connect AND Interweave)
 //   This MUST reference the relevant CareConnect profile (Resources not compliant with CareConnect will not be accepted)
 //   This should normally also reference an Interweave profile (such as this one) which further constraints CareConnect. 
 * meta.profile MS
+* meta.profile ^short = "Profiles this resource claims to conform to. Should list (i) this profile (ii) underlying CareConnect profile"
 
 // Security
 //  This field is not used and will not be honoured. 
@@ -54,23 +56,23 @@ RuleSet: YhcrBaseFieldsRuleset
 
 // Tags
 //  We require two tags to describe the source (system - Data Provider Id) and provenance (organisation - ODS Code) of the data
-
+//  (They are mandatory, but make MS so they can be omitted in Contained Resources)
 * meta.tag ^slicing.discriminator.type = #value
 * meta.tag ^slicing.discriminator.path = "system"
 * meta.tag ^slicing.ordered = false
 * meta.tag ^slicing.rules = #open
 * meta.tag contains
-    Source 1..1 MS and
-    Provenance 1..1 MS
+    Source 0..1 MS and
+    Provenance 0..1 MS
 
-* meta.tag[Source] ^short = "The Data Provider Id (and display text) of the system supplying the data"
+* meta.tag[Source] ^short = "MANDATORY except in Contained Resources. The Data Provider Id (and display text) of the system supplying the data"
 * meta.tag[Source].system =  "https://yhcr.nhs.uk/Source" (exactly)
 * meta.tag[Source].code 1..1 MS
 * meta.tag[Source].code ^short = "The Data Provider Id of the system supplying the data"
 * meta.tag[Source].display 1..1 MS
 * meta.tag[Source].display ^short = "Name of the system supplying the data"
 
-* meta.tag[Provenance] ^short = "The ODS Code (and display text) of the organisation responsible for the data"
+* meta.tag[Provenance] ^short = "MANDATORY except in Contained Resources. The ODS Code (and display text) of the organisation responsible for the data"
 * meta.tag[Provenance].system =  "https://yhcr.nhs.uk/Provenance" (exactly)
 * meta.tag[Provenance].code 1..1 MS
 * meta.tag[Provenance].code ^short = "The ODS Code of the organisation responsible for the data"
@@ -91,7 +93,7 @@ RuleSet: YhcrBaseFieldsRuleset
 ////////////////////
 
 // Useful to assist with creating references having useful display text. 
-// But only one approach to achieving this, so not mandatory
+// But this is only one approach to achieving this, so not mandatory
 //* extension contains Extension-Yhcr-TextSummary 0..1 //named textSummary 0..1
 //* extension[Extension-Yhcr-TextSummary] ^short = "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
 * extension contains Extension-Yhcr-TextSummary named textSummary 0..1
@@ -99,40 +101,29 @@ RuleSet: YhcrBaseFieldsRuleset
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Extension: ExtensionYhcrTextSummary
-Id: Extension-Yhcr-TextSummary
-Description: "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
-* ^status = #draft
-* ^url = "http://yhcr.org/StructureDefinition/Extension-Yhcr-TextSummary"
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Rulesets to help with Examples
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-* ^context[+].type = #element   // R3 is contextType = resource
-* ^context[=].expression = "Appointment" //R3 is just context
-* ^context[+].type = #element   
-* ^context[=].expression = "Encounter" 
-* ^context[+].type = #element   
-* ^context[=].expression = "DocumentReference" 
-* ^context[+].type = #element   
-* ^context[=].expression = "Location" 
-* ^context[+].type = #element   
-* ^context[=].expression = "Organization" 
-* ^context[+].type = #element   
-* ^context[=].expression = "Practitioner" 
-* ^context[+].type = #element   
-* ^context[=].expression = "Patient" 
-* ^context[+].type = #element   
-* ^context[=].expression = "Condition" 
-* ^context[+].type = #element   
-* ^context[=].expression = "Procedure" 
+RuleSet: Ruleset-ExampleMetaForHospital(type)
 
-* . ..1
-* . ^short = "A short summary string eg for display in References"
-* . ^definition = "A short summary string eg for display in References"
+//(Note - important to put our profile first, or else the website won't recognise it!)
+* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-{type}"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-{type}-1"
+* meta.versionId = "Yhcr{type}Example-v1.0.0"
 
-* valueString only string
-* valueString ^short = "A short summary string eg for display in References"
-* valueString ^definition = "A short summary string eg for display in References"
+* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+
+
+
+RuleSet: Ruleset-ExampleLocalId(type, localId)
+
+* identifier[0].system = "https://yhcr.org/Id/local-{type}-identifier"
+* identifier[0].value = "{localId}" 
+
 
 
 
@@ -152,7 +143,7 @@ RuleSet: Ruleset-AddLocalIdentifier(type)
 * identifier[localIdentifier].system 1..1 MS
 * identifier[localIdentifier].system = "https://yhcr.org/Id/local-{type}-identifier" (exactly)
 * identifier[localIdentifier].value 1..1 MS
-* identifier[localIdentifier].value ^short = "The Local {type} Identifier"
+* identifier[localIdentifier].value ^short = "The Local {type} Identifier. Please prefix with ODS code plus period (XXX.) to ensure unique"
 // Period assumed to match that of the entity
 * identifier[localIdentifier].period 0..0
 

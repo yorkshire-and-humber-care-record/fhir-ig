@@ -6,7 +6,7 @@ Id: Yhcr-Procedure
 Description: "YHCR Procedure resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 
 // Extension - CareConnect Anesthetic Issues: Excluded
@@ -142,21 +142,13 @@ InstanceOf: YhcrProcedure
 Description: "YHCR Procedure example"
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Procedure"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Procedure-1"
-* meta.versionId = "YhcrProcedureExample-v1.0.0"
+* insert Ruleset-ExampleMetaForHospital(Procedure)
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (PerformedDateTime + Code description)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00: Repair of malunion of tibia"
 
 
-
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-procedure-identifier"
-* identifier[localIdentifier].value = "PROC-456-XYZ"
+* insert Ruleset-ExampleLocalId(procedure, RCB.PROC-456-XYZ)
 
 * status = http://hl7.org/fhir/event-status#completed "Completed"
 
@@ -168,7 +160,6 @@ Description: "YHCR Procedure example"
 
 * encounter = Reference(YhcrEncounterExample) // R4 encounter -> STU3 context
 * encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
-
 
 * performedDateTime = "2022-01-09T09:00:00Z"
 

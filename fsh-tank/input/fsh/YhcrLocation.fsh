@@ -4,7 +4,7 @@ Id: Yhcr-Location
 Description: "YHCR Location resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 // Identifier (ODS) - CareConnect already defines a special identifier for ODS Site Code
 // We can't make this mandatory as some locations are not part of an ODS Site (eg patient's house). 
@@ -118,14 +118,9 @@ Description: "YHCR Location example - Site"
 
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "YhcrLocationExampleSite-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Name + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Hospital"
 
@@ -134,8 +129,7 @@ Description: "YHCR Location example - Site"
 * identifier[0].system = "https://fhir.nhs.uk/Id/ods-site-code"
 * identifier[0].value = "G5A1J"
 
-* identifier[1].system = "https://fhir.nhs.uk/Id/local-location-identifier"
-* identifier[1].value = "ABC123"
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-ABC123)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "York Hospital"
@@ -166,21 +160,14 @@ InstanceOf: YhcrLocation
 Description: "YHCR Location example - Ward 27"
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "YhcrLocationExampleWard27-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Name + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 27: Dermatology clinic"
 
 
-
-* identifier[0].system = "https://fhir.nhs.uk/Id/local-location-identifier"
-* identifier[0].value = "XYZ456"
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "York Hospital: Ward 27"
@@ -206,21 +193,15 @@ InstanceOf: YhcrLocation
 Description: "YHCR Location example - Ward 28"
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "YhcrLocationExampleWard28-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Name + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
 
 
 
-* identifier[0].system = "https://fhir.nhs.uk/Id/local-location-identifier"
-* identifier[0].value = "ABC789"
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-ABC789)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "York Hospital: Ward 28"
@@ -248,22 +229,14 @@ InstanceOf: YhcrLocation
 Description: "YHCR Location example - Room"
 
 
-
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "YhcrLocationExampleRoom-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Name + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 27: Room 1: Dermatology clinic"
 
 
-
-* identifier[0].system = "https://fhir.nhs.uk/Id/local-location-identifier"
-* identifier[0].value = "XYZ456-1"
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456-1)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "York Hospital: Ward 27: Room 1"
@@ -288,14 +261,9 @@ InstanceOf: YhcrLocation
 Description: "YHCR Location example - House"
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "YhcrLocationExampleHouse-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Name + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
 
@@ -321,22 +289,13 @@ Instance: YhcrLocationSocialCareDeptExample
 InstanceOf: YhcrLocation
 Description: "YHCR Location example - Social Care Department"
 
-
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
+* insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "YhcrLocationExampleSocialCare-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Name + Type)
 * extension[Extension-Yhcr-TextSummary].valueString = "Leeds Social Services: Adult Services Department: community service center"
 
-
-
-* identifier[0].system = "https://fhir.nhs.uk/Id/local-location-identifier"
-* identifier[0].value = "XYZ789"
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ789)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "Leeds Social Services: Adult Services Department"

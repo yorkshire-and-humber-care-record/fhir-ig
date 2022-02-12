@@ -6,7 +6,7 @@ Id: Yhcr-Appointment
 Description: "YHCR Appointment resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 ///////////////////////////////////////
 // --- CARE CONNECT EXTENSIONS ---
@@ -169,14 +169,8 @@ Instance: YhcrAppointmentExample
 InstanceOf: YhcrAppointment
 Description: "YHCR Appointment example"
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Appointment"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Appointment-1"
-* meta.versionId = "YhcrAppointmentExample-v1.0.0"
+* insert Ruleset-ExampleMetaForHospital(Appointment)
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Start + Service Type + Location.display)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022-9:00 : Dermatology : York Hospital: Ward 27 - Dermatology clinic"
 
@@ -184,8 +178,7 @@ Description: "YHCR Appointment example"
 * extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
 * extension[Extension-CareConnect-AppointmentCancellationReason-1].valueString = "Unable to attend due to prior engagement"
 
-* identifier[0].system = "https://yhcr.org/Id/local-appointment-identifier"
-* identifier[0].value = "APPT-Q54321" 
+* insert Ruleset-ExampleLocalId(appointment, RCB.APPT-Q54321)
 
 * status = http://hl7.org/fhir/appointmentstatus#booked "Booked"
 

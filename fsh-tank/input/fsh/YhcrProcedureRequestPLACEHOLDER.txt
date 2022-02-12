@@ -1,0 +1,12 @@
+There is no ProcedureRequest in FHIR R4!
+
+However there is a ServiceRequest that is 90% similar, 
+and the CareConnect ProcedureRequest is therefore avaiable here, built over that
+
+1) Consider if profiling ProcedureRequest is a good idea? (Or should we go straight to the new R4 ServiceRequest?)
+
+2) If proceeding, then need to carefully compare STU3 ProcedureRequest and R4 ServiceRequest and understand the differences
+   - This is good to do anyway, to consider future migration path
+   - Some fields have been renamed - which is similar to other R4 renames, and easily dealt with in the "convert-STU3" script
+   - A few changes are more significant. In most cases there is a "similar"field in R4 which could be profiled and renamed.
+     However it is possible that some profiling statements might need to be added directly in code in "convert-STU3" script

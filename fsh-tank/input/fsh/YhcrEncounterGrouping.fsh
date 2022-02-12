@@ -4,7 +4,7 @@ Id: Yhcr-EncounterGrouping
 Description: "YHCR Encounter resource profile  to group other encounters into a 'visit'"
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 // This is a higher-level encounter used to group other encounters together. 
 // The aim is to capture skeletal information which does not duplicate that already covered by the more detailed Encounter records
@@ -128,23 +128,16 @@ InstanceOf: YhcrEncounterGrouping
 Description: "YHCR Encounter Grouping example"
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
+* insert Ruleset-ExampleMetaForHospital(Encounter)
 * meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-EncounterGrouping"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Encounter-1"
-* meta.versionId = "YhcrEncounterExample-v1.0.0"
+* meta.versionId = "YhcrEncounterGroupingExample-v1.0.0"
 
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Period.start - Period.end : Class description)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Grouping of related Encounters"
 
-
 * contained[0] = YhcrLocationHouseDischargeExample
 
-
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-encounter-identifier"
-* identifier[localIdentifier].value = "ABC-777-XYZ"
+* insert Ruleset-ExampleLocalId(encounter, RCB.ENC-777-XYZ)
 
 * status = #finished
 
@@ -176,16 +169,7 @@ Description: "YHCR Location example - House for discharge"
 Usage: #inline
 
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Location"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Location-1"
-
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-// (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
-
-
+// No meta tags or TextSummary as inline
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "42 Grove Street, LS21 1PF"

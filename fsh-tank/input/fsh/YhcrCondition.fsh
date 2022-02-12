@@ -6,7 +6,7 @@ Id: Yhcr-Condition
 Description: "YHCR Condition resource profile."
 * ^status = #draft
 
-* insert YhcrBaseFieldsRuleset
+* insert Ruleset-YhcrBaseFields
 
 
 // Extension - CareConnect Episodicity: Leave optional
@@ -115,22 +115,12 @@ Instance: YhcrConditionExample
 InstanceOf: YhcrCondition
 Description: "YHCR Condition example"
 
+* insert Ruleset-ExampleMetaForHospital(Condition)
 
-//(Note - important to put our profile first, or else the website won't recognise it!)
-* meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-Condition"
-* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"
-* meta.versionId = "YhcrConditionExample-v1.0.0"
-
-* meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
-* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 // (Code description + clinical status)
 * extension[Extension-Yhcr-TextSummary].valueString = "Paraffinoma of skin: Active"
 
-
-
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-condition-identifier"
-* identifier[localIdentifier].value = "COND-456-XYZ"
+* insert Ruleset-ExampleLocalId(condition, RCB.COND-456-XYZ)
 
 //* clinicalStatus = http://hl7.org/fhir/condition-clinical#active "Active"
 * clinicalStatus = #active 
