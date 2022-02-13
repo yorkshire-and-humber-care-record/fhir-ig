@@ -1,5 +1,5 @@
 ValueSet: YhcrDocumentType
-Id: Yhcr-DocumentType-1
+Id: Yhcr-DocumentType
 Description: "A code from the SNOMED Clinical Terminology UK coding system that describes a clinical document type."
 * ^name = "Yhcr Document Type"
 * ^copyright = "This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement."

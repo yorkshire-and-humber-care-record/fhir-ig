@@ -44,14 +44,14 @@ This is relatively uncontroversial and basically refers to the "setting".
 
 
 ## **Encounter Type**
-This is a tricky field, as the FHIR definition is not all that clear. However it seems to be mostly about "where" the encounter took place.
+This is a tricky field, as the FHIR definition is not all that clear. However it seems to be mostly about categorising the type of place where the encounter took place.
  - FHIR provides a very sketchy "example" list with four random values
- - CareConnect and UK Core replace this with a much better list. This is still only an "example" in CareConnect, but is tightened to be mandated as "extensible" in UKCore. This list is based on the following SNOMED reference sets:
+ - CareConnect and UK Core replace this with a much better list. This is still only an "example" in CareConnect, but is tightened to be mandated as "extensible" in UKCore. This list is based on the following SNOMED reference sets: 
    - **185316007: Indirect Encounter** - this lists mechanisms such as email, video link, letter, etc
    - **308467007: Seen in Establishment** - this provides a short list of 22 top level codes which cover a good range of care settings eg "Seen in clinic", "Seen in own home", "Seen in supervised accomodation", etc. 
    
      However... some of these expand into a much longer list. For example "Seen in clinic" expands into a list of 118 different types of cinic.
-     >Our understanding is that the purpose of this field is to describe the type of place where the encounter occured (not the service provided), and so only the simple top level codes should be used
+     >Our understanding is that the purpose of this field is to describe the type of place where the encounter occured (not the service provided), and so it is not required to expand down to the level of the specific clinic type.
 
    - **185201007: Site of Encounter** - this contains a single value for "Seen in street"   
 

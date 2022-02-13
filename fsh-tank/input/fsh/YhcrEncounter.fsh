@@ -14,6 +14,13 @@ Description: "YHCR Encounter resource profile."
 // - Emergency Care Discharge Status (a list of snomed codes - when did they leave, were they pass onwards)
 // These all look like they might sometimes be useful but not essential - leave optional for now, subject to further discussion.
 
+// Service Type is perhaps one of the most useful and important fields about an Encounter - but missing from STU3!
+// This omission is rectified in R4, so we pre-adopt it here - and make the extension Must Support
+// We also pre-adopt the UKCore value set, which is more relevant than the default FHIR example and also covers social care
+* extension contains Extension-Yhcr-R4EncounterServiceType named serviceType 0..1
+* extension[Extension-Yhcr-R4EncounterServiceType] ^short = "Specific type of service (pre-adopted from R4)"
+* extension[Extension-Yhcr-R4EncounterServiceType] MS
+
 
 // Identifier:
 // This is a business identifier for the Encounter.
@@ -40,14 +47,15 @@ Description: "YHCR Encounter resource profile."
 * class 1..1 MS //(R4 is already 1..1, so need to hack this in via script)
 //* class from http://hl7.org/fhir/ValueSet/v3-ActEncounterCode (required)
 * class from Yhcr-EncounterClass-1 (required)
+* class ^short = "Classification of the encounter. EXTENSIBLE on request, eg to cover other care settings"
 * insert Ruleset-RawCodingWithSystemCodeDisplay(class)
 
 * classHistory 0..0
 
-// Type: Make mandatory, and tighten coding based on the Care Connect list
+// Type: Make MS, and tighten coding based on the Care Connect list
 //     Useful information based on several sets of SNOMED codes which describes the type of clinic or setting where the encounter occurred 
 //      (eg in establishment, in own home, by telephone, etc)
-* type 1..1 MS
+* type 0..1 MS
 * type from CareConnect-EncounterType-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
 * type.coding[snomedCT] 1..1 MS
@@ -108,8 +116,10 @@ Description: "YHCR Encounter resource profile."
 * length ^short = "DISCOURAGED: This duplicates information that is already available via the Period"
 
 // Reason: MS
-//   Capture the reason for the encounter (see documentation notes on code lists)
+//   Capture the reason for the encounter
+//   We pre-adopt the R4 list of reason codes which covers not only Clinical Finding and Procedure, but also social care and A&E.
 * reasonCode MS  //R4 reasonCode -> STU3 reason
+* reasonCode from Yhcr-R4EncounterReason (required)
 
 // Diagnosis: Is Must Support, and if provided we want references only to a Condition, with role and ranking
 * diagnosis MS
@@ -174,6 +184,10 @@ Description: "YHCR Encounter example"
 
 // (Period.start - Period.end : Class description: Type description)
 * extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+
+// Extension to add the all-important Service Type that is missing from STU3!
+* extension[Extension-Yhcr-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
+
 
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-456-XYZ)
 

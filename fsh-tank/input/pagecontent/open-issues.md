@@ -41,9 +41,7 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
 
 ## **Encounter**
- - **Class and Type** - CareConnect provides reasonable lists for these, but do we need to extend them? Or is there a better list anywhere else?
-
- - **Reason** -  a long list of SNOMED codes to describe different types of problems which may have led to the Encounter. Confirm if this is a good list? The right level of detail? Covering relevant care settings? Also may not be needed if extensive information already in the Appointment or Referral?
+ - No points noted
 
 
 ## **Appointment**
