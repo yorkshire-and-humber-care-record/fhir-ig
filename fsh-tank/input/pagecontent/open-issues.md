@@ -4,6 +4,7 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
 ## **Patient**
  - **Address - unknown or no permanent abode** - is there a standard representation of the address which could be used in this case?
+ 
  - **Religious Affiliation** (Care Connect Extension) - this is a difficult field to provide definitive guidance on. In general it is useful to populate if possible, and for some scenarios it may be extremely important (eg End of Life, and certain aspects of community and social care). In other scenarios however it may be considered unnecessary and intrusive information. Therefore optional, to allow appropriate discretion to be applied. However there is a case for Must Support.
 
   - **Individual Requirements** - Care Connect (and FHIR) allows for capturing information about "communication", however this focuses on languanges. There are other important aspects to be aware of when dealing with certain patients - for example cognative abilities, mobility, etc. PRSB has been doing work on "Individual Requirements" to better consider this. Do we need an additional extension to allow this information to be captured?

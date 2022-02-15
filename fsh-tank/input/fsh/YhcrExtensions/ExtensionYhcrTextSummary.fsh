@@ -21,6 +21,8 @@ Description: "A short text string to summarise the resource. Intended to be used
 * ^context[=].expression = "Condition" 
 * ^context[+].type = #element   
 * ^context[=].expression = "Procedure" 
+* ^context[+].type = #element   
+* ^context[=].expression = "DiagnosticReport" 
 
 * . ..1
 * . ^short = "A short summary string eg for display in References"

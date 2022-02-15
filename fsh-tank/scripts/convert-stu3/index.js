@@ -70,6 +70,10 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = convertYhcrProcedureStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Yhcr-DiagnosticReport") {
+                jsonObject = convertYhcrDiagnosticReportStructureDefinition(jsonObject);
+              }
+
             }
 
             // Convert various types of instances
@@ -95,6 +99,10 @@ fileArrayR4.forEach(function(filePathR4) {
 
             if (jsonObject.resourceType == "Condition") {
               jsonObject = convertConditionInstance(jsonObject);
+            }
+
+            if (jsonObject.resourceType == "DiagnosticReport") {
+              jsonObject = convertDiagnosticReportInstance(jsonObject);
             }
 
             // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
@@ -360,6 +368,33 @@ function convertYhcrProcedureStructureDefinition(jsonObject) {
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertYhcrDiagnosticReportStructureDefinition(jsonObject) {
+ 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("DiagnosticReport.encounter"))  {
+      objElement.id = objElement.id.replace("DiagnosticReport.encounter", "DiagnosticReport.context");
+      objElement.path = objElement.id;
+    };     
+    
+
+    // Convert "media" to "image"
+    if(objElement.id.includes("DiagnosticReport.media"))  {
+      objElement.id = objElement.id.replace("DiagnosticReport.media", "DiagnosticReport.image");
+      objElement.path = objElement.id;
+    };     
+
+  }); //Element
+
+  return jsonObject;
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -466,6 +501,28 @@ function convertProcedureInstance(jsonObject) {
   if(jsonObject.encounter) {
     jsonObject.context = jsonObject.encounter;
     delete jsonObject.encounter;
+  }
+
+
+  return jsonObject;
+}
+
+
+function convertDiagnosticReportInstance(jsonObject) {
+
+  if(jsonObject.encounter) {
+    jsonObject.context = jsonObject.encounter;
+    delete jsonObject.encounter;
+  }
+
+  if(jsonObject.media) {
+    jsonObject.image = jsonObject.media;
+    delete jsonObject.media;
+  }
+
+  // Convert from an array in R4 to a single value in STU3
+  if(jsonObject.category) {
+    jsonObject.category = jsonObject.category[0];
   }
 
 
