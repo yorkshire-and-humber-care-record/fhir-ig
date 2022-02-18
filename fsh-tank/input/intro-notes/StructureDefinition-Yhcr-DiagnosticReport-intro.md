@@ -74,9 +74,9 @@ Other fields are optional and may be populated if known - on the understanding t
 
  - **Conclusion** - this is an important field, and only considered "optional" due to the potential difficulty of populating it in practice. It provides a brief summary of the findings, typically easier to understand than the technical detail of the full report. This information can often be found in the "comments" field(s) of a lab or RIS system. However the wide variation in usage of these "comments" fields can make it challenging to identify and extract reliably.
 
- - **Coded Diagnosis** - this is in effect the "conclusion" in coded form (In FHIR R4 this field is renamed as "conclusionCode"). Whilst this could obviously be useful to populate, it typically seems unlikely to be feasible, given the challenges described above in extracting even a text-based conclusion
+ - **Coded Diagnosis** - this is in effect the "conclusion" in coded form (In FHIR R4 this field is renamed as "conclusionCode"). Whilst this could obviously be useful to populate, it often may not be feasible given the challenges described above in extracting even a text-based conclusion
 
- - **Specimen** - if relevant and available then details of the specimen may be provided
+ - **Specimen** - if relevant and available then details of the specimen should be provided
 
  - **Performer** - again this may be useful if available. (Noting that for a regional shared care record the practitioner managing the overall encounter may often be of greater relevance).
 
@@ -85,7 +85,7 @@ Other fields are optional and may be populated if known - on the understanding t
  - **Image and Imaging Study** - the priority for the shared care record is to share results and reports, rather than raw image data. As of this writing (Feb 2022) there is no support for retriving these imaging links. (Note that this position could change in future - please get in touch if you have a specific use-case) 
 
 
- ### **Summary Text**
+### **Summary Text**
 
     Date + Code Description
   

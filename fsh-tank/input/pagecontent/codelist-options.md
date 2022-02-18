@@ -88,7 +88,7 @@ This provides information about the purpose of the Encounter. (There are some su
   - PRSB does not directly have this concept, but it does consider "Problems" (aka "Conditions") and "Procedures" separately and uses slightly different (but overlapping) SNOMED refsets - see further discussion below - with the conclusion that we will stick with the above FHIR lists
 
   > ***Our conclusion is that this is a useful field, but with important additions to the code lists for emergency and social care in R4. We will therefore pre-adopt the FHIR R4 code lists.***
-
+ 
 
 ## **Appointment Service Category**
 Gives a high-level summary of the Service Type.

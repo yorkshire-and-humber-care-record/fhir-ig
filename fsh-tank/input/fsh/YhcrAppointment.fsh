@@ -26,6 +26,12 @@ Description: "YHCR Appointment resource profile."
 * extension[Extension-CareConnect-BookingOrganisation-1] ^short = "DISCOURAGED - use referral, or provenance tags instead"
 
 
+// PLUS our own (optional) extension - to pre-adopt the useful R4 field of "patientInstruction"
+* extension contains Extension-Yhcr-R4PatientInstruction named patientInstruction 0..1
+* extension[Extension-Yhcr-R4PatientInstruction] ^short = "Detailed information and instructions for the patient"
+
+
+
 ///////////////////////////////////////
 // --- Main Fields ---
 ///////////////////////////////////////
@@ -40,21 +46,26 @@ Description: "YHCR Appointment resource profile."
 * status MS
 
 
-// Service Category: leave optional. In FHIR this is a short list of broad categories at a higher-level then Service Type
+// Service Category: Discouraged. In FHIR this is a short list of broad categories at a higher-level then Service Type
 //   However CareConnect has somewhat confused matters by instead linking it to SDS Job Roles
 //   This isn't the same idea at all, and would have been more appropriate for "specialty"?
-//   Leave optional therefore
+* serviceCategory ^short = "DISCOURAGED - Unfortunately CareConnect has prescribed an inappropriate valueset for this field, which negates its use."
 
-// Service Type: A list of types of appointment eg “Urology”, “Community Health”, “Social Support” etc
-//    Appears to be possible, useful and important to populate.
-//    (Could be multiple??)
-//    Tighten up to use the FHIR list (is this OK?)
+// Service Type: A list of types of service for the appointment eg "Cardiology Service", “School Nursing Service" etc
+//    Appears to be possible, useful and important to populate. (Could be multiple??)
+//    We also want to pre-adopt this value set from UK Core which is better than the original FHIR suggestion
+//    (More relevant to UK and better coverage of social care)
+//    It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
 * serviceType 1..* MS
-* serviceType from http://hl7.org/fhir/ValueSet/service-type (required)
+* serviceType from Yhcr-UkCoreCareSettingType (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(serviceType)
 
+
 // Specialty: leave optional. Further describes the type of service / person so useful if known, 
-// although the list seems very acute-focused. Overall, confusing between this and Service Category.
+//   Replace the default FHIR valueset with the list of SDS Job Roles - 
+//   which appears to be more complete and relevant to the UK, and which offers better coverage of Social Care.
+* specialty from CareConnect-SDSJobRoleName-1 (preferred)
+* insert Ruleset-CodingWithSystemCodeDisplay(specialty)
 
 // Appointment Type: MS and tighten the list. A simple list of “Routine”, “Emergency”, etc
 * appointmentType MS
@@ -64,16 +75,16 @@ Description: "YHCR Appointment resource profile."
 
 // Reason: MS The reason for making the appointment – ie a list of SNOMED codes for various medical problems.
 // Does not look very “social care” friendly – an extended or alternative list may be needed if we decide that appointments are relevant to social care?
-// NB "reasonCode" (R4) -> "reason" (STU3)
-* reasonCode MS
-* reasonCode from http://hl7.org/fhir/ValueSet/encounter-reason (required)
+* reasonCode MS  //R4 reasonCode -> STU3 reason
+* reasonCode from Yhcr-R4EncounterReason (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
-// Indication: A reference to further detail about either the Condition or Procedure which is the reason for the appointment
+// Indication: Leave optional (concentrate on populating "reason" as the priority)
+// A reference to further detail about either the Condition or Procedure which is the reason for the appointment
 //  May not always be available, but should be populated if these resources are supported and relevant
 // NB "reasonReference" (R4) -> "indication" (STU3)
-* reasonReference MS
-* insert Ruleset-ReferenceWithAtLeastDisplay(reasonReference)
+////* reasonReference MS
+/////* insert Ruleset-ReferenceWithAtLeastDisplay(reasonReference)
 
 // Priority - discouraged
 * priority ^short = "DISCOURAGED - More applicable to internal scheduling"
@@ -101,9 +112,9 @@ Description: "YHCR Appointment resource profile."
 
 // Created: optional - basic information about when it was created
 
-// Comment - leave optional. Key point is to use with care, as it may be viewed by the patient
-//  (Note: R4 has an extra field "patientInstruction", but "comment" has to cover this too in STU3)
-* comment ^short = "Additional comments. NB: It must be assumed that this comment will be widely viewed across the region, including by the patient themselves"
+// Comment - Discouraged. Key point is to use with care, as it may be viewed by the patient
+//  (Note: We add an extension to pre-adopt the useful R4 for "patientInstruction")
+* comment ^short = "DISCOURAGED. It must be assumed that this comment will be widely viewed across the region, including by the patient themselves. See also / instead the 'patientInstruction' field"
 
 // Incoming referral: Optional
 // A reference to the Referral which led to the appointment. Useful to provide if relevant and available
@@ -172,8 +183,8 @@ Description: "YHCR Appointment example"
 * insert Ruleset-ExampleMetaForHospital(Appointment)
 
 // (Start + Service Type + Location.display)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022-9:00 : Dermatology : York Hospital: Ward 27 - Dermatology clinic"
-
+* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
+* extension[Extension-Yhcr-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
 * extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
 * extension[Extension-CareConnect-AppointmentCancellationReason-1].valueString = "Unable to attend due to prior engagement"
@@ -183,14 +194,12 @@ Description: "YHCR Appointment example"
 * status = http://hl7.org/fhir/appointmentstatus#booked "Booked"
 
 // Service Category: leave optional
-* serviceType = http://hl7.org/fhir/service-type#168 "Dermatology"
+* serviceType = $SCT#23871000087101 "Adult dermatology service"
 // Specialty: leave optional
 * appointmentType = http://hl7.org/fhir/v2/0276#FOLLOWUP "A follow up visit from a previous appointment"
 
 * reasonCode = $SCT#299007 "Paraffinoma of skin" // R4 - STU3 has "reason"
 
-// TODO - add fuller references once we have these resources
-* reasonReference[0].display = "Purple rash" // R4 - STU3 has "indication"
 
 * description = "Outpatient dermatology clinic"
 
@@ -200,7 +209,6 @@ Description: "YHCR Appointment example"
 
 * created = "2021-12-05T00:00:00Z"
 
-* comment = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
 // For now take this out, as referral downgraded to optional (due to R4 changes)
 //* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"

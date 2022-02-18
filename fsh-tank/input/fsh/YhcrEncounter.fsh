@@ -120,6 +120,7 @@ Description: "YHCR Encounter resource profile."
 //   We pre-adopt the R4 list of reason codes which covers not only Clinical Finding and Procedure, but also social care and A&E.
 * reasonCode MS  //R4 reasonCode -> STU3 reason
 * reasonCode from Yhcr-R4EncounterReason (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 // Diagnosis: Is Must Support, and if provided we want references only to a Condition, with role and ranking
 * diagnosis MS

@@ -16,4 +16,5 @@ Description: "An extension to add Service Type to the Encounter. This is pre-ado
 // (More relevant to UK and better coverage of social care)
 // It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
 * valueCodeableConcept from Yhcr-UkCoreCareSettingType (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)
 
