@@ -76,7 +76,7 @@ Description: "YHCR Organization example"
 
 * active = true
 * name = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-* type.coding = Yhcr-OrganisationType-1#142 "NHS Trust"
+* type.coding = Yhcr-OrganisationType-1#197 "NHS Trust"
 
 * address[0].line[0] = "York Hospital"
 * address[0].line[1] = "Wigginton Road"

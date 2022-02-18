@@ -200,7 +200,6 @@ Description: "YHCR Location example - Ward 28"
 * extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
 
 
-
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-ABC789)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
@@ -220,6 +219,43 @@ Description: "YHCR Location example - Ward 28"
 
 * partOf = Reference(YhcrLocationSiteExample)
 * partOf.display = "York Hospital"
+
+
+
+////////////////////////////////////
+Instance: YhcrLocationWardExampleAandE
+InstanceOf: YhcrLocation
+Description: "YHCR Location example - A&E"
+
+
+* insert Ruleset-ExampleMetaForHospital(Location)
+* meta.versionId = "YhcrLocationExampleWardAandE-v1.0.0"
+
+// (Name + Type)
+* extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Accident and Emergency"
+
+
+
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-AE789)
+
+* status = http://hl7.org/fhir/location-status#active "Active"
+* name = "York Hospital: Accident and Emergency"
+
+* mode = http://hl7.org/fhir/location-mode#instance "Instance"
+* type.coding = http://hl7.org/fhir/v3/RoleCode#ER "Emergency room"
+* physicalType.coding = http://hl7.org/fhir/location-physical-type#wa "Ward"
+
+* telecom[0].system = #phone "Phone"
+* telecom[0].value = "05678 111999"
+
+* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
+
+* partOf = Reference(YhcrLocationSiteExample)
+* partOf.display = "York Hospital"
+
 
 
 

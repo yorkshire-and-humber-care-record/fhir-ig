@@ -163,11 +163,14 @@ This could be especially relevant for Community and Social Care, to understand i
 
  - All of the FHIR-based standards use the same "example" list of approx 10 organisation types including "insurance company" etc - it is not a very useful list
  - PRSB does not really have this concept
- - There is a good list on the ODS website here: <https://odsportal.digital.nhs.uk/Organisation/Search> And obviously this will align exactly with the organisation types allocated by ODS. However other than retyping it from the website, is it published anywhere?
- - The ODS downloads seem to use slightly different coding
- - Can't find anything obvious in the NHS Data Dictionary?
+ - There is a good list on the ODS website here: <https://odsportal.digital.nhs.uk/Organisation/Search>. And obviously this will align exactly with the organisation types allocated by ODS. 
+ - However a more formal version of the list can be found via the TRUD ODS dataset <https://isd.digital.nhs.uk/trud/users/authenticated/filters/0/categories/5/items/341/releases>
 
-  > ***Tentatively adopt the list rekeyed from the ODS website, subject to a better list being advised***
+   The first part of the (very large) download file provides the list from which this is taken:
+
+       CodeSystem name="OrganisationRole" oid="2.16.840.1.113883.2.1.3.2.4.17.507"
+
+  > ***Adopt this list of organisation types as provided by ODS / TRUD***
 
 
 ## **Location Type**

@@ -7,7 +7,7 @@ This page captures topics of ongoing discussion. Contributions and insights are 
  
 
 ## **Organisation**
- - **Type** - a good list of organisation types has been found on the ODS search page: <https://odsportal.digital.nhs.uk/Organisation/Search>. It has been pasted in, but does anyone know its actual origins (NHS Data Dictionary)? Also need to confirm the codes - as those on this screen do not match those in the ODS extracts. Also need to confirm the relationship between Organisations / Sites etc - are all the codes relevant here? Once all clarified then could potentially make this a Mandatory field.
+ - No points noted
 
 
 ## **Location**
