@@ -20,8 +20,9 @@ Description: "YHCR DocumentReference resource profile."
 
 // Type - very important field to identify the type of document (already mandatory in FHIR)
 // Much discussion about this, and DADA proposed list of SNOMED codes selected for now
+// However it is still a controversial area, and does not yet feel appropriate to prescibe more than "preferred"
 * type MS
-* type from YhcrDocumentType (required)
+* type from YhcrDocumentType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Class - leave optional for now, pending further discussion

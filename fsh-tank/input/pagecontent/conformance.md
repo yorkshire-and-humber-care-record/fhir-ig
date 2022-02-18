@@ -49,9 +49,15 @@ Excluded data items have a cardinality of 0, and therefore MUST NOT be populated
 
 ## **Binding Strengths for Coding**
 When populating coded data, FHIR offers four levels of Binding Strength, as documented here: <https://www.hl7.org/fhir/STU3/conformance-rules.html>
- - **Required** - This is the strongest Binding Strength, and is the most commonly used by Interweave. We take the view that to be useful then coding needs to be consistent. Where FHIR (as an international standard) offers weaker binding options, these are taken as a cue for us to consider and replace / refine the coding list - agreeing on a definitive list of codes to be used by this Implementation Guidance.
-  - **Extensible / Preferred / Example** - These weaker Binding Strengths will generally only remain on "Optional" fields - indicating that not only is the field itself optional, but so also is whether and how to code it. Very occasionally they might be seen on a Must Support field - to indicate that text is the priority, and that coding is not considered important for this field. (This is rare and will be explained further in accompanying notes).
 
-  ***NB: Although marked as "Required", most code lists are implicitly "Extensible" via consultation.***
-   - If a code list does not meet your needs, please do get in touch so that the issue can be discussed and extra codes added.
-   - The point is to extend the "Required" list in a curated and consistent way, to be used by all in the region. As opposed to inconsistent extensions being unilaterally devised by individual Data Providers.
+ - **Required** - This is the strongest Binding Strength, and is the most commonly used in these profiles. We take the view that to be useful then coding needs to be consistent. Where FHIR (as an international standard) offers weaker binding options, these are taken as a cue for us to consider and replace / refine the coding list - agreeing on a definitive list of codes to be used by this Implementation Guidance.
+
+  - **Extensible** - This is not used. However if a code list does not meet your needs, please get in touch so that the issue can be discussed and extra codes added if necessary. The point is to extend the "Required" list in a curated and consistent way, to be used by all in the region. As opposed to inconsistent extensions being unilaterally devised by individual Data Providers.
+
+  - **Preferred** - This is used only very rarely, where a code list is controversial and we do not yet feel justified as marking it as "required". However our conformance criteria are stronger than those of FHIR - as we request that any deviation from the "preferred" coding seeks explicit approval.
+
+   - **Example** - This would only be used to indicate that coding is not considered important for this field. (This is rare and will be explained further in accompanying notes).
+
+
+  ***NB: The above classifications apply only to "Must Support" fields. For "Optional" or "Discouraged" fields then no attempt has been made to define or govern coding, other than the standard defaults provided by FHIR.***
+ 

@@ -6,5 +6,4 @@ Description: "A code from the SNOMED Clinical Terminology UK coding system that 
 
 // Care Connect uses 999000391000000109, but this doesn't seem to actaully have any members?!
 // This alternative set of codes (EHR Composition Types) recommended by DADA
-// (There is also recent good work by PRSB - should we be using that?? https://theprsb.org/standards/documentnaming/)
 * include codes from system SNOMED_CT where concept in "24501000000105"

@@ -63,4 +63,6 @@ There are several flags regarding the overall status of a patient, with further 
    - **Deceased** - this flag must NOT be populated by local Data Providers. It will however be populated in the regional Master Patient Index. This MPI is based on PDS and will reflect the deceased status of the patient, as formally recorded by PDS. 
 
 
+### **Notes on additional patient-based datasets**
+The [PRSB](https://prsb2.vercel.app/page/core-information-standard) defines quite a number of additional datasets which provide additional rich information about the patient. For example "About Me", "Individual Requirements", etc. Guidance is however that in FHIR these are generally not incorporated into the basic Patient resource, are but instead represented as separate QuestionnaireResponse resources. Additional profiles of the QuestionnaireResponse to model these datasets are therefore anticipated. 
 

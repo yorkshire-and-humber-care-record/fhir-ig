@@ -50,8 +50,8 @@ Description: "YHCR Location resource profile."
 * type 1..1 MS 
 //(Retain optionality about whether code or text is provided)
 // If a code is provided then it must be from the original FHIR list, or from an extension code that is curated and added to the regional list
-* type from Yhcr-ServiceDeliveryLocationRoleType-1 (required)
-* type ^short = "Type of function performed. Useful to indicate the type of activity that is likely to have happened there."
+* type from http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType (required)
+* type ^short = "Type of function performed. Useful to indicate the type of activity that is likely to have happened there. EXTENSIBLE on request, eg to cover other care settings"
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Telecom - required to provide if at all possible, as this is extremely useful if external clinicians want to get in touch to find out more

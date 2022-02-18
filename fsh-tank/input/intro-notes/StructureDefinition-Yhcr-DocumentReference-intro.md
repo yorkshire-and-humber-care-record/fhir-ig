@@ -9,7 +9,13 @@ The following mandatory fields are defined in order to properly describe a Docum
 1. **Status** - already mandatory in FHIR, and will generally contain "current". (A practical challenge for many systems can be to accurately maintain this, eg updating to "superseded" when necessary)
 2. **DocStatus** - will generally contain “final”, as most documents will only be published for regional sharing once they are finalised. 
 However there may be exceptions where it is useful to collaborate on preliminary versions of a document. (It is anticipated that additional guidance on the use of this field for collaborating on specific types of document may be added in future.)
-3. **Type** - essential information to help categorise the type of document
+3. **Type** - essential information to help categorise the type of document. 
+
+   The categorisation of document types is a much debated topic, with a number of alternative standards still vying for precedence. See [discussion of code list options](codlist-options.html) for further details. However for practical purposes of consistency a regional design decision has been made based on the SNOMED refset **24501000000105: EHR composition types**. This is therefore specified as "preferred" and we ask that SNOMED coding based on this list is provided. 
+   - It is, of course, permissible to provide more than one code to also support other coding schemes if desired
+   - We accept that this is an area where we will need to remain open to consultation as National standards continue to evolve.
+
+
 4. **Indexed** - already mandatory in FHIR and essential for date-based searching and sorting
 5. **Subject** - every document must be linked to a Patient
 6. **Content** - usually a link to retrieve the actual document content (see further guidance below). 

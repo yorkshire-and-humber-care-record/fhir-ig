@@ -20,11 +20,11 @@ The aim is not only to define a useful constrained standard, but also to capture
 
 ## Status and Approvals
 The profiles in this implementation guide are categorised by status as follows:
- 1. **Draft: Work In Progress** - this is initial work, shared for consultation but still subject to discussion and change
- 2. **Draft: For Review** - the draft is stable and ready for wider review. May still be subject to change based on review comments
- 3. **Active: Approved** - the profile has been approved for use by the regional Technical Design Authority
- 4. **Active: Implemented** - the profile has been proven in at least one successful implementation
-
+ 1. **Draft: Work In Progress** - this is initial work, shared for consultation but unstable and still subject to discussion and change at any time.
+ 2. **Draft: For Review** - the draft is more stable and ready for wider review. However may still be subject to change at any time, for example based on review comments
+ 3. **Active: Approved (STU)** - the profile has been approved for use by the regional Technical Design Authority. It may be considered as a Standard for Trial Use. Any changes will be notified and Change Controlled.
+ 4. **Active: Implemented (STU)** - whilst still a Standard for Trial Use, the profile has been proven in at least one successful implementation
+ 5. **Active: Normative** - the profile is widely established and proven, and may be considered Normative
 
 
 ## How to read this guide

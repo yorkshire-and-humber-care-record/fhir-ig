@@ -7,7 +7,7 @@ This profile describes the use of an Encounter resource to provide an overarchin
 ***Please refer to the main [Encounter Resource profile](StructureDefinition-Yhcr-Encounter.html) for a more complete description of the approach to modelling Encounters***
 
 The EncounterGrouping is a skeletal Encounter which requires a small number of mandatory fields:
- - Class - a new class code of ENCOUNTERGROUPING is defined specifically to identify these overarching Encounters
+ - Class - a new class code of GROUPING is defined specifically to identify these overarching Encounters
  - Status - mandatory in FHIR
  - Period - the period of the overall "visit"
  - Subject - the Patient involved

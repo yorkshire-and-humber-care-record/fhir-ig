@@ -70,6 +70,6 @@ We always want to know what type of services are typically provided at the locat
 
  - *Please select the most specific code possible, to provide maximum context about the location to Data Consumers*
 
- - *We welcome proposed additions to this code list, to be curated regionally if you have additional suggestions*
+ - *The list is perhaps not ideal, and there might be better alternatives for the UK - for example based on the NHS Data Dictionary or PRSB standards. However the binding is specified as "extensible" by FHIR which means it is simply not possible to replace it with an alternative. We therefore invite proposed additions to this code list, to be curated regionally if you have additional suggestions*
 
  - *Alternatively please select the most relevant generic option and provide further detail in the "text" field. This will still be useful for other care professionals to read in a direct care scenario*

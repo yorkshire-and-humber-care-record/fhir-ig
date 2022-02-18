@@ -3,7 +3,7 @@ Alias: $SCT = http://snomed.info/sct
 Profile: YhcrProcedure
 Parent: CareConnect-Procedure-1
 Id: Yhcr-Procedure
-Description: "YHCR Procedure resource profile."
+Description: "YHCR Procedure resource profile - DRAFT"
 * ^status = #draft
 
 * insert Ruleset-YhcrBaseFields

@@ -29,7 +29,7 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 //      (Use our own list in case so we can add this to it
 * class 1..1 MS
 //* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute" (exactly)
-* class = Yhcr-EncounterClass-1#ENCOUNTERGROUPING "Grouping of related Encounters" (exactly)
+* class = Yhcr-EncounterClass-1#GROUPING "Grouping of related Encounters" (exactly)
 * insert Ruleset-RawCodingWithSystemCodeDisplay(class)
 
 * classHistory 0..0
@@ -144,7 +144,7 @@ Description: "YHCR Encounter Grouping example"
 * period.start = "2022-01-09T09:00:00Z"
 * period.end = "2022-01-11T14:30:00Z"
 
-* class = Yhcr-EncounterClass-1#ENCOUNTERGROUPING "Grouping of related Encounters"
+* class = Yhcr-EncounterClass-1#GROUPING "Grouping of related Encounters"
 
 * subject = Reference(YhcrPatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
