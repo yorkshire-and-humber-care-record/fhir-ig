@@ -200,3 +200,22 @@ This could be especially relevant for Community and Social Care, to understand i
  - Other work is also in progress eg see **<https://theprsb.org/standards/documentnaming/>**. This has 17 high-level (class) and 182 lower level (type) entries - and again it looks good. (Although perhaps more focused on health than social care?) It ultimately maps to SNOMED codes - quite possibly overlapping with some of the other lists! The status of this work is currently (Feb 2022) unclear - as although it appears to be published, contacts at PRSB suggest that discussion is still ongoing.
 
 > ***This is clearly a difficult and confusing area, with no clear standard defined. Having sucessfully started using the "EHR Composition Types" there therefore seems no strong driver to move away from this immediately. However this remains an area to monitor - and implementers need to be aware that there may be a need for a mapping / migration exercise in future if a different list achieves clear prominence. Sites who wish to be future-proofed could also choose to provide more than one of these codes.***
+
+
+## **DiagnosticReport Category**
+ - Provides a high-level categorisation of the report. This is based on a short and simple list provided by FHIR which is expected to be straightforward to map to (eg "Radiology"). Useful for sorting and filtering.
+
+## **DiagnosticReport Code**
+ - This is mandatory in FHIR and defines in more detail the type of diagnostic report. The coding of diagnostic reports is known to be a difficult topic, and at this stage a single set of codes is difficult to prescribe. It is therefore suggested that the following are preferred, most favoured first:
+ 
+   - SNOMED - CareConnect (and UKCore) defines the use of SNOMED coding based on the use of ***371525003 - Clinical procedure report***
+
+   - NICIP - this code list covers only imaging. However within that domain it has been defined by NHS Digital and mandated for use by the Information Standards Board. See <https://digital.nhs.uk/services/terminology-and-classifications/national-interim-clinical-imaging-procedure-nicip-code-set>. Note that the NICIP codes include a maintained standard mapping to SNOMED  
+
+    - LOINC - the default mapping in FHIR is to LOINC codes for diagnostic reporting
+
+    - Local Codes - outside of the imaging domain there is significant variation in coding and, whilst mapping to one of the above standards is preferred, it may not always be feasible. 
+
+    ***TODO - finally confirm approach - potentially allowing for capture of more than one of these?***
+
+    ***NB: In all cases display text must be provided so that, regardless of coding, the type of report can be understood by a user***
