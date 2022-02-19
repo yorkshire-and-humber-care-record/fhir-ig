@@ -200,6 +200,7 @@ Description: "YHCR Location example - Ward 28"
 * extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
 
 
+
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-ABC789)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
