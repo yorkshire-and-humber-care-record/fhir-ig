@@ -1,5 +1,5 @@
-Extension: ExtensionYhcrTextSummary
-Id: Extension-Yhcr-TextSummary
+Extension: ExtensionInterweaveTextSummary
+Id: Extension-Interweave-TextSummary
 Description: "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
 * ^status = #draft
 

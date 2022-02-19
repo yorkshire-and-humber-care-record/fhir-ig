@@ -64,7 +64,7 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
      - An initial call to 111 is followed by a visit at home from a first-responder, and finally a conveyance to hospital in an ambulance
 
     ***A two-level heirarchy is therefore defined, based on the use of special type of Grouping Encounter to link together Encounters which comprise part of the same "visit", "stay" or "incident".***
-      -  A separate [Encounter Grouping profile](StructureDefinition-Yhcr-EncounterGrouping.html) is provided to support this.
+      -  A separate [Encounter Grouping profile](StructureDefinition-Interweave-EncounterGrouping.html) is provided to support this.
       - Data Providers who feel it is relevant MAY provide this additional grouping information
       - Data Consumers who are able MAY make use of this additional grouping information to provide a richer and more meaningful display to their users
 
@@ -88,7 +88,7 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
      ***Level 3 is currently seen as aspiriational and unlikely to be implemented immediately. Please get in touch for further discussion if you believe you may be a first-of-type.***
 
 
-The diagram below summarises the above discussion - ie core Encounters, single Grouping Encounter, and aspiriational Episode of Care.
+The diagram below summarises the above discussion - ie core Encounters, single Grouping Encounter, and aspirational Episode of Care.
 
 
 <img src=".\EncounterStructure.png" alt="Encounter Structure" style="clear:both; float:none">
@@ -204,7 +204,7 @@ Fields in the Hospitalization structure are as follows:
       - Optional if discharged to a residential address
    - **Discharge Disposition** - Useful information about the type of place the patient has been discharged to (eg home, other NHS hospital, care home, etc))
 
-    *Note that Origin and Destination are likely to be external locations - please refer to guidance on the [Location profile](StructureDefinition-Yhcr-Location.html) about use of References. For example the use of a Contained Resource may be appropriate.*
+    *Note that Origin and Destination are likely to be external locations - please refer to guidance on the [Location profile](StructureDefinition-Interweave-Location.html) about use of References. For example the use of a Contained Resource may be appropriate.*
 
 
  - **Optional**

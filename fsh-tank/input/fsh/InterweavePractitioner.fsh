@@ -1,10 +1,10 @@
-Profile: YhcrPractitioner
+Profile: InterweavePractitioner
 Parent: CareConnect-Practitioner-1
-Id: Yhcr-Practitioner
-Description: "YHCR Practitioner resource profile."
+Id: Interweave-Practitioner
+Description: "Interweave Practitioner resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 // Extension - NHS Communication
 // Leave alone as optional. 
@@ -31,7 +31,7 @@ Description: "YHCR Practitioner resource profile."
 //   https://fhir.hl7.org.uk/id/hcpc-number (Health and Care Professional Council Code)
 
 // Or failing any of these then as a last resort:
-//   https://yhcr.org/Id/local-practitioner-identifier
+//   https://fhir.yhcr.nhs.uk/Id/local-practitioner-identifier
 
 
 // Active:  Assumption is that it is "true" if not populated
@@ -82,14 +82,14 @@ Description: "YHCR Practitioner resource profile."
 // Examples
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrPractitionerExample
-InstanceOf: YhcrPractitioner
-Description: "YHCR Practitioner example"
+Instance: InterweavePractitionerExample
+InstanceOf: InterweavePractitioner
+Description: "YHCInterweaveR Practitioner example"
 
 * insert Ruleset-ExampleMetaForHospital(Practitioner)
 
 // (name.given + name.family)
-* extension[Extension-Yhcr-TextSummary].valueString = "Jane Bloggs"
+* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
 * identifier[0].value = "ABC123"

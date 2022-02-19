@@ -1,10 +1,10 @@
-Profile: YhcrOrganization
+Profile: InterweaveOrganization
 Parent: CareConnect-Organization-1
-Id: Yhcr-Organization
-Description: "YHCR Organization resource profile."
+Id: Interweave-Organization
+Description: "Interweave Organization resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 // There are a couple of Care Connect extensions that we don't currently really need
 * extension[Extension-CareConnect-MainLocation-1] ^short = "DISCOURAGED"
@@ -30,7 +30,7 @@ Description: "YHCR Organization resource profile."
 // List created based on the ODS dropdown list here: https://odsportal.digital.nhs.uk/Organisation/Search
 * type 0..1 MS
 * type.coding ^short = "Kind of organization (based on ODS organisation types)"
-* type from Yhcr-OrganisationType-1 (required)
+* type from Interweave-OrganisationType-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Name - make this mandatory, at a minimum we always want the organisation's name
@@ -62,21 +62,21 @@ Description: "YHCR Organization resource profile."
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Examples
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrOrganizationExample
-InstanceOf: YhcrOrganization
-Description: "YHCR Organization example"
+Instance: InterweaveOrganizationExample
+InstanceOf: InterweaveOrganization
+Description: "Interweave Organization example"
 
 * insert Ruleset-ExampleMetaForHospital(Organization)
 
 // (Name)
-* extension[Extension-Yhcr-TextSummary].valueString = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* extension[Extension-Interweave-TextSummary].valueString = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * identifier[0].value = "RCB"
 
 * active = true
 * name = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
-* type.coding = Yhcr-OrganisationType-1#197 "NHS Trust"
+* type.coding = Interweave-OrganisationType-1#197 "NHS Trust"
 
 * address[0].line[0] = "York Hospital"
 * address[0].line[1] = "Wigginton Road"

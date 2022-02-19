@@ -1,12 +1,12 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: YhcrDiagnosticReport
+Profile: InterweaveDiagnosticReport
 Parent: CareConnect-DiagnosticReport-1
-Id: Yhcr-DiagnosticReport
-Description: "YHCR Diagnostic Report resource profile."
+Id: Interweave-DiagnosticReport
+Description: "Interweave Diagnostic Report resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 
 // Identifier: (MS)
@@ -47,9 +47,9 @@ Description: "YHCR Diagnostic Report resource profile."
     loinc 0..1
 
 * code.coding[nicip].system 1..1 MS
-* code.coding[nicip].system = "http://yhcr.org/CodeSystem/Yhcr-NICIP-1" (exactly)
+* code.coding[nicip].system = "https://fhir.yhcr.nhs.uk/CodeSystem/Interweave-NICIP-1" (exactly)
 * code.coding[nicip].code 1..1 MS
-* code.coding[nicip].code from Yhcr-NICIP-1
+* code.coding[nicip].code from Interweave-NICIP-1
 * code.coding[nicip].code ^short = "National Interim Clinical Imaging Procedure code"
 * code.coding[nicip].display 1..1 MS
 
@@ -122,14 +122,14 @@ Description: "YHCR Diagnostic Report resource profile."
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrDiagnosticReportBasicExample
-InstanceOf: YhcrDiagnosticReport
-Description: "YHCR Diagnostic Report - basic example"
+Instance: InterweaveDiagnosticReportBasicExample
+InstanceOf: InterweaveDiagnosticReport
+Description: "Interweave Diagnostic Report - basic example"
 
 * insert Ruleset-ExampleMetaForHospital(DiagnosticReport)
 
-// (Issued date + category description) TODO - or CODE description?
-* extension[Extension-Yhcr-TextSummary].valueString = "14/01/2022 - CT Abdomen"
+// (Issued date + code description)
+* extension[Extension-Interweave-TextSummary].valueString = "14/01/2022 - CT Abdomen"
 
 * insert Ruleset-ExampleLocalId(diagnostic-report, RCB.DIAG-456-XYZ)
 
@@ -138,12 +138,12 @@ Description: "YHCR Diagnostic Report - basic example"
 * category = http://hl7.org/fhir/v2/0074#RAD "Radiology"
 
 * code.coding[0] = $SCT#169070004 "Computed tomography of abdomen (procedure)"
-* code.coding[1] = Yhcr-NICIP-1#CABDO "CT Abdomen"
+* code.coding[1] = Interweave-NICIP-1#CABDO "CT Abdomen"
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
-* encounter = Reference(YhcrEncounterExample) // R4 encounter -> STU3 context
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
 * encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * effectiveDateTime = "2022-01-10T09:00:00Z"

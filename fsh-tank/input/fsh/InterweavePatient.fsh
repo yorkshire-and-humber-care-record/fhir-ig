@@ -1,12 +1,12 @@
 Alias: $patient-cadavericDonor = http://hl7.org/fhir/StructureDefinition/patient-cadavericDonor
 
-Profile: YhcrPatient
+Profile: InterweavePatient
 Parent: CareConnect-Patient-1
-Id: Yhcr-Patient
-Description: "YHCR Patient resource profile."
+Id: Interweave-Patient
+Description: "Interweave Patient resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 ///////////////////////////////////////
 // --- EXTENSIONS ---
@@ -123,7 +123,6 @@ Description: "YHCR Patient resource profile."
 ///////////////////////////////////////
 // --- Other fields ---
 ///////////////////////////////////////
-//*********************TODO - relink to yhcr versions of the fields when ready*
 * generalPractitioner ^short = "DISCOURAGED: PDS is the master of this information, should not normally be populated by other systems."
 * managingOrganization ^short = "DISCOURAGED: Already covered by the provenance tags. (If populated then must match this)"
 //link: remains optional. ***TODO** or maybe discouraged - normally for internal use only?
@@ -183,15 +182,15 @@ Description: "YHCR Patient resource profile."
 // EXAMPLES
 // *************************************************************************************************************************
 
-Instance: YhcrPatientExample-MustSupport
-InstanceOf: YhcrPatient
-Description: "YHCR Patient example - Must Support"
+Instance: InterweavePatientExample-MustSupport
+InstanceOf: InterweavePatient
+Description: "Interweave Patient example - Must Support"
 
 * insert Ruleset-ExampleMetaForHospital(Patient)
-* meta.versionId = "YhcrPatientExampleMustSupport-v1.0.0"
+* meta.versionId = "InterweavePatientExampleMustSupport-v1.0.0"
 
 // (name.given + name.family)
-* extension[Extension-Yhcr-TextSummary].valueString = "Fred Bloggs"
+* extension[Extension-Interweave-TextSummary].valueString = "Fred Bloggs"
 
 
 
@@ -231,16 +230,16 @@ Description: "YHCR Patient example - Must Support"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrPatientExample-Full
-InstanceOf: YhcrPatient
-Description: "YHCR Patient example - Full"
+Instance: InterweavePatientExample-Full
+InstanceOf: InterweavePatient
+Description: "Interweave Patient example - Full"
 
 
 * insert Ruleset-ExampleMetaForHospital(Patient)
-* meta.versionId = "YhcrPatientExampleFull-v1.0.0"
+* meta.versionId = "InterweavePatientExampleFull-v1.0.0"
 
 // (name.given + name.family)
-* extension[Extension-Yhcr-TextSummary].valueString = "Jane Bloggs"
+* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
 
 
 * extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept = CareConnect-EthnicCategory-1#A "British, Mixed British"

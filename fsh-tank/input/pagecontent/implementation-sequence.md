@@ -4,26 +4,26 @@ FHIR offers a wealth of different Resource types, and it can be difficult to kno
 
 ### **1) Patient**
 
- The [Patient](StructureDefinition-Yhcr-Patient.html) resource provides a basis, as everything relates back to a Patient. Creating a Patient also acts as a trigger for PIX registration - thus indicating in the regional record locator that a Data Provider has information about this person.
+ The [Patient](StructureDefinition-Interweave-Patient.html) resource provides a basis, as everything relates back to a Patient. Creating a Patient also acts as a trigger for PIX registration - thus indicating in the regional record locator that a Data Provider has information about this person.
 
 ### **2) Foundational Reference Data**
 
 This consists of:
 
- - [Organisation](StructureDefinition-Yhcr-Organization.html)
- - [Practitioner](StructureDefinition-Yhcr-Practitioner.html)
- - [Location](StructureDefinition-Yhcr-Location.html)
+ - [Organisation](StructureDefinition-Interweave-Organization.html)
+ - [Practitioner](StructureDefinition-Interweave-Practitioner.html)
+ - [Location](StructureDefinition-Interweave-Location.html)
 
  Each Data Provider needs to offer a set of FHIR reference data describing these fundamental aspects of their enterprise. The datasets are fairly small and simple, and do not offer any real value on their own. However they lay the foundations as they are constantly referenced by all other datasets.
 
 ### **3) Documents**
 
-FHIR offers the [DocumentReference](StructureDefinition-Yhcr-DocumentReference.html) resource type to facilitate sharing of documents (eg PDF, Tiff, etc). This is very often a "quick win" which allows a wide variety of useful information (eg Discharge Summaries, Care Plans) to be quickly and easily shared.
+FHIR offers the [DocumentReference](StructureDefinition-Interweave-DocumentReference.html) resource type to facilitate sharing of documents (eg PDF, Tiff, etc). This is very often a "quick win" which allows a wide variety of useful information (eg Discharge Summaries, Care Plans) to be quickly and easily shared.
 
 
 ### **4a) Healthcare - Encounter, Appointment, Related Person**
 
- The [Encounter](StructureDefinition-Yhcr-Encounter.html) is a key FHIR resource for Healthcare Data Providers. It offers structured information about interactions with the patient. It furthermore provides a foundation - as many other FHIR resources "hang off" the Encounter.
+ The [Encounter](StructureDefinition-Interweave-Encounter.html) is a key FHIR resource for Healthcare Data Providers. It offers structured information about interactions with the patient. It furthermore provides a foundation - as many other FHIR resources "hang off" the Encounter.
 
  Appointments are closely related to Encounters, and often worth implementating at the same time.
 

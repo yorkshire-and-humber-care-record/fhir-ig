@@ -1,12 +1,12 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: YhcrEncounter
+Profile: InterweaveEncounter
 Parent: CareConnect-Encounter-1
-Id: Yhcr-Encounter
-Description: "YHCR Encounter resource profile."
+Id: Interweave-Encounter
+Description: "Interweave Encounter resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 // Extensions
 // - Encounter Transport:  (contains more detail of type, period, reason - as far as I can see free text?)
@@ -17,9 +17,9 @@ Description: "YHCR Encounter resource profile."
 // Service Type is perhaps one of the most useful and important fields about an Encounter - but missing from STU3!
 // This omission is rectified in R4, so we pre-adopt it here - and make the extension Must Support
 // We also pre-adopt the UKCore value set, which is more relevant than the default FHIR example and also covers social care
-* extension contains Extension-Yhcr-R4EncounterServiceType named serviceType 0..1
-* extension[Extension-Yhcr-R4EncounterServiceType] ^short = "Specific type of service (pre-adopted from R4)"
-* extension[Extension-Yhcr-R4EncounterServiceType] MS
+* extension contains Extension-Interweave-R4EncounterServiceType named serviceType 0..1
+* extension[Extension-Interweave-R4EncounterServiceType] ^short = "Specific type of service (pre-adopted from R4)"
+* extension[Extension-Interweave-R4EncounterServiceType] MS
 
 
 // Identifier:
@@ -46,7 +46,7 @@ Description: "YHCR Encounter resource profile."
 //      Each encounter should be of exactly one class. If the class changes then this is modelled as a separate encounter
 * class 1..1 MS //(R4 is already 1..1, so need to hack this in via script)
 //* class from http://hl7.org/fhir/ValueSet/v3-ActEncounterCode (required)
-* class from Yhcr-EncounterClass-1 (required)
+* class from Interweave-EncounterClass-1 (required)
 * class ^short = "Classification of the encounter. EXTENSIBLE on request, eg to cover other care settings"
 * insert Ruleset-RawCodingWithSystemCodeDisplay(class)
 
@@ -119,7 +119,7 @@ Description: "YHCR Encounter resource profile."
 //   Capture the reason for the encounter
 //   We pre-adopt the R4 list of reason codes which covers not only Clinical Finding and Procedure, but also social care and A&E.
 * reasonCode MS  //R4 reasonCode -> STU3 reason
-* reasonCode from Yhcr-R4EncounterReason (required)
+* reasonCode from Interweave-R4EncounterReason (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 // Diagnosis: Is Must Support, and if provided we want references only to a Condition, with role and ranking
@@ -170,7 +170,7 @@ Description: "YHCR Encounter resource profile."
 // PartOf: Optional - may be used to point at an overarching EncounterGrouping.
 // Generally it is a flat structure, EXCEPT for pointing specifically at an Encounter Grouping
 * partOf 0..1
-* partOf only Reference(Yhcr-EncounterGrouping)
+* partOf only Reference(Interweave-EncounterGrouping)
 * insert Ruleset-ReferenceWithDisplayAndReference(partOf)
 
 
@@ -221,19 +221,19 @@ RuleSet: Ruleset-Hospitalization
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrEncounterExample-MaturityLevel1
-InstanceOf: YhcrEncounter
-Description: "YHCR Encounter example - Maturity Level 1 (no grouping)"
+Instance: InterweaveEncounterExample-MaturityLevel1
+InstanceOf: InterweaveEncounter
+Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
 
 // (Period.start - Period.end : Class description: Service Type description)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
+* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
 
 // Extension to add the all-important Service Type that is missing from STU3!
-* extension[Extension-Yhcr-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
+* extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
 
-* contained[0] = YhcrLocationHouseAdmissionExample
+* contained[0] = InterweaveLocationHouseAdmissionExample
 
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-123-XYZ)
 
@@ -253,31 +253,31 @@ Description: "YHCR Encounter example - Maturity Level 1 (no grouping)"
 * priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EL "elective"
 
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
 
 // For now take this out, as referral downgraded to optional (due to R4 changes)
 //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
-* appointment = Reference(YhcrAppointmentExample)
+* appointment = Reference(InterweaveAppointmentExample)
 * appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[0].individual = Reference(YhcrPractitionerExample)
+* participant[0].individual = Reference(InterweavePractitionerExample)
 * participant[0].individual.display = "Dr Jane Bloggs"
 * participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[0].individual.identifier.value = "ABC123"
 
 * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
-* participant[1].individual = Reference(YhcrPractitionerExample)
+* participant[1].individual = Reference(InterweavePractitionerExample)
 * participant[1].individual.display = "Dr Jane Bloggs"
 * participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[1].individual.identifier.value = "ABC123"
 
 * participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
-* participant[2].individual = Reference(YhcrPractitionerExample)
+* participant[2].individual = Reference(InterweavePractitionerExample)
 * participant[2].individual.display = "Dr Jane Bloggs"
 * participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[2].individual.identifier.value = "ABC123"
@@ -294,13 +294,13 @@ Description: "YHCR Encounter example - Maturity Level 1 (no grouping)"
 
 * reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
 
-* location[0].location = Reference(YhcrLocationWardExample1)
+* location[0].location = Reference(InterweaveLocationWardExample1)
 * location[0].location.display = "York Hospital: Ward 27 - Dermatology clinic"
 * location[0].status = #completed
 * location[0].period.start = "2022-01-09T09:00:00Z"
 * location[0].period.end = "2022-01-09T10:30:00Z"
 
-* location[1].location = Reference(YhcrLocationWardExample2)
+* location[1].location = Reference(InterweaveLocationWardExample2)
 * location[1].location.display = "York Hospital: Ward 28 - Allergy clinic"
 * location[1].status = #completed
 * location[1].period.start = "2022-01-09T10:30:00Z"
@@ -315,19 +315,19 @@ Description: "YHCR Encounter example - Maturity Level 1 (no grouping)"
 
 ////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrEncounterExample-MaturityLevel2-Part1
-InstanceOf: YhcrEncounter
-Description: "YHCR Encounter example - Maturity Level 2 (part 1 of grouping)"
+Instance: InterweaveEncounterExample-MaturityLevel2-Part1
+InstanceOf: InterweaveEncounter
+Description: "Interweave Encounter example - Maturity Level 2 (part 1 of grouping)"
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
 
 // (Period.start - Period.end : Class description: Service Type description)
-* extension[Extension-Yhcr-TextSummary].valueString = "08/01/2022 11:03 - 09/01/2022 09:00 : Emergency : Accident and Emergency service"
+* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 09/01/2022 09:00 : Emergency : Accident and Emergency service"
 
 // Extension to add the all-important Service Type that is missing from STU3!
-* extension[Extension-Yhcr-R4EncounterServiceType].valueCodeableConcept = $SCT#310000008 "Accident and Emergency service"
+* extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#310000008 "Accident and Emergency service"
 
-* contained[0] = YhcrLocationHouseAdmissionExample
+* contained[0] = InterweaveLocationHouseAdmissionExample
 
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-321-XYZ)
 
@@ -347,7 +347,7 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 1 of grouping)"
 * priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EM "emergency"
 
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
 
@@ -358,13 +358,13 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 1 of grouping)"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[0].individual = Reference(YhcrPractitionerExample)
+* participant[0].individual = Reference(InterweavePractitionerExample)
 * participant[0].individual.display = "Dr Jane Bloggs"
 * participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[0].individual.identifier.value = "ABC123"
 
 * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
-* participant[1].individual = Reference(YhcrPractitionerExample)
+* participant[1].individual = Reference(InterweavePractitionerExample)
 * participant[1].individual.display = "Dr Jane Bloggs"
 * participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[1].individual.identifier.value = "ABC123"
@@ -378,14 +378,14 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 1 of grouping)"
 
 * reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
 
-* location[0].location = Reference(YhcrLocationWardExampleAandE)
+* location[0].location = Reference(InterweaveLocationWardExampleAandE)
 * location[0].location.display = "York Hospital: Accident and Emergency"
 * location[0].status = #completed
 * location[0].period.start = "2022-01-08T11:03:00Z"
 * location[0].period.end = "2022-01-09T09:00:00Z"
 
 
-* partOf = Reference(YhcrEncounterGroupingExample)
+* partOf = Reference(InterweaveEncounterGroupingExample)
 * partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
 // This encounter has the "admission" half of the hospitalization
@@ -397,17 +397,17 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 1 of grouping)"
 ////////////////////////////////////////////////////////////////////////
 
 
-Instance: YhcrEncounterExample-MaturityLevel2-Part2
-InstanceOf: YhcrEncounter
-Description: "YHCR Encounter example - Maturity Level 2 (part 2 of grouping)"
+Instance: InterweaveEncounterExample-MaturityLevel2-Part2
+InstanceOf: InterweaveEncounter
+Description: "Interweave Encounter example - Maturity Level 2 (part 2 of grouping)"
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
 
 // (Period.start - Period.end : Class description: Service Type description)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
+* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
 
 // Extension to add the all-important Service Type that is missing from STU3!
-* extension[Extension-Yhcr-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
+* extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
 
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-456-XYZ)
 
@@ -427,19 +427,19 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 2 of grouping)"
 * priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EM "emergency"
 
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
 
 // For now take this out, as referral downgraded to optional (due to R4 changes)
 //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
-* appointment = Reference(YhcrAppointmentExample)
+* appointment = Reference(InterweaveAppointmentExample)
 * appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[0].individual = Reference(YhcrPractitionerExample)
+* participant[0].individual = Reference(InterweavePractitionerExample)
 * participant[0].individual.display = "Dr Jane Bloggs"
 * participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[0].individual.identifier.value = "ABC123"
@@ -447,7 +447,7 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 2 of grouping)"
 // No admitter here
 
 * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
-* participant[1].individual = Reference(YhcrPractitionerExample)
+* participant[1].individual = Reference(InterweavePractitionerExample)
 * participant[1].individual.display = "Dr Jane Bloggs"
 * participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[1].individual.identifier.value = "ABC123"
@@ -464,20 +464,20 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 2 of grouping)"
 
 * reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
 
-* location[0].location = Reference(YhcrLocationWardExample1)
+* location[0].location = Reference(InterweaveLocationWardExample1)
 * location[0].location.display = "York Hospital: Ward 27 - Dermatology clinic"
 * location[0].status = #completed
 * location[0].period.start = "2022-01-09T09:00:00Z"
 * location[0].period.end = "2022-01-09T10:30:00Z"
 
-* location[1].location = Reference(YhcrLocationWardExample2)
+* location[1].location = Reference(InterweaveLocationWardExample2)
 * location[1].location.display = "York Hospital: Ward 28 - Allergy clinic"
 * location[1].status = #completed
 * location[1].period.start = "2022-01-09T10:30:00Z"
 * location[1].period.end = "2022-01-11T14:30:00Z"
 
 
-* partOf = Reference(YhcrEncounterGroupingExample)
+* partOf = Reference(InterweaveEncounterGroupingExample)
 * partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
 // This encounter has the "discharge" half of the hospitalization
@@ -486,9 +486,9 @@ Description: "YHCR Encounter example - Maturity Level 2 (part 2 of grouping)"
 
 
 /////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationHouseAdmissionExample
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - House for discharge"
+Instance: InterweaveLocationHouseAdmissionExample
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - House for discharge"
 Usage: #inline
 
 
@@ -516,7 +516,7 @@ Usage: #inline
 RuleSet: Ruleset-HospitalizationExample-AdmissionEmergency
 
 * hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#21 "Accident and emergency or dental casualty department of the Health Care Provider"
-* hospitalization.origin = Reference(YhcrLocationHouseAdmissionExample)
+* hospitalization.origin = Reference(InterweaveLocationHouseAdmissionExample)
 * hospitalization.origin.display = "42 Grove Street, LS21 1PF"
 * hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
 
@@ -524,7 +524,7 @@ RuleSet: Ruleset-HospitalizationExample-AdmissionEmergency
 RuleSet: Ruleset-HospitalizationExample-AdmissionWaitingList
 
 * hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#11 "Waiting list"
-* hospitalization.origin = Reference(YhcrLocationHouseAdmissionExample)
+* hospitalization.origin = Reference(InterweaveLocationHouseAdmissionExample)
 * hospitalization.origin.display = "42 Grove Street, LS21 1PF"
 * hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
 
@@ -533,7 +533,7 @@ RuleSet: Ruleset-HospitalizationExample-AdmissionWaitingList
 RuleSet: Ruleset-HospitalizationExample-Discharge
 
 * hospitalization.extension[Extension-CareConnect-DischargeMethod-1].valueCodeableConcept =  CareConnect-DischargeMethod-1#1 "Patient discharged on clinical advice or with clinical consent"
-* hospitalization.destination = Reference(YhcrLocationSocialCareDeptExample)
+* hospitalization.destination = Reference(InterweaveLocationSocialCareDeptExample)
 * hospitalization.destination.display = "Leeds Social Services: Adult Services Department"
 * hospitalization.dischargeDisposition = CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation i.e. where care is provided"
 

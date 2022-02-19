@@ -1,11 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// YHCR Base Fields
+// YInterweave Base Fields
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // This ruleset defines the use of base fields - ie from the Resource, Resource.meta, and DomainResource
-// It is intended to be inserted into all other YHCR profiles
+// It is intended to be inserted into all other Interweave profiles
 
-RuleSet: Ruleset-YhcrBaseFields
+RuleSet: Ruleset-InterweaveBaseFields
 
 //////////////
 // Resource
@@ -94,10 +94,8 @@ RuleSet: Ruleset-YhcrBaseFields
 
 // Useful to assist with creating references having useful display text. 
 // But this is only one approach to achieving this, so not mandatory
-//* extension contains Extension-Yhcr-TextSummary 0..1 //named textSummary 0..1
-//* extension[Extension-Yhcr-TextSummary] ^short = "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
-* extension contains Extension-Yhcr-TextSummary named textSummary 0..1
-* extension[Extension-Yhcr-TextSummary] ^short = "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
+* extension contains Extension-Interweave-TextSummary named textSummary 0..1
+* extension[Extension-Interweave-TextSummary] ^short = "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
 
 
 
@@ -110,9 +108,9 @@ RuleSet: Ruleset-ExampleMetaForHospital(type)
 
 //(Note - important to put our profile first, or else the website won't recognise it!)
 * meta.lastUpdated = "2022-02-01T09:37:00Z"
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-{type}"
+* meta.profile[0] = "https://fhir.yhcr.nhs.uk/StructureDefinition/Interweave-{type}"
 * meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-{type}-1"
-* meta.versionId = "Yhcr{type}Example-v1.0.0"
+* meta.versionId = "Interweave{type}Example-v1.0.0"
 
 * meta.tag[0] =  https://yhcr.nhs.uk/Source#ABC-01 "Acme Ltd Data Systems"
 * meta.tag[1] =  https://yhcr.nhs.uk/Provenance#RCB "York and Scarborough Teaching Hospitals NHS Foundation Trust"
@@ -121,7 +119,7 @@ RuleSet: Ruleset-ExampleMetaForHospital(type)
 
 RuleSet: Ruleset-ExampleLocalId(type, localId)
 
-* identifier[0].system = "https://yhcr.org/Id/local-{type}-identifier"
+* identifier[0].system = "https://fhir.yhcr.nhs.uk/Id/local-{type}-identifier"
 * identifier[0].value = "{localId}" 
 
 
@@ -141,7 +139,7 @@ RuleSet: Ruleset-AddLocalIdentifier(type)
     localIdentifier 0..1 MS
 
 * identifier[localIdentifier].system 1..1 MS
-* identifier[localIdentifier].system = "https://yhcr.org/Id/local-{type}-identifier" (exactly)
+* identifier[localIdentifier].system = "https://fhir.yhcr.nhs.uk/Id/local-{type}-identifier" (exactly)
 * identifier[localIdentifier].value 1..1 MS
 * identifier[localIdentifier].value ^short = "The Local {type} Identifier. Please prefix with ODS code plus period (XXX.) to ensure unique"
 // Period assumed to match that of the entity

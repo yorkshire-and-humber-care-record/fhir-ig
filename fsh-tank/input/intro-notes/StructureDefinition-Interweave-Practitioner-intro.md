@@ -38,7 +38,7 @@ This profile sets minimum expectations for the Practitioner resource.
 
 
     Or as a last resort if no other professional identifier:
-    - https://yhcr.org/Id/local-practitioner-identifier (Local identifier)
+    - https://fhir.yhcr.nhs.uk/Id/local-practitioner-identifier (Local identifier)
 
 ### **Must Support fields**
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known:

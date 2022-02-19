@@ -1,12 +1,12 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: YhcrAppointment
+Profile: InterweaveAppointment
 Parent: CareConnect-Appointment-1
-Id: Yhcr-Appointment
-Description: "YHCR Appointment resource profile."
+Id: Interweave-Appointment
+Description: "Interweave Appointment resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 ///////////////////////////////////////
 // --- CARE CONNECT EXTENSIONS ---
@@ -27,8 +27,8 @@ Description: "YHCR Appointment resource profile."
 
 
 // PLUS our own (optional) extension - to pre-adopt the useful R4 field of "patientInstruction"
-* extension contains Extension-Yhcr-R4PatientInstruction named patientInstruction 0..1
-* extension[Extension-Yhcr-R4PatientInstruction] ^short = "Detailed information and instructions for the patient"
+* extension contains Extension-Interweave-R4PatientInstruction named patientInstruction 0..1
+* extension[Extension-Interweave-R4PatientInstruction] ^short = "Detailed information and instructions for the patient"
 
 
 
@@ -57,7 +57,7 @@ Description: "YHCR Appointment resource profile."
 //    (More relevant to UK and better coverage of social care)
 //    It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
 * serviceType 1..* MS
-* serviceType from Yhcr-UkCoreCareSettingType (required)
+* serviceType from Interweave-UkCoreCareSettingType (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(serviceType)
 
 
@@ -76,7 +76,7 @@ Description: "YHCR Appointment resource profile."
 // Reason: MS The reason for making the appointment – ie a list of SNOMED codes for various medical problems.
 // Does not look very “social care” friendly – an extended or alternative list may be needed if we decide that appointments are relevant to social care?
 * reasonCode MS  //R4 reasonCode -> STU3 reason
-* reasonCode from Yhcr-R4EncounterReason (required)
+* reasonCode from Interweave-R4EncounterReason (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 // Indication: Leave optional (concentrate on populating "reason" as the priority)
@@ -138,7 +138,7 @@ Description: "YHCR Appointment resource profile."
 // Allow only one "type" per participant. Pick the main one. (Or list the whole participant several times)
 // To the normal valueset extend with the standard codes for SBJ (subject) and LOC (location)
 * participant.type 1..1 MS
-* participant.type from Yhcr-AppointmentParticipationType-1 (required)
+* participant.type from Interweave-AppointmentParticipationType-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(participant.type)
 
 // We also need an actor, and FHIR insists on a status. Leave the other bits optional ("required", "period") 
@@ -176,15 +176,15 @@ Description: "YHCR Appointment resource profile."
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXAMPLES
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrAppointmentExample
-InstanceOf: YhcrAppointment
-Description: "YHCR Appointment example"
+Instance: InterweaveAppointmentExample
+InstanceOf: InterweaveAppointment
+Description: "Interweave Appointment example"
 
 * insert Ruleset-ExampleMetaForHospital(Appointment)
 
 // (Start + Service Type + Location.display)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
-* extension[Extension-Yhcr-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
+* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
+* extension[Extension-Interweave-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
 * extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
 * extension[Extension-CareConnect-AppointmentCancellationReason-1].valueString = "Unable to attend due to prior engagement"
@@ -214,17 +214,17 @@ Description: "YHCR Appointment example"
 //* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
 * participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
-* participant[0].actor = Reference(YhcrPatientExample-MustSupport) 
+* participant[0].actor = Reference(InterweavePatientExample-MustSupport) 
 * participant[0].actor.display = "Fred Bloggs"
 * participant[0].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
 
 * participant[1].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" 
-* participant[1].actor = Reference(YhcrLocationWardExample1)
+* participant[1].actor = Reference(InterweaveLocationWardExample1)
 * participant[1].actor.display = "York Hospital: Ward 27 - Dermatology clinic"
 * participant[1].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
 
 * participant[2].type = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[2].actor = Reference(YhcrPractitionerExample)
+* participant[2].actor = Reference(InterweavePractitionerExample)
 * participant[2].actor.display = "Dr Jane Bloggs"
 * participant[2].actor.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * participant[2].actor.identifier.value = "ABC123"

@@ -4,7 +4,7 @@
 ## **Introduction**
 This profile describes the use of an Encounter resource to provide an overarching "Encounter Grouping". The purpose is to link together several underlying more detailed Encounters, thus representing the concept of a "visit", "stay", or "incident".
 
-***Please refer to the main [Encounter Resource profile](StructureDefinition-Yhcr-Encounter.html) for a more complete description of the approach to modelling Encounters***
+***Please refer to the main [Encounter Resource profile](StructureDefinition-Interweave-Encounter.html) for a more complete description of the approach to modelling Encounters***
 
 The EncounterGrouping is a skeletal Encounter which requires a small number of mandatory fields:
  - Class - a new class code of GROUPING is defined specifically to identify these overarching Encounters

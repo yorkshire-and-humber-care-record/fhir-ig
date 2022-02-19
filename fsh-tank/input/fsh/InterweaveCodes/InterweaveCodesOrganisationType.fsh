@@ -1,15 +1,15 @@
-ValueSet: YhcrOrganisationType
-Id: Yhcr-OrganisationType-1
+ValueSet: InterweaveOrganisationType
+Id: Interweave-OrganisationType-1
 Description: "Organisation Types, as used by ODS"
-* ^name = "YhcrOrganisationType"
-* include codes from system Yhcr-OrganisationType-1
+* ^name = "InterweaveOrganisationType"
+* include codes from system Interweave-OrganisationType-1
 
 
 
-CodeSystem: YhcrOrganisationType
-Id: Yhcr-OrganisationType-1
+CodeSystem: InterweaveOrganisationType
+Id: Interweave-OrganisationType-1
 Description: "Organisation Types, as used by ODS"
-* ^name = "YhcrOrganisationType"
+* ^name = "InterweaveOrganisationType"
 * ^content = #complete
 
 // See https://odsportal.digital.nhs.uk/Organisation/Search

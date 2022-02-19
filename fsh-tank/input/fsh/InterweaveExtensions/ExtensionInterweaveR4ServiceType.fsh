@@ -1,5 +1,5 @@
-Extension: ExtensionYhcrR4EncounterServiceType
-Id: Extension-Yhcr-R4EncounterServiceType
+Extension: ExtensionInterweaveR4EncounterServiceType
+Id: Extension-Interweave-R4EncounterServiceType
 Description: "An extension to add Service Type to the Encounter. This is pre-adopting a field that is missing in STU3 but added in R4"
 * ^status = #draft
 
@@ -15,6 +15,6 @@ Description: "An extension to add Service Type to the Encounter. This is pre-ado
 // We also want to pre-adopt this value set from UK Core which is better than the original FHIR suggestion
 // (More relevant to UK and better coverage of social care)
 // It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
-* valueCodeableConcept from Yhcr-UkCoreCareSettingType (required)
+* valueCodeableConcept from Interweave-UkCoreCareSettingType (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)
 

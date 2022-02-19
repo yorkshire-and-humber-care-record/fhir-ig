@@ -1,5 +1,5 @@
-ValueSet: YhcrLocationPhysicalType
-Id: Yhcr-LocationPhysicalType-1
+ValueSet: InterweaveLocationPhysicalType
+Id: Interweave-LocationPhysicalType-1
 Description: "A ValueSet to identify the physical type of a location. A subset of the example FHIR list"
 
 // Simplified 3 level heirarchy within an organisation

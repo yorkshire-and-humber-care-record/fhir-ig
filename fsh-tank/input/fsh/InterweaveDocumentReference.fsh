@@ -1,12 +1,12 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: YhcrDocumentReference
+Profile: InterweaveDocumentReference
 Parent: CareConnect-DocumentReference-1
-Id: Yhcr-DocumentReference
-Description: "YHCR DocumentReference resource profile."
+Id: Interweave-DocumentReference
+Description: "Interweave DocumentReference resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 // Leave optional:
 // masterIdentifier (version specific, eg correlate with document system)
@@ -22,7 +22,7 @@ Description: "YHCR DocumentReference resource profile."
 // Much discussion about this, and DADA proposed list of SNOMED codes selected for now
 // However it is still a controversial area, and does not yet feel appropriate to prescibe more than "preferred"
 * type MS
-* type from YhcrDocumentType (preferred)
+* type from InterweaveDocumentType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
 
 // Class - leave optional for now, pending further discussion
@@ -94,27 +94,27 @@ Description: "YHCR DocumentReference resource profile."
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrDocumentReferenceExample
-InstanceOf: YhcrDocumentReference
-Description: "YHCR Document Reference example"
+Instance: InterweaveDocumentReferenceExample
+InstanceOf: InterweaveDocumentReference
+Description: "Interweave Document Reference example"
 
 
 * insert Ruleset-ExampleMetaForHospital(DocumentReference)
 
 // (Date + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 : Discharge Letter"
+* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 : Discharge Letter"
 
 * status = http://hl7.org/fhir/document-reference-status#current "Current"
 * docStatus = http://hl7.org/fhir/composition-status#final "Final"
 
 * type = $SCT#8237010000001 "Discharge Letter"
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
 * date = "2022-01-09T00:00:00Z"  // "indexed" in STU3
 
-* author = Reference(YhcrPractitionerExample)
+* author = Reference(InterweavePractitionerExample)
 * author.display = "Dr Jane Bloggs"
 * author.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * author.identifier.value = "ABC123"
@@ -122,7 +122,7 @@ Description: "YHCR Document Reference example"
 // And then we have the "context" structure with numerous fields:
 //  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
 
-* context.encounter = Reference(YhcrEncounterExample)
+* context.encounter = Reference(InterweaveEncounterExample-MaturityLevel1)
 * context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
 
 // And finally the actual content. This and the attachment are already mandatory in FHIR, and we also need the content type

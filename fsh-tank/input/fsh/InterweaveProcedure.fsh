@@ -1,12 +1,12 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: YhcrProcedure
+Profile: InterweaveProcedure
 Parent: CareConnect-Procedure-1
-Id: Yhcr-Procedure
-Description: "YHCR Procedure resource profile - DRAFT"
+Id: Interweave-Procedure
+Description: "Interweave Procedure resource profile - DRAFT"
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 
 // Extension - CareConnect Anesthetic Issues: Excluded
@@ -138,15 +138,15 @@ Description: "YHCR Procedure resource profile - DRAFT"
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: YhcrProcedureExample
-InstanceOf: YhcrProcedure
-Description: "YHCR Procedure example"
+Instance: InterweaveProcedureExample
+InstanceOf: InterweaveProcedure
+Description: "Interweave Procedure example"
 
 
 * insert Ruleset-ExampleMetaForHospital(Procedure)
 
 // (PerformedDateTime + Code description)
-* extension[Extension-Yhcr-TextSummary].valueString = "09/01/2022 09:00: Repair of malunion of tibia"
+* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00: Repair of malunion of tibia"
 
 
 * insert Ruleset-ExampleLocalId(procedure, RCB.PROC-456-XYZ)
@@ -156,10 +156,10 @@ Description: "YHCR Procedure example"
 * category = $SCT#387713003 "Surgical procedure"
 * code.coding[0] = $SCT#445004 "Repair of malunion of tibia"
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
-* encounter = Reference(YhcrEncounterExample) // R4 encounter -> STU3 context
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
 * encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * performedDateTime = "2022-01-09T09:00:00Z"

@@ -1,12 +1,12 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: YhcrCondition
+Profile: InterweaveCondition
 Parent: CareConnect-Condition-1
-Id: Yhcr-Condition
-Description: "YHCR Condition resource profile - DRAFT"
+Id: Interweave-Condition
+Description: "Interweave Condition resource profile - DRAFT"
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 
 // Extension - CareConnect Episodicity: Leave optional
@@ -111,14 +111,14 @@ Description: "YHCR Condition resource profile - DRAFT"
 
 
 
-Instance: YhcrConditionExample
-InstanceOf: YhcrCondition
-Description: "YHCR Condition example"
+Instance: InterweaveConditionExample
+InstanceOf: InterweaveCondition
+Description: "Interweave Condition example"
 
 * insert Ruleset-ExampleMetaForHospital(Condition)
 
 // (Code description + clinical status)
-* extension[Extension-Yhcr-TextSummary].valueString = "Paraffinoma of skin: Active"
+* extension[Extension-Interweave-TextSummary].valueString = "Paraffinoma of skin: Active"
 
 * insert Ruleset-ExampleLocalId(condition, RCB.COND-456-XYZ)
 
@@ -128,17 +128,17 @@ Description: "YHCR Condition example"
 * code.coding[0] = $SCT#299007 "Paraffinoma of skin" 
 * bodySite.coding[0] =  $SCT#2059009 "Skin of ear lobule"
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
-* encounter = Reference(YhcrEncounterExample) // R4 encounter -> STU3 context
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
 * encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * onsetDateTime = "2020-04-01T00:00:00Z"   
 * abatementString = "During summer holidays 2021"
 * recordedDate = "2020-06-09T09:00:00Z"  //recordedDate -> STU3 assertedDate
 
-* asserter = Reference(YhcrPractitionerExample)
+* asserter = Reference(InterweavePractitionerExample)
 * asserter.display = "Dr Jane Bloggs"
 * asserter.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
 * asserter.identifier.value = "ABC123"

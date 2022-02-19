@@ -1,16 +1,16 @@
-ValueSet: YhcrNICIP
-Id: Yhcr-NICIP-1
+ValueSet: InterweaveNICIP
+Id: Interweave-NICIP-1
 Description: "National Interim Clinical Imaging Procedure codes"
-* ^name = "YhcrNICIP codes"
+* ^name = "InterweaveNICIP codes"
 
-* include codes from system Yhcr-NICIP-1
+* include codes from system Interweave-NICIP-1
 
 
 
-CodeSystem: YhcrNICIP
-Id: Yhcr-NICIP-1
+CodeSystem: InterweaveNICIP
+Id: Interweave-NICIP-1
 Description: "National Interim Clinical Imaging Procedure codes"
-* ^name = "YhcrNICIP codes"
+* ^name = "InterweaveNICIP codes"
 * ^content = #complete
 
 * #CABDO "CT Abdomen"

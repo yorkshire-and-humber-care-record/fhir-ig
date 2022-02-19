@@ -1,10 +1,10 @@
-Profile: YhcrLocation
+Profile: InterweaveLocation
 Parent: CareConnect-Location-1
-Id: Yhcr-Location
-Description: "YHCR Location resource profile."
+Id: Interweave-Location
+Description: "Interweave Location resource profile."
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 // Identifier (ODS) - CareConnect already defines a special identifier for ODS Site Code
 // We can't make this mandatory as some locations are not part of an ODS Site (eg patient's house). 
@@ -81,7 +81,7 @@ Description: "YHCR Location resource profile."
 * physicalType 1..1 MS
 * physicalType.coding 1..1 MS
 * physicalType ^short = "Physical form of the location. Note reduced subset of location types that are supported"
-* physicalType from Yhcr-LocationPhysicalType-1 (required)
+* physicalType from Interweave-LocationPhysicalType-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(physicalType)
 
 
@@ -112,17 +112,17 @@ Description: "YHCR Location resource profile."
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Site ////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationSiteExample
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - Site"
+Instance: InterweaveLocationSiteExample
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - Site"
 
 
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleSite-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleSite-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Hospital"
+* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Hospital"
 
 
 
@@ -146,7 +146,7 @@ Description: "YHCR Location example - Site"
 * address.city = "York"
 * address.postalCode = "YO31 8HE"
 
-* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization = Reference(InterweaveOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
@@ -155,16 +155,16 @@ Description: "YHCR Location example - Site"
 
 
 // Ward //////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationWardExample1
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - Ward 27"
+Instance: InterweaveLocationWardExample1
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - Ward 27"
 
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleWard27-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleWard27-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 27: Dermatology clinic"
+* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 27: Dermatology clinic"
 
 
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456)
@@ -179,25 +179,25 @@ Description: "YHCR Location example - Ward 27"
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "01234 345345"
 
-* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization = Reference(InterweaveOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(YhcrLocationSiteExample)
+* partOf = Reference(InterweaveLocationSiteExample)
 * partOf.display = "York Hospital"
 
 ////////////////////////////////////
-Instance: YhcrLocationWardExample2
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - Ward 28"
+Instance: InterweaveLocationWardExample2
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - Ward 28"
 
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleWard28-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleWard28-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
+* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
 
 
 
@@ -213,27 +213,27 @@ Description: "YHCR Location example - Ward 28"
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "05678 111222"
 
-* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization = Reference(InterweaveOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(YhcrLocationSiteExample)
+* partOf = Reference(InterweaveLocationSiteExample)
 * partOf.display = "York Hospital"
 
 
 
 ////////////////////////////////////
-Instance: YhcrLocationWardExampleAandE
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - A&E"
+Instance: InterweaveLocationWardExampleAandE
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - A&E"
 
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleWardAandE-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleWardAandE-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Accident and Emergency"
+* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Accident and Emergency"
 
 
 
@@ -249,28 +249,28 @@ Description: "YHCR Location example - A&E"
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "05678 111999"
 
-* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization = Reference(InterweaveOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(YhcrLocationSiteExample)
+* partOf = Reference(InterweaveLocationSiteExample)
 * partOf.display = "York Hospital"
 
 
 
 
 // Room //////////////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationRoomExample
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - Room"
+Instance: InterweaveLocationRoomExample
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - Room"
 
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleRoom-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleRoom-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "York Hospital: Ward 27: Room 1: Dermatology clinic"
+* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 27: Room 1: Dermatology clinic"
 
 
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456-1)
@@ -283,26 +283,26 @@ Description: "YHCR Location example - Room"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#DERM "Dermatology clinic"
 * physicalType.coding = http://hl7.org/fhir/location-physical-type#ro "Room"
 
-* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization = Reference(InterweaveOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(YhcrLocationWardExample1)
+* partOf = Reference(InterweaveLocationWardExample1)
 * partOf.display = "York Hospital: Ward 27"
 
 
 // House ///////////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationHouseExample
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - House"
+Instance: InterweaveLocationHouseExample
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - House"
 
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleHouse-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleHouse-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
+* extension[Extension-Interweave-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
 
 
 
@@ -322,15 +322,15 @@ Description: "YHCR Location example - House"
 
 
 // Social Care Dept ///////////////////////////////////////////////////////////////////////////////
-Instance: YhcrLocationSocialCareDeptExample
-InstanceOf: YhcrLocation
-Description: "YHCR Location example - Social Care Department"
+Instance: InterweaveLocationSocialCareDeptExample
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - Social Care Department"
 
 * insert Ruleset-ExampleMetaForHospital(Location)
-* meta.versionId = "YhcrLocationExampleSocialCare-v1.0.0"
+* meta.versionId = "InterweaveLocationExampleSocialCare-v1.0.0"
 
 // (Name + Type)
-* extension[Extension-Yhcr-TextSummary].valueString = "Leeds Social Services: Adult Services Department: community service center"
+* extension[Extension-Interweave-TextSummary].valueString = "Leeds Social Services: Adult Services Department: community service center"
 
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ789)
 
@@ -345,12 +345,12 @@ Description: "YHCR Location example - Social Care Department"
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "01234 345345"
 
-* managingOrganization = Reference(YhcrOrganizationExample)
+* managingOrganization = Reference(InterweaveOrganizationExample)
 * managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(YhcrLocationSiteExample)
+* partOf = Reference(InterweaveLocationSiteExample)
 * partOf.display = "York Hospital"
 
 

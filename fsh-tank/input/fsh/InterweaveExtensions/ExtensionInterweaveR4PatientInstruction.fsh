@@ -1,5 +1,5 @@
-Extension: ExtensionYhcrPatientInstruction
-Id: Extension-Yhcr-R4PatientInstruction
+Extension: ExtensionInterweavePatientInstruction
+Id: Extension-Interweave-R4PatientInstruction
 Description: "Detailed information and instructions for the patient. Pre-adopted from R4"
 * ^status = #draft
 

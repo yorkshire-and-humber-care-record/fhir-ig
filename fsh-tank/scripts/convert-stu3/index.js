@@ -50,28 +50,28 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "StructureDefinition") {
               jsonObject = convertStructureDefinition(jsonObject);
 
-              if(jsonObject.id == "Yhcr-Encounter" || jsonObject.id == "Yhcr-EncounterGrouping") {
-                jsonObject = convertYhcrEncounterStructureDefinition(jsonObject);
+              if(jsonObject.id == "Interweave-Encounter" || jsonObject.id == "Interweave-EncounterGrouping") {
+                jsonObject = convertInterweaveEncounterStructureDefinition(jsonObject);
               }
 
-              if(jsonObject.id == "Yhcr-DocumentReference") {
-                jsonObject = convertYhcrDocumentReferenceStructureDefinition(jsonObject);
+              if(jsonObject.id == "Interweave-DocumentReference") {
+                jsonObject = convertInterweaveDocumentReferenceStructureDefinition(jsonObject);
               }
 
-              if(jsonObject.id == "Yhcr-Appointment") {
-                jsonObject = convertYhcrAppointmentStructureDefinition(jsonObject);
+              if(jsonObject.id == "Interweave-Appointment") {
+                jsonObject = convertInterweaveAppointmentStructureDefinition(jsonObject);
               }
 
-              if(jsonObject.id == "Yhcr-Condition") {
-                jsonObject = convertYhcrConditionStructureDefinition(jsonObject);
+              if(jsonObject.id == "Interweave-Condition") {
+                jsonObject = convertInterweaveConditionStructureDefinition(jsonObject);
               }
 
-              if(jsonObject.id == "Yhcr-Procedure") {
-                jsonObject = convertYhcrProcedureStructureDefinition(jsonObject);
+              if(jsonObject.id == "Interweave-Procedure") {
+                jsonObject = convertInterweaveProcedureStructureDefinition(jsonObject);
               }
 
-              if(jsonObject.id == "Yhcr-DiagnosticReport") {
-                jsonObject = convertYhcrDiagnosticReportStructureDefinition(jsonObject);
+              if(jsonObject.id == "Interweave-DiagnosticReport") {
+                jsonObject = convertInterweaveDiagnosticReportStructureDefinition(jsonObject);
               }
 
             }
@@ -205,7 +205,7 @@ function convertStructureDefinition(jsonObject) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function convertYhcrEncounterStructureDefinition(jsonObject) {
+function convertInterweaveEncounterStructureDefinition(jsonObject) {
  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
@@ -266,7 +266,7 @@ function convertYhcrEncounterStructureDefinition(jsonObject) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function convertYhcrDocumentReferenceStructureDefinition(jsonObject) {
+function convertInterweaveDocumentReferenceStructureDefinition(jsonObject) {
  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
@@ -287,7 +287,7 @@ function convertYhcrDocumentReferenceStructureDefinition(jsonObject) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function convertYhcrAppointmentStructureDefinition(jsonObject) {
+function convertInterweaveAppointmentStructureDefinition(jsonObject) {
  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
@@ -322,7 +322,7 @@ function convertYhcrAppointmentStructureDefinition(jsonObject) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function convertYhcrConditionStructureDefinition(jsonObject) {
+function convertInterweaveConditionStructureDefinition(jsonObject) {
  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
@@ -349,7 +349,7 @@ function convertYhcrConditionStructureDefinition(jsonObject) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function convertYhcrProcedureStructureDefinition(jsonObject) {
+function convertInterweaveProcedureStructureDefinition(jsonObject) {
  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
@@ -370,7 +370,7 @@ function convertYhcrProcedureStructureDefinition(jsonObject) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function convertYhcrDiagnosticReportStructureDefinition(jsonObject) {
+function convertInterweaveDiagnosticReportStructureDefinition(jsonObject) {
  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {

@@ -1,10 +1,10 @@
-Profile: YhcrEncounterGrouping
+Profile: InterweaveEncounterGrouping
 Parent: CareConnect-Encounter-1
-Id: Yhcr-EncounterGrouping
-Description: "YHCR Encounter resource profile  to group other encounters into a 'visit'"
+Id: Interweave-EncounterGrouping
+Description: "Interweave Encounter resource profile  to group other encounters into a 'visit'"
 * ^status = #draft
 
-* insert Ruleset-YhcrBaseFields
+* insert Ruleset-InterweaveBaseFields
 
 // This is a higher-level encounter used to group other encounters together. 
 // The aim is to capture skeletal information which does not duplicate that already covered by the more detailed Encounter records
@@ -29,7 +29,7 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 //      (Use our own list in case so we can add this to it
 * class 1..1 MS
 //* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute" (exactly)
-* class = Yhcr-EncounterClass-1#GROUPING "Grouping of related Encounters" (exactly)
+* class = Interweave-EncounterClass-1#GROUPING "Grouping of related Encounters" (exactly)
 * insert Ruleset-RawCodingWithSystemCodeDisplay(class)
 
 * classHistory 0..0
@@ -88,19 +88,19 @@ Description: "YHCR Encounter resource profile  to group other encounters into a 
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Instance: YhcrEncounterGroupingExample
-InstanceOf: YhcrEncounterGrouping
-Description: "YHCR Encounter Grouping example"
+Instance: InterweaveEncounterGroupingExample
+InstanceOf: InterweaveEncounterGrouping
+Description: "Interweave Encounter Grouping example"
 
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
-* meta.profile[0] = "http://yhcr.org/StructureDefinition/Yhcr-EncounterGrouping"
-* meta.versionId = "YhcrEncounterGroupingExample-v1.0.0"
+* meta.profile[0] = "https://fhir.yhcr.nhs.uk/StructureDefinition/Interweave-EncounterGrouping"
+* meta.versionId = "InterweaveEncounterGroupingExample-v1.0.0"
 
 // (Period.start - Period.end : Class description)
-* extension[Extension-Yhcr-TextSummary].valueString = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
+* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
-* contained[0] = YhcrLocationHouseAdmissionExample
+* contained[0] = InterweaveLocationHouseAdmissionExample
 
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-777-XYZ)
 
@@ -109,9 +109,9 @@ Description: "YHCR Encounter Grouping example"
 * period.start = "2022-01-08T11:03:00Z"
 * period.end = "2022-01-11T14:30:00Z"
 
-* class = Yhcr-EncounterClass-1#GROUPING "Grouping of related Encounters"
+* class = Interweave-EncounterClass-1#GROUPING "Grouping of related Encounters"
 
-* subject = Reference(YhcrPatientExample-MustSupport) 
+* subject = Reference(InterweavePatientExample-MustSupport) 
 * subject.display = "Fred Bloggs"
 
 * insert Ruleset-HospitalizationExample-AdmissionEmergency

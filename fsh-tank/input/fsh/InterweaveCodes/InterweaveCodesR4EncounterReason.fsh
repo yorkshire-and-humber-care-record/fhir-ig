@@ -1,7 +1,7 @@
-ValueSet: YhcrR4EncounterReason
-Id: Yhcr-R4EncounterReason
+ValueSet: InterweaveR4EncounterReason
+Id: Interweave-R4EncounterReason
 Description: "Defines the set of codes that can be used to indicate reasons for an encounter. Pre-adopted from R4 to gain additional codes for Social Care and A&E."
-* ^name = "Yhcr R4 Encounter Reason"
+* ^name = "Interweave R4 Encounter Reason"
 * ^copyright = "This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement."
 
 * include codes from system SNOMED_CT where concept is-a #404684003 // Clinical finding
