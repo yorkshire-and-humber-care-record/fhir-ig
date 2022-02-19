@@ -15,9 +15,9 @@ The following mandatory fields are defined in order to properly describe a Proce
 1. **Status** - This is most likely to be “completed” to provide a historical list of procedures performed. However other codes about future or aborted procedures MAY be used where relevant – as long as they are kept up-to-date.
    - “unknown” should be avoided if at all possible
 
-2. **Category** - A simple and short list of SNOMED codes to describe the overall category of procedure eg “Surgical Procedure”, “Diagnostic Procedure”
+2. **Category** - A simple and short list of SNOMED codes to describe the overall category of procedure eg “Surgical Procedure”, “Diagnostic Procedure”. We pre-adopt the R4 list which adds one extra code for "Social Service Procedure".
 
-3. **Code** - Essential to describe what the procedure actually is. Based on SNOMED codes eg "Excision of lesion of artery"
+3. **Code** - Essential to describe what the procedure actually is. Based on SNOMED codes eg "Excision of lesion of artery". We pre-adopt the list from UkCore which aligns with PRSB standards and extends FHIR with extra codes for social care
 
 4. **Subject** - every Procedure must be linked to a Patient (not a Group)
 
@@ -36,7 +36,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 3. **Outcome** - A short and simple list of “successful”, “unsuccessful”, “partially successful”. Must be populated when relevant and known. (Accepting that for some types of procedure then this may be impossible if there is no simple definition of “success”)
 
-4. **Follow Up** - This is very useful to populate in a regional care record as, for example, it allows community teams to see that follow up care is needed
+4. **Follow Up** - This is very useful to populate in a regional care record as, for example, it allows community teams to see that follow up care is needed. FHIR provides an "example" list which does not cover a great range of scenarios, and we are not aware of any better alternative list. Therefore categorised only as a "preferred" list for now - please get in touch if you intend to use and have further insights.
 
 5. **Focal Device** - This is useful to provide if relevant (ie if a device has been fitted or changed). May inform community teams with follow up care.
 

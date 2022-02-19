@@ -44,18 +44,20 @@ Description: "Interweave Procedure resource profile - DRAFT"
 
 // Category: Mandatory
 //   A simple and short list of SNOMED codes to describe the overall category of procedure eg “Surgical Procedure”, “Diagnostic Procedure”
+//   We pre-adopt the R4 list which adds one extra code for "Social Service Procedure"
 * category 1..1 MS
-* category from http://hl7.org/fhir/ValueSet/procedure-category (required)
+* category from Interweave-R4ProcedureCategory (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(category)
 	
 
 // Code: Mandatory
 //   Essential information about what the procedure actually was.
+//   We pre-adopt the list from UkCore which aligns with PRSB standards and extends FHIR with extra codes for social care
 * code 1..1 MS
-* code from http://hl7.org/fhir/ValueSet/procedure-code (required)
+* code from Interweave-UkCoreCareProcedureCode (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
 * code.coding[snomedCT] 1..1 MS
-* code.coding[snomedCT] from http://hl7.org/fhir/ValueSet/procedure-code (required)
+* code.coding[snomedCT] from Interweave-UkCoreCareProcedureCode (required)
 
 
 // Subject: Is already mandatory. Essential reference to the patient (only)
@@ -110,8 +112,9 @@ Description: "Interweave Procedure resource profile - DRAFT"
 // Follow Up (MS)
 //  This is very useful to populate in a regional care record as, 
 //  for example, it allows community teams to see that follow up care is needed
+//  FHIR does not provide a great list, and there seems to be no well-accepted alternative. So mark as only "preferred" for now
 * followUp MS
-* followUp from http://hl7.org/fhir/ValueSet/procedure-followup (required)
+* followUp from http://hl7.org/fhir/ValueSet/procedure-followup (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(followUp)
 
 // Note (Optional)

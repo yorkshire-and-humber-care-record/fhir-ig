@@ -11,7 +11,7 @@ The following mandatory fields are defined in order to properly describe a Condi
    This implies a need to keep this status up-to-date – and ideally this will be done, but in reality might not always be possible. For example in the case of historical records where the patient has moved on. 
 At a minimum however this status must be valid as-at the “assertedDate”. This allows a viewer to make an informed judgement about the likelihood that it is still relevant now.
 
-2. **Code** - Essential to describe what the condition actually is. Based on SNOMED codes eg "Sprain of shoulder"
+2. **Code** - Essential to describe what the condition actually is. Based on SNOMED codes eg "Sprain of shoulder". We pre-adopt the UK Core code list, which extends the default FHIR list with additional codes covering Social Care and Urgent Care
 
 3. **Subject** - every Condition must be linked to a Patient (not a Group)
 
@@ -57,11 +57,12 @@ Other fields are optional and may be populated if known - on the understanding t
 
  - **Note** - Only to be used with caution. Any notes may be shared widely across the region, including being viewed by the patient themselves
 
+- **Category** - There are a few codes here to classify a Condition eg “Encounter Diagnosis” or “Problem List Item”. (The original FHIR spec only has these two, but Care Connect adds a few more which perhaps makes it a bit more useful)
+
+
 
 ### **Discouraged or Removed fields**
- - **Verification Status** - This appears to be an important modifier of the Condition, however it has been removed by Care Connect. Note that an implication of this decision by Care Connect is that this becomes a set of Conditions which DO apply to the subject. Ie there is no mechanism to capture a "refuted" Condition.
-
-  - **Category** - This field provides an opportunity to classify a Condition as either “Encounter Diagnosis” or “Problem List Item”. It is proposed that this is not a vital distinction - as where a Condition is related to an Encounter then this will be evident from the Context linkages
+ - **Verification Status** - This appears to be a significant modifier of the Condition, however it has been removed by Care Connect. Note that an implication of this decision by Care Connect is that this becomes a set of Conditions which DO apply to the subject. Ie there is no mechanism to capture a "refuted" Condition.
 
 
 ### **Summary Text**

@@ -118,7 +118,7 @@ This is about the type of practitioner needed (eg for scheduling):
  *Strangely enough, the list of "SDS Job Roles" which CareConnect (mis)uses for the Service Category would actaully be rather good here. But for some reason no-one is using it?*
 
  > ***Proposed to replace the FHIR default (which is not very useful anyway) with the list of SDS Job Roles***
-
+ 
 ## **Appointment Reason**
 This is the same field and same considerations as Encounter Reason.
 

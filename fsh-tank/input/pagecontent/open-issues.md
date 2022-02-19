@@ -46,8 +46,6 @@ This page captures topics of ongoing discussion. Contributions and insights are 
   
 ## **Condition**
 
- - **Code** - FHIR provides an example list of SNOMED codes for describing a Condition. Need feedback on whether this is appropriate and achievable. (Including consideration of Social Care)?
-
  - **Onset and Abatement** -In both cases there is a variety of options for how to express this (eg datetime, age, period, etc). These do seem relevant for accurately capturing what is known - with the implication that Data Consumers will need corresponding flexibility in displaying this information.
    - Is this OK?
    - What about implications for a "timeline". Options other than a simple datetime may be difficult to plot on a timeline? Do we need any other options eg a "timeline date?"
@@ -67,9 +65,7 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
 ## **Procedure**
 
- - **Category and Code** - FHIR provides example lists for both of these, need feedback on whether they are appropriate and achievable. 
-
-  - **Follow Up codes** - FHIR provides an example list, but it is quite short - need feedback on whether they are appropriate, (or sources of alternatives). 
+  - **Follow Up codes** - FHIR provides an example list, but it is quite short - provisionally adopted for now, but invite feedback on sources of alternatives. 
  
  - **Performed** - it seems important to know when a Procedure is performed, but FHIR complicates with a choice between datetime and period. It would be simpler to restrict to a single datetime only, but this could exclude valid use-cases which do need a period? Otherwise a Data Consumers will need to cope with both (including for timelines)?
 

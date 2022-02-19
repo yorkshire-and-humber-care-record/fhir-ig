@@ -27,19 +27,19 @@ Description: "Interweave Condition resource profile - DRAFT"
 // Verification Status: (Removed by Care Connect)
 //   (We thought this looked important - may even indicate that it is "refuted"! However CareConnect has removed it)
 
-// Category (discouraged)
+// Category (optional)
 // This field provides an opportunity to classify a Condition as either “Encounter Diagnosis” or “Problem List Item”.
-// It is proposed that this is not a necessary distinction. 
-// (Where a Condition is related to an Encounter then this will be evident from the linkages)
-* category ^short = "DISCOURAGED - may be inferred from presence of 'context' linking to an Encounter"
+// This basic FHIR list doesn't seem much point, but CareConnect adds some more values which makes it look a bit more useful
+// So optional
 
 // Severity (optional)
 // A simple categorisation of “simple”, “moderate”, or “mild”. May be useful if known, but will not be relevant to all types of condition
 
 // Code (mandatory)
 //  Essential to provide to describe what the condition actually is.
+//  We pre-adopt the UKCore code list - which extends the standard FHIR list by adding codes for social care and A&E
 * code 1..1 MS
-* code from http://hl7.org/fhir/ValueSet/condition-code (required)
+* code from Interweave-UkCoreCareConditionCode (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
 
 
