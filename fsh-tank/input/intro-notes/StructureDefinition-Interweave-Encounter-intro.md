@@ -91,7 +91,7 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
 The diagram below summarises the above discussion - ie core Encounters, single Grouping Encounter, and aspirational Episode of Care.
 
 
-<img src=".\EncounterStructure.png" alt="Encounter Structure" style="clear:both; float:none">
+<img src=".\EncounterStructure2.png" alt="Encounter Structure" style="clear:both; float:none">
  
 
 
