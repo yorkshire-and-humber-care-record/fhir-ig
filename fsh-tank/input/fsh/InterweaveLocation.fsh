@@ -30,7 +30,7 @@ Description: "Interweave Location resource profile."
 //     A short name for the location. eg “Ward 27” 
 //     For a house it could be “Patient’s home”, “Foster home”, etc
 * name 1..1 MS
-* name ^short = "Name of the location as used by humans. Does not need to be unique, but preferably incorporates any heirarchy for more meaningful display. Eg 'Green Road Hospital, Ward 27, Room 5"
+* name ^short = "Name of the location as used by humans. Does not need to be unique, but preferably incorporates any hierarchy for more meaningful display. Eg 'Green Road Hospital, Ward 27, Room 5"
 
 // Alias - optional, but probably rarely used. One current name should be enough
 // Description - optional. Could be useful to describe further, eg about the types of care typically performed there.
@@ -100,7 +100,7 @@ Description: "Interweave Location resource profile."
 //   For  Room – points to the owning Ward
 //   For a House – not used
 * partOf MS
-* partOf ^short = "Another Location this one is physically part of. Must be provided for Ward->Site and Room->Ward to build the heirarchy"
+* partOf ^short = "Another Location this one is physically part of. Must be provided for Ward->Site and Room->Ward to build the hierarchy"
 * insert Ruleset-ReferenceInternalLocation(partOf)
 
 // Endpoint - removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)

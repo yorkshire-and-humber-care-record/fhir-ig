@@ -11,7 +11,7 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
 
 ## **Location**
- - **Heirarchy in references** - how best to represent the location heirarchy in references?
+ - **hierarchy in references** - how best to represent the location hierarchy in references?
 
 
 ## **Practitioner**

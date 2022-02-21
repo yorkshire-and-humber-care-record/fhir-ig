@@ -27,24 +27,24 @@ Whilst there is an intuitive understanding of what constitutes the start / end o
    - As a minor contributor the dietician would be referenced as the author of a CarePlan, performer of an Observation, or assessor of a ClinicalImpression. These in turn would be linked to the Encounter.
 
 
-### **Encounter Structure and Heirarchy**
+### **Encounter Structure and hierarchy**
 
 Any discussion of Encounters inevitably has to consider the topic of how Encounters are structured and grouped. 
- - The FHIR Encounter Resource includes the "partOf" field, which allows Encounters to be linked into structures and heirarchies.
+ - The FHIR Encounter Resource includes the "partOf" field, which allows Encounters to be linked into structures and hierarchies.
  - It is also possible to link to an Episode of Care
 
- There is a need to balance the desire to accurately model the complexity of real-life vs the need to provide a simple model which is easy for Data Consumers to understand and to reliably display. Experience suggests that offering a plethora of varying complex heirarchical structures from different care settings makes the task of a Data Consumer extremely challenging.
+ There is a need to balance the desire to accurately model the complexity of real-life vs the need to provide a simple model which is easy for Data Consumers to understand and to reliably display. Experience suggests that offering a plethora of varying complex hierarchical structures from different care settings makes the task of a Data Consumer extremely challenging.
 
  ***A three-level maturity model for Encouter structures is therefore defined:***
 
   - **Maturity Level 1 - Simple flat list of Encounters**
 
-    This is the basic level which all Data Providers and Consumers MUST support. It consists of a simple flat list of Encounters with no heirarchy whatsoever.
+    This is the basic level which all Data Providers and Consumers MUST support. It consists of a simple flat list of Encounters with no hierarchy whatsoever.
 
-     - Much of the value comes from this list and, for Direct Care purposes at least, it is not difficult for a clinician to look at the times and locations and deduce what has occured.
-      - ***A important use-case is messaging-based consumers*** - eg Ambulance Transfer of Care and Subscription Notifications. These consumers see the world as a real-time stream of Encounter-based events. In this world-view it is difficult to comprehend heirarchy - and indeed the ultimate set of interrelationships may not even be known as the initial Encounter event unfolds. ***It is therefore extremely important that all of the necessary information can be conveyed as a "flat" stream of Encounter messages***.
+     - Much of the value comes from this list and, for Direct Care purposes at least, it is not difficult for a clinician to look at the times and locations and deduce what has occurred.
+      - ***A important use-case is messaging-based consumers*** - eg Ambulance Transfer of Care and Subscription Notifications. These consumers see the world as a real-time stream of Encounter-based events. In this world-view it is difficult to comprehend hierarchy - and indeed the ultimate set of interrelationships may not even be known as the initial Encounter event unfolds. ***It is therefore extremely important that all of the necessary information can be conveyed as a "flat" stream of Encounter messages***.
 
-      The basic model is therefore of standalone Encounters which have a full set of information populated to give a complete picture of what occured.
+      The basic model is therefore of standalone Encounters which have a full set of information populated to give a complete picture of what occurred.
 
       A specific implication of this is in the use of the "hospitalization" structure which, despite the name, can be used to convey important admission and discharge information relevant to any care-setting:
        - A hospitalization structure MUST be included on every Encounter
@@ -63,14 +63,14 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
      - An initial "emergency" visit to A&E is followed by admittance to the ward as an inpatient
      - An initial call to 111 is followed by a visit at home from a first-responder, and finally a conveyance to hospital in an ambulance
 
-    ***A two-level heirarchy is therefore defined, based on the use of special type of Grouping Encounter to link together Encounters which comprise part of the same "visit", "stay" or "incident".***
+    ***A two-level hierarchy is therefore defined, based on the use of special type of Grouping Encounter to link together Encounters which comprise part of the same "visit", "stay" or "incident".***
       -  A separate [Encounter Grouping profile](StructureDefinition-Interweave-EncounterGrouping.html) is provided to support this.
       - Data Providers who feel it is relevant MAY provide this additional grouping information
       - Data Consumers who are able MAY make use of this additional grouping information to provide a richer and more meaningful display to their users
 
     In practical terms:
       - The "partOf" field on the base Encounters is populated to point at a Grouping Encounter
-      - Only a SINGLE level of Encounter heirarchy is supported. The "partOf" field of a base Encounter must point ONLY at a single Grouping Encounter. Other more complex structures are NOT supported
+      - Only a SINGLE level of Encounter hierarchy is supported. The "partOf" field of a base Encounter must point ONLY at a single Grouping Encounter. Other more complex structures are NOT supported
       - It is perfectly acceptable to have a Grouping Encounter which contains only a single base Encounter. In fact this is likely to be common - as when the initial encounter occurs it is not known how events will unfold. The simplest approach for a Maturity Level 2 Data Provider will therefore be to always create a Grouping Encounter in anticipation. With the grouping structure already in place, it becomes straightforward to add additional Encounters as-and-if they occur.
       - The Grouping Encounter is essentially an empty shell. Its purpose is purely to group. All of the important information is held in the base Encounters.
        - The Grouping Encounter does however add value by capturing the overall period and the full set of "hospitalization" information about admission and discharge. Whilst this could be deduced from the base encounters, it is helpful and logical to also provide in one place here.
@@ -98,7 +98,7 @@ The diagram below summarises the above discussion - ie core Encounters, single G
 ### **Encounters vs Appointments**
 Whilst the terms "Encounter" and "Appointment" might be used interchangably in everyday speach, in FHIR they have specific meanings:
  - An Appointment describes a plan for the future
- - An Encounter generally describes something that is happening now, or has occured in the past
+ - An Encounter generally describes something that is happening now, or has occurred in the past
 
  In general therefore:
   - An Appointment will lead to an Encounter - when the patient attends

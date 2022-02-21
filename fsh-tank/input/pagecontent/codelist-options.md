@@ -51,7 +51,7 @@ This is a tricky field, as the FHIR definition is not all that clear. However it
    - **308467007: Seen in Establishment** - this provides a short list of 22 top level codes which cover a good range of care settings eg "Seen in clinic", "Seen in own home", "Seen in supervised accomodation", etc. 
    
      However... some of these expand into a much longer list. For example "Seen in clinic" expands into a list of 118 different types of cinic.
-     >Our understanding is that the purpose of this field is to describe the type of place where the encounter occured (not the service provided), and so it is not required to expand down to the level of the specific clinic type.
+     >Our understanding is that the purpose of this field is to describe the type of place where the encounter occurred (not the service provided), and so it is not required to expand down to the level of the specific clinic type.
 
    - **185201007: Site of Encounter** - this contains a single value for "Seen in street"   
 
@@ -75,8 +75,8 @@ This is an important field that covers what everyone really wants to know about 
 This provides information about the purpose of the Encounter. (There are some subtleties here - eg the reason is why you came, the Service Type is the clinic you want to, and the diagnosis is what was learned).
 
  - FHIR STU3 and CareConnect both suggest a "preferred" list based on two SNOMED refsets:
-   - **404684003: Clinical Finding** - this is a huge heirarchy of every imaginable kind of medical problem
-   - **71388002: Procedure** - another huge heirarchy of every imaginable clinical procedure
+   - **404684003: Clinical Finding** - this is a huge hierarchy of every imaginable kind of medical problem
+   - **71388002: Procedure** - another huge hierarchy of every imaginable clinical procedure
   (The two together offer over 100,000 codes)
 
  - FHIR R4 and UK Core build upon this by adding two additional SNOMED refsets to this list. This is significant because they broaden the coverage to emergency and social care scenarios:
@@ -125,7 +125,7 @@ This is the same field and same considerations as Encounter Reason.
 
 ## **Condition Code**
 
- - FHIR STU3 (and CareConnect) goes with SNOMED **404684003: Clinical Finding** - the same is a huge heirarchy of medical problems that forms part of Encounter Reason. (Plus an extra code for "no problems")
+ - FHIR STU3 (and CareConnect) goes with SNOMED **404684003: Clinical Finding** - the same is a huge hierarchy of medical problems that forms part of Encounter Reason. (Plus an extra code for "no problems")
  - FHIR R4 does the same
  - UKCore however adds in **243796009: Context-dependent categories** and **272379006: Events**. (And mandates the list as "extensible"). These are the same items as discussed above in Encounter Reason and, as discussed there, greatly broaden the reach into Social Care
  - PRSB instead goes with **1127581000000103: Health issues simple reference set**. Despite the word "simple" this is another huge list with over 100,000 entries. A superficial inspection suggests a lot of overlap with the "Clinical Findings" list
@@ -143,7 +143,7 @@ This is the same field and same considerations as Encounter Reason.
 
 ## **Procedure Code**
 
- - FHIR STU3 (and CareConnect) uses the SNOMED list **71388002: Procedure** - the same as the huge heirarchy of procedures that forms part of Encounter Reason
+ - FHIR STU3 (and CareConnect) uses the SNOMED list **71388002: Procedure** - the same as the huge hierarchy of procedures that forms part of Encounter Reason
  - FHIR R4 does the same
  - UKCore however adds in **129125009: Context-dependent procedure** (And mandates the list as "extensible"). This broadens the reach into Social Care
  - PRSB uses these same two SNOMED lists

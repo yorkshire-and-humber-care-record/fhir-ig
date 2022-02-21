@@ -76,7 +76,7 @@ Description: "Interweave Encounter resource profile  to group other encounters i
 //  This is covered via the provenance tags
 * serviceProvider ^short = "DISCOURAGED: This is instead covered via the provenance tags"
 
-// PartOf: Excluded. This is the top of the heirarchy
+// PartOf: Excluded. This is the top of the hierarchy
 * partOf 0..0
 
 

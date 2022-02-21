@@ -29,7 +29,7 @@ When referencing an external location then a Data Provider must always populate 
 
 ### **Mandatory fields**
 Bearing in mind the multiple scenarios above, a small subset of fields can be specified as mandatory:
-1. **Name** - The name of the location. Noting that it is useful to reflect any heirarchy for more informative display eg "York Hospital: Ward 27"
+1. **Name** - The name of the location. Noting that it is useful to reflect any hierarchy for more informative display eg "York Hospital: Ward 27"
 2. **Status** - Should normally be “active”, and only active locations should be used in new references. However it may be necessary to retain locations at other statuses (eg inactive) if they have already been used in references
 3. **Type** - Must be populated to describe the type of services typically provided at this location. Please select a value that is as specific as possible to provide maximum information. See also further notes below.
 4. **Physical Type** - A subset of the FHIR codes - covering either site / ward / room, or house / vehicle.
@@ -41,7 +41,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
 2. **Telecom** - Eg phone and/or email details. Useful for getting in contact for further information
 3. **Address** - Must be provided if relevant (eg for Site and House). Not relevant for a Ward or Room. Just the current address for contact purposes, no history
 4. **Managing Organisation** - Must be provided for institutional locations ie Site / Ward / Room. Note: this will often be the same as the provenance of the message, but not necessarily if external locations are being referenced
-5. **Part Of** - To describe the heirarchy. Required to link ward -> site and room -> ward
+5. **Part Of** - To describe the hierarchy. Required to link ward -> site and room -> ward
 
 
 ### **Optional fields**
