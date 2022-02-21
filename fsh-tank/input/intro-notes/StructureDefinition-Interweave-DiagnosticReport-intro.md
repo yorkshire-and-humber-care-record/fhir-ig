@@ -7,6 +7,7 @@ This profile sets minimum expectations for the Diagnostic Report resource. As no
  - Imaging (although this is currently out of scope for the shared care record) 
 
 
+
 ### **Mandatory fields**
 The following mandatory fields are defined for a Diagnostic Report:
 1. **Status** - this is mandatory in FHIR, with a short list of codes provided. Most commonly the status will be "final". (Other statuses may be used if relevant, but must be kept up-to-date)
@@ -21,7 +22,7 @@ The following mandatory fields are defined for a Diagnostic Report:
  
    - SNOMED - CareConnect defines the use of SNOMED coding based on the use of ***371525003 - Clinical procedure report***
 
-   - NICIP - this code list covers only imaging. However within that domain it has been defined by NHS Digital and mandated for use by the Information Standards Board. See <https://digital.nhs.uk/services/terminology-and-classifications/national-interim-clinical-imaging-procedure-nicip-code-set>. Note that the NICIP codes include a maintained standard mapping to SNOMED  ***TODO - so do we use this mapping to always just provide SNOMED? Or include both?***
+   - NICIP - this code list covers only imaging. However within that domain it has been defined by NHS Digital and mandated for use by the Information Standards Board. See <https://digital.nhs.uk/services/terminology-and-classifications/national-interim-clinical-imaging-procedure-nicip-code-set>. Note that the NICIP codes include a maintained standard mapping to SNOMED, and so typically the associated SNOMED code can also be provided as a second coding
 
     - LOINC - the default mapping in FHIR is to LOINC codes for diagnostic reporting
 
@@ -55,12 +56,11 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
    - As of this writing (Feb 2022) the actual content must be Base64 encoded and included in the "data" element
    - Longer term it is anticipated that the messaging infrastructure will be enhanced to also support "url" links to a separately saved document - with this then becoming the preferred mechanism due to the reduced message size. (See [DocumentReference](StructureDefinition-Interweave-DocumentReference.html) for further guidance on providing url links)
-   - A particular issue for Diagnostic Reports is the use of text/plain. 
-     - The underlying source for many diagnostic reports is messages extracted from a text-based lab or RIS system.
-     - The ***strongly preferred*** approach is to reformat as HTML - as this is an interoperable standard which guarantees consistent presentation across any consumer system
+   - A particular issue for Diagnostic Reports is that the underlying source for many diagnostic reports is messages extracted from a text-based lab or RIS system.
+     - The ***strongly preferred*** approach is to reformat textual reports as HTML - as this is an interoperable standard which guarantees consistent presentation across any consumer system
      - In some cases this may be relatively easy to do - for example if the report is already structured as separate lines which can be simply "decorated" with HTML tags
-     - In other cases it may be much more difficult - for example if the original report is structured as a single block of text containing various escape characters. ***TODO - discuss this problem further. It may be that formatting for certain defined escape characters can be agreed... although it still feels like the most robust option may be to do this interpretation at source?***
-     
+     - In other cases it may be much more difficult to format the report text - for example if the original report is structured as a single block of text containing various escape characters. Tackling this is, however, a key part of a Data Provider's work in offering their reports in an interoperable format for wider sharing.
+     - It is also important to ensure that any such text is HTML Encoded - for example to make sure that characters such as "<" in the report do not cause problems when displaying.     
 
 
 4. **Result** - this allows for (semi) structured results to be offered in the form of a list of Observations. Whilst some types of Diagnostic Report are purely textual, for others these structured Observations are extremely important.
