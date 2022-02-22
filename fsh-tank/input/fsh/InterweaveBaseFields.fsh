@@ -92,12 +92,7 @@ RuleSet: Ruleset-InterweaveBaseFields
 // Extensions
 ////////////////////
 
-// Useful to assist with creating references having useful display text. 
-// But this is only one approach to achieving this, so not mandatory
-* extension contains Extension-Interweave-TextSummary named textSummary 0..1
-* extension[Extension-Interweave-TextSummary] ^short = "A short text string to summarise the resource. Intended to be used for the 'display' value in References"
-
-
+// None at this stage
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

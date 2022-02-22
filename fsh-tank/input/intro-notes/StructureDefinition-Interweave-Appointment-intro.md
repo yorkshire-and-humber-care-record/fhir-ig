@@ -81,10 +81,3 @@ Other fields are optional and may be populated if known - on the understanding t
 .
   - **Priority, Slot, and Requested Period** - more relevant for local use in a scheduling system, rather than a regional shared record.
 
-
-### **Summary Text**
-
-    Start + Service Type + Location.display
-  
-    Example: 
-    "09/01/2022-9:00 : Dermatology : York Hospital: Ward 27 - Dermatology clinic"

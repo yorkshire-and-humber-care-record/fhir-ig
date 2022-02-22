@@ -88,8 +88,9 @@ Description: "YHCInterweaveR Practitioner example"
 
 * insert Ruleset-ExampleMetaForHospital(Practitioner)
 
+// Text summary no longer needed
 // (name.given + name.family)
-* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
+//* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
 * identifier[0].value = "ABC123"

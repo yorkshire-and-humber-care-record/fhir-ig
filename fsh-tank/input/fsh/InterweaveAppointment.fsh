@@ -182,8 +182,10 @@ Description: "Interweave Appointment example"
 
 * insert Ruleset-ExampleMetaForHospital(Appointment)
 
+// Text summary no longer needed
 // (Start + Service Type + Location.display)
-* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
+
 * extension[Extension-Interweave-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
 * extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"

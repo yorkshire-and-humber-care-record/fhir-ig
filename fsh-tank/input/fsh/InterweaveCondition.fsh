@@ -117,8 +117,9 @@ Description: "Interweave Condition example"
 
 * insert Ruleset-ExampleMetaForHospital(Condition)
 
+// Text summary no longer needed
 // (Code description + clinical status)
-* extension[Extension-Interweave-TextSummary].valueString = "Paraffinoma of skin: Active"
+//* extension[Extension-Interweave-TextSummary].valueString = "Paraffinoma of skin: Active"
 
 * insert Ruleset-ExampleLocalId(condition, RCB.COND-456-XYZ)
 

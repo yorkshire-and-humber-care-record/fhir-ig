@@ -148,8 +148,9 @@ Description: "Interweave Procedure example"
 
 * insert Ruleset-ExampleMetaForHospital(Procedure)
 
+// Text summary no longer needed
 // (PerformedDateTime + Code description)
-* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00: Repair of malunion of tibia"
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00: Repair of malunion of tibia"
 
 
 * insert Ruleset-ExampleLocalId(procedure, RCB.PROC-456-XYZ)

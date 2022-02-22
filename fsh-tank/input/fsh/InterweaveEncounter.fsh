@@ -227,8 +227,9 @@ Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
 
+// Text summary no longer needed
 // (Period.start - Period.end : Class description: Service Type description)
-* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
 
 // Extension to add the all-important Service Type that is missing from STU3!
 * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
@@ -321,8 +322,9 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 1 of groupin
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
 
+// Text summary no longer needed
 // (Period.start - Period.end : Class description: Service Type description)
-* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 09/01/2022 09:00 : Emergency : Accident and Emergency service"
+//* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 09/01/2022 09:00 : Emergency : Accident and Emergency service"
 
 // Extension to add the all-important Service Type that is missing from STU3!
 * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#310000008 "Accident and Emergency service"
@@ -403,8 +405,9 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 2 of groupin
 
 * insert Ruleset-ExampleMetaForHospital(Encounter)
 
+// Text summary no longer needed
 // (Period.start - Period.end : Class description: Service Type description)
-* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
 
 // Extension to add the all-important Service Type that is missing from STU3!
 * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"

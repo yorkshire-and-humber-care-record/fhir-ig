@@ -53,7 +53,9 @@ Other fields are optional and may be populated if known - on the understanding t
 ### **Additional notes**
 
 1. **RequestId tag**
-   All Operation Outcomes which pass through the Exchange will have a tag populated: https://yhcr.nhs.uk/RequestId. The "code" of this tag will contain a request id which can be used to uniquely identify the interaction and thus provide a link to diagnostic logs. Please quote for troubleshooting purposes.
+   All Operation Outcomes which pass through the Exchange will have a tag populated: https://yhcr.nhs.uk/RequestId. The "code" of this tag will contain a request id which can be used to uniquely identify the interaction and thus provide a link to diagnostic logs. 
+   
+   ***Please quote this RequestId for troubleshooting purposes***
 
 2. **Narrative text**
 

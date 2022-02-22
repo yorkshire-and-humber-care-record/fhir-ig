@@ -189,8 +189,9 @@ Description: "Interweave Patient example - Must Support"
 * insert Ruleset-ExampleMetaForHospital(Patient)
 * meta.versionId = "InterweavePatientExampleMustSupport-v1.0.0"
 
+// Text summary no longer needed
 // (name.given + name.family)
-* extension[Extension-Interweave-TextSummary].valueString = "Fred Bloggs"
+//* extension[Extension-Interweave-TextSummary].valueString = "Fred Bloggs"
 
 
 
@@ -238,8 +239,9 @@ Description: "Interweave Patient example - Full"
 * insert Ruleset-ExampleMetaForHospital(Patient)
 * meta.versionId = "InterweavePatientExampleFull-v1.0.0"
 
+// Text summary no longer needed
 // (name.given + name.family)
-* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
+//* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
 
 
 * extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept = CareConnect-EthnicCategory-1#A "British, Mixed British"

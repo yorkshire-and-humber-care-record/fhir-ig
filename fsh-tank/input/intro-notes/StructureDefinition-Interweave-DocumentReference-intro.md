@@ -59,14 +59,6 @@ Other fields are optional and may be populated if known - on the understanding t
    - **Security Label** - This field is not used and will not be honoured. All data published to the Interweave Exchange will be shared with other participants. (It is possible that additional security mechanisms may be added in future, however this would be subject to further consultation at the time). 
 
 
-### **Summary Text**
-
-    Date + Type
-  
-    Example: 
-    "09/01/2022 : Discharge Letter"
-
-
 
 ### **Approaches to document content**
 The DocumentReference this offers three different ways to transmit the document content and it is important to understand the details of this. The sections below cover each option in turn.

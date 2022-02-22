@@ -68,8 +68,9 @@ Description: "Interweave Organization example"
 
 * insert Ruleset-ExampleMetaForHospital(Organization)
 
+// Text summary no longer needed
 // (Name)
-* extension[Extension-Interweave-TextSummary].valueString = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+//* extension[Extension-Interweave-TextSummary].valueString = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * identifier[0].value = "RCB"

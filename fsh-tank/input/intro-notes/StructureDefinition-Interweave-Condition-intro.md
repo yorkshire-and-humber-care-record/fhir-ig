@@ -63,13 +63,3 @@ Other fields are optional and may be populated if known - on the understanding t
 
 ### **Discouraged or Removed fields**
  - **Verification Status** - This appears to be a significant modifier of the Condition, however it has been removed by Care Connect. Note that an implication of this decision by Care Connect is that this becomes a set of Conditions which DO apply to the subject. Ie there is no mechanism to capture a "refuted" Condition.
-
-
-### **Summary Text**
-
-    Code description + Clinical Status
-  
-    Example: 
-    "Sprain of shoulder: Active"
-
-

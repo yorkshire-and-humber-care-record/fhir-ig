@@ -74,11 +74,3 @@ Other fields are optional and may be populated if known - on the understanding t
 
  - **Used Code and Used Reference** - Relevant to stock control within an organisation, but less so for a regional record
 
-
-
-### **Summary Text**
-
-    PerformedDateTime + Code description 
-  
-    Example: 
-    "09/01/2022 09:00 - Excision of lesion of artery"

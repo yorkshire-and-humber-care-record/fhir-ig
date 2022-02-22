@@ -121,8 +121,9 @@ Description: "Interweave Location example - Site"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleSite-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Hospital"
+//* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Hospital"
 
 
 
@@ -163,8 +164,9 @@ Description: "Interweave Location example - Ward 27"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleWard27-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 27: Dermatology clinic"
+//* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 27: Dermatology clinic"
 
 
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456)
@@ -196,8 +198,9 @@ Description: "Interweave Location example - Ward 28"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleWard28-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
+//* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
 
 
 
@@ -232,8 +235,9 @@ Description: "Interweave Location example - A&E"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleWardAandE-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Accident and Emergency"
+//* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Accident and Emergency"
 
 
 
@@ -269,8 +273,9 @@ Description: "Interweave Location example - Room"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleRoom-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 27: Room 1: Dermatology clinic"
+//* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 27: Room 1: Dermatology clinic"
 
 
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456-1)
@@ -301,8 +306,9 @@ Description: "Interweave Location example - House"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleHouse-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
+//* extension[Extension-Interweave-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
 
 
 
@@ -329,8 +335,9 @@ Description: "Interweave Location example - Social Care Department"
 * insert Ruleset-ExampleMetaForHospital(Location)
 * meta.versionId = "InterweaveLocationExampleSocialCare-v1.0.0"
 
+// Text summary no longer needed
 // (Name + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "Leeds Social Services: Adult Services Department: community service center"
+//* extension[Extension-Interweave-TextSummary].valueString = "Leeds Social Services: Adult Services Department: community service center"
 
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ789)
 

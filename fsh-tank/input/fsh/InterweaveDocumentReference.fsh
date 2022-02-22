@@ -101,8 +101,9 @@ Description: "Interweave Document Reference example"
 
 * insert Ruleset-ExampleMetaForHospital(DocumentReference)
 
+// Text summary no longer needed
 // (Date + Type)
-* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 : Discharge Letter"
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 : Discharge Letter"
 
 * status = http://hl7.org/fhir/document-reference-status#current "Current"
 * docStatus = http://hl7.org/fhir/composition-status#final "Final"

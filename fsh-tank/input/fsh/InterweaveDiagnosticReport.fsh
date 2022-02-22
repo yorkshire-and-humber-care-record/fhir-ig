@@ -128,8 +128,9 @@ Description: "Interweave Diagnostic Report - basic example"
 
 * insert Ruleset-ExampleMetaForHospital(DiagnosticReport)
 
+// Text summary no longer needed
 // (Issued date + code description)
-* extension[Extension-Interweave-TextSummary].valueString = "14/01/2022 - CT Abdomen"
+//* extension[Extension-Interweave-TextSummary].valueString = "14/01/2022 - CT Abdomen"
 
 * insert Ruleset-ExampleLocalId(diagnostic-report, RCB.DIAG-456-XYZ)
 

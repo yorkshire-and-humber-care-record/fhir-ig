@@ -38,9 +38,9 @@ Looking at it another way, this means that:
   - And/or if the user has entered further descriptive text this should also be populated into the "text" field.
 
   Other points of note:
-   - A "coding" entry must always include "coding.display" wording. (Noting some exceptions where no display value exists, in which case this is impossible)
+   - ***A "coding" entry must always include "coding.display" wording***. (Noting some rare exceptions where no display value exists, in which case this is impossible)
 
-   - The coding.system must always be populated. (For local codes it is suggested to devise a unique uri - for example based on the url of the FHIR server)
+   - The coding.system must always be populated. (For local codes it is suggested to devise a unique uri - for example based on the url of the local FHIR server)
 
 
 ### Data Consumer Implications

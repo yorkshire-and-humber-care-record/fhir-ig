@@ -97,8 +97,9 @@ Description: "Interweave Encounter Grouping example"
 * meta.profile[0] = "https://fhir.yhcr.nhs.uk/StructureDefinition/Interweave-EncounterGrouping"
 * meta.versionId = "InterweaveEncounterGroupingExample-v1.0.0"
 
+// Text summary no longer needed
 // (Period.start - Period.end : Class description)
-* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
+//* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
 * contained[0] = InterweaveLocationHouseAdmissionExample
 
