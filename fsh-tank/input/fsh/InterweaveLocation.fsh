@@ -80,8 +80,8 @@ Description: "Interweave Location resource profile."
 // Define a cut-down subset of the FHIR example list for our purposes
 * physicalType 1..1 MS
 * physicalType.coding 1..1 MS
-* physicalType ^short = "Physical form of the location. Note reduced subset of location types that are supported"
-* physicalType from Interweave-LocationPhysicalType-1 (required)
+* physicalType ^short = "Physical form of the location. Extensible by request if additional types needed"
+* physicalType from http://hl7.org/fhir/ValueSet/location-physical-type (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(physicalType)
 
 
@@ -91,7 +91,7 @@ Description: "Interweave Location resource profile."
 //    Shows who the location "belongs" to. Although often the same as the provenance of the message, it might be different (eg if refering to a location elsewhere)
 //    (Should normally be known and easy to populate)
 * managingOrganization MS
-* insert Ruleset-ReferenceOrganization(managingOrganization)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(managingOrganization)
 
 // Part Of - must support if relevant
 //   (The aim is to build a very simple structure with a maximum of 3 levels - that is easy for a data consumer to display - based on Rooms (optional), which belong to Wards, which belong to a Site. The purpose is to provide basic information about where a patient has been – not necessarily to build a complete and accurate model of the organisation structure.)
@@ -101,7 +101,7 @@ Description: "Interweave Location resource profile."
 //   For a House – not used
 * partOf MS
 * partOf ^short = "Another Location this one is physically part of. Must be provided for Ward->Site and Room->Ward to build the hierarchy"
-* insert Ruleset-ReferenceInternalLocation(partOf)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(partOf)
 
 // Endpoint - removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)
 * endpoint 0..0

@@ -84,7 +84,7 @@ Description: "Interweave Appointment resource profile."
 //  May not always be available, but should be populated if these resources are supported and relevant
 // NB "reasonReference" (R4) -> "indication" (STU3)
 ////* reasonReference MS
-/////* insert Ruleset-ReferenceWithAtLeastDisplay(reasonReference)
+/////* insert Ruleset-ReferenceWithReferenceOnly(reasonReference)
 
 // Priority - discouraged
 * priority ^short = "DISCOURAGED - More applicable to internal scheduling"
@@ -120,7 +120,7 @@ Description: "Interweave Appointment resource profile."
 // A reference to the Referral which led to the appointment. Useful to provide if relevant and available
 // Could have been MS, HOWEVER leave optional for now due to significant changes to ReferralRequest coming in R4
 // NB "basedOn" (R4) -> "incomingReferral" (STU3)
-* insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
+* insert Ruleset-ReferenceWithReferenceOnly(basedOn)
 
 // RequestedPeriod: Discouraged
 * requestedPeriod ^short = "DISCOURAGED - Relevant to a scheduling system, but less so to a regional shared record"
@@ -160,17 +160,17 @@ Description: "Interweave Appointment resource profile."
 * participant[subject].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" (exactly)
 * participant[subject].actor 1..1 MS
 * participant[subject].actor only Reference(Patient)
-* insert Ruleset-ReferencePatient(participant[subject].actor)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[subject].actor)
 
 * participant[location].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" (exactly)
 * participant[location].actor 1..1 MS
 * participant[location].actor only Reference(Location)
-* insert Ruleset-ReferenceInternalLocation(participant[location].actor)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[location].actor)
 
 * participant[primaryPerformer].type =  http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer" (exactly)
 * participant[primaryPerformer].actor 1..1 MS
 * participant[primaryPerformer].actor only Reference(Practitioner)
-* insert Ruleset-ReferenceInternalPractitioner(participant[primaryPerformer].actor)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[primaryPerformer].actor)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +217,7 @@ Description: "Interweave Appointment example"
 
 * participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
 * participant[0].actor = Reference(InterweavePatientExample-MustSupport) 
-* participant[0].actor.display = "Fred Bloggs"
+* participant[0].actor.display = "Mr Fred BLOGGS"
 * participant[0].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
 
 * participant[1].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" 
@@ -227,8 +227,8 @@ Description: "Interweave Appointment example"
 
 * participant[2].type = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
 * participant[2].actor = Reference(InterweavePractitionerExample)
-* participant[2].actor.display = "Dr Jane Bloggs"
-* participant[2].actor.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[2].actor.identifier.value = "ABC123"
+* participant[2].actor.display = "Dr Jane BLOGGS"
+//* participant[2].actor.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[2].actor.identifier.value = "ABC123"
 * participant[2].status = http://hl7.org/fhir/participationstatus#tentative "Tentative" 
 

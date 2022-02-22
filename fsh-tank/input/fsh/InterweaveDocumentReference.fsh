@@ -32,7 +32,7 @@ Description: "Interweave DocumentReference resource profile."
 // Subject - mandatory, and must refer to a patient
 * subject 1..1 MS
 * subject only Reference(CareConnect-Patient-1)
-* insert Ruleset-ReferencePatient(subject)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 
 // Created - leave optional
 // This is a potentially useful field, but note that deprecated in R4
@@ -46,7 +46,7 @@ Description: "Interweave DocumentReference resource profile."
 // But explain in words what we want
 * author    MS
 * author ^short = "Who and/or what authored the document. NB: For most use-cases this should contain a single practitioner who is the main contact for any further questions"
-* insert Ruleset-ReferenceWithAtLeastDisplay(author)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(author)
 
 // Authenticator - leave optional
 // More likely to be relevant for internal records rather than external sharing, but may be used if desired
@@ -67,7 +67,7 @@ Description: "Interweave DocumentReference resource profile."
 // And then we have the "context" structure with numerous fields:
 //  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
 * context.encounter MS
-* insert Ruleset-ReferenceWithAtLeastDisplay(context.encounter)
+* insert Ruleset-ReferenceWithReferenceOnly(context.encounter)
 
 //  Period (MS) A document may related to a period of time (eg a care plan for the coming 6 months). 
 //     Where this is the case then this field must be populated
@@ -111,20 +111,20 @@ Description: "Interweave Document Reference example"
 * type = $SCT#8237010000001 "Discharge Letter"
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 * date = "2022-01-09T00:00:00Z"  // "indexed" in STU3
 
 * author = Reference(InterweavePractitionerExample)
-* author.display = "Dr Jane Bloggs"
-* author.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* author.identifier.value = "ABC123"
+* author.display = "Dr Jane BLOGGS"
+//* author.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* author.identifier.value = "ABC123"
 
 // And then we have the "context" structure with numerous fields:
 //  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
 
 * context.encounter = Reference(InterweaveEncounterExample-MaturityLevel1)
-* context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
+//* context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
 
 // And finally the actual content. This and the attachment are already mandatory in FHIR, and we also need the content type
 * content.attachment.contentType = #text/html

@@ -71,20 +71,20 @@ Description: "Interweave Encounter resource profile."
 * subject 1..1 MS 
 // We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
-* insert Ruleset-ReferencePatient(subject)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 * subject ^short = "The patient (NOT group) present at the encounter"
 
 // Episode of Care: Leave as optional for now. (A potential part of wider structure, see wider discussion)
 
 // Appointment: MS. If these exist, and if the Data Provider is able to publish the resources, then this must link to it
 * appointment MS
-* insert Ruleset-ReferenceWithAtLeastDisplay(appointment)
+* insert Ruleset-ReferenceWithReferenceOnly(appointment)
 
 // Incoming referral: Optional
 // A reference to the Referral which led to the appointment. Useful to provide if relevant and available
 // Could have been MS, HOWEVER leave optional for now due to significant changes to ReferralRequest coming in R4
 // NB "basedOn" (R4) -> "incomingReferral" (STU3)
-* insert Ruleset-ReferenceWithAtLeastDisplay(basedOn)
+* insert Ruleset-ReferenceWithReferenceOnly(basedOn)
 
 
 // Participant: We want exactly one "primary performer" who is the main contact responsible
@@ -101,7 +101,7 @@ Description: "Interweave Encounter resource profile."
 // Must actually reference someone, and for this type of encounter they must be a practitioner
 * participant.individual 1..1 MS
 * participant.individual only Reference(CareConnect-Practitioner-1)
-* insert Ruleset-ReferenceExternalPractitioner(participant.individual) // Will normally be internal, but occaisonally maybe not
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant.individual) 
 // Period is optional, may be useful if they were briefly involved, but most likely it matches the period of the encounter
 
 
@@ -126,7 +126,7 @@ Description: "Interweave Encounter resource profile."
 * diagnosis MS
 * diagnosis.condition only Reference(CareConnect-Condition-1)
 * diagnosis.condition 1..1 MS
-* insert Ruleset-ReferenceWithAtLeastDisplay(diagnosis.condition)
+* insert Ruleset-ReferenceWithReferenceOnly(diagnosis.condition)
 * diagnosis.use 1..1 MS   //R4 - STU3 has "role"
 * diagnosis.use from http://hl7.org/fhir/ValueSet/diagnosis-role (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(diagnosis.use)
@@ -159,7 +159,7 @@ Description: "Interweave Encounter resource profile."
 * location 1..* MS
 * location ^short = "Location the encounter takes place (at Ward level)"
 * location.location MS
-* insert Ruleset-ReferenceInternalLocation(location.location)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(location.location)
 * location.status 1..1 MS
 * location.period 1..1 MS
 
@@ -171,7 +171,7 @@ Description: "Interweave Encounter resource profile."
 // Generally it is a flat structure, EXCEPT for pointing specifically at an Encounter Grouping
 * partOf 0..1
 * partOf only Reference(Interweave-EncounterGrouping)
-* insert Ruleset-ReferenceWithDisplayAndReference(partOf)
+* insert Ruleset-ReferenceWithReferenceOnly(partOf)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +187,7 @@ RuleSet: Ruleset-Hospitalization
 
 // Origin: Useful to provide if possible, especially if transfered from another institution
 * hospitalization.origin ^short = "The location from which the patient came before admission. Useful to provide if possible, in particular to reference a 'site' if transfered from another institution."
-* insert Ruleset-ReferenceExternalLocation(hospitalization.origin)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(hospitalization.origin)
 
 // AdmitSource: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
@@ -207,7 +207,7 @@ RuleSet: Ruleset-Hospitalization
 // Destination: Important to provide if known, especially if transfered to another institution, but also to support discharge planning
 * hospitalization.destination MS
 * hospitalization.destination ^short = "Location to which the patient is discharged. Important to provide if known to support discharge planning, and/or to reference a 'site' if transfered to another institution."
-* insert Ruleset-ReferenceExternalLocation(hospitalization.destination)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(hospitalization.destination)
 
 // Discharge Disposition: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
@@ -235,6 +235,7 @@ Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
 * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
 
 * contained[0] = InterweaveLocationHouseAdmissionExample
+* contained[1] = InterweavePractitionerBobExample
 
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-123-XYZ)
 
@@ -255,41 +256,44 @@ Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
 
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 
 // For now take this out, as referral downgraded to optional (due to R4 changes)
 //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
 * appointment = Reference(InterweaveAppointmentExample)
-* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
+//* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
 * participant[0].individual = Reference(InterweavePractitionerExample)
-* participant[0].individual.display = "Dr Jane Bloggs"
-* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[0].individual.identifier.value = "ABC123"
+* participant[0].individual.display = "Dr Jane BLOGGS"
+//* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[0].individual.identifier.value = "ABC123"
 
 * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
 * participant[1].individual = Reference(InterweavePractitionerExample)
-* participant[1].individual.display = "Dr Jane Bloggs"
-* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[1].individual.identifier.value = "ABC123"
+* participant[1].individual.display = "Dr Jane BLOGGS"
+//* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[1].individual.identifier.value = "ABC123"
 
 * participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
 * participant[2].individual = Reference(InterweavePractitionerExample)
-* participant[2].individual.display = "Dr Jane Bloggs"
-* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[2].individual.identifier.value = "ABC123"
+* participant[2].individual.display = "Dr Jane BLOGGS"
+//* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[2].individual.identifier.value = "ABC123"
+
 
 * participant[3].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
-* participant[3].individual.display = "Bob Smithson"
-* participant[3].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[3].individual.identifier.value = "XYZ987"
+* participant[3].individual = Reference(InterweavePractitionerBobExample)
+* participant[3].individual.display = "Dr Bob SMITHSON"
+//* participant[3].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[3].individual.identifier.value = "XYZ987"
 
-// TODO - add fuller references once we have these resources
-* diagnosis[0].condition.display = "Purple rash"
+
+* diagnosis[0].condition = Reference(InterweaveConditionExample)
+//* diagnosis[0].condition.display = "Purple rash"
 * diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
 * diagnosis[0].rank = 1
 
@@ -350,7 +354,7 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 1 of groupin
 
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 
 // For now take this out, as referral downgraded to optional (due to R4 changes)
@@ -361,20 +365,20 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 1 of groupin
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
 * participant[0].individual = Reference(InterweavePractitionerExample)
-* participant[0].individual.display = "Dr Jane Bloggs"
-* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[0].individual.identifier.value = "ABC123"
+* participant[0].individual.display = "Dr Jane BLOGGS"
+//* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[0].individual.identifier.value = "ABC123"
 
 * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
 * participant[1].individual = Reference(InterweavePractitionerExample)
-* participant[1].individual.display = "Dr Jane Bloggs"
-* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[1].individual.identifier.value = "ABC123"
+* participant[1].individual.display = "Dr Jane BLOGGS"
+//* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[1].individual.identifier.value = "ABC123"
 
 // No discharger or other participants
 
-// TODO - add fuller references once we have these resources
-* diagnosis[0].condition.display = "Purple rash"
+* diagnosis[0].condition = Reference(InterweaveConditionExample)
+//* diagnosis[0].condition.display = "Purple rash"
 * diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
 * diagnosis[0].rank = 1
 
@@ -388,7 +392,7 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 1 of groupin
 
 
 * partOf = Reference(InterweaveEncounterGroupingExample)
-* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
+//* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
 // This encounter has the "admission" half of the hospitalization
 * insert Ruleset-HospitalizationExample-AdmissionEmergency
@@ -412,6 +416,8 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 2 of groupin
 // Extension to add the all-important Service Type that is missing from STU3!
 * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
 
+* contained[0] = InterweavePractitionerBobExample
+
 * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-456-XYZ)
 
 * status = #finished
@@ -431,37 +437,40 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 2 of groupin
 
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 
 // For now take this out, as referral downgraded to optional (due to R4 changes)
 //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
 * appointment = Reference(InterweaveAppointmentExample)
-* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
+//* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
 * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
 * participant[0].individual = Reference(InterweavePractitionerExample)
-* participant[0].individual.display = "Dr Jane Bloggs"
-* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[0].individual.identifier.value = "ABC123"
+* participant[0].individual.display = "Dr Jane BLOGGS"
+//* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[0].individual.identifier.value = "ABC123"
 
 // No admitter here
 
 * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
 * participant[1].individual = Reference(InterweavePractitionerExample)
-* participant[1].individual.display = "Dr Jane Bloggs"
-* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[1].individual.identifier.value = "ABC123"
+* participant[1].individual.display = "Dr Jane BLOGGS"
+//* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[1].individual.identifier.value = "ABC123"
+
 
 * participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
-* participant[2].individual.display = "Bob Smithson"
-* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* participant[2].individual.identifier.value = "XYZ987"
+* participant[2].individual = Reference(InterweavePractitionerBobExample)
+* participant[2].individual.display = "Dr Bob SMITHSON"
+//* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[2].individual.identifier.value = "XYZ987"
 
-// TODO - add fuller references once we have these resources
-* diagnosis[0].condition.display = "Purple rash"
+
+* diagnosis[0].condition = Reference(InterweaveConditionExample)
+//* diagnosis[0].condition.display = "Purple rash"
 * diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
 * diagnosis[0].rank = 1
 
@@ -481,7 +490,7 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 2 of groupin
 
 
 * partOf = Reference(InterweaveEncounterGroupingExample)
-* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
+//* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
 // This encounter has the "discharge" half of the hospitalization
 * insert Ruleset-HospitalizationExample-Discharge
@@ -509,6 +518,28 @@ Usage: #inline
 * address[0].city = "Overtown"
 * address[0].district = "West Yorkshire"
 * address[0].postalCode = "LS21 1PF"
+
+
+/////////////////////////////////////////////////////////////////////////
+Instance: InterweavePractitionerBobExample
+InstanceOf: InterweavePractitioner
+Description: "Interweave Practitioner Bob example"
+Usage: #inline
+
+
+// No meta tags or TextSummary as inline
+
+* identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
+* identifier[0].value = "XYZ987"
+
+* active = true
+* name[0].given[0] = "Bob"
+* name[0].family = "Smithson"
+* name[0].prefix = "Dr"
+
+* telecom[0].system = #phone "Phone"
+* telecom[0].use = #work "Work"
+* telecom[0].value = "01234 9876512"
 
 
 

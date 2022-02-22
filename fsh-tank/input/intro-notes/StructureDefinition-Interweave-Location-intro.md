@@ -5,34 +5,41 @@
 This profile sets minimum expectations for the Location resource, to record information on locations where care is provided.
 
 
-### **Location coverage and references**
-The goal for regional sharing is not to build a detailed model of the real-world, but rather to provide a simple representation which is easy for Data Consumers to interpret and display. The purpose is to understand where a patient has been, give some insight into the type of services typically provided at that location, and provide contact details if further follow up is desired.
 
-**Therefore a simple 3-level model of site -> ward -> room is proposed**
+### **Location coverage and references**
+
+ - A Data Provider MUST offer Location FHIR resources to represent its own locations
+ - When referencing a Location then "reference" (url to a FHIR Resource) and "display" (name), MUST be populated
+ - For an external location then the url could point to an ad-hoc Contained Resource
+ - In addition the "identifier" MAY also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted). However for some locations an ODS Site Code may be relevant, or otherwise it may still be useful to provide a local identifier.
+
+### **Location structure and hierarchy**
+The goal for regional sharing of locations is not necessarily to build a detailed model of the real-world, but rather to provide a simple representation which is easy for Data Consumers to interpret and display. The purpose is to understand where a patient has been, give some insight into the type of services typically provided at that location, and provide contact details if further follow up is desired.
+
+**Therefore a simple 3-level model of site -> ward -> room is proposed as adequate for most purposes**
 
  - All Data Providers must populate reference data for their own site(s) and wards
- - Room-level detail may optionally be added if relevant (unlikely to be necessary for historical understanding, but may be relevant  to inform attendance at future appointments)
- - Additional detail such as "beds" is not necesssary or desired for regional sharing
- - The phase "ward" is interpreted broadly as a "section of a facility". For example it could also be used to represent a department in a Social Care setting.
+  - The phase "ward" is interpreted broadly as a "section of a facility". For example it could also be used to represent a department in a Social Care setting.
+ - Room-level detail may optionally be added if relevant (unlikely to be necessary for historical understanding, but may be relevant to inform attendance at future appointments)
+ - Additional detail such as "bed" level of location detail is optional, may be onerous to keep up-to-date, and is not necessary for currently known regional sharing use-cases
 
-When a Data Provider is populating References to its own locations then the "display" (name) and "reference" (url of local FHIR Resource) must be populated. (The "identifer" is optional and may also provide a local id if desired)
+A particular issue is making it easy and efficient for Data Consumers to understand the hierarchy.
+ - The location "name" is used in references, and this needs to be usable standalone - without the need for Data Consumers to make multiple additional queries to follow a tree, just to meaningfully display where the patient is. 
 
-**There can also be a need to reference locations outside of the Data Provider's own facilities**
+ - In practice this means:
 
-This could be for referals and discharges, and refer to other external locations. Consideration also needs to be given to care provided outside of institutions. Therefore variants of location for "house" and "vehicle" are offered.
+   **The location name must incorporate the hierarchy. For example "York Hospital: Ward 27: Room 4"**
 
-When referencing an external location then a Data Provider must always populate the reference "display" value with the external location's name. Beyond this it is difficult to prescribe a single approach without considering the use-case, but opportunites for providing additional information include:
- - Populating the "identifier". This is not always easy as there are many different types of location and no universal identifier scheme which can cover all of them. Certainly if the location has an ODS Site Code then this should be included as an identifier. If it does not then it may still be useful to provide a local identifier - if this is useful over-and-above the "display" name to assist Data Consumers in consistently processing the data
- - Populating the "reference" url with a pointer to a Contained Resource. Thus including additional ad-hoc information about the external location (for example, the address of a house).
- - Populating the "reference" url with a pointer to a locally hosted Location FHIR Resource. This may be possible when refering to external locations which are frequently used and for which the Data Provider therefore actually does maintain their own local reference data.
+ - *(In contrast just naming the location "Room 4" is meaningless to a consumer without further queries to follow the references, trace the tree, and assemble these details for themselves every time)*
+
 
 
 ### **Mandatory fields**
 Bearing in mind the multiple scenarios above, a small subset of fields can be specified as mandatory:
-1. **Name** - The name of the location. Noting that it is useful to reflect any hierarchy for more informative display eg "York Hospital: Ward 27"
+1. **Name** - The name of the location. Noting that, as noted above,this must reflect any hierarchy for more informative display eg "York Hospital: Ward 27"
 2. **Status** - Should normally be “active”, and only active locations should be used in new references. However it may be necessary to retain locations at other statuses (eg inactive) if they have already been used in references
 3. **Type** - Must be populated to describe the type of services typically provided at this location. Please select a value that is as specific as possible to provide maximum information. See also further notes below.
-4. **Physical Type** - A subset of the FHIR codes - covering either site / ward / room, or house / vehicle.
+4. **Physical Type** - Standard FHIR code list. As noted in the introduction, any location structures should be kept simple with focus on site/ward/room, plus of course non-institutional locations such as "house" or "vehicle" 
 
 
 ### **Must Support fields**
@@ -54,14 +61,6 @@ Other fields are optional and may be populated if known - on the understanding t
 ### **Discouraged or Removed fields**
  - **Operational Status** - Discouraged. As noted in the FHIR spec this is only relevant for beds / rooms, to indicate if they are undergoing housekeeping etc – relevant for a local care system, but not for tracking in a regional care record.
   - **Endpoint** - Removed. Technical endpoints are captured elsewhere (ie via the Participant Registry)
-
-
-### **Summary Text**
-
-    Name + Type
-  
-    Example: 
-    "York Hospital: Ward 27: Dermatology clinic"
 
 
 

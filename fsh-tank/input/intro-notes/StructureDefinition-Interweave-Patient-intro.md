@@ -8,6 +8,14 @@ The important underlying principle is that this information identifies a patient
 
 *NB: Whilst the term "Patient" is used by FHIR, the profile is equally relevant to a "citizen", "service user" or "client" in other contexts such as Social Care.*
 
+### **Patient coverage and references**
+
+ - A Data Provider MUST offer Patient FHIR resources to represent its own patients (those that are relevant for regional sharing). 
+ - This includes registering these patients with PIX, such that they become available for regional sharing.
+ - When referencing a Patient then the "reference" (url of FHIR Resource) and "display" (name) MUST be populated
+ - The "identifier" MAY be populated with the patient's NHS Number
+
+
 ### **Mandatory fields**
 Bearing in mind the above principle, the following fields are mandatory:
 1. NHS Number (fully traced and verified)
@@ -42,14 +50,6 @@ Several fields are marked as "discouraged" to indicate that they are preferably 
   
   Other standard FHIR fields that have been entirely removed by CareConnect are:
    - Animal - not relevant here, and also deprecated in FHIR R4
-
-
-### **Summary Text**
-
-    name.given + name.family
-  
-    Example: 
-    "Fred Bloggs"
 
 
 

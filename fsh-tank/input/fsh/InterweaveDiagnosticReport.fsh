@@ -66,12 +66,12 @@ Description: "Interweave Diagnostic Report resource profile."
 * subject MS
 * subject ^short = "The subject of the report - for our purposes the patient"
 * subject only Reference(CareConnect-Patient-1)
-* insert Ruleset-ReferencePatient(subject)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 
 // Context (MS)
 //   Link to the Encounter which led to this diagnostic report. Very useful to provide if relevant and have it
 * encounter MS  // "context" is renamed "encounter" in R4
-* insert Ruleset-ReferenceWithDisplayAndReference(encounter)
+* insert Ruleset-ReferenceWithReferenceOnly(encounter)
 
 // Effective and Issued dates (Mandatory)
 //   As-per the FHIR spec there are two dates with slighlty different purposes
@@ -91,6 +91,7 @@ Description: "Interweave Diagnostic Report resource profile."
 //   Essential if they are relevant (not always the case, but often)
 //   There will be more work to do on defining profiles for the many types of Observation possible
 * result MS
+* insert Ruleset-ReferenceWithReferenceOnly(result)
 
 // Imaging Study (Discouraged)
 //   There are other PACS solutions available - we are anticipating primarily sharing reports, not raw images
@@ -142,10 +143,10 @@ Description: "Interweave Diagnostic Report - basic example"
 * code.coding[1] = Interweave-NICIP-1#CABDO "CT Abdomen"
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 * encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
-* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+//* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * effectiveDateTime = "2022-01-10T09:00:00Z"
 * issued = "2022-01-14T09:00:00Z"

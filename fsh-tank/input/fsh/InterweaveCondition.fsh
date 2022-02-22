@@ -57,14 +57,14 @@ Description: "Interweave Condition resource profile - DRAFT"
 //   We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
 * subject ^short = "Who has the condition? (A patient, NOT group)"
-* insert Ruleset-ReferencePatient(subject)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 
 // Context: (MS)
 //   Will not be relevant to all Conditions (eg historical lists), 
 //   but should be populated if there is a relevant Encounter to link the Condition to.
 * encounter MS  // R4 encounter -> STU3 Context
 * encounter only Reference(CareConnect-Encounter-1)
-* insert Ruleset-ReferenceWithAtLeastDisplay(encounter)
+* insert Ruleset-ReferenceWithReferenceOnly(encounter)
 
 // Onset and Abatement: (MS)
 //   Important to provide if at all possible –
@@ -88,7 +88,7 @@ Description: "Interweave Condition resource profile - DRAFT"
 //   Could maybe also be the patient etc - perhaps more discussion about the implications of this?
 //   Useful to say that if not provided then an unknown Practitioner may be assumed
 * asserter MS
-* insert Ruleset-ReferenceWithAtLeastDisplay(asserter)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(asserter)
 
 // Stage: (Optional)
 //    Clearly not applicable to all conditions, but useful where it is applicable (eg cancer)
@@ -130,17 +130,17 @@ Description: "Interweave Condition example"
 * bodySite.coding[0] =  $SCT#2059009 "Skin of ear lobule"
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 * encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
-* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+//* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * onsetDateTime = "2020-04-01T00:00:00Z"   
 * abatementString = "During summer holidays 2021"
 * recordedDate = "2020-06-09T09:00:00Z"  //recordedDate -> STU3 assertedDate
 
 * asserter = Reference(InterweavePractitionerExample)
-* asserter.display = "Dr Jane Bloggs"
-* asserter.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-* asserter.identifier.value = "ABC123"
+* asserter.display = "Dr Jane BLOGGS"
+//* asserter.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* asserter.identifier.value = "ABC123"
 

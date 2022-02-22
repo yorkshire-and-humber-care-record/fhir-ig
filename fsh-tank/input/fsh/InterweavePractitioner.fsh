@@ -84,13 +84,13 @@ Description: "Interweave Practitioner resource profile."
 
 Instance: InterweavePractitionerExample
 InstanceOf: InterweavePractitioner
-Description: "YHCInterweaveR Practitioner example"
+Description: "Interweave Practitioner example"
 
 * insert Ruleset-ExampleMetaForHospital(Practitioner)
 
 // Text summary no longer needed
 // (name.given + name.family)
-//* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
+//* extension[Extension-Interweave-TextSummary].valueString = "Dr Jane BLOGGS"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
 * identifier[0].value = "ABC123"
@@ -106,3 +106,7 @@ Description: "YHCInterweaveR Practitioner example"
 * telecom[0].value = "01234 123412"
 
 * qualification[0].code.text = "Membership of Royal College of General Practice"
+
+
+
+

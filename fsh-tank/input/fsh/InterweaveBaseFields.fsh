@@ -158,73 +158,20 @@ RuleSet: Ruleset-RawCodingWithSystemCodeDisplay(path)
 * {path}.display 1..1
 
 
-RuleSet: Ruleset-ReferenceWithAtLeastDisplay(path)
-* {path}.display 1..1 
-* {path}.display ^short = "As a minimum explain in words"
-* {path}.reference 0..1 
-* {path}.reference ^short = "Preferably reference a resource"
-* {path}.identifier 0..1 
-* {path}.identifier ^short = "If relevant could include a local id"
-
-
-RuleSet: Ruleset-ReferenceWithDisplayAndReference(path)
-* {path}.display 1..1 
+RuleSet: Ruleset-ReferenceWithReferenceAndDisplay(path)
+* {path}.display 1..1
 * {path}.display ^short = "Description of the referenced resource"
-* {path}.reference 1..1 
-* {path}.reference ^short = "Reference to a resource"
-* {path}.identifier 0..1 
-* {path}.identifier ^short = "If relevant could include a local id"
+* {path}.reference 1..1
+* {path}.reference ^short = "Reference to a resource (could be Contained)"
+* {path}.identifier 0..1
+* {path}.identifier ^short = "If relevant could include an id"
 
 
-RuleSet: Ruleset-ReferencePatient(path)
-* {path}.display 1..1 
-* {path}.display ^short = "The patient's name"
-* {path}.reference 1..1 
-* {path}.reference ^short = "Reference to Patient Resource"
-* {path}.identifier 0..1 
-* {path}.identifier ^short = "Ideally also include NHS Number"
+RuleSet: Ruleset-ReferenceWithReferenceOnly(path)
+* {path}.display 0..1
+* {path}.display ^short = "If relevant, description of the referenced resource"
+* {path}.reference 1..1
+* {path}.reference ^short = "Reference to a resource (could be Contained)"
+* {path}.identifier 0..1
+* {path}.identifier ^short = "If relevant could include an id"
 
-
-RuleSet: Ruleset-ReferenceInternalLocation(path)
-* {path}.display 1..1 
-* {path}.display ^short = "Description of the location"
-* {path}.reference 1..1 
-* {path}.reference ^short = "Reference to internal Location Resource"
-* {path}.identifier 0..1 
-* {path}.identifier ^short = "Ideally also include a local id"
-
-
-RuleSet: Ruleset-ReferenceExternalLocation(path)
-* {path}.display 1..1 
-* {path}.display ^short = "Description of the location"
-* {path}.reference 0..1 
-* {path}.reference ^short = "Reference to Location Resource if relevant/possible (could be Contained)"
-* {path}.identifier 0..1 
-* {path}.identifier ^short = "Ideally also include a local id"
-
-
-RuleSet: Ruleset-ReferenceInternalPractitioner(path)
-* {path}.display 1..1 
-* {path}.display ^short = "The practitioner's name"
-* {path}.reference 1..1 
-* {path}.reference ^short = "Reference to internal Practitioner Resource"
-* {path}.identifier 1..1 
-* {path}.identifier ^short = "Include a practitioner id"
-
-
-RuleSet: Ruleset-ReferenceExternalPractitioner(path)
-* {path}.display 1..1 
-* {path}.display ^short = "The practitioner's name"
-* {path}.reference 0..1 
-* {path}.reference ^short = "Reference to Practitioner Resource if relevant/possible"
-* {path}.identifier 1..1 
-* {path}.identifier ^short = "Include a practitioner id to formally identify"
-
-
-RuleSet: Ruleset-ReferenceOrganization(path)
-* {path}.display 1..1 
-* {path}.display ^short = "The organisation name"
-* {path}.reference 0..1 
-* {path}.reference ^short = "Reference to Organisation Resource if relevant/possible"
-* {path}.identifier 1..1 
-* {path}.identifier ^short = "The ODS code to formally identify"

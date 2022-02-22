@@ -191,7 +191,7 @@ Description: "Interweave Patient example - Must Support"
 
 // Text summary no longer needed
 // (name.given + name.family)
-//* extension[Extension-Interweave-TextSummary].valueString = "Fred Bloggs"
+//* extension[Extension-Interweave-TextSummary].valueString = "Mr Fred BLOGGS"
 
 
 
@@ -241,7 +241,7 @@ Description: "Interweave Patient example - Full"
 
 // Text summary no longer needed
 // (name.given + name.family)
-//* extension[Extension-Interweave-TextSummary].valueString = "Jane Bloggs"
+//* extension[Extension-Interweave-TextSummary].valueString = Dr Jane BLOGGS"
 
 
 * extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept = CareConnect-EthnicCategory-1#A "British, Mixed British"

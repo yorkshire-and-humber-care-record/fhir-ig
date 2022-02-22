@@ -42,7 +42,7 @@ Description: "Interweave Encounter resource profile  to group other encounters i
 * subject 1..1 MS 
 // We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
-* insert Ruleset-ReferencePatient(subject)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 * subject ^short = "The patient (NOT group) present at the encounter"
 
 
@@ -113,7 +113,7 @@ Description: "Interweave Encounter Grouping example"
 * class = Interweave-EncounterClass-1#GROUPING "Grouping of related Encounters"
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 * insert Ruleset-HospitalizationExample-AdmissionEmergency
 * insert Ruleset-HospitalizationExample-Discharge

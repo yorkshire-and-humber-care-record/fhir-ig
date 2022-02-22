@@ -65,14 +65,14 @@ Description: "Interweave Procedure resource profile - DRAFT"
 //   We only want Patients - not Groups
 * subject only Reference(CareConnect-Patient-1)
 * subject ^short = "Who the procedure was performed on. (A patient, NOT group)"
-* insert Ruleset-ReferencePatient(subject)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 
 // Context: (MS)
 //   A reference to the Encounter where the procedure was performed.
 //   This is likely to be very useful and should be provided if at all possible. .
 * encounter MS  // R4 encounter -> STU3 Context
 * encounter only Reference(CareConnect-Encounter-1)
-* insert Ruleset-ReferenceWithAtLeastDisplay(encounter)
+* insert Ruleset-ReferenceWithReferenceOnly(encounter)
 
 // Performed: (Mandatory) (But difficult to specify this for a choice!)
 //  performedDateTime is easier to deal with, and would be simpler to exclude performedPeriod, but perhaps over-simplistic.
@@ -129,7 +129,7 @@ Description: "Interweave Procedure resource profile - DRAFT"
 * focalDevice.action from http://hl7.org/fhir/ValueSet/device-action (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(focalDevice.action)
 * focalDevice.manipulated MS
-* insert Ruleset-ReferenceWithAtLeastDisplay(focalDevice.manipulated)
+* insert Ruleset-ReferenceWithReferenceOnly(focalDevice.manipulated)
 
 // Used Code and Used Reference (discouraged)
 * usedCode ^short = "DISCOURAGED: relevant to stock control within an organisation, but less so for a regional record"
@@ -161,17 +161,18 @@ Description: "Interweave Procedure example"
 * code.coding[0] = $SCT#445004 "Repair of malunion of tibia"
 
 * subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Fred Bloggs"
+* subject.display = "Mr Fred BLOGGS"
 
 * encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
-* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
+//* encounter.display = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Dermatology"
 
 * performedDateTime = "2022-01-09T09:00:00Z"
 
 * outcome = $SCT#385669000 "Successful"
 * followUp = $SCT#18949003 "Change of dressing"
 
-* focalDevice.action = $SCT#129426002 "Adjustment - action"
-* focalDevice.manipulated.display = "Pacemaker"
-//  Note - add better reference once tackled Devices. Probably to a contained resource.
+//  Note - add reference once tackled Devices. Probably to a contained resource.
+//* focalDevice.action = $SCT#129426002 "Adjustment - action"
+//* focalDevice.manipulated.display = "Pacemaker"
+
 

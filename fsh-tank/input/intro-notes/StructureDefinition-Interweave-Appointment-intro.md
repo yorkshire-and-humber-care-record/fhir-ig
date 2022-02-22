@@ -43,8 +43,6 @@ In addition the following fields are "Must Support" - ie they must be populated 
 7. **Participant: Location** - again, rather unusually, the location is considered as another "participant" in the FHIR Appointment. A reference to the location is therefore required, once this has been allocated. 
     - Note that a location that is as granular as possible should be provided, although what this means may vary by Data Provider. Some may be able to allocate locations down to the "room" level - with this obviously being essential if the aim is to guide the patient directly to the right place. Others may allocate only at a "ward" or even "site" level - with the patient having to ask for further directions on arrival.
 
-    - *See also the Practitioner and Location resources for further advice on approaches to populating references*
-
 
 8. **Reason**: A long list of SNOMED codes to describe different reasons which have led to the Appointment. 
 

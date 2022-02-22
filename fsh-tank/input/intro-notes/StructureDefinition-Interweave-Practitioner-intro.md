@@ -7,22 +7,10 @@ This profile sets minimum expectations for the Practitioner resource.
 
 ### **Practitioner coverage and references**
 
-**A Data Provider MUST offer Practitioner FHIR resources to represent its own practitioners**
-
-  - When populating references to its own Practitioners then the "display" (name) and "reference" (url of local FHIR Resource) must be populated. In addition any relevant SDS, other professional ID, or failing that local identifier must be populated in the "identifier" 
-
-**There can also be a need to reference practitioners outside of the Data Provider's own organisation** 
-
- - When referencing an external practitioner then a Data Provider MUST always populate the reference "display" value with the external practitioner's name. 
-
- - In addition the "identifier" SHOULD also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted), but some practitioners will have an SDS User Id (which should be used in preference), and most will have at least some other professional id which can be populated  to more definitively identify them. Or failing that a local id.
-
-   *(Note also that these practitioner identifiers are less useful than ODS codes, as there is no obvious single master data source which can be used to easily retrieve further details based upon an id)*
-
-
- - Beyond this then the "reference" url MAY be populated with a pointer to further information about the Practitioner - either in Contained Resource, or pointing to a locally hosted replica of a Practitioner Resource for this external practitioner. This is only useful if there is information beyond their name avaiable to convey - for example, contact details or qualifications.
- 
-
+ - A Data Provider MUST offer Practitioner FHIR resources to represent its own practitioners
+ - When referencing a Practitioner then "reference" (url to a FHIR Resource) and "display" (name), MUST be populated
+ - For an external practitioner then the url could point to an ad-hoc Contained Resource
+ - In addition the "identifier" MAY also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted), but most practitioners will have a professional id which could be populated to more definitively identify them.
 
 
 ### **Mandatory fields**
@@ -60,14 +48,6 @@ Other fields are optional and may be populated if known - on the understanding t
 2. **Birth Date** - For the purposes of regional sharing then the birth date could be considered as unnecessary personal information and is not required
 3. **Photo** - At the present time then photos are not required. Excluded to avoid any complexities with sharing large image files
 
-
-
-### **Summary Text**
-
-    name.given + name.family
-  
-    Example: 
-    "Jane Bloggs"
 
 
 
