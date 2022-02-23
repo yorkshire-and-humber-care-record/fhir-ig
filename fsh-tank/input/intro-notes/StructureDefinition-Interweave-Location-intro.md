@@ -16,7 +16,7 @@ This profile sets minimum expectations for the Location resource, to record info
 ### **Location structure and hierarchy**
 The goal for regional sharing of locations is not necessarily to build a detailed model of the real-world, but rather to provide a simple representation which is easy for Data Consumers to interpret and display. The purpose is to understand where a patient has been, give some insight into the type of services typically provided at that location, and provide contact details if further follow up is desired.
 
-**Therefore a simple 3-level model of site -> ward -> room is proposed as adequate for most purposes**
+***Therefore a simple 3-level model of site -> ward -> room is proposed as adequate for most purposes***
 
  - All Data Providers must populate reference data for their own site(s) and wards
   - The phase "ward" is interpreted broadly as a "section of a facility". For example it could also be used to represent a department in a Social Care setting.
@@ -28,7 +28,7 @@ A particular issue is making it easy and efficient for Data Consumers to underst
 
  - In practice this means:
 
-   **The location name must incorporate the hierarchy. For example "York Hospital: Ward 27: Room 4"**
+   ***The location name must incorporate the hierarchy. For example "York Hospital: Ward 27: Room 4"***
 
  - *(In contrast just naming the location "Room 4" is meaningless to a consumer without further queries to follow the references, trace the tree, and assemble these details for themselves every time)*
 

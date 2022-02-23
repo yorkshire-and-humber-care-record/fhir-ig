@@ -11,10 +11,11 @@ The EncounterGrouping is a skeletal Encounter which requires a small number of m
  - Status - mandatory in FHIR
  - Period - the period of the overall "visit"
  - Subject - the Patient involved
- - Hospitalization - information about admission and discharge. (Collating together information already provided on the underlying Encounters). See the Encounter Resource Profile for further details of this structure.
 
  In addition as Must Support:
   - Identifier - a local id if relevant
+ - Hospitalization - information about admission and discharge. (Collating together information already provided on the underlying Encounters). See the Encounter Resource Profile for further details of this structure.
+
 
 Most other fields are removed, as this detail should instead be captured on the underlying Encounter records.
 

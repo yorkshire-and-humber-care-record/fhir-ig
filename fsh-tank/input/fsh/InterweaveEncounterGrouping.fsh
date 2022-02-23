@@ -80,10 +80,10 @@ Description: "Interweave Encounter resource profile  to group other encounters i
 * partOf 0..0
 
 
-// Hospitalization: Mandatory to provide as part of this grouping
+// Hospitalization: Must Support to provide as part of this grouping
 // It will be normal to fully populate here too (although not necessarily always if not relevant, depending on use-case)
 // This will intentionally repeat here (all in one place details) already provided separately on one or more of the base encounters
-* hospitalization 1..1 MS
+* hospitalization 0..1 MS
 * insert Ruleset-Hospitalization
 
 

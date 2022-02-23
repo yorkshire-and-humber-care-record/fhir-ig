@@ -47,11 +47,10 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
       The basic model is therefore of standalone Encounters which have a full set of information populated to give a complete picture of what occurred.
 
       A specific implication of this is in the use of the "hospitalization" structure which, despite the name, can be used to convey important admission and discharge information relevant to any care-setting:
-       - A hospitalization structure MUST be included on every Encounter
        - If the Encounter includes an Admission event, then the relevant portion of the hospitalization structure MUST be populated
        - If the Encounter includes a Discharge event, then the relevant portion of the hospitalization structure MUST be populated
        - Portions of the hospitalization structure which are irrelevant to this Encounter may be omitted. 
-       - In other words, there will always be a hospitalization structure but - depending on circumstances - it might be:
+       - In other words, depending on circumstances, the hospitalization structure might be:
          - Fully populated (for a simple standalone Encounter)
          - Half populated (for an Encounter that is the first or last of a set)
          - Not populated at all (more rarely, for an Encounter that is "in the middle" of a set)
@@ -72,6 +71,7 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
       - The "partOf" field on the base Encounters is populated to point at a Grouping Encounter
       - Only a SINGLE level of Encounter hierarchy is supported. The "partOf" field of a base Encounter must point ONLY at a single Grouping Encounter. Other more complex structures are NOT supported
       - It is perfectly acceptable to have a Grouping Encounter which contains only a single base Encounter. In fact this is likely to be common - as when the initial encounter occurs it is not known how events will unfold. The simplest approach for a Maturity Level 2 Data Provider will therefore be to always create a Grouping Encounter in anticipation. With the grouping structure already in place, it becomes straightforward to add additional Encounters as-and-if they occur.
+      - It is, of course, also acceptable to have a standalone Encounter with no Grouping Encounter - for example where an Encounter is not going to be part of any grouping and this is known from the start.
       - The Grouping Encounter is essentially an empty shell. Its purpose is purely to group. All of the important information is held in the base Encounters.
        - The Grouping Encounter does however add value by capturing the overall period and the full set of "hospitalization" information about admission and discharge. Whilst this could be deduced from the base encounters, it is helpful and logical to also provide in one place here.
 
@@ -135,8 +135,6 @@ A significant set of mandatory fields are defined in order to properly describe 
 
 6. **Location** - the location provides essential information about where the encounter took place. The intent is to provide information down to the “ward” level. It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
 
-7. **Hospitalization**: To provide details of admission and discharge. As described above, although it is mandatory to include the structure, depending on circumstances it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
-
 
 ### **Must Support fields**
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known. These largely relate to providing additional "clinical" detail about the Encounter - including links to related FHIR Resources such as the originating Appointment, the Condition, etc. These build up the rich dataset around an Encounter and are important to provide, but may not yet be available for an initial Encounter implementation.
@@ -163,6 +161,8 @@ In addition the following fields are "Must Support" - ie they must be populated 
    We pre-adopt the value set used in R4. This builds on the existing STU3 list covering SNOMED codes for "Clinical Finding" and "Procedure", and adds codes for "Context-dependent categories" (Social Care) and "Events" (A&E) 
 
 6. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
+
+7. **Hospitalization**: To provide details of admission and discharge. As described above then, depending on circumstances, it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
 
 
 ### **Optional fields**

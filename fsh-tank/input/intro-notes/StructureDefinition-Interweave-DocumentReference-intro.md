@@ -11,7 +11,7 @@ The following mandatory fields are defined in order to properly describe a Docum
 However there may be exceptions where it is useful to collaborate on preliminary versions of a document. (It is anticipated that additional guidance on the use of this field for collaborating on specific types of document may be added in future.)
 3. **Type** - essential information to help categorise the type of document. 
 
-   The categorisation of document types is a much debated topic, with a number of alternative standards still vying for precedence. See [discussion of code list options](codlist-options.html) for further details. However for practical purposes of consistency a regional design decision has been made based on the SNOMED refset **24501000000105: EHR composition types**. This is therefore specified as "preferred" and we ask that SNOMED coding based on this list is provided. 
+   The categorisation of document types is a much debated topic, with a number of alternative standards still vying for precedence. See [discussion of code list options](codelist-options.html) for further details. However for practical purposes of consistency a regional design decision has been made based on the SNOMED refset **24501000000105: EHR composition types**. This is therefore specified as "preferred" and we ask that SNOMED coding based on this list is provided. 
    - It is, of course, permissible to provide more than one code to also support other coding schemes if desired
    - We accept that this is an area where we will need to remain open to consultation as National standards continue to evolve.
 

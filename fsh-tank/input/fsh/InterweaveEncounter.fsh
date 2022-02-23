@@ -144,11 +144,11 @@ Description: "Interweave Encounter resource profile."
 // Account: Excluded - we are not concerned with billing information
 * account 0..0
 
-// Hospitalization: Mandatory to include
-//   However it will not always be relevant to actaully populate
+// Hospitalization: Must Support
+//   However it will not always be relevant to actaully populate all fields
 //   Depending on scenario it could include information on admission, discharge, both, or neither
 //   However where relevant it must be populated - all information must be available in these base encounters
-* hospitalization 1..1 MS
+* hospitalization 0..1 MS
 * insert Ruleset-Hospitalization
 
 // Location: Mandatory.
