@@ -1,4 +1,4 @@
-      Status: Draft - Work In Progress
+      Status: Draft - For Review
 
 ## **Introduction**
 This profile sets minimum expectations for the OperationOutcome resource. Note that the OperationOutcome is based around at least one top-level "issue" - and so the points below refer to the fields within the "issue". Also see further notes on usage below.

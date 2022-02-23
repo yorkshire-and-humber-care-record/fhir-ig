@@ -1,4 +1,4 @@
-      Status: Draft - Work In Progress
+      Status: Draft - For Review
 
 ## **Introduction**
 This profile sets minimum expectations for the Diagnostic Report resource. As noted in the FHIR specifications, a Diagnostic Report allows for presenting a combination of:

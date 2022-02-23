@@ -1,4 +1,4 @@
-      Status: Draft - Work In Progress
+      Status: Draft - For Review
 
 ## **Introduction**
 This profile sets minimum expectations for the Appointment resource.
