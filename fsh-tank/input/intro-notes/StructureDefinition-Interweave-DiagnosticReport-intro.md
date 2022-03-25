@@ -14,7 +14,7 @@ The following mandatory fields are defined for a Diagnostic Report:
 
 2. **Subject** - every Diagnostic Report must be linked to a Patient
 
-3. **Issued and Effective dates** - important dates to cover both when the report was issued and the clinically relevant period
+3. **Issued date** - when the report was issued
 
 4. **Category** - provides a high-level categorisation of the report. This is based on a short and simple list provided by FHIR which is expected to be straightforward to map to (eg "Radiology"). Useful for sorting and filtering.
 
@@ -28,7 +28,7 @@ The following mandatory fields are defined for a Diagnostic Report:
 
     - Local Codes - outside of the imaging domain there is significant variation in coding and, whilst mapping to one of the above standards is preferred, it may not always be feasible. 
 
-    ***NB: Any intention to use local codes must be explictly discussed and approved***
+    ***NB: Any intention to use local codes must be explicitly discussed and approved***
 
     ***NB: In all cases display text must be provided so that, regardless of coding, the type of report can be understood by a user***
 
@@ -38,9 +38,11 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 1. **Identifier** - a Local Id should be provided, such that could be quoted if manually getting in touch to find out more
 
-2. **Context** - this provides a link to the Encounter. Whilst there will not always be an Encounter, it is important to populate if it is relevant - to help build the complete picture by linking together all activities surrounding the Encounter
+2. **Effective date** - important date to provide details of the clinically relevant period, where relevant (eg based on when specimens taken - see FHIR guidance notes for further details)
 
-3. **Presented Form** - this allows for a textual report to be offered. Whilst not mandatory, this will almost always be relevant and important.
+3. **Context** - this provides a link to the Encounter. Whilst there will not always be an Encounter, it is important to populate if it is relevant - to help build the complete picture by linking together all activities surrounding the Encounter
+
+4. **Presented Form** - this allows for a textual report to be offered. This must be provided whenever a written report "document" is present.
 
    - Within "presented form" it is mandatory to populate the Content Type, so that consumers can be aware and process accordingly.  
 
@@ -58,12 +60,13 @@ In addition the following fields are "Must Support" - ie they must be populated 
    - Longer term it is anticipated that the messaging infrastructure will be enhanced to also support "url" links to a separately saved document - with this then becoming the preferred mechanism due to the reduced message size. (See [DocumentReference](StructureDefinition-Interweave-DocumentReference.html) for further guidance on providing url links)
    - A particular issue for Diagnostic Reports is that the underlying source for many diagnostic reports is messages extracted from a text-based lab or RIS system.
      - The ***strongly preferred*** approach is to reformat textual reports as HTML - as this is an interoperable standard which guarantees consistent presentation across any consumer system
-     - In some cases this may be relatively easy to do - for example if the report is already structured as separate lines which can be simply "decorated" with HTML tags
+     - It is also important to ensure that any such text is HTML Encoded - for example to make sure that characters such as "<" in the report do not cause problems when displaying.   
+     - In some cases this presentation as HTML may be relatively easy to do - for example if the report is already structured as separate lines which can be simply "decorated" with HTML tags
      - In other cases it may be much more difficult to format the report text - for example if the original report is structured as a single block of text containing various escape characters. Tackling this is, however, a key part of a Data Provider's work in offering their reports in an interoperable format for wider sharing.
-     - It is also important to ensure that any such text is HTML Encoded - for example to make sure that characters such as "<" in the report do not cause problems when displaying.     
+  
 
 
-4. **Result** - this allows for (semi) structured results to be offered in the form of a list of Observations. Whilst some types of Diagnostic Report are purely textual, for others these structured Observations are extremely important.
+5. **Result** - this allows for (semi) structured results to be offered in the form of a list of Observations. Whilst some types of Diagnostic Report are purely textual, for others these structured Observations are extremely important.
 
     ***Note: The relevant Observations for different types of report, and tips for populating from common Radiology and Lab systems is potentially a topic for a further paper in its own right***
 

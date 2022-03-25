@@ -74,7 +74,7 @@ Description: "Interweave Patient resource profile."
 // It is however important that both Providers and Consumers can handle appropriatly if "false"
 // (Suggested good practice would just be to always populate it)
 * active MS
-* active ^short = "Whether this patient's record is in active use - must be both populated and understood if 'false'"
+* active ^short = "Whether this patient's record is in active use - must be both populated and understood if 'false'. See notes on usage."
 
 // Name: CareConnect already mandates there to be exactly one "official" name, including a "family" name.
 //   However here we also mandate a "given" name, plus note that prefix and suffix must be supported if relevant
@@ -89,10 +89,12 @@ Description: "Interweave Patient resource profile."
 * name[official].suffix 0..* MS
 * name[official].text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
 
-// Gender and DoB: Basics which we want to always capture
-* gender 1..1 MS
+// DoB: Basics which we want to always capture - and needed for PDS tracing
 * birthDate 1..1 MS
 * birthDate ^short = "The date of birth for the individual. NB: Must match PDS"
+
+// Gender - basics which we want to always capture, although not as vital as other fields so Must Support
+* gender MS
 
 // Deceased, maritalStatus, multipleBirth: Already optional, no changes needed
 
@@ -138,7 +140,8 @@ Description: "Interweave Patient resource profile."
 * contact.name.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
 * contact.address.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the address based on the detailed elements."
 
-
+* deceased[x] ^short = "Indicates if the individual is deceased or not. Do not populate - populated by PDS only."
+* link ^short = "Link to another patient resource that concerns the same actual person. (For example merged record)"
 
 ///////////////////////////////////////
 // --- Removed fields ---

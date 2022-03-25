@@ -8,9 +8,15 @@ Description: "Interweave DocumentReference resource profile."
 
 * insert Ruleset-InterweaveBaseFields
 
+// Identifier:
+// This is a business identifier for the document.
+// The value for a local identifier must be populated and contain the internal id for this document on the providing system
+// Thus providing a link back for any follow-up and/or troubleshooting
+* insert Ruleset-AddLocalIdentifier(documentreference)
+
+
 // Leave optional:
 // masterIdentifier (version specific, eg correlate with document system)
-// identifier (other ids for the document)
 
 // Status and docStatus
 // Status is already mandatory in FHIR (challenge may be accurately populating it with anything other than "current")
@@ -31,11 +37,14 @@ Description: "Interweave DocumentReference resource profile."
 
 // Subject - mandatory, and must refer to a patient
 * subject 1..1 MS
+* subject ^short = "Who is the subject of the document"
 * subject only Reference(CareConnect-Patient-1)
 * insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 
-// Created - leave optional
+// Created - discouraged
 // This is a potentially useful field, but note that deprecated in R4
+// ** Because the field doesn't exist in R4 we can't use it here! Instead this has to be inserted later in the node script
+//* created ^short = "DISCOURAGED - deprecated in R4"
 
 // Indexed - already mandatory in FHIR (note it is renamed to "date" in R4)
 * date MS

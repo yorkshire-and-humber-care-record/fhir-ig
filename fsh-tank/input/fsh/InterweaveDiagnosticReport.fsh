@@ -73,10 +73,10 @@ Description: "Interweave Diagnostic Report resource profile."
 * encounter MS  // "context" is renamed "encounter" in R4
 * insert Ruleset-ReferenceWithReferenceOnly(encounter)
 
-// Effective and Issued dates (Mandatory)
+// Effective and Issued dates
 //   As-per the FHIR spec there are two dates with slighlty different purposes
-//   Both seem to be commonly populated and considered essential
-* effective[x] 1..1 MS
+//   Both seem to be commonly populated - issued date is mandatory, and effective date MS
+* effective[x] 0..1 MS
 * issued 1..1 MS
 
 // Performer (leave optional)

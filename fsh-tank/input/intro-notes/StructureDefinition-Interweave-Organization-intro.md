@@ -10,8 +10,8 @@ Organisations are consistently identified across the region by their ODS code, a
 ### **Organisation coverage and references**
  - A Data Provider MUST offer Organisation FHIR resources to represent its own organisation(s)
  - When referencing an organisation then the "reference" (url of FHIR Resource) and "display" (name) MUST be populated
- - For an external organisation then the url could be either to an ad-hoc Contained Resource, or to the regional master organisation record
- - The "identifier" MAY be populated with the organisation's ODS Code
+   - For an external organisation then the url could be either to an ad-hoc Contained Resource, or to the regional master organisation record
+   - The "identifier" in the reference MAY be populated with the organisation's ODS Code
   
 
 ### **Mandatory fields**

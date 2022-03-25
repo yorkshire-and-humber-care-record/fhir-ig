@@ -9,8 +9,8 @@ This profile sets minimum expectations for the Practitioner resource.
 
  - A Data Provider MUST offer Practitioner FHIR resources to represent its own practitioners
  - When referencing a Practitioner then "reference" (url to a FHIR Resource) and "display" (name), MUST be populated
- - For an external practitioner then the url could point to an ad-hoc Contained Resource
- - In addition the "identifier" MAY also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted), but most practitioners will have a professional id which could be populated to more definitively identify them.
+   - For an external practitioner then the url could point to an ad-hoc Contained Resource
+   - In addition the "identifier" in the reference MAY also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted), but most practitioners will have a professional id which could be populated to more definitively identify them.
 
 
 ### **Mandatory fields**

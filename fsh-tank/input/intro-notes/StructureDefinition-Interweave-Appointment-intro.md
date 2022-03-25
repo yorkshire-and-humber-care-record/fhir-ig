@@ -62,7 +62,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
  - **Patient Instruction (Extension)** - this is a useful field added in FHIR R4, and pre-adopted by us here as an extension. It provides a more specific alternative to the "comment" field for any notes specifically intended for the patient. It might be used, for example, by an appointment reminders app to provide instructions such as “Please arrive at least 10 minutes beforehand, and go to the room at the end of the corridor”
    
- - **Additional Participants** - other participant type codes in the list may optionally be used to reference other FHIR Resource types ie RelatedPerson, Device, Healthcare Service. However it must not be assumed that a data consumer will necessarily have the ability to display anything more than the provided “display” text on the reference about these.
+ - **Additional Participants** - other participant type codes in the list may optionally be used to reference other FHIR Resource types ie RelatedPerson, Device, Healthcare Service. However it must not be assumed that a data consumer will have the ability to display anything more than the provided “display” text associated with a reference to these resources.
 
  - **Incoming Referral**: Link to the originating Referral, if relevant and implemented. This could be very useful information. However FHIR makes significant changes from the STU3 "ReferralRequest" to the R4 "ServiceRequest", and so we are reluctant to mandate implementation at this stage
 
@@ -73,7 +73,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
  - **Service Category** - unfortunately Care Connect has made a choice of mandating a code list based on SDS Job Roles. In our opinion this is not the intended use of this field, and so negates its use. (Encouragingly, drafts of the future UKCore specification revert to the standard FHIR list of simple appointment category codes - so this situation may change in future)
 
- - **Booking Organisation (Care Connect Extension)** - Proposed that this can instead be covered by other fields. For the organisation making the booking then see “incomingReferral”. For the organisation taking the booking then see provenance tags
+ - **Booking Organisation (Care Connect Extension)** - Proposed that this can instead be covered by other fields. For the organisation making the booking then see “incomingReferral”. For the organisation taking the booking then see provenance tags in the "meta" section
 
   - **Supporting Information** - A pointer to potentially any other FHIR Resource. Should not be used as potentially difficult for a Data Consumer to know how to handle.
 .

@@ -10,18 +10,22 @@ This profile sets minimum expectations for the Location resource, to record info
 
  - A Data Provider MUST offer Location FHIR resources to represent its own locations
  - When referencing a Location then "reference" (url to a FHIR Resource) and "display" (name), MUST be populated
- - For an external location then the url could point to an ad-hoc Contained Resource
- - In addition the "identifier" MAY also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted). However for some locations an ODS Site Code may be relevant, or otherwise it may still be useful to provide a local identifier.
+   - For an external location then the url could point to an ad-hoc Contained Resource
+   - In addition the "identifier" in the reference MAY also be populated. This is not as straightforward as for Organisations (where the ODS Code is widely accepted). However for some locations an ODS Site Code may be relevant, or otherwise it may still be useful to provide a local identifier.
 
 ### **Location structure and hierarchy**
 The goal for regional sharing of locations is not necessarily to build a detailed model of the real-world, but rather to provide a simple representation which is easy for Data Consumers to interpret and display. The purpose is to understand where a patient has been, give some insight into the type of services typically provided at that location, and provide contact details if further follow up is desired.
 
 ***Therefore a simple 3-level model of site -> ward -> room is proposed as adequate for most purposes***
 
- - All Data Providers must populate reference data for their own site(s) and wards
-  - The phase "ward" is interpreted broadly as a "section of a facility". For example it could also be used to represent a department in a Social Care setting.
+ All Data Providers must populate reference data for their own site(s) and, where relevant, wards:
  - Room-level detail may optionally be added if relevant (unlikely to be necessary for historical understanding, but may be relevant to inform attendance at future appointments)
  - Additional detail such as "bed" level of location detail is optional, may be onerous to keep up-to-date, and is not necessary for currently known regional sharing use-cases
+
+ Social Care has a slightly different set of considerations:
+  - It is rare to find a location as large and complex as a hospital, therefore the "site" level of detail will usually be sufficient
+  - Ward and Room-level detail may optionally be added only if relevant. (The phrase "ward" may be interpreted broadly as a "section of a facility" - for example a section of a care home, and not necessarily an actual hospital "ward").
+  -  More activity is likely to occur outside of institutions - for example in the persons's home (typically modelled as a location Contained Resource)
 
 A particular issue is making it easy and efficient for Data Consumers to understand the hierarchy.
  - The location "name" is used in references, and this needs to be usable standalone - without the need for Data Consumers to make multiple additional queries to follow a tree, just to meaningfully display where the patient is. 

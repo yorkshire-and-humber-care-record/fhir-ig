@@ -29,6 +29,7 @@ fs.mkdirSync(dirSTU3);
 fileArrayR4 = fileHelpers.getAllFiles(dirR4);
 fileArrayR4.forEach(function(filePathR4) {
 
+
        var fileData = fs.readFileSync(filePathR4,'utf8');
 
       var processContent = true;
@@ -73,6 +74,7 @@ fileArrayR4.forEach(function(filePathR4) {
               if(jsonObject.id == "Interweave-DiagnosticReport") {
                 jsonObject = convertInterweaveDiagnosticReportStructureDefinition(jsonObject);
               }
+
 
             }
 
@@ -267,16 +269,24 @@ function convertInterweaveEncounterStructureDefinition(jsonObject) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function convertInterweaveDocumentReferenceStructureDefinition(jsonObject) {
- 
+
+  // The "created" field does not exist in R4! Add text to the STU3 profile to indicate this
+  objCreated = new Object;
+  objCreated.id = "DocumentReference.created";
+  objCreated.path = "DocumentReference.created";
+  objCreated.short = "DISCOURAGED - deprecated in R4";
+  jsonObject.differential.element.push(objCreated);
+
+
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
 
-    // Convert "date" to "indexed"
-    if(objElement.id.includes("DocumentReference.date"))  {
-      objElement.id = objElement.id.replace("DocumentReference.date", "DocumentReference.indexed");
-      objElement.path = objElement.id;
-  };
+        // Convert "date" to "indexed"
+        if(objElement.id.includes("DocumentReference.date"))  {
+          objElement.id = objElement.id.replace("DocumentReference.date", "DocumentReference.indexed");
+          objElement.path = objElement.id;
 
+      };
 
 
   }); //Element
