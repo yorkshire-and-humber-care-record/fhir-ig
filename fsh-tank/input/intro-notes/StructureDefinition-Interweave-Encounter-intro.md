@@ -133,7 +133,7 @@ A significant set of mandatory fields are defined in order to properly describe 
 
    Participants can be given a "period" and this is optional. For regional sharing the most important thing is really just to see who has been involved with the patient, rather than to construct a forensic timeline of involvements. However this information might be useful in the case of a long Encounter with many brief involvements, and so may be provided if desired.
 
-6. **Location** - the location provides essential information about where the encounter took place. The intent is to provide information down to the “ward” level. It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
+6. **Location** - the location provides essential information about where the encounter took place. The intent is to provide information down to the “ward” level. It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history SHOULD be provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
 
 
 ### **Must Support fields**

@@ -155,7 +155,7 @@ Description: "Interweave Encounter resource profile."
 //   The location provides essential information about where the encounter took place. 
 //   The intent is to provide information down to the “ward” level
 //   It is useful to understand the history of where the patient has been seen, 
-//   So the status and period MUST be populated, and a history provided.
+//   So the status and period MUST be populated, and a history SHOULD be provided.
 * location 1..* MS
 * location ^short = "Location the encounter takes place (at Ward level)"
 * location.location MS
