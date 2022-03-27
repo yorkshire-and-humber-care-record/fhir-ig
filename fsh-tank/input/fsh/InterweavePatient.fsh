@@ -4,7 +4,7 @@ Profile: InterweavePatient
 Parent: CareConnect-Patient-1
 Id: Interweave-Patient
 Description: "Interweave Patient resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

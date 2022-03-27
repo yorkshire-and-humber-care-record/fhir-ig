@@ -4,7 +4,7 @@ Profile: InterweaveDiagnosticReport
 Parent: CareConnect-DiagnosticReport-1
 Id: Interweave-DiagnosticReport
 Description: "Interweave Diagnostic Report resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

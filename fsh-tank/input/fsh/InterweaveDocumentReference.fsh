@@ -4,7 +4,7 @@ Profile: InterweaveDocumentReference
 Parent: CareConnect-DocumentReference-1
 Id: Interweave-DocumentReference
 Description: "Interweave DocumentReference resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

@@ -1,4 +1,4 @@
-      Status: Draft - For Review
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets minimum expectations for the DocumentReference resource.

@@ -4,7 +4,7 @@ Profile: InterweaveAppointment
 Parent: CareConnect-Appointment-1
 Id: Interweave-Appointment
 Description: "Interweave Appointment resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
