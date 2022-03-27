@@ -17,8 +17,14 @@ Description: "Interweave Appointment resource profile."
 
 // Appointment Cancellation Reason (MS) - Obviously only relevant if the appointment has been cancelled. 
 // However in that case it is useful to populate – to understand why it was cancelled
-// However it is text only - not coded...
-* extension[Extension-CareConnect-AppointmentCancellationReason-1] MS
+// Care Connect offers a free-text extension, which we strike out
+// Instead we pre-adopt the field from R4, which offers a better coded list of reasons
+* extension[Extension-CareConnect-AppointmentCancellationReason-1] 0..0
+* extension contains Extension-Interweave-R4AppointmentCancellationReason named appointmentCancellationReasonR4 0..1
+* extension[Extension-Interweave-R4AppointmentCancellationReason] ^short = "The coded reason for the appointment being cancelled (pre-adopted from R4)"
+* extension[Extension-Interweave-R4AppointmentCancellationReason] MS
+
+
 
 // Booking Organisations - difficult to see why this is needed
 // - if the organisation making the booking, then see “incomingReferral”
@@ -68,8 +74,10 @@ Description: "Interweave Appointment resource profile."
 * insert Ruleset-CodingWithSystemCodeDisplay(specialty)
 
 // Appointment Type: MS and tighten the list. A simple list of “Routine”, “Emergency”, etc
+// Move to our own list which adds "Urgent"
 * appointmentType MS
-* appointmentType from http://hl7.org/fhir/ValueSet/v2-0276 (required)
+//* appointmentType from http://hl7.org/fhir/ValueSet/v2-0276 (required)
+* appointmentType from Interweave-AppointmentType-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(appointmentType)
 
 
@@ -189,7 +197,7 @@ Description: "Interweave Appointment example"
 * extension[Extension-Interweave-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
 * extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
-* extension[Extension-CareConnect-AppointmentCancellationReason-1].valueString = "Unable to attend due to prior engagement"
+* extension[Extension-Interweave-R4AppointmentCancellationReason].valueCodeableConcept = Interweave-R4AppointmentCancellationReason#pat "Patient"
 
 * insert Ruleset-ExampleLocalId(appointment, RCB.APPT-Q54321)
 

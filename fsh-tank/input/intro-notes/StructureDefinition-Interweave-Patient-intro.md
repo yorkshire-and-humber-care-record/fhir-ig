@@ -32,13 +32,21 @@ In addition the following fields are "Must Support" - ie they must be populated 
 4. Telecom (eg phone and/or email details)
 5. Address (eg a current home address)
 6. Contacts (eg next of kin and/or emergency contact)
-7. Ethnicity (potentially useful for equality monitoring, noting the option for "Not Stated")
-8. Communication preferences - only required if a language other than English is preferred. (Note that CareConnect have defined an extension to be used in preference to the standard FHIR field)
+7. Communication preferences - only required if a language other than English is preferred. (Note that CareConnect have defined an extension to be used in preference to the standard FHIR field)
+
+### **Analytical fields**
+The patient resource has a number of fields which are difficult to provide definitive guidance on. In the profile they are marked as "optional" as they are not necessarily essential for the provision of direct care. Their significant in terms of both data capture and display is however likely to be scenario dependant. In some scenarios they may be extremely relevant (eg Religious Affiliation at End of Life), whereas in other scenarios they may be seen as unnecessary or even intrusive information.
+
+These fields however assume a greater importance when considering analytics - and in particular for Public Health and Equality Monitoring. Considering, for example, the requirement for monitoring of Protect Characteristics and for reducing health inequalities based on Core20Plus5. Therefore although marked as "optional" every effort should be made to populate wherever possible and appropriate:
+
+1. Ethnicity 
+2. Religious Affiliation (Care Connect Extension)
+3. Sexual Orientation (Interweave Extension, based on NHS Data Dictionary)
+4. Residential Status
+
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Optional fields to note include:
-
- - Religious Affiliation (Care Connect Extension) - this is a difficult field to provide definitive guidance on. In general it is useful to populate if possible, and for some scenarios it may be extremely important (eg End of Life, and certain aspects of community and social care). In other scenarios however it may be considered unnecessary and intrusive information. Therefore optional, to allow appropriate discretion to be applied.
 
  - Name and Address history - these can be provided if known, optionally with periods, and importantly with a "use" that distinguishes them from the current values.
 

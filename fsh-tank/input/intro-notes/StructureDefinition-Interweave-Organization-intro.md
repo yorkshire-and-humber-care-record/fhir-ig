@@ -4,8 +4,6 @@
 ## Introduction
 This profile sets minimum expectations for the Organization resource.
 
-Organisations are consistently identified across the region by their ODS code, and so this is the most important data item as it both identifies the organisation and allows other details to be looked up from the master ODS records.
-
 
 ### **Organisation coverage and references**
  - A Data Provider MUST offer Organisation FHIR resources to represent its own organisation(s)
@@ -16,15 +14,15 @@ Organisations are consistently identified across the region by their ODS code, a
 
 ### **Mandatory fields**
 The following fields are mandatory:
-1. **Identifier**: ODS Organisation code - The critical identifier which must always be populated
-2. **Name** - The name of the organisation
-3. **Address** - The organisation's address. (Noting that the definitive address can always be looked up given the ODS code)
+1. **Name** - The name of the organisation
+2. **Address** - The organisation's address. (Noting that the definitive address can always be looked up given the ODS code)
 
 
 ### **Must Support fields**
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known:
-1. **Type** - The type of organisation, as classified by ODS
-2. **Active** - Essential if not active. Good practice to always populate anyway.
+1. **Identifier**: ODS Organisation code - The important identifier which must be populated in the vast majority of cases. Almost all organisations in both Health and Social Care do have an ODS Code which both identifies the organisation and allows other details to be looked up from the master ODS records. However it is recognised that there may be some circumstances with new or smaller providers where it cannot be mandated.
+2. **Type** - The type of organisation, as classified by ODS
+3. **Active** - Essential if not active. Good practice to always populate anyway.
 
 
 ### **Optional fields**

@@ -11,6 +11,7 @@ Id: Interweave-OrganisationType-1
 Description: "Organisation Types, as used by ODS"
 * ^name = "InterweaveOrganisationType"
 * ^content = #complete
+* ^caseSensitive = true
 
 // See https://odsportal.digital.nhs.uk/Organisation/Search
 

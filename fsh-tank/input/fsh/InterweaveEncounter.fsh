@@ -185,6 +185,14 @@ RuleSet: Ruleset-Hospitalization
 * hospitalization.extension[Extension-CareConnect-AdmissionMethod-1] MS
 * hospitalization.extension[Extension-CareConnect-DischargeMethod-1] MS
 
+// Add an extension to provide information about whether the patient is medically safe for discharge
+// The current status, date when predicted they will be ready, and actaul date when they were ready
+// This has been requested as important information to inform planning and analysis (therefore make MS)
+* hospitalization.extension contains Extension-Interweave-MedicallySafeForDischarge named medicallySafeForDischarge 0..1
+* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge] MS
+* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge] ^short = "Medically Safe for Discharge"
+
+
 // Origin: Useful to provide if possible, especially if transfered from another institution
 * hospitalization.origin ^short = "The location from which the patient came before admission. Useful to provide if possible, in particular to reference a 'site' if transfered from another institution."
 * insert Ruleset-ReferenceWithReferenceAndDisplay(hospitalization.origin)
@@ -210,9 +218,9 @@ RuleSet: Ruleset-Hospitalization
 * insert Ruleset-ReferenceWithReferenceAndDisplay(hospitalization.destination)
 
 // Discharge Disposition: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
-//   (Also tighten the code list)
+//   (Also tighten the code list, and use our own which updates CareConnect with the latest values from NHSDD)
 * hospitalization.dischargeDisposition MS
-* hospitalization.dischargeDisposition from CareConnect-DischargeDestination-1 (required)
+* hospitalization.dischargeDisposition from Interweave-DischargeDestination-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.dischargeDisposition)
 
 
@@ -567,9 +575,13 @@ RuleSet: Ruleset-HospitalizationExample-AdmissionWaitingList
 RuleSet: Ruleset-HospitalizationExample-Discharge
 
 * hospitalization.extension[Extension-CareConnect-DischargeMethod-1].valueCodeableConcept =  CareConnect-DischargeMethod-1#1 "Patient discharged on clinical advice or with clinical consent"
+
+* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[status].valueCode = Interweave-MedicallySafeForDischargeStatus-1#ready "Ready"
+* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[predictedDate].valueDateTime = "2022-01-11T09:00:00Z"
+* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[actualDate].valueDateTime = "2022-01-09T09:00:00Z"
+
 * hospitalization.destination = Reference(InterweaveLocationSocialCareDeptExample)
 * hospitalization.destination.display = "Leeds Social Services: Adult Services Department"
-* hospitalization.dischargeDisposition = CareConnect-DischargeDestination-1#65 "Local Authority residential accommodation i.e. where care is provided"
-
+* hospitalization.dischargeDisposition = Interweave-DischargeDestination-1#56 "Care Home Without Nursing"
 
 

@@ -12,6 +12,7 @@ Id: Interweave-NICIP-1
 Description: "National Interim Clinical Imaging Procedure codes"
 * ^name = "InterweaveNICIP codes"
 * ^content = #complete
+* ^caseSensitive = true
 
 * #CABDO "CT Abdomen"
 * #CABDOB "CT Guided biopsy abdomen"

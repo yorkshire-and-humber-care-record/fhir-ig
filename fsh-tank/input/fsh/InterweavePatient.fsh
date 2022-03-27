@@ -24,8 +24,7 @@ Description: "Interweave Patient resource profile."
 //     (Other items such as DocumentReferences and Encounters could provide specific maternity details if needed)
 // - nominatedPharmacy: generally not needed for current use-cases and should not be used unless certain that up-to-date (also gone in new UK Core)  
 
-* extension[Extension-CareConnect-TreatmentCategory-1] ^short = "DISCOURAGED"
-* extension[Extension-CareConnect-ResidentialStatus-1] ^short = "DISCOURAGED"
+* extension[Extension-CareConnect-TreatmentCategory-1] ^short = "DISCOURAGED (removed in UKCore)"
 * extension[$patient-cadavericDonor] ^short = "DISCOURAGED"
 * extension[birthPlace] ^short = "DISCOURAGED"
 * extension[Extension-CareConnect-NominatedPharmacy-1] ^short = "DISCOURAGED"
@@ -49,9 +48,14 @@ Description: "Interweave Patient resource profile."
 * extension[Extension-CareConnect-NHSCommunication-1] ^short = "Communication Preferences - please indicate if a preference for language other than English"
 * extension[Extension-CareConnect-NHSCommunication-1].extension[modeOfCommunication] ^short = "DISCOURAGED"
 * extension[Extension-CareConnect-NHSCommunication-1].extension[communicationProficiency] ^short = "DISCOURAGED"
-* extension[Extension-CareConnect-EthnicCategory-1] MS
+//* extension[Extension-CareConnect-EthnicCategory-1] MS
 * extension[Extension-CareConnect-EthnicCategory-1] ^short = "Ethnic Category - please provide if known. (Noting also option for 'Not Stated')"
+//* extension[Extension-CareConnect-ResidentialStatus-1]
 
+
+//Also - add an extension (optional) for Sexual Orientation, based on NHSDD. As requested for equality monitoring
+* extension contains Extension-Interweave-SexualOrientation named sexualOrientation 0..1
+* extension[Extension-Interweave-SexualOrientation] ^short = "Sexual Orientation, as per NHS Data Dictionary: Person Stated Sexual Orientation Code"
 
 
 ///////////////////////////////////////
@@ -197,9 +201,6 @@ Description: "Interweave Patient example - Must Support"
 //* extension[Extension-Interweave-TextSummary].valueString = "Mr Fred BLOGGS"
 
 
-
-* extension[Extension-CareConnect-EthnicCategory-1].valueCodeableConcept =  CareConnect-EthnicCategory-1#A "British, Mixed British"
-
 * identifier[nhsNumber].extension[nhsNumberVerificationStatus].valueCodeableConcept = CareConnect-NHSNumberVerificationStatus-1#01 "Number present and verified"
 * identifier[nhsNumber].system = "https://fhir.nhs.uk/Id/nhs-number"
 * identifier[nhsNumber].value = "123456789"
@@ -251,7 +252,8 @@ Description: "Interweave Patient example - Full"
 * extension[Extension-CareConnect-ReligiousAffiliation-1].valueCodeableConcept = http://snomed.info/sct#160549006 "Christian"
 * extension[Extension-CareConnect-NHSCommunication-1].extension[language].valueCodeableConcept = CareConnect-HumanLanguage-1#bo "Tibetan"
 * extension[Extension-CareConnect-NHSCommunication-1].extension[preferred].valueBoolean =  true
-
+* extension[Extension-CareConnect-ResidentialStatus-1].valueCodeableConcept =  CareConnect-ResidentialStatus-1#H "UK Resident"
+* extension[Extension-Interweave-SexualOrientation].valueCodeableConcept =  Interweave-SexualOrientation-1#1 "Heterosexual or Straight"
 
 * identifier[nhsNumber].extension[nhsNumberVerificationStatus].valueCodeableConcept = CareConnect-NHSNumberVerificationStatus-1#01 "Number present and verified"
 * identifier[nhsNumber].system = "https://fhir.nhs.uk/Id/nhs-number"

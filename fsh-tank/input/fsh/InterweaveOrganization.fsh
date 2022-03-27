@@ -11,9 +11,10 @@ Description: "Interweave Organization resource profile."
 * extension[http://hl7.org/fhir/StructureDefinition/organization-period] ^short = "DISCOURAGED"
 
 // Identifier (ODS) - CareConnect already defines a special identifier for ODS Code
-// Let's be bold and say this is mandatory. To identify the organisation and tie in with regional master data downloaded from ODS
-// (All organisations involved in care really should have an ODS code. Reconsider if something unforeseen turns up later)
-* identifier[odsOrganisationCode] 1..1 MS
+// To identify the organisation and tie in with regional master data downloaded from ODS
+// All organisations involved in care really should have an ODS code, but it is difficult to mandate more strongly than MS
+// For example there may be examples of private sector labs or smaller social care providers who may not have one
+* identifier[odsOrganisationCode] 0..1 MS
 * identifier[odsOrganisationCode].system MS
 * identifier[odsOrganisationCode].value MS
 

@@ -41,8 +41,6 @@ This page captures topics of ongoing discussion. Contributions and insights are 
 
  - **Subject (participant)** - the Appointment does not have a Subject field! So we are referencing the Patient as a "participant". But double check exactly how this will work for practical purposes such as patient-centric searching.
 
-  - **Appointment Cancellation Reason** - how useful is this field and when will it be used? It is free text - is that OK?
- 
   
 ## **Condition**
 

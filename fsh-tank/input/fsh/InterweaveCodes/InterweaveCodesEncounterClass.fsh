@@ -18,5 +18,6 @@ Id: Interweave-EncounterClass-1
 Description: "Additional Encounter Class codes"
 * ^name = "InterweaveEncounterClass"
 * ^content = #complete
+* ^caseSensitive = true
 
 * #GROUPING "Grouping of related Encounters"

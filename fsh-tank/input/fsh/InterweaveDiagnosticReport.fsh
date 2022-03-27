@@ -32,9 +32,11 @@ Description: "Interweave Diagnostic Report resource profile."
 // Code - this is already mandatory in FHIR
 //   We certainly need something in here, but the exact code list is much more difficult to agree.
 //   FHIR "prefers" LOINC codes
-//   But Care Connect defines SNOMED, and also (for Imaging) there is NHS Digital's National Interim Clinical Imaging Procedure (NICIP)
+//   But Care Connect defines SNOMED, so we take that as our preference instead.
+//   There is and also (for Imaging) there is NHS Digital's National Interim Clinical Imaging Procedure (NICIP)
 //   Plus local codes seem to still be widely used in practice
 * code MS
+* code from CareConnect-ReportCodeSnCT-1 (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
 // CareConnect already defines a slide based on the snomed 371525003 | Clinical procedure report (extensible)
 // Add a slice for NICIP

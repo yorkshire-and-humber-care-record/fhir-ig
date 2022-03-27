@@ -34,7 +34,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 3. **Minutes Duration** - overlaps to some extent with "start" and "end" but useful to indicate at-a-glance how long the appointment is. May also be useful to indicate the anticipated duration within a longer overall timeslot.
 
-4. **Appointment Type** - a simple list of codes eg "routine", "emergency" etc
+4. **Appointment Type** - a simple list of codes eg "routine", "emergency" etc. We add a value for "urgent" to cover scheduled but urgent appointments.
 
 5. **Description** - any other title or text to further describe the appointment
 
@@ -50,7 +50,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 9. **Delivery Channel (Care Connect Extension)** - simple and useful field to indicate whether in-person, telephone, or video
 
-10. **Appointment Cancellation Reason (Care Connect Extension)** - obviously only relevant if the appointment is cancelled, but then useful to populate. (Noting that it is defined as free text, so of limited value for analytics).
+10. **Appointment Cancellation Reason (Extension, from R4)** - obviously only relevant if the appointment is cancelled, but then useful to populate. (CareConnect offers a free-text extension - however we replace this by pre-adopting the field from R4 which offers a better coded list).
 
 
 ### **Optional fields**
