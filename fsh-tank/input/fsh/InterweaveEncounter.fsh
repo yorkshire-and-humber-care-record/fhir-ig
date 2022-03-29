@@ -4,15 +4,19 @@ Profile: InterweaveEncounter
 Parent: CareConnect-Encounter-1
 Id: Interweave-Encounter
 Description: "Interweave Encounter resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
 // Extensions
-// - Encounter Transport:  (contains more detail of type, period, reason - as far as I can see free text?)
-// - Outcome of attendance: (simple list of discharged, another appointment given, another appointment needed)
-// - Emergency Care Discharge Status (a list of snomed codes - when did they leave, were they pass onwards)
-// These all look like they might sometimes be useful but not essential - leave optional for now, subject to further discussion.
+// - Encounter Transport:  (Optional - contains more detail of type, period, reason - as far as I can see free text? Removed in UK Core)
+
+// Outcome information (Must Support. BUT only one of these two or hospitalization.dischargeMethod is needed, depending on the type of encounter)
+// - Outcome of attendance: (For outpatients - simple list of discharged, another appointment given, another appointment needed)
+// - Emergency Care Discharge Status (For emergencies - a list of snomed codes - when did they leave, were they pass onwards)
+* extension[Extension-CareConnect-OutcomeOfAttendance-1] MS
+* extension[Extension-CareConnect-EmergencyCareDischargeStatus-1] MS
+
 
 // Service Type is perhaps one of the most useful and important fields about an Encounter - but missing from STU3!
 // This omission is rectified in R4, so we pre-adopt it here - and make the extension Must Support
@@ -26,7 +30,8 @@ Description: "Interweave Encounter resource profile."
 // This is a business identifier for the Encounter.
 // The value for a local identifier must be populated and contain the internal id for this Encounter on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* insert Ruleset-AddLocalIdentifier(encounter)
+* insert Ruleset-AddIdentifierSlicing
+* insert Ruleset-AddLocalIdentifierMS(encounter)
 
 
 // Status: Already mandatory in FHIR, emphasise with Must Support
@@ -111,9 +116,10 @@ Description: "Interweave Encounter resource profile."
 * period.start 1..1 MS
 * period.end MS
 
-// Length: Discouraged. This duplicates information that is already available via the Period.
+// Length: (optional)
+// This to some extent duplicates information that is already available via the Period, but useful to provide for analytical purposes
 // In some systems it is used to indicate exactly how long a patient was in the consulting room (eg for billing), but this is not relevant here.
-* length ^short = "DISCOURAGED: This duplicates information that is already available via the Period"
+* length ^short = "Quantity of time the encounter lasted (less time absent). Please use minutes."
 
 // Reason: MS
 //   Capture the reason for the encounter
@@ -580,8 +586,8 @@ RuleSet: Ruleset-HospitalizationExample-Discharge
 * hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[predictedDate].valueDateTime = "2022-01-11T09:00:00Z"
 * hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[actualDate].valueDateTime = "2022-01-09T09:00:00Z"
 
-* hospitalization.destination = Reference(InterweaveLocationSocialCareDeptExample)
-* hospitalization.destination.display = "Leeds Social Services: Adult Services Department"
+* hospitalization.destination = Reference(InterweaveLocationSocialCareExample)
+* hospitalization.destination.display = "St Hildas Care Home"
 * hospitalization.dischargeDisposition = Interweave-DischargeDestination-1#56 "Care Home Without Nursing"
 
 

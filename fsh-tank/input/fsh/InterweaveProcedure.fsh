@@ -17,7 +17,8 @@ Description: "Interweave Procedure resource profile - DRAFT"
 // This is a business identifier for the Procedure.
 // The value for a local identifier must be populated and contain the internal id for this Procedure on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* insert Ruleset-AddLocalIdentifier(procedure)
+* insert Ruleset-AddIdentifierSlicing
+* insert Ruleset-AddLocalIdentifierMS(procedure)
 
 
 // Definition: Leave optional

@@ -1,4 +1,4 @@
-      Status: Draft - For Review
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets minimum expectations for the OperationOutcome resource. Note that the OperationOutcome is based around at least one top-level "issue" - and so the points below refer to the fields within the "issue". Also see further notes on usage below.
@@ -53,13 +53,13 @@ Other fields are optional and may be populated if known - on the understanding t
 ### **Additional notes**
 
 1. **RequestId tag**
-   All Operation Outcomes which pass through the Exchange will have a tag populated: https://yhcr.nhs.uk/RequestId. The "code" of this tag will contain a request id which can be used to uniquely identify the interaction and thus provide a link to diagnostic logs. 
+   All Operation Outcomes which pass through the Exchange will have a tag automatically added: https://yhcr.nhs.uk/RequestId. The "code" of this tag will contain a request id which can be used to uniquely identify the interaction and thus provide a link to diagnostic logs. 
    
    ***Please quote this RequestId for troubleshooting purposes***
 
 2. **Narrative text**
 
-   Some Operation Outcomes have historically populated the resource's narrative “text” with HTML information about the error. This is discouraged and it should not be assumed that the user will be shown this text. This is because it is difficult to predict the effect of this HTML formatting on a Data Consumer screen. Instead simple text should be provided in the "details.text".
+   Some Operation Outcomes have historically populated the resource's narrative “text” with HTML information about the error. This is discouraged (as per [base fields](base-fields.html) ) and it should not be assumed that the user will be shown this text. This is because it is difficult to predict the effect of this HTML formatting on a Data Consumer screen. Instead simple non-html text should be provided in the "details.text".
 
 
 3. **Multiple Issues**

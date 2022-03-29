@@ -2,7 +2,7 @@ Profile: InterweavePractitioner
 Parent: CareConnect-Practitioner-1
 Id: Interweave-Practitioner
 Description: "Interweave Practitioner resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -49,6 +49,7 @@ Description: "Interweave Practitioner resource profile."
 * name.prefix MS
 * name.suffix MS
 * name.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the name based on the detailed elements."
+* name.period ^short = "DISCOURAGED: Not relevant as only a single name is permitted"
 
 
 // Telcom: Leave as optional
@@ -62,8 +63,9 @@ Description: "Interweave Practitioner resource profile."
 * address ^short = "DISCOURAGED: Addresses should be provided instead on the relevant organisation / location records. For the purposes of regional sharing then practitioner home addresses should NOT be shared."
 
 // Gender: Leave as optional
-// Birth Date: Discouraged
-* birthDate ^short = "DISCOURAGED: For the purposes of regional sharing then the birth date is not required - this is unnecessary personal information"
+// Birth Date: removed - unnecessary personal information
+////* birthDate ^short = "DISCOURAGED: For the purposes of regional sharing then the birth date is not required - this is unnecessary personal information"
+* birthDate 0..0
 
 // Photo: At the present time then photos are NOT required. Excluded to avoid any complexities with sharing large image files
 * photo 0..0

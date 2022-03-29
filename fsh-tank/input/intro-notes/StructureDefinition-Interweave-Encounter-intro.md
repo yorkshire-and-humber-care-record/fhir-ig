@@ -1,4 +1,4 @@
-      Status: Draft - For Review
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets minimum expectations for the Encounter resource.
@@ -7,9 +7,9 @@ The Encounter is a key resource - as it explains the who, where, when, and why o
 
 Its main use in our region at present is for acute care, where it can be used to describe inpatient, outpatient and emergency encounters.
 
-As of this writing then Encounters are not being used by Social Care - which instead uses a model based around the Episode of Care. See the Episode of Care profile for further details.
+As of this writing Encounters are not being used by Social Care - which instead uses a model based around the Episode of Care. See the Episode of Care profile for further details.
 
-The Encounter is a complex FHIR Resource – and one which offers significant flexibility to support different representations. The FHIR guidance on anticipated usage is helpful and should be read as background, see <https://www.hl7.org/fhir/STU3/encounter.html>. As this states however: “*The expectation is that for each domain of exchange, profiles are used to limit the flexibility of Encounter to meet the demands of the use case*”. Before looking at the data items in detail, it is therefore necessary to establish some overall guidelines on how the Encounter resource type will be used
+The Encounter is a complex FHIR Resource – and one which offers significant flexibility to support different representations. The FHIR guidance on anticipated usage is helpful and should be read as background, see <https://www.hl7.org/fhir/STU3/encounter.html>. As this states: “*The expectation is that for each domain of exchange, profiles are used to limit the flexibility of Encounter to meet the demands of the use case*”. Before looking at the data items in detail, it is therefore necessary to establish some overall guidelines on how the Encounter resource type will be used
 
 ### **Encounter Start/End**
 Whilst there is an intuitive understanding of what constitutes the start / end of an Encounter, it is challenging to establish a rigorous definition. Nevertheless, the following guidelines cover key points discussed to date:
@@ -18,9 +18,7 @@ Whilst there is an intuitive understanding of what constitutes the start / end o
 
  - A ***change in care-setting*** constitutes a change of Encounter. (This would include moving from Emergency to Inpatient to Outpatient within a hospital – as indicated by the “class”)
 
- - A ***change in diagnosis*** constitutes a change of Encounter. (This would include a significant change in the primary diagnosis, as this is significant for many analytical purposes including outcome tracking. It would not necessarily include a minor refinement to the secondary diagnosis)
-
- - A ***change in location*** does NOT constitute a change of Encounter. (For example moving between beds and/or wards within a hospital inpatient stay. This would instead be modelled using the “location” sub-structure of the Encounter)
+ - A ***change in location*** within the same care setting does NOT constitute a change of Encounter. (For example moving between beds and/or wards within a hospital inpatient stay. This would instead be modelled using the “location” sub-structure of the Encounter)
 
  - ***Involvement of additional clinicians*** does NOT constitute a separate Encounter. For example, suppose a hospital inpatient is visited by a dietician during their stay: 
    - As a major contributor to the encounter the dietician would be referenced as one of the participants
@@ -35,11 +33,11 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
 
  There is a need to balance the desire to accurately model the complexity of real-life vs the need to provide a simple model which is easy for Data Consumers to understand and to reliably display. Experience suggests that offering a plethora of varying complex hierarchical structures from different care settings makes the task of a Data Consumer extremely challenging.
 
- ***A three-level maturity model for Encouter structures is therefore defined:***
+ ***The core of the approach is therefore a simple flat list of Encounters. Two options are then offered to enrich this with different types of groupings:***
 
-  - **Maturity Level 1 - Simple flat list of Encounters**
+  - **Core Model - Simple flat list of Encounters**
 
-    This is the basic level which all Data Providers and Consumers MUST support. It consists of a simple flat list of Encounters with no hierarchy whatsoever.
+    This is the basic model which all Data Providers and Consumers MUST support. It consists of a simple flat list of Encounters with no hierarchy whatsoever.
 
      - Much of the value comes from this list and, for Direct Care purposes at least, it is not difficult for a clinician to look at the times and locations and deduce what has occurred.
       - ***A important use-case is messaging-based consumers*** - eg Ambulance Transfer of Care and Subscription Notifications. These consumers see the world as a real-time stream of Encounter-based events. In this world-view it is difficult to comprehend hierarchy - and indeed the ultimate set of interrelationships may not even be known as the initial Encounter event unfolds. ***It is therefore extremely important that all of the necessary information can be conveyed as a "flat" stream of Encounter messages***.
@@ -56,9 +54,9 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
          - Not populated at all (more rarely, for an Encounter that is "in the middle" of a set)
 
 
-  - **Maturity Level 2 - Encounter Grouping**
+  - **Grouping Option 1 - Encounter Grouping (linking in time)**
 
-    Despite the appeal of a simple flat list of Encounters, the concept of a "visit", "hospitalisation", or "incident" is widely recognised and agreed to be useful. For example:
+    Despite the appeal of a simple flat list of Encounters, the concept of a "visit", "hospitalisation", or "incident" is widely recognised and agreed to be useful as a way of grouping Encounters that are linked in time. For example:
      - An initial "emergency" visit to A&E is followed by admittance to the ward as an inpatient
      - An initial call to 111 is followed by a visit at home from a first-responder, and finally a conveyance to hospital in an ambulance
 
@@ -75,28 +73,29 @@ Any discussion of Encounters inevitably has to consider the topic of how Encount
       - The Grouping Encounter is essentially an empty shell. Its purpose is purely to group. All of the important information is held in the base Encounters.
        - The Grouping Encounter does however add value by capturing the overall period and the full set of "hospitalization" information about admission and discharge. Whilst this could be deduced from the base encounters, it is helpful and logical to also provide in one place here.
 
-  - **Maturity Level 3 - Episode of Care**
 
-    This final level of maturity adds a further level of linkage - one that goes beyond modelling a single visit or incident and links together a whole care pathway. This is provided by the Episode of Care.
+  - **Grouping Option 2 - Episode of Care (linking by condition)**
+
+    Another way of grouping Encounters goes beyond modelling a single visit or incident and links together a care pathway based on a Condition. This linkage is provided by the Episode of Care.
     
     At first glance it can be difficult to distinguish an Encounter Grouping from an Episode of Care - however the [FHIR specification](https://www.hl7.org/fhir/STU3/episodeofcare.html) provides helpful guidance, and in fact there are some clear differentiating features:
-     - An Episode of Care continues over a longer period of time. Specifically it can be used to link together ***multiple separate visits*** over a period of months or even years
-     - An Episode of Care is ***based around a "condition"***, and is thus used to join-up a care pathway. Specifically, a patient with multiple conditions could have multiple Episodes of Care running concurrently. The Episode of Care is used to "pick out" from the mass of activity those Encounters relating to a particular care pathway.
+     - An Episode of Care continues over a longer period of time. Specifically it can be used to link together ***multiple separate visits*** over a period of months or even years. For example an initial in-patient stay, and then several related out patient appointments, and then maybe another in-patient stay if there is a relapse.
+     - An Episode of Care is ***based around a "condition"*** and is thus used to join-up a care pathway. Specifically, a patient with multiple conditions could have multiple Episodes of Care running concurrently. The Episode of Care is used to "pick out" from the mass of activity those Encounters relating to a particular care pathway. Therefore the Episode of Care MUST have its Condition field populated when using it to group Encounters in this way.
 
-     The FHIR Specification states that an Episode of Care relates to a single organisation. However the definition of "organisation" might be considered a point of controversy, specifically is an Integrated Care System an "organisation"? This would provide a valuable mechanism to link up a   cross-care-setting care pathway - granted however that there is currently no obvious mechanism to identify and link encounters at this whole-system level.
-
-     ***Level 3 is currently seen as aspiriational and unlikely to be implemented immediately. Please get in touch for further discussion if you believe you may be a first-of-type.***
-
-
-The diagram below summarises the above discussion - ie core Encounters, single Grouping Encounter, and aspirational Episode of Care.
+     - The FHIR Specification states that an Episode of Care relates to a single organisation, and this is how we envisage it being used initially.
+     
+     *Longer term the definition of "organisation" might be considered a point of controversy, specifically is an Integrated Care System an "organisation"? This would provide a valuable mechanism to link up a   cross-care-setting care pathway - noting that there is currently no obvious mechanism to identify and link encounters at this whole-system level. Extending an Episode of Care across multiple care settings in this way is therefore currently seen as aspiriational and unlikely to be implemented immediately. Please get in touch for further discussion if you believe you may be a first-of-type.*
 
 
-<img src=".\EncounterStructure2.png" alt="Encounter Structure" style="clear:both; float:none">
+The diagram below summarises the above discussion - ie core Encounters, plus options for a single Grouping Encounter, and/or one or more Episodes of Care.
+
+
+<img src=".\EncounterStructure3.png" alt="Encounter Structure" style="clear:both; float:none">
  
 
 
 ### **Encounters vs Appointments**
-Whilst the terms "Encounter" and "Appointment" might be used interchangably in everyday speach, in FHIR they have specific meanings:
+Whilst the terms "Encounter" and "Appointment" might be used interchangeably in everyday speech, in FHIR they have specific meanings:
  - An Appointment describes a plan for the future
  - An Encounter generally describes something that is happening now, or has occurred in the past
 
@@ -122,7 +121,7 @@ A significant set of mandatory fields are defined in order to properly describe 
 
 1. **Status** - this is already mandatory in FHIR. As noted above the use of "planned" is discouraged - use Appointment instead for this.
 2. **Status History** - this is seen as important - to understand the timeline of the Encounter. (If there is only a single status then simply replicate it here, so it should always be possible to populate). 
-3. **Class** - this provides a basic categorisation, ie Emergency, Inpatient, Ambulatory. Should always be known, and vital for meaningful display purposes. We have defined a custom code list which, for now, simply replicates the standard list provided by Care Connect and adds a code to identify an "Encounter Grouping". However it also enables the possiblity of extending the list to cover a wider range of care settings if this is found to be necessary (please get in touch).
+3. **Class** - this provides a basic categorisation, ie Emergency, Inpatient, Ambulatory. Should always be known, and vital for meaningful display purposes. We have defined a custom code list which, for now, simply replicates the standard list provided by Care Connect and adds a code to identify an "Encounter Grouping". However it also enables the possibility of extending the list to cover a wider range of care settings if this is found to be necessary (please get in touch).
 
 4. **Subject** - every encounter must be linked to a Patient (not a Group)
 5. **Participant** - it is required to include EXACTLY ONE practitioner who has the "type" of "Primary Performer". This should be the main person responsible - someone who it would be useful to contact if further information is desired. (If this person changed during the course of the encounter then please pick just ONE to finally hold this key role, and demote the others to "participant")
@@ -131,9 +130,16 @@ A significant set of mandatory fields are defined in order to properly describe 
      - Admitter and Discharger - should be included if known/relevant and different to the Primary Performer
      - Participant - FHIR offers a wealth of other participant type codes, however it is suggested that simply classifying others as "participant" is likely to be adequate in most cases.
 
-   Participants can be given a "period" and this is optional. For regional sharing the most important thing is really just to see who has been involved with the patient, rather than to construct a forensic timeline of involvements. However this information might be useful in the case of a long Encounter with many brief involvements, and so may be provided if desired.
+   Participants can be given a "period" and this is optional. For regional sharing the most important thing is to see who has been involved with the patient, rather than to construct a forensic timeline of involvements. However this information might be useful in the case of a long Encounter with many brief involvements, and so may be provided if desired.
 
-6. **Location** - the location provides essential information about where the encounter took place. The intent is to provide information down to the “ward” level. It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history SHOULD be provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
+6. **Location** - the location provides essential information about where the encounter took place. Exactly what is appropriate here will depend on the care setting:
+   - For a hospital information should be provided down to the “ward” level. Thus enabling a visitor to find the patient, as well as potentially giving some insight into the type of treatment being provided.
+   - For other (smaller) locations then the "site" level may be sufficient
+   - Other types of care (eg community, emergency) may take place at home or in a vehicle 
+
+   It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history SHOULD be provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
+
+7. **Period** When the encounter occurred is vital to know. The start date/time is always mandatory, but as per the FHIR specification, the end date/time may be omitted if the encounter is ongoing
 
 
 ### **Must Support fields**
@@ -162,7 +168,14 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 6. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
 
-7. **Hospitalization**: To provide details of admission and discharge. As described above then, depending on circumstances, it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
+7. **Outcome fields**: Care Connect defines three extension fields which cover aspects of the encounter outcome: 
+   - **Outcome of Attendance** - relevant to outpatient encounters
+   - **Emergency Care Discharge Status** - relevant to emergency encounters
+   - **Discharge Method** - found in the "hospitalization", and relevant to inpatient encounters
+
+   These provide valuable information which is important to populate. However it is expected that only **one** of the three will be populated, as relevant for the type of encounter
+
+8. **Hospitalization**: To provide details of admission and discharge. As described above then, depending on circumstances, it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
 
 
 ### **Optional fields**
@@ -173,13 +186,15 @@ Other fields are optional and may be populated if known - on the understanding t
  - **Episode of Care** - again as described above, this may be used to link up a care pathway by pointing to an Episode of Care.
 
  - **Incoming Referral**: Link to the originating Referral, if relevant and implemented. This could be very useful information. However FHIR makes significant changes from the STU3 "ReferralRequest" to the R4 "ServiceRequest", and so we are reluctant to mandate implementation at this stage
- - **Care Connect Extensions** - these cover Encounter Transport, Outcome of Attendance, and Emergency Care Discharge Status. May be useful if relevant and known
+
+  - **Length** - the period is already provided, so this may appear to be duplication. However it is encouraged to populate if possible as it is useful for analytic purposes. If provided then the duration SHOULD be in minutes, and should reflect the time the patient is receiving direct care - eg not including the time the patient is waiting to be seen in clinic. (This provides a further distinction and greater analytical accuracy over-and-above the "period")
+
+ - **Encounter Transport** - may be useful if relevant and known (however noting that it no longer exists in UK Core)
 
 
 
 ### **Discouraged or Removed fields**
  - **Class History** - as described in the introduction, a change of care setting would constitute a new Encounter. Therefore by definition an Encounter will only ever have a single Class.
-  - **Length** - the period is already provided, so this appears to be duplication. In other countries then the exact length might be important for billing purposes, but this is not relevant here.
   - **Account** - for billing purposes, not relevant.   
   - **Service Provider** - duplicates information already available in the provenance tags
 
@@ -188,13 +203,13 @@ Other fields are optional and may be populated if known - on the understanding t
 
 
 ### **Hospitalization Structure**
-Within the Encounter sits the "Hospitalization" structure. TThis structure provides information about the admission and discharge. Therefore it is particularly important for a regional shared record - as this defines the touchpoints with other care providers.
+Within the Encounter sits the "Hospitalization" structure. This structure provides information about the admission and discharge. Therefore it is particularly important for a regional shared record - as this defines the touchpoints with other care providers.
 
 Fields in the Hospitalization structure are as follows:
 
  - **Must Support**
    - **Admission Method** - this CareConnect extension provides a useful list of codes about the method of admission (eg Planned, A&E, transfer, etc)
-   - **Discharge Method** - this CareConnect extension provides a useful list of codes about the method of discharge (eg clinical discharge, self-discharge, deceased, etc)
+   - **Discharge Method** - this CareConnect extension provides a useful list of codes about the method of discharge relevant to an inpatient stay (eg clinical discharge, self-discharge, deceased, etc). It is one of three alternatives for providing outcome information, depending on the type of encounter - see above under the main encounter "must support" heading for further details.
    - **Origin** - Information about the location which the patient arrived from (if relevant / known)
       - Required at the “site” level if arriving from another institution
       - Optional if arriving from a residential address

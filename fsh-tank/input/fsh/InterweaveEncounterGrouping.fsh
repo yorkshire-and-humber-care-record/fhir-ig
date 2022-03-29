@@ -2,7 +2,7 @@ Profile: InterweaveEncounterGrouping
 Parent: CareConnect-Encounter-1
 Id: Interweave-EncounterGrouping
 Description: "Interweave Encounter resource profile  to group other encounters into a 'visit'"
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -18,7 +18,8 @@ Description: "Interweave Encounter resource profile  to group other encounters i
 // This is a business identifier for the Encounter.
 // The value for a local identifier must be populated and contain the internal id for this Encounter on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* insert Ruleset-AddLocalIdentifier(encounter)
+* insert Ruleset-AddIdentifierSlicing
+* insert Ruleset-AddLocalIdentifierMS(encounter)
 
 // Status: Already mandatory in FHIR, emphasise with Must Support
 * status MS

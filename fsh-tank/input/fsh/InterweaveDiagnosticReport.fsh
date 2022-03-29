@@ -13,7 +13,8 @@ Description: "Interweave Diagnostic Report resource profile."
 // This is a business identifier for the Diagnostic Report.
 // The value for a local identifier must be populated and contain the internal id for this Diagnostic Report on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* insert Ruleset-AddLocalIdentifier(diagnostic-report)
+* insert Ruleset-AddIdentifierSlicing
+* insert Ruleset-AddLocalIdentifierMS(diagnostic-report)
 
 // Based on (optional)
 // Leave optional for now. If there is a referral request etc then useful to reference - but perhaps not that likely initially

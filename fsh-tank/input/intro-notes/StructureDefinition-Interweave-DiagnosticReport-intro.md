@@ -85,4 +85,4 @@ Other fields are optional and may be populated if known - on the understanding t
 
 
 ### **Discouraged or Removed fields**
- - **Image and Imaging Study** - the priority for the shared care record is to share results and reports, rather than raw image data. As of this writing (Feb 2022) there is no support for retriving these imaging links. (Note that this position could change in future - please get in touch if you have a specific use-case) 
+ - **Image and Imaging Study** - the priority for the shared care record is to share results and reports, rather than raw image data. As of this writing (Feb 2022) there is no support for retrieving these imaging links. (Note that this position could change in future - please get in touch if you have a specific use-case) 

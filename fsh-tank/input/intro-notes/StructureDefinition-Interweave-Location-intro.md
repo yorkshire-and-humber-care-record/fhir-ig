@@ -1,4 +1,4 @@
-      Status: Draft - For Review
+      Status: Active: Approved (STU)
 
 
 ## Introduction
@@ -16,23 +16,23 @@ This profile sets minimum expectations for the Location resource, to record info
 ### **Location structure and hierarchy**
 The goal for regional sharing of locations is not necessarily to build a detailed model of the real-world, but rather to provide a simple representation which is easy for Data Consumers to interpret and display. The purpose is to understand where a patient has been, give some insight into the type of services typically provided at that location, and provide contact details if further follow up is desired.
 
-***Therefore a simple 3-level model of site -> ward -> room is proposed as adequate for most purposes***
+***Therefore a 4-level model of site -> buillding -> ward -> room is proposed***
 
- All Data Providers must populate reference data for their own site(s) and, where relevant, wards:
+ All Data Providers must populate reference data for their own site(s) and, where relevant, buldings and wards:
  - Room-level detail may optionally be added if relevant (unlikely to be necessary for historical understanding, but may be relevant to inform attendance at future appointments)
  - Additional detail such as "bed" level of location detail is optional, may be onerous to keep up-to-date, and is not necessary for currently known regional sharing use-cases
 
- Social Care has a slightly different set of considerations:
-  - It is rare to find a location as large and complex as a hospital, therefore the "site" level of detail will usually be sufficient
-  - Ward and Room-level detail may optionally be added only if relevant. (The phrase "ward" may be interpreted broadly as a "section of a facility" - for example a section of a care home, and not necessarily an actual hospital "ward").
-  -  More activity is likely to occur outside of institutions - for example in the persons's home (typically modelled as a location Contained Resource)
+ When describing locations other than hospitals then there are a slightly different set of considerations:
+  - It is rare to find a location as large and complex as a hospital, therefore the "site" level of detail will often be sufficient
+  - Building, ward and Room-level detail may optionally be added only if relevant. (The phrase "ward" may be interpreted broadly as a "section of a facility" - for example a section of a care home, and not necessarily an actual hospital "ward").
+  - In non-acute settings activity is more likely to occur outside of institutions - for example in the persons' home (typically modelled as a location Contained Resource)
 
 A particular issue is making it easy and efficient for Data Consumers to understand the hierarchy.
  - The location "name" is used in references, and this needs to be usable standalone - without the need for Data Consumers to make multiple additional queries to follow a tree, just to meaningfully display where the patient is. 
 
  - In practice this means:
 
-   ***The location name must incorporate the hierarchy. For example "York Hospital: Ward 27: Room 4"***
+   ***The location name must incorporate the hierarchy. For example "York Hospital: Jubilee Building: Ward 27: Room 4"***
 
  - *(In contrast just naming the location "Room 4" is meaningless to a consumer without further queries to follow the references, trace the tree, and assemble these details for themselves every time)*
 
@@ -40,7 +40,7 @@ A particular issue is making it easy and efficient for Data Consumers to underst
 
 ### **Mandatory fields**
 Bearing in mind the multiple scenarios above, a small subset of fields can be specified as mandatory:
-1. **Name** - The name of the location. Noting that, as noted above,this must reflect any hierarchy for more informative display eg "York Hospital: Ward 27"
+1. **Name** - The name of the location. Noting that, as per above, this must reflect any hierarchy for more informative display eg "York Hospital: Jubilee Building: Ward 27"
 2. **Status** - Should normally be “active”, and only active locations should be used in new references. However it may be necessary to retain locations at other statuses (eg inactive) if they have already been used in references
 3. **Type** - Must be populated to describe the type of services typically provided at this location. Please select a value that is as specific as possible to provide maximum information. See also further notes below.
 4. **Physical Type** - Standard FHIR code list. As noted in the introduction, any location structures should be kept simple with focus on site/ward/room, plus of course non-institutional locations such as "house" or "vehicle" 
@@ -48,18 +48,18 @@ Bearing in mind the multiple scenarios above, a small subset of fields can be sp
 
 ### **Must Support fields**
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known:
-1. **Identifier**: ODS Site code - Must be populated if the location has an ODS site code, to formally identify the site
+1. **Identifier: Local Id** - A local business identifier, over-and-above the name - to assist with more definitively identifying the location.
 2. **Telecom** - Eg phone and/or email details. Useful for getting in contact for further information
 3. **Address** - Must be provided if relevant (eg for Site and House). Not relevant for a Ward or Room. Just the current address for contact purposes, no history
 4. **Managing Organisation** - Must be provided for institutional locations ie Site / Ward / Room. Note: this will often be the same as the provenance of the message, but not necessarily if external locations are being referenced
-5. **Part Of** - To describe the hierarchy. Required to link ward -> site and room -> ward
+5. **Part Of** - To describe the hierarchy - this is a reference to the parent location where relevant. Required to link room -> ward -> building -> site
 
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
  - **Mode** - this must always be "instance", and is preferably explicitly populated. "Instance" may be assumed if missing.
- - **Local Id** - In some cases there may be a local business identifier, over-and-above the name. Optional, but useful to include if relevant - to assist with more definitively identifying the location.
- - **Alias and Description** - May be useful to provide additional information. Description might include information to assist vistors in finding the location - eg if being used for appointments.
+ - **Identifier: ODS Site code** - Some locations will have an ODS site code, in which case this should be included to help formally identify the site
+ - **Alias and Description** - May be useful to provide additional information. Description might include information to assist visitors in finding the location - eg if being used for appointments.
  - **Position** - Currently there is no requirement to track exact geographical coordinates
 
 ### **Discouraged or Removed fields**

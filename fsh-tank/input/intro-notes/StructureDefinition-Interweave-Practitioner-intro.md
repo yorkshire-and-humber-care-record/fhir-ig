@@ -1,4 +1,4 @@
-      Status: Draft - For Review
+      Status: Active: Approved (STU)
 
 
 ## Introduction
@@ -21,7 +21,7 @@ This profile sets minimum expectations for the Practitioner resource.
     - https://fhir.hl7.org.uk/id/gmp-number (General Medical Practitioner)
     - https://fhir.hl7.org.uk/id/gmc-number (General Medical Council / Consultant Code)
     - https://fhir.hl7.org.uk/id/nmc-number (Nursing and Midwifery Council)
-    - https://fhir.hl7.org.uk/id/gphc-number (General Pharmaceautical Council Code)
+    - https://fhir.hl7.org.uk/id/gphc-number (General Pharmaceutical Council Code)
     - https://fhir.hl7.org.uk/id/hcpc-number (Health and Care Professional Council Code)
 
 
@@ -32,7 +32,7 @@ This profile sets minimum expectations for the Practitioner resource.
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known:
 1. **Active** - Essential if not active. Good practice to always populate anyway.
 
-3. **Qualifications** - These are useful if known, to provide information above-and-beyond just the identity of the practitioner - ie also about their professional status and qualifications. See further discussion below.
+3. **Qualifications** - These are useful if known, to provide information above-and-beyond just the identity of the practitioner - ie also about their professional status and qualifications. Please include currently active qualifications only. See further discussion below.
 
 
 ### **Optional fields**

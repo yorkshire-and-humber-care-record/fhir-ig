@@ -12,7 +12,8 @@ Description: "Interweave DocumentReference resource profile."
 // This is a business identifier for the document.
 // The value for a local identifier must be populated and contain the internal id for this document on the providing system
 // Thus providing a link back for any follow-up and/or troubleshooting
-* insert Ruleset-AddLocalIdentifier(documentreference)
+* insert Ruleset-AddIdentifierSlicing
+* insert Ruleset-AddLocalIdentifierMS(documentreference)
 
 
 // Leave optional:

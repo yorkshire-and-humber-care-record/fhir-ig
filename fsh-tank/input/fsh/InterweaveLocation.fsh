@@ -2,21 +2,23 @@ Profile: InterweaveLocation
 Parent: CareConnect-Location-1
 Id: Interweave-Location
 Description: "Interweave Location resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
 // Identifier (ODS) - CareConnect already defines a special identifier for ODS Site Code
-// We can't make this mandatory as some locations are not part of an ODS Site (eg patient's house). 
+// Optional - as some locations are not part of an ODS Site (eg patient's house). 
 // And not all sites are ODS registed, especially in community / social care.
-// But we want it if applicable - to help formally identify the site.
-* identifier[odsSiteCode] MS
-* identifier[odsSiteCode] ^short = "ODS Site code to identify the organisation at site level. Must be provided for locations that have one"
+// But useful if applicable - to help formally identify the site.
+/////* identifier[odsSiteCode] MS (no longer must support, as only quite rarely relevant)
+* identifier[odsSiteCode] ^short = "ODS Site code to identify the organisation at site level. Should be provided for locations that have one"
 * identifier[odsSiteCode].system MS
 * identifier[odsSiteCode].value MS
 
-// Identifier (Local) - In some cases there may be a local business identifier, over-and-above the name. 
-// Optional, but useful to include if relevant - to assist with more definately identifying the location
+// Identifier (Local) - A local business identifier, over-and-above the name. 
+// Must Support - to assist with more definately identifying the location
+* insert Ruleset-AddLocalIdentifierMS(location)
+
 
 // Should normally be “active”, and only active locations should be used in new references.
 // However it may be necessary to retain locations at other statuses (eg inactive) if they have already been used in references
@@ -126,7 +128,6 @@ Description: "Interweave Location example - Site"
 //* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Hospital"
 
 
-
 * identifier[0].system = "https://fhir.nhs.uk/Id/ods-site-code"
 * identifier[0].value = "G5A1J"
 
@@ -156,6 +157,36 @@ Description: "Interweave Location example - Site"
 
 
 // Ward //////////////////////////////////////////////////////////////////////////////////
+Instance: InterweaveLocationBuildingExample
+InstanceOf: InterweaveLocation
+Description: "Interweave Location example - Building"
+
+
+* insert Ruleset-ExampleMetaForHospital(Location)
+* meta.versionId = "InterweaveLocationExampleBuilding-v1.0.0"
+
+* insert Ruleset-ExampleLocalId(location, RCB.LOC-BUILD01)
+
+* status = http://hl7.org/fhir/location-status#active "Active"
+* name = "York Hospital: Jubilee Building"
+
+* mode = http://hl7.org/fhir/location-mode#instance "Instance"
+* type.coding = http://hl7.org/fhir/v3/RoleCode#HU "Hospital unit"
+* physicalType.coding = http://hl7.org/fhir/location-physical-type#bu "Building"
+
+* telecom[0].system = #phone "Phone"
+* telecom[0].value = "01234 345346"
+
+* managingOrganization = Reference(InterweaveOrganizationExample)
+* managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* managingOrganization.identifier.value = "RCB"
+
+* partOf = Reference(InterweaveLocationSiteExample)
+* partOf.display = "York Hospital"
+
+
+// Ward //////////////////////////////////////////////////////////////////////////////////
 Instance: InterweaveLocationWardExample1
 InstanceOf: InterweaveLocation
 Description: "Interweave Location example - Ward 27"
@@ -172,7 +203,7 @@ Description: "Interweave Location example - Ward 27"
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
-* name = "York Hospital: Ward 27"
+* name = "York Hospital: Jubilee Building: Ward 27"
 
 * mode = http://hl7.org/fhir/location-mode#instance "Instance"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#DERM "Dermatology clinic"
@@ -186,8 +217,8 @@ Description: "Interweave Location example - Ward 27"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(InterweaveLocationSiteExample)
-* partOf.display = "York Hospital"
+* partOf = Reference(InterweaveLocationBuildingExample)
+* partOf.display = "York Hospital:Jubilee Building"
 
 ////////////////////////////////////
 Instance: InterweaveLocationWardExample2
@@ -202,12 +233,10 @@ Description: "Interweave Location example - Ward 28"
 // (Name + Type)
 //* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Ward 28: Allergy clinic"
 
-
-
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-ABC789)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
-* name = "York Hospital: Ward 28"
+* name = "York Hospital: Jubilee Building: Ward 28"
 
 * mode = http://hl7.org/fhir/location-mode#instance "Instance"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#ALL "Allergy clinic"
@@ -221,8 +250,8 @@ Description: "Interweave Location example - Ward 28"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(InterweaveLocationSiteExample)
-* partOf.display = "York Hospital"
+* partOf = Reference(InterweaveLocationBuildingExample)
+* partOf.display = "York Hospital:Jubilee Building"
 
 
 
@@ -239,12 +268,10 @@ Description: "Interweave Location example - A&E"
 // (Name + Type)
 //* extension[Extension-Interweave-TextSummary].valueString = "York Hospital: Accident and Emergency"
 
-
-
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-AE789)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
-* name = "York Hospital: Accident and Emergency"
+* name = "York Hospital: Jubilee Building: Accident and Emergency"
 
 * mode = http://hl7.org/fhir/location-mode#instance "Instance"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#ER "Emergency room"
@@ -258,8 +285,8 @@ Description: "Interweave Location example - A&E"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
 * managingOrganization.identifier.value = "RCB"
 
-* partOf = Reference(InterweaveLocationSiteExample)
-* partOf.display = "York Hospital"
+* partOf = Reference(InterweaveLocationBuildingExample)
+* partOf.display = "York Hospital:Jubilee Building"
 
 
 
@@ -281,7 +308,7 @@ Description: "Interweave Location example - Room"
 * insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ456-1)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
-* name = "York Hospital: Ward 27: Room 1"
+* name = "York Hospital: Jubilee Building: Ward 27: Room 1"
 * description = "Go to the main desk, then turn left by the green door at the end of the corridor"
 
 * mode = http://hl7.org/fhir/location-mode#instance "Instance"
@@ -294,7 +321,7 @@ Description: "Interweave Location example - Room"
 * managingOrganization.identifier.value = "RCB"
 
 * partOf = Reference(InterweaveLocationWardExample1)
-* partOf.display = "York Hospital: Ward 27"
+* partOf.display = "York Hospital: Jubilee Building: Ward 27"
 
 
 // House ///////////////////////////////////////////////////////////////////////////////////////
@@ -309,9 +336,6 @@ Description: "Interweave Location example - House"
 // Text summary no longer needed
 // (Name + Type)
 //* extension[Extension-Interweave-TextSummary].valueString = "42 Grove Street, LS21 1P: Patient's Residence"
-
-
-
 
 * status = http://hl7.org/fhir/location-status#active "Active"
 * name = "42 Grove Street, LS21 1PF"
@@ -328,36 +352,35 @@ Description: "Interweave Location example - House"
 
 
 // Social Care Dept ///////////////////////////////////////////////////////////////////////////////
-Instance: InterweaveLocationSocialCareDeptExample
+Instance: InterweaveLocationSocialCareExample
 InstanceOf: InterweaveLocation
-Description: "Interweave Location example - Social Care Department"
+Description: "Interweave Location example - Care Home"
 
 * insert Ruleset-ExampleMetaForHospital(Location)
+// Overwrite the hospital with a social care organisation tag
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#212 "Leeds City Council"
 * meta.versionId = "InterweaveLocationExampleSocialCare-v1.0.0"
 
 // Text summary no longer needed
 // (Name + Type)
 //* extension[Extension-Interweave-TextSummary].valueString = "Leeds Social Services: Adult Services Department: community service center"
 
-* insert Ruleset-ExampleLocalId(location, RCB.LOC-XYZ789)
+* insert Ruleset-ExampleLocalId(location, 212.LOC-1234)
 
 * status = http://hl7.org/fhir/location-status#active "Active"
-* name = "Leeds Social Services: Adult Services Department"
+* name = "St Hildas Care Home"
 
 * mode = http://hl7.org/fhir/location-mode#instance "Instance"
 * type.coding = http://hl7.org/fhir/v3/RoleCode#CSC "community service center"
-* type.text = "Adult Services"
-* physicalType.coding = http://hl7.org/fhir/location-physical-type#wa "Ward"
+* type.text = "Care Home"
+* physicalType.coding = http://hl7.org/fhir/location-physical-type#si "Site"
 
 * telecom[0].system = #phone "Phone"
-* telecom[0].value = "01234 345345"
+* telecom[0].value = "01234 345347"
 
-* managingOrganization = Reference(InterweaveOrganizationExample)
-* managingOrganization.display = "York and Scarborough Teaching Hospitals NHS Foundation Trust"
+* managingOrganization = Reference(InterweaveOrganizationExampleSocialCare)
+* managingOrganization.display = "Leeds City Council"
 * managingOrganization.identifier.system = "https://fhir.nhs.uk/Id/ods-organization-code"
-* managingOrganization.identifier.value = "RCB"
-
-* partOf = Reference(InterweaveLocationSiteExample)
-* partOf.display = "York Hospital"
+* managingOrganization.identifier.value = "212"
 
 

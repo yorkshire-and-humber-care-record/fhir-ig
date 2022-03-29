@@ -2,7 +2,7 @@ Profile: InterweaveOrganization
 Parent: CareConnect-Organization-1
 Id: Interweave-Organization
 Description: "Interweave Organization resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -20,6 +20,9 @@ Description: "Interweave Organization resource profile."
 
 // Identifier (ODS Site Code) - **TODO** not sure exactly why this is also provided? Leave as optional for now
 
+// Identifier (Local) - A local business identifier. 
+// Optional - only needed if there is no ODS code
+* insert Ruleset-AddLocalIdentifierOptional(organization)
 
 // Active:  Assumption is that it is "true" if not populated
 // It is however important that both Providers and Consumers can handle appropriatly if "false"
@@ -42,7 +45,7 @@ Description: "Interweave Organization resource profile."
 * telecom ^short = "Contact details of the location. (However contact details of Locations and Practitioners are probably more useful)."
 
 // Address - useful and probably easy to populate. (However is also available from regional master record downloaded from ODS)
-* address 1..1 MS
+* address 0..1 MS
 * address.line MS
 * address.city MS
 * address.district MS
@@ -85,3 +88,23 @@ Description: "Interweave Organization example"
 * address.city = "York"
 * address.postalCode = "YO31 8HE"
 
+
+Instance: InterweaveOrganizationExampleSocialCare
+InstanceOf: InterweaveOrganization
+Description: "Interweave Organization Social Care example"
+
+* insert Ruleset-ExampleMetaForHospital(Organization)
+// Overwrite the hospital with a social care organisation tag
+* meta.tag[1] =  https://yhcr.nhs.uk/Provenance#212 "Leeds City Council"
+
+* identifier[0].system = "https://fhir.nhs.uk/Id/ods-organization-code"
+* identifier[0].value = "212"
+
+* active = true
+* name = "Leeds City Council"
+* type.coding = Interweave-OrganisationType-1#141 "Local Authority"
+
+* address[0].line[0] = "Civic Hall"
+* address[0].line[1] = "Calverley Street"
+* address.city = "Leeds"
+* address.postalCode = "LS1 1UR"

@@ -2,7 +2,7 @@ Profile: InterweaveOperationOutcome
 Parent: OperationOutcome
 Id: Interweave-OperationOutcome
 Description: "Interweave Operation Outcome resource profile."
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

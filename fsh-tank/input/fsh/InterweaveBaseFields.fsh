@@ -124,14 +124,31 @@ RuleSet: Ruleset-ExampleLocalId(type, localId)
 // Additional Rulesets to tighten up Local Id, CodeableConcept and Reference usage
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-RuleSet: Ruleset-AddLocalIdentifier(type)
+RuleSet: Ruleset-AddIdentifierSlicing
 
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"
 * identifier ^slicing.ordered = false
 * identifier ^slicing.rules = #open
+
+
+RuleSet: Ruleset-AddLocalIdentifierMS(type)
+
 * identifier contains
     localIdentifier 0..1 MS
+
+* identifier[localIdentifier].system 1..1 MS
+* identifier[localIdentifier].system = "https://fhir.yhcr.nhs.uk/Id/local-{type}-identifier" (exactly)
+* identifier[localIdentifier].value 1..1 MS
+* identifier[localIdentifier].value ^short = "The Local {type} Identifier. Please prefix with ODS code plus period (XXX.) to ensure unique"
+// Period assumed to match that of the entity
+* identifier[localIdentifier].period 0..0
+
+
+RuleSet: Ruleset-AddLocalIdentifierOptional(type)
+
+* identifier contains
+    localIdentifier 0..1
 
 * identifier[localIdentifier].system 1..1 MS
 * identifier[localIdentifier].system = "https://fhir.yhcr.nhs.uk/Id/local-{type}-identifier" (exactly)
