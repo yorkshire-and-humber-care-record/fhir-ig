@@ -35,7 +35,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
 7. Communication preferences - only required if a language other than English is preferred. (Note that CareConnect have defined an extension to be used in preference to the standard FHIR field)
 
 ### **Analytical fields**
-The patient resource has a number of fields which are difficult to provide definitive guidance on. In the profile they are marked as "optional" as they are not necessarily essential for the provision of direct care. Their significant in terms of both data capture and display is however likely to be scenario dependant. In some scenarios they may be extremely relevant (eg Religious Affiliation at End of Life), whereas in other scenarios they may be seen as unnecessary or even intrusive information.
+The patient resource has a number of fields which are difficult to provide definitive guidance on. In the profile they are marked as "optional" as they are not necessarily essential for the provision of direct care. Their significance in terms of both data capture and display is however likely to be scenario dependant. In some scenarios they may be extremely relevant (eg Religious Affiliation at End of Life), whereas in other scenarios they may be seen as unnecessary or even intrusive information.
 
 These fields however assume a greater importance when considering analytics - and in particular for Public Health and Equality Monitoring. Considering, for example, the requirement for monitoring of Protect Characteristics and for reducing health inequalities based on Core20Plus5. Therefore although marked as "optional" every effort should be made to populate wherever possible and appropriate:
 
