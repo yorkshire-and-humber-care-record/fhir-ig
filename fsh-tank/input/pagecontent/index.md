@@ -25,6 +25,7 @@ The profiles in this implementation guide are categorised by status as follows:
  3. **Active: Approved (STU)** - the profile has been approved for use by the regional Technical Design Authority. It may be considered as a Standard for Trial Use. Any changes will be notified and Change Controlled.
  4. **Active: Implemented (STU)** - whilst still a Standard for Trial Use, the profile has been proven in at least one successful implementation
  5. **Active: Normative** - the profile is widely established and proven, and may be considered Normative
+99) **Deprecated** - the profile has been superceeded and should no longer be used for new implementations
 
 
 ## How to read this guide
