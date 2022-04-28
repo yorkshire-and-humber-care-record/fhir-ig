@@ -1,6 +1,6 @@
 # **Implementation Sequence**
 
-FHIR offers a wealth of different Resource types, and it can be difficult to know where to start. However experience with Shared Care Record implementations suggests a well-trodden path to incrementally delivering value.
+FHIR offers a wealth of different Resource types, and it can be difficult to know where to start. However experience with Shared Care Record implementations suggests a well-trodden path to incrementally delivering value..
 
 ### **1) Patient**
 
