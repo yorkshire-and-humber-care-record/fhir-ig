@@ -70,11 +70,11 @@ Description: "Interweave Practitioner resource profile."
 // Photo: At the present time then photos are NOT required. Excluded to avoid any complexities with sharing large image files
 * photo 0..0
 
-// Qualifications: (MS)
+// Qualifications: 
 //   Identified as useful (in the absence of PractitionerRole) to undestand more about their status and skills.
 //   (Envisaged however that it will often not be easy to include)
 //   (Potentially more to do on refining the exact representation within)
-* qualification MS
+* qualification 0..*
 //The code is already mandatory in FHIR... but it could be just text. (If a code, then must be populated fully)
 * qualification.code MS
 * insert Ruleset-CodingWithSystemCodeDisplay(qualification.code)

@@ -21,3 +21,7 @@ Description: "Additional Encounter Class codes"
 * ^caseSensitive = true
 
 * #GROUPING "Grouping of related Encounters"
+* #111 "NHS 111 encounter"
+* #999-EPR "999 EPR encounter"
+* #999-CAD "999 CAD encounter"
+* #PTS "patient transport service encounter"

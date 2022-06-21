@@ -30,27 +30,25 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
 1. **Identifier** - a Local Id should be provided, such that could be quoted if manually getting in touch to find out more
 
-2. **Start and End** - to define the timing of the appointment. (Note that FHIR requires these fields to be populated for appointments that are not at status "proposed" or "cancelled")
+2. **Start** - the date/time that an appointment is to take place. (Note that FHIR requires this field to be populated for appointments that are not at status “proposed” or “cancelled”)
 
-3. **Minutes Duration** - overlaps to some extent with "start" and "end" but useful to indicate at-a-glance how long the appointment is. May also be useful to indicate the anticipated duration within a longer overall timeslot.
+3. **Appointment Type** - a simple list of codes eg "routine", "emergency" etc. We add a value for "urgent" to cover scheduled but urgent appointments.
 
-4. **Appointment Type** - a simple list of codes eg "routine", "emergency" etc. We add a value for "urgent" to cover scheduled but urgent appointments.
+4. **Description** - any other title or text to further describe the appointment
 
-5. **Description** - any other title or text to further describe the appointment
+5. **Participant: Primary Performer** - a reference to the main practitioner involved, once they have been allocated.
 
-6. **Participant: Primary Performer** - a reference to the main practitioner involved, once they have been allocated.
-
-7. **Participant: Location** - again, rather unusually, the location is considered as another "participant" in the FHIR Appointment. A reference to the location is therefore required, once this has been allocated. 
+6. **Participant: Location** - again, rather unusually, the location is considered as another "participant" in the FHIR Appointment. A reference to the location is therefore required, once this has been allocated. 
     - Note that a location that is as granular as possible should be provided, although what this means may vary by Data Provider. Some may be able to allocate locations down to the "room" level - with this obviously being essential if the aim is to guide the patient directly to the right place. Others may allocate only at a "ward" or even "site" level - with the patient having to ask for further directions on arrival.
 
 
-8. **Reason**: A long list of SNOMED codes to describe different reasons which have led to the Appointment. 
+7. **Reason**: A long list of SNOMED codes to describe different reasons which have led to the Appointment. 
 
    We pre-adopt the value set used in R4. This builds on the existing STU3 list covering SNOMED codes for "Clinical Finding" and "Procedure", and adds codes for "Context-dependent categories" (Social Care) and "Events" (A&E) 
 
-9. **Delivery Channel (Care Connect Extension)** - simple and useful field to indicate whether in-person, telephone, or video
+8. **Delivery Channel (Care Connect Extension)** - simple and useful field to indicate whether in-person, telephone, or video
 
-10. **Appointment Cancellation Reason (Extension, from R4)** - obviously only relevant if the appointment is cancelled, but then useful to populate. (CareConnect offers a free-text extension - however we replace this by pre-adopting the field from R4 which offers a better coded list).
+9. **Appointment Cancellation Reason (Extension, from R4)** - obviously only relevant if the appointment is cancelled, but then useful to populate. (CareConnect offers a free-text extension - however we replace this by pre-adopting the field from R4 which offers a better coded list).
 
 
 ### **Optional fields**
@@ -64,8 +62,11 @@ Other fields are optional and may be populated if known - on the understanding t
    
  - **Additional Participants** - other participant type codes in the list may optionally be used to reference other FHIR Resource types ie RelatedPerson, Device, Healthcare Service. However it must not be assumed that a data consumer will have the ability to display anything more than the provided “display” text associated with a reference to these resources.
 
- - **Incoming Referral**: Link to the originating Referral, if relevant and implemented. This could be very useful information. However FHIR makes significant changes from the STU3 "ReferralRequest" to the R4 "ServiceRequest", and so we are reluctant to mandate implementation at this stage
+ - **Incoming Referral**: Link to the originating Referral, if relevant and implemented. This could be very useful information. However FHIR makes significant changes from the STU3 "ReferralRequest" to the R4 "ServiceRequest", and so we are reluctant to mandate implementation at this stageu
 
+ - **End** - the end date/time has been marked as optional as providers and consumers indicated that this is not an important field, with most people only being interested in the start date/time.
+
+- **Minutes Duration** - can optionally be used to indicate at-a-glance how long the appointment is. May also be useful to indicate the anticipated duration within a longer overall timeslot.
 
 ### **Discouraged or Removed fields**
 

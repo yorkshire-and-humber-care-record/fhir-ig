@@ -32,8 +32,6 @@ This profile sets minimum expectations for the Practitioner resource.
 In addition the following fields are "Must Support" - ie they must be populated if relevant and known:
 1. **Active** - Essential if not active. Good practice to always populate anyway.
 
-3. **Qualifications** - These are useful if known, to provide information above-and-beyond just the identity of the practitioner - ie also about their professional status and qualifications. Please include currently active qualifications only. See further discussion below.
-
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
@@ -41,7 +39,7 @@ Other fields are optional and may be populated if known - on the understanding t
 2. **Telecom** - It is very useful to provide a contact phone number and/or email if at all possible – to enable further enquiries about any information seen. However caution is needed, as these contact details may be widely seen throughout the region. Only work details suitable for receiving external enquires should be included. Specifically home phone numbers should not be shared.
 3. **Gender** - May be provided if known, but is not essential
 4. **Communication preferences** - A Care Connect extension containing several fields for details about preferred languages and other modes of communication. Optional, as in general it is assumed that the employing organisation will make any necessary provisions and so largely not relevant for regional sharing. (Note that CareConnect have defined an extension to be used in preference to the standard FHIR field)
-
+5. **Qualifications** - These are useful if known, to provide information above-and-beyond just the identity of the practitioner - ie also about their professional status and qualifications. Please include currently active qualifications only. See further discussion below.
 
 ### **Discouraged or Removed fields**
 1. **Address** - Addresses should be provided instead on the relevant organisation / location records. For the purposes of regional sharing then practitioner home addresses must NOT be shared.
@@ -56,4 +54,4 @@ Other fields are optional and may be populated if known - on the understanding t
 
 HOWEVER the PractitionerRole resource is little used in FHIR STU3. This has been addressed in FHIR R4, which allows use of a PractitionerRole throughout as an alternative to Practitioner. However for now, in STU3, use of the Practitioner resource is the main requirement - and really the only option.
 
-The best substitute in the Practitioner resource appears to be the "qualifications" section - with the opportunity here to provide information about the practitioner's professional status and qualifications. Thus at least indicating the kind of role they are likely to perform. This must therefore be populated if possible (accepting that for some Data Provider systems this may not be known).
+The best substitute in the Practitioner resource appears to be the "qualifications" section - with the opportunity here to provide information about the practitioner's professional status and qualifications. Thus at least indicating the kind of role they are likely to perform. This can therefore be populated if known.

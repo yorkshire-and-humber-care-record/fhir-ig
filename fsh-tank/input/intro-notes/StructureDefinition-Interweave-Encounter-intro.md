@@ -120,11 +120,12 @@ Further useful guidance can be found on the FHIR website, here:
 A significant set of mandatory fields are defined in order to properly describe an Encounter:
 
 1. **Status** - this is already mandatory in FHIR. As noted above the use of "planned" is discouraged - use Appointment instead for this.
-2. **Status History** - this is seen as important - to understand the timeline of the Encounter. (If there is only a single status then simply replicate it here, so it should always be possible to populate). 
-3. **Class** - this provides a basic categorisation, ie Emergency, Inpatient, Ambulatory. Should always be known, and vital for meaningful display purposes. We have defined a custom code list which, for now, simply replicates the standard list provided by Care Connect and adds a code to identify an "Encounter Grouping". However it also enables the possibility of extending the list to cover a wider range of care settings if this is found to be necessary (please get in touch).
 
-4. **Subject** - every encounter must be linked to a Patient (not a Group)
-5. **Participant** - it is required to include EXACTLY ONE practitioner who has the "type" of "Primary Performer". This should be the main person responsible - someone who it would be useful to contact if further information is desired. (If this person changed during the course of the encounter then please pick just ONE to finally hold this key role, and demote the others to "participant")
+2. **Class** - this provides a categorisation, ie Emergency, Inpatient, Ambulatory. This should always be known, and vital for meaningful display purposes. We have defined a custom code list which replicates the standard list provided by Care Connect, and adds a codes to identify an "Encounter Grouping", and various types of ambulance/emergency service encounters. However it also enables the possibility of extending the list to cover a wider range of care settings if this is found to be necessary (please get in touch).
+
+3. **Subject** - every encounter must be linked to a Patient (not a Group)
+
+4. **Participant** - it is required to include EXACTLY ONE practitioner who has the "type" of "Primary Performer". This should be the main person responsible - someone who it would be useful to contact if further information is desired. (If this person changed during the course of the encounter then please pick just ONE to finally hold this key role, and demote the others to "participant")
 
    Also included in the list of participants might be:
      - Admitter and Discharger - should be included if known/relevant and different to the Primary Performer
@@ -132,14 +133,7 @@ A significant set of mandatory fields are defined in order to properly describe 
 
    Participants can be given a "period" and this is optional. For regional sharing the most important thing is to see who has been involved with the patient, rather than to construct a forensic timeline of involvements. However this information might be useful in the case of a long Encounter with many brief involvements, and so may be provided if desired.
 
-6. **Location** - the location provides essential information about where the encounter took place. Exactly what is appropriate here will depend on the care setting:
-   - For a hospital information should be provided down to the “ward” level. Thus enabling a visitor to find the patient, as well as potentially giving some insight into the type of treatment being provided.
-   - For other (smaller) locations then the "site" level may be sufficient
-   - Other types of care (eg community, emergency) may take place at home or in a vehicle 
-
-   It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history SHOULD be provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
-
-7. **Period** When the encounter occurred is vital to know. The start date/time is always mandatory, but as per the FHIR specification, the end date/time may be omitted if the encounter is ongoing
+5. **Period** When the encounter occurred is vital to know. The start date/time is always mandatory, but as per the FHIR specification, the end date/time may be omitted if the encounter is ongoing
 
 
 ### **Must Support fields**
@@ -153,30 +147,39 @@ In addition the following fields are "Must Support" - ie they must be populated 
    - On the street
    > NB: The code for "Seen in Clinic" offers the ability to drill down into a long list of specific clinic types. However this overlaps to some extent with the purpose of the "Service Type" field - so it is sufficient here to populate simply "Seen in Clinic".
 
-2. **Service Type (Extension)** -  this is perhaps one of the most important and useful fields about an Encounter as it describes the type of service - ie what the Encounter was "for". 
+3. **Service Type (Extension)** -  this is perhaps one of the most important and useful fields about an Encounter as it describes the type of service - ie what the Encounter was "for". 
 
    However this field is missing in FHIR STU3! This is corrected in FHIR R4, and so we pre-adopt it here as an extension.
 
    We also pre-adopt the UKCore value set (based on SNOMED refset 1127531000000102: Services Simple Reference Set), which is more relevant than the default FHIR example and also covers social care
 
+4. **Priority**: This provides useful information about whether it was emergency, routine, elective, etc
 
-3. **Priority**: This provides useful information about whether it was emergency, routine, elective, etc
-4. **Appointment**: Link to the originating Appointment, if relevant
-5. **Reason**: A long list of SNOMED codes to describe different reasons which may have led to the Encounter. (Note that this may duplicate to some extent information provided in a linked Appointment and/or Referral, but is seen as useful to pull through onto the Encounter itself also).
+5. **Location** - the location provides essential information about where the encounter took place. Exactly what is appropriate here will depend on the care setting:
+   - For a hospital information should be provided down to the “ward” level. Thus enabling a visitor to find the patient, as well as potentially giving some insight into the type of treatment being provided.
+   - For other (smaller) locations then the "site" level may be sufficient
+   - Other types of care (eg community, emergency) may take place at home or in a vehicle 
+
+   It is useful to understand the history of where the patient has been seen, so the status and period MUST be populated, and a history SHOULD be provided. (As noted above, a change of location does not in itself constitute a new Encounter, simply append to this list).
+
+6. **Appointment**: Link to the originating Appointment, if relevant
+
+7. **Reason**: A long list of SNOMED codes to describe different reasons which may have led to the Encounter. (Note that this may duplicate to some extent information provided in a linked Appointment and/or Referral, but is seen as useful to pull through onto the Encounter itself also).
 
    We pre-adopt the value set used in R4. This builds on the existing STU3 list covering SNOMED codes for "Clinical Finding" and "Procedure", and adds codes for "Context-dependent categories" (Social Care) and "Events" (A&E) 
 
-6. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
+8. **Diagnosis**: Link to a Condition diagnosed as a result of the Encounter. Can obviously be provided only if the Condition FHIR Resource is also being offered. If populated then it is required to rank the Conditions, and to assign one the "role" of "Chief Complaint"
 
-7. **Outcome fields**: Care Connect defines three extension fields which cover aspects of the encounter outcome: 
+9. **Outcome fields**: Care Connect defines three extension fields which cover aspects of the encounter outcome: 
    - **Outcome of Attendance** - relevant to outpatient encounters
    - **Emergency Care Discharge Status** - relevant to emergency encounters
    - **Discharge Method** - found in the "hospitalization", and relevant to inpatient encounters
 
    These provide valuable information which is important to populate. However it is expected that only **one** of the three will be populated, as relevant for the type of encounter
 
-8. **Hospitalization**: To provide details of admission and discharge. As described above then, depending on circumstances, it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
+10. **Hospitalization**: To provide details of admission and discharge. As described above then, depending on circumstances, it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
 
+11. **Status History** - this is seen as important - to understand the timeline of the Encounter.  
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:

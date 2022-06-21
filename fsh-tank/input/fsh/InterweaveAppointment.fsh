@@ -64,7 +64,7 @@ Description: "Interweave Appointment resource profile."
 //    (More relevant to UK and better coverage of social care)
 //    It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
 * serviceType 1..* MS
-* serviceType from Interweave-UkCoreCareSettingType (required)
+* serviceType from Interweave-UkCoreCareSettingType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(serviceType)
 
 
@@ -85,7 +85,7 @@ Description: "Interweave Appointment resource profile."
 // Reason: MS The reason for making the appointment – ie a list of SNOMED codes for various medical problems.
 // Does not look very “social care” friendly – an extended or alternative list may be needed if we decide that appointments are relevant to social care?
 * reasonCode MS  //R4 reasonCode -> STU3 reason
-* reasonCode from Interweave-R4EncounterReason (required)
+* reasonCode from Interweave-R4EncounterReason (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 // Indication: Leave optional (concentrate on populating "reason" as the priority)
@@ -105,14 +105,12 @@ Description: "Interweave Appointment resource profile."
 // Supporting Information: Discouraged. A pointer to almost any other information
 * supportingInformation ^short = "DISCOURAGED - very broad, and so difficult for a consumer to handle"
 
-// Start and End: Must always be populated unless the appointment is still only at status “proposed” (or cancelled)
+// Start: Must always be populated unless the appointment is still only at status “proposed” (or cancelled)
 // (It turns out that this validation is built into FHIR! So originally we favoured not giving the end and 
 //  instead saying the "minutesDuration" as a more natural way of expressing it. But that fails FHIR validation!)
 //  Capture "minutes duration" too as can be useful to just show easily how long the appointment is.
 //     And may also be useful if it is expected to be a shorter time-slot within an overall period of time
 * start MS
-* end MS
-* minutesDuration MS
 
 
 

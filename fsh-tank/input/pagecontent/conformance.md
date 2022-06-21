@@ -54,7 +54,7 @@ When populating coded data, FHIR offers four levels of Binding Strength, as docu
 
   - **Extensible** - This is not used. However if a code list does not meet your needs, please get in touch so that the issue can be discussed and extra codes added if necessary. The point is to extend the "Required" list in a curated and consistent way, to be used by all in the region. As opposed to inconsistent extensions being unilaterally devised by individual Data Providers.
 
-  - **Preferred** - This is used only very rarely, where a code list is controversial and we do not yet feel justified as marking it as "required". However our conformance criteria are stronger than those of FHIR - as we request that any deviation from the "preferred" coding seeks explicit approval.
+  - **Preferred** - This is used where there is a clear preference for a standardised coding which should be used whenever possible to support analytics. However sometimes our engagement with data providers indicates practical difficulties with populating this standardised coding, and there is felt to be value in allowing other codings in the immediate term to support direct-care. This can be seen as somewhat analogous to “Must Support” – and our conformance criteria are stronger than those of FHIR, as we request that any deviation from the “preferred” coding seeks explicit approval.
 
    - **Example** - This would only be used to indicate that coding is not considered important for this field. (This is rare and will be explained further in accompanying notes).
 

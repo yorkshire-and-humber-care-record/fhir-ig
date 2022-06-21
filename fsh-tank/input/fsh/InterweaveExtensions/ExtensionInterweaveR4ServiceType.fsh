@@ -15,6 +15,6 @@ Description: "An extension to add Service Type to the Encounter. This is pre-ado
 // We also want to pre-adopt this value set from UK Core which is better than the original FHIR suggestion
 // (More relevant to UK and better coverage of social care)
 // It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
-* valueCodeableConcept from Interweave-UkCoreCareSettingType (required)
+* valueCodeableConcept from Interweave-UkCoreCareSettingType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)
 

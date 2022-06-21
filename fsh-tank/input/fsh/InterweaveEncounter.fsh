@@ -42,7 +42,7 @@ Description: "Interweave Encounter resource profile."
 
 // Status History: Make mandatory and MS
 //    It is considered to also be very important and useful to be able to see the progression and timeline of the encounter – from arrived, triaged, in-progress, etc
-* statusHistory 1..* MS
+* statusHistory 0..* MS
 
 // Class: Make mandatory, MS, and tighten the coding.
 //      This is an essential field to categorise the encounter (eg emergency, inpatient, ambulatory, etc)
@@ -125,7 +125,7 @@ Description: "Interweave Encounter resource profile."
 //   Capture the reason for the encounter
 //   We pre-adopt the R4 list of reason codes which covers not only Clinical Finding and Procedure, but also social care and A&E.
 * reasonCode MS  //R4 reasonCode -> STU3 reason
-* reasonCode from Interweave-R4EncounterReason (required)
+* reasonCode from Interweave-R4EncounterReason (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 // Diagnosis: Is Must Support, and if provided we want references only to a Condition, with role and ranking
@@ -162,7 +162,7 @@ Description: "Interweave Encounter resource profile."
 //   The intent is to provide information down to the “ward” level
 //   It is useful to understand the history of where the patient has been seen, 
 //   So the status and period MUST be populated, and a history SHOULD be provided.
-* location 1..* MS
+* location 0..* MS
 * location ^short = "Location the encounter takes place (at Ward level)"
 * location.location MS
 * insert Ruleset-ReferenceWithReferenceAndDisplay(location.location)
