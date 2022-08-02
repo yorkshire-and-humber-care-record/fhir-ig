@@ -49,6 +49,7 @@ fileArrayR4.forEach(function(filePathR4) {
 
             // Convert Structure Definitions
             if (jsonObject.resourceType == "StructureDefinition") {
+              
               jsonObject = convertStructureDefinition(jsonObject);
 
               if(jsonObject.id == "Interweave-Encounter" || jsonObject.id == "Interweave-EncounterGrouping") {
@@ -75,7 +76,24 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = convertInterweaveDiagnosticReportStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Interweave-SocialCareDeviceRequest"){
+                jsonObject = convertInterweaveSocialCareDeviceRequestStructureDefinition(jsonObject);
+              }
 
+              if(jsonObject.id == "Interweave-SocialCareSupportReason"){
+                jsonObject = convertInterweaveSocialCareSupportReasonStructureDefinition(jsonObject);
+              
+              }
+            
+              if(jsonObject.id == "Interweave-SocialCareAssessment"){
+                jsonObject = convertInterweaveSocialCareAssessmentStructureDefinition(jsonObject);
+              }
+              
+              if(jsonObject.id == "Interweave-SocialCareContact"){
+                //Need to replace all occurrences of ServiceRequest with ReferralRequest
+                jsonObject = JSON.parse(JSON.stringify(jsonObject).replace(/ServiceRequest/g, "ReferralRequest"));
+                jsonObject = convertInterweaveSocialCareContactStructureDefinition(jsonObject);
+              } 
             }
 
             // Convert various types of instances
@@ -98,15 +116,39 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "Procedure") {
               jsonObject = convertProcedureInstance(jsonObject);
             }
-
-            if (jsonObject.resourceType == "Condition") {
-              jsonObject = convertConditionInstance(jsonObject);
-            }
-
             if (jsonObject.resourceType == "DiagnosticReport") {
               jsonObject = convertDiagnosticReportInstance(jsonObject);
             }
-
+            
+            if (jsonObject.resourceType == "Condition") {
+              if (jsonObject.id.includes("InterweaveSocialCareSupportReason")){
+                jsonObject = convertSocialCareSupportReasonInstance(jsonObject);
+              }
+              else
+              {
+               jsonObject = convertConditionInstance(jsonObject);
+              }
+            }
+           
+            //InterweaveSocialCareDeviceRequest
+            if((jsonObject.resourceType == "DeviceRequest" )
+                && (jsonObject.id.includes("InterweaveSocialCareDeviceRequest"))){
+                  jsonObject = convertSocialCareDeviceRequestInstance(jsonObject);
+            }
+            
+            //InterweaveSocialCareAssessment
+            if((jsonObject.resourceType == "Task")
+              && (jsonObject.id.includes("InterweaveSocialCareAssessment"))){
+              jsonObject = convertSocialCareAssessmentInstance(jsonObject);
+            }
+            /*
+            if((jsonObject.resourceType == "ServiceRequest")
+              && (jsonObject.id.includes("InterweaveSocialCareContact"))){
+              //Need to replace all occurrences of ServiceRequest with ReferralRequest
+              jsonObject = JSON.parse(JSON.stringify(jsonObject).replace(/ServiceRequest/g, "ReferralRequest"));
+              jsonObject = convertSocialCareContactInstance(jsonObject);
+            }
+            */
             // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
             if (jsonObject.contained) {
               jsonObject.contained.forEach(function(jsonContained) {
@@ -123,10 +165,11 @@ fileArrayR4.forEach(function(filePathR4) {
             fileData = JSON.stringify(jsonObject, null, 2)
 
           } //Process Content
-
+          
 
       //Write the output to STU3 folder
       var filePathSTU3 = filePathR4.replace(new RegExp(regexEscapedDirR4, 'g'), dirSTU3);
+      //filePathSTU3 = filePathSTU3.replace("ServiceRequest-","ReferralRequest-"); //rename service request to referral request
       fileHelpers.ensureDirectoryExistence(filePathSTU3);
       fs.writeFileSync(filePathSTU3, fileData, 'utf8')
 
@@ -170,22 +213,22 @@ function convertStructureDefinition(jsonObject) {
   jsonObject.differential.element.forEach(function(objElement) {
 
     // If the element has a "type" attribute with a "targetProfile" then convert it from an array (R4) to a single value (STU3)
-    if(objElement.type) objElement.type.forEach(function(objType) {
+    
+      if(objElement.type) objElement.type.forEach(function(objType) {
 
-        if(objType.targetProfile) {
-          objType.targetProfile = objType.targetProfile[0];
-        }
+          if(objType.targetProfile) {
+            objType.targetProfile = objType.targetProfile[0];
+          }
 
-        if(objType.profile) {
-          objType.profile = objType.profile[0];
-        }
+          if(objType.profile) {
+            objType.profile = objType.profile[0];
+          }
 
-        // Also remove an R4 "type" extension that we don't need
-        if(objType.extension) delete objType.extension;
+          // Also remove an R4 "type" extension that we don't need
+          if(objType.extension) delete objType.extension;
 
-      }); // Type
-
-
+        }); // Type
+    
       // If the element has a "binding" attribute then we need to adjust any valueSet
       // R4 has a simple "valueSet" attribute, whereas STU3 has a more baroque "valueSetReference" containing a "reference"
       if(objElement.binding) {
@@ -404,10 +447,104 @@ function convertInterweaveDiagnosticReportStructureDefinition(jsonObject) {
   return jsonObject;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function convertInterweaveSocialCareDeviceRequestStructureDefinition(jsonObject) {
+   
+  // * The following fields are removed and are deprecated in R4
+   jsonObject = insertDeprectatedR4Field(jsonObject, "DeviceRequest.definition");
+   jsonObject = insertDeprectatedR4Field(jsonObject, "DeviceRequest.context");
 
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    //convert requester to requester.agent   
+    if(objElement.id.includes("DeviceRequest.requester"))  {
+      objElement.id = objElement.id.replace("DeviceRequest.requester", "DeviceRequest.requester.agent");
+      objElement.path = objElement.id;   
+    };       
+  });
+  
+  return jsonObject;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 
+function convertInterweaveSocialCareSupportReasonStructureDefinition(jsonObject) {
+   
+  // * context 0..0 doesnt exist in R4
+  jsonObject = insertDeprectatedR4Field(jsonObject, "Condition.context");
+  
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    //convert recordedDate to assertedDate
+    if(objElement.id.includes("Condition.recordedDate"))  {
+      objElement.id = objElement.id.replace("Condition.recordedDate", "Condition.assertedDate");
+      objElement.path = objElement.id;
+    };           
+  }); 
+  return jsonObject;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveSocialCareAssessmentStructureDefinition(jsonObject) {
+  // * definition 0..0 doesnt exist in R4
+  jsonObject = insertDeprectatedR4Field(jsonObject, "Task.definition[x]");
+
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+   //convert reasonCode to reason
+   if(objElement.id.includes("Task.reasonCode"))  {
+    objElement.id = objElement.id.replace("Task.reasonCode", "Task.reason");
+    objElement.path = objElement.id;
+  };     
+   //convert encounter to context
+    if(objElement.id.includes("Task.encounter"))  {
+      objElement.id = objElement.id.replace("Task.encounter", "Task.context");
+      objElement.path = objElement.id;
+    };     
+  }); 
+
+  return jsonObject;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveSocialCareContactStructureDefinition(jsonObject) {
+  
+  /* This section inserts the fields which have been deprecated in R4 */
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.definition");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.groupIdentifier");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.specialty");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.receipient");
+  /************************************************************************* */
+
+ //type MS TODO
+ 
+ // Loop through the elements
+ jsonObject.differential.element.forEach(function(objElement) {
+
+  //convert requester to requester.agent
+  if(objElement.id.includes("ReferralRequest.requester"))  {
+    objElement.id = objElement.id.replace("ReferralRequest.requester", "ReferralRequest.requester.agent");
+    objElement.path = objElement.id;
+  };     
+  
+  //convert patientInstruction to description
+  if(objElement.id.includes("ReferralRequest.patientInstruction"))  {
+      objElement.id = objElement.id.replace("ReferralRequest.patientInstruction", "ReferralRequest.description");
+      objElement.path = objElement.id;
+    }; 
+    
+  //convert encounter to context
+  if(objElement.id.includes("ReferralRequest.encounter"))  {
+      objElement.id = objElement.id.replace("ReferralRequest.encounter", "ReferralRequest.context");
+      objElement.path = objElement.id;
+    }; 
+});
+
+  return jsonObject;
+}
+////////////////////////////////////////////////////////////////////////////////////////
 
 function convertLocationInstance(jsonObject) {
 
@@ -535,6 +672,66 @@ function convertDiagnosticReportInstance(jsonObject) {
     jsonObject.category = jsonObject.category[0];
   }
 
+  return jsonObject;
+}
 
+function convertSocialCareDeviceRequestInstance(jsonObject) {
+  
+  if(jsonObject.requester) {
+    jsonObject.requester.agent = jsonObject.requester;
+    delete jsonObject.requester;
+  }
+  return jsonObject;
+}
+
+function convertSocialCareSupportReasonInstance(jsonObject) {
+  if(jsonObject.recordedDate) {
+    jsonObject.assertedDate = jsonObject.recordedDate;
+    delete jsonObject.recordedDate;
+  }
+  return jsonObject;
+}
+
+function convertSocialCareAssessmentInstance(jsonObject) {
+    //convert reasonCode to reason
+    if(jsonObject.reasonCode) {
+      jsonObject.reason = jsonObject.reasonCode;
+      delete jsonObject.reasonCode;
+    }
+    //convert encounter to context
+    if(jsonObject.encounter) {
+      jsonObject.context = jsonObject.encounter;
+      delete jsonObject.encounter;
+    } 
+  return jsonObject;
+}
+
+function convertSocialCareContactInstance(jsonObject) {
+    //convert requester to requester.agent
+    if(jsonObject.requester) {
+      jsonObject.requester.agent = jsonObject.requester;
+      delete jsonObject.requester;
+    }
+    //convert patientInstruction to description
+    if(jsonObject.patientInstruction) {
+      jsonObject.requester.description = jsonObject.patientInstruction;
+      delete jsonObject.patientInstruction;
+    }    
+    //convert encounter to context
+    if(jsonObject.encounter) {
+      jsonObject.requester.context = jsonObject.encounter;
+      delete jsonObject.encounter;
+    }  
+  return jsonObject;
+}
+
+function insertDeprectatedR4Field(jsonObject, fieldId){
+  field = new Object;
+  field.id = fieldId;
+  field.path = fieldId;
+  field.min = "0";
+  field.max = "0";
+  field.short = "REMOVED - deprecated in R4";
+  jsonObject.differential.element.push(field);
   return jsonObject;
 }
