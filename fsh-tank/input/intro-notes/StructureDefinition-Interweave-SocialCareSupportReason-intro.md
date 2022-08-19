@@ -30,7 +30,7 @@ The following fields are mandatory:
 ### **Must Support fields**
 In addition, the following fields are "Must Support" - i.e. they must be populated if relevant and known:
 
-- **onset.period.end** period.end should be populated with the date that the support reason was removed from the person.
+- **supportReasonPeriod.end** Should be populated with the date that the person stopped receiving support for this reason.
 
 - **primarySupportReason** This is an extension required by social care to specify whether this is the person's primary reason for support. It is simple true/false field and should be offered where known.
 
@@ -40,6 +40,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
 - **note** use note to enter further detail on the support reason.
  
+ - **assertedDate** The date that the support reason was recognised/diagnosed.
 ### **Discouraged or Removed fields**
 
 - **context** - This field is deprecated in R4 and has been removed from our specification.

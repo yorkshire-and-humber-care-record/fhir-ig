@@ -35,14 +35,14 @@ It is envisaged that most contacts will not use the 'active' status as most cont
 
 - **requesterType** This is an Interweave extension created to record the type of person making the contact E.g. relative, person themselves, health professional etc. We have created an extensible Valueset to use here. Please get in touch if there are any requirements for further values to be added. 
 
+- **reasonCode** The reason why the person first made the contact. e.g. Concern for welfare
+
 ### **Must Support fields**
 In addition, the following fields are "Must Support" - i.e. they must be populated if relevant and known:
 
 - **type** The type of contact being made e.g. Referral to Social Care
 
-- **reasonCode** The reason why the person first made the contact. e.g. Concern for welfare
-
-- **description** Narrative around the reason for contact.
+- **description** Narrative around the reason for contact. Please ensure any detail included is appropriate for regional sharing.
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Optional fields to note include:
@@ -59,7 +59,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
 - **context** Optional link to an encounter resource. A use case has been identified where it would be useful to link the contact back to a Hospital Encounter record for when a discharge assessment is requested.
 
-- **requester** Optionally provide the Organization, Organisational Team or Practitioner making the contact.
+- **requester** Optionally provide the Organization, Organisational Team or Practitioner making the contact. The data provider will need to consider the usefulness of sharing this information and any condider and confidentiality implications.
  
 ### **Discouraged or Removed fields**
 The following fields have also been removed as they do not capture data relevant to a Social Care Contact.    

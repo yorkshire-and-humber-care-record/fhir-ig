@@ -12,7 +12,7 @@ Description: "Interweave Social Care Service resource profile (modelled using FH
 
 //A MS extension for requester type, As requested by the Social Care Data Standards working group.
 * extension contains Extension-Interweave-SocialCareServiceCategory named category 1..1
-* extension contains Extension-Interweave-SocialCareServiceTrigger named trigger 0..1
+* extension contains Extension-Interweave-SocialCareServiceTrigger named triggeringAssessment 0..1
 
 ///////////////////////////////////////
 // --- MANDATORY FIELDS ---
@@ -22,7 +22,7 @@ Description: "Interweave Social Care Service resource profile (modelled using FH
 * status ^short = "A mandatory flag to indicate the status of the service."
 
 * type 1..1 MS
-* type from InterweaveSocialCareServiceType (extensible)
+* type from InterweaveSocialCareServiceType (required)
 * type.text 1..1 MS
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
 
@@ -82,7 +82,7 @@ InstanceOf: InterweaveSocialCareService
 Description: "Interweave Social Care Service example - Must Support"
 
 * insert Ruleset-ExampleMetaForHospital(SocialCareService)
-* meta.versionId = "InterweaveSocialCareServiceExampleMustSupport-v1.0.0"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-EpisodeOfCare-1"
 
 * status = http://hl7.org/fhir/episode-of-care-status#planned "Planned"
 
@@ -116,7 +116,7 @@ InstanceOf: InterweaveSocialCareService
 Description: "Interweave Social Care Service example - Full"
 
 * insert Ruleset-ExampleMetaForHospital(SocialCareService)
-* meta.versionId = "InterweaveSocialCareServiceExampleFull-v1.0.0"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-EpisodeOfCare-1"
 
 * insert Ruleset-ExampleLocalId(SocialCareService, XXX.SERVICE-ABC123)
 

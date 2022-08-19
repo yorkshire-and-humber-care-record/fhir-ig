@@ -13,7 +13,7 @@ Description: "Interweave Social Care Support Reason resource profile (modelled u
 //A MS extensiSon for Primary Support Reason, As requested by the Social Care Data Standards working group.
 * extension contains Extension-Interweave-SocialCarePrimarySupportReason named primarySupportReason 0..1 MS
 
-* extension contains Extension-Interweave-SocialCareSupportReasonPeriod named supportReasonPeriod 0..1 MS
+* extension contains Extension-Interweave-SocialCareSupportReasonPeriod named supportReasonPeriod 1..1 MS
 
 ///////////////////////////////////////
 // --- MANDATORY FIELDS ---
@@ -24,12 +24,12 @@ Description: "Interweave Social Care Support Reason resource profile (modelled u
 
 * category 1..1 MS
 * category ^short = "A categorisation of the reason why a person is receiving support."
-* category from InterweaveSocialCareSupportReasonCategory (extensible)
+* category from InterweaveSocialCareSupportReasonCategory (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(category)
 
 * code 1..1 MS
 * code ^short = "The type of support reason."
-* code from InterweaveSocialCareSupportReason (preferred)
+* code from InterweaveSocialCareSupportReason (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
 
 // Subject: Every Flag MUST be linked to a patient
@@ -59,6 +59,7 @@ Description: "Interweave Social Care Support Reason resource profile (modelled u
 * asserter ^short = "Optionally provide the practitioner who asserted the support reason"
 
 * note ^short = "Can be used to provide further describe the support reason"
+
 
 ///////////////////////////////////////
 // --- Removed fields ---
@@ -101,7 +102,7 @@ InstanceOf: InterweaveSocialCareSupportReason
 Description: "Interweave Social Care Support Reason (FHIR Condition) example - Must Support"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareSupportReason)
-* meta.versionId = "InterweaveSocialCareSupportReasonExampleMS-v1.0.0"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"
 
 * extension[Extension-Interweave-SocialCarePrimarySupportReason].valueBoolean = true
 * extension[Extension-Interweave-SocialCareSupportReasonPeriod].valuePeriod.start = "2022-01-09T09:00:00Z" 
@@ -121,7 +122,7 @@ InstanceOf: InterweaveSocialCareSupportReason
 Description: "Interweave Social Care Support Reason (FHIR Condition) example - Full"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareSupportReason)
-* meta.versionId = "InterweaveSocialCareSupportReasonExampleFull-v1.0.0"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"
 
 * extension[Extension-Interweave-SocialCarePrimarySupportReason].valueBoolean = true
 * extension[Extension-Interweave-SocialCareSupportReasonPeriod].valuePeriod.start = "2022-01-09T09:00:00Z" 

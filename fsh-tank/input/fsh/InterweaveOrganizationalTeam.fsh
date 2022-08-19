@@ -1,7 +1,7 @@
-Profile: InterweaveSocialCareOrganizationalTeam
+Profile: InterweaveOrganizationalTeam
 Parent: CareConnect-Organization-1
-Id: Interweave-SocialCareOrganizationalTeam
-Description: "Interweave Social Care Organizational Team resource profile (modelled using FHIR Organization) - DRAFT"
+Id: Interweave-OrganizationalTeam
+Description: "Interweave Organizational Team resource profile (modelled using FHIR Organization) - DRAFT"
 * ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
@@ -21,23 +21,28 @@ Description: "Interweave Social Care Organizational Team resource profile (model
 // Type 
 * type 1..1 MS
 * insert Ruleset-CodingWithSystemCodeDisplay(type)
-* type.coding ^short = "The type of organizational team - default to SCT 310136008: Social Services department duty team."
-* type.coding.code = #310136008 (exactly)
-* type.coding.display = "Social services department duty team" (exactly)
-* type.coding.system = "http://snomed.info/sct" (exactly)
+* type ^short = "Default to Organizational team."
+* type.coding.code = #team (exactly)
+* type.coding.display = "Organizational team" (exactly)
+* type.coding.system = "http://hl7.org/fhir/organization-type" (exactly)
 
 // Name - make this mandatory, at a minimum we always want the organisational team name
 * name 1..1 MS
+* name ^short = "Name used for the organizational team."
+
 // Alias - optional, but probably rarely used. One current name should be enough
+* alias ^short = "A list of alternate names that the organizational team is known as, or was known as in the past"
 
 // Telecom - Must Support - Vital Information to contact the team to find out information on a person's care
 * telecom MS
 * telecom ^short = "Contact details of the Organisational team. To be used for the practical purpose of getting in touch about a person’s care."
 
 // Address - Optional, more important to supply contact information
+* address ^short = "An address for the organizational team"
 
 // PartOf Mandatory to supply a link to the parent Organisation e.g. the Local Authority
 * partOf 1..1 MS
+* partOf ^short = "The organization of which this organizational team forms a part"
 * insert Ruleset-ReferenceWithReferenceAndDisplay(partOf)
 
 //Contact removed to avoid confusion with Telecom
@@ -51,15 +56,16 @@ Description: "Interweave Social Care Organizational Team resource profile (model
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Examples
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Instance: InterweaveSocialCareOrganizationalTeamExampleMS
-InstanceOf: InterweaveSocialCareOrganizationalTeam
-Description: "Interweave Social Care Organizational Team example - Must Support"
+Instance: InterweaveOrganizationalTeamExampleMS
+InstanceOf: InterweaveOrganizationalTeam
+Description: "Interweave Organizational Team example - Must Support"
 
-* insert Ruleset-ExampleMetaForSocialCare(SocialCareOrganizationalTeam)
+* insert Ruleset-ExampleMetaForSocialCare(OrganizationalTeam)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
 
 * active = true
 
-* type.coding =  http://snomed.info/sct#310136008 "Social services department duty team"
+* type.coding =  http://hl7.org/fhir/organization-type#team "Organizational team"
 
 * name = "The reablement team"
 
@@ -73,17 +79,18 @@ Description: "Interweave Social Care Organizational Team example - Must Support"
 * partOf[0] = Reference(InterweaveOrganizationExampleSocialCare) 
 * partOf[0].display = "Leeds City Council"
 
-Instance: InterweaveSocialCareOrganizationalTeamExampleFull
-InstanceOf: InterweaveSocialCareOrganizationalTeam
-Description: "Interweave Social Care Organizational Team example - Full"
+Instance: InterweaveOrganizationalTeamExampleFull
+InstanceOf: InterweaveOrganizationalTeam
+Description: "Interweave Organizational Team example - Full"
 
-* insert Ruleset-ExampleMetaForSocialCare(SocialCareOrganizationalTeam)
+* insert Ruleset-ExampleMetaForSocialCare(OrganizationalTeam)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
 
 * insert Ruleset-ExampleLocalId(OrganizationalTeam, XXX.OT-ABC123)
 
 * active = true
 
-* type.coding =  http://snomed.info/sct#310136008 "Social services department duty team"
+* type.coding =  http://hl7.org/fhir/organization-type#team "Organizational team"
 
 * name = "The reablement team"
 

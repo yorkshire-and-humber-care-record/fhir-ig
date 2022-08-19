@@ -27,6 +27,7 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 * code 1..1 MS
 * code from InterweaveSocialCareAssessmentType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
+* code.text 1..1 MS
 * code ^short = "The type of assessment."
 
 // Every assessment MUST be linked to a patient
@@ -37,7 +38,10 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 * for ^short = "The person which is subject of the assessment."
 
 * authoredOn 1..1 MS
-* authoredOn ^short = "The date that the assessment was entered in to the source system."
+* authoredOn ^short = "The date that the assessment was first entered in to the source system."
+
+* lastModified 1..1 MS
+* lastModified ^short = "The date that the assessment was last updated."
 
 * owner 1..1 MS
 * owner only Reference(CareConnect-Organization-1)
@@ -71,6 +75,9 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 * encounter ^short = "Optional link to an Encounter resource which maybe associated with the assessment"
 
 * output.value[x] only Reference(CareConnect-DocumentReference-1) // TODO: limit to document reference only
+* output.type from InterweaveSocialCareAssessmentOutputType (required)
+* output.type.coding.system = #DOC (exactly)
+
 
 ///////////////////////////////////////
 // --- Discouraged fields ---
@@ -134,7 +141,8 @@ InstanceOf: InterweaveSocialCareAssessment
 Description: "Interweave Social Care Assessment example - Must Support"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareAssessment)
-* meta.versionId = "InterweaveSocialCareAssessmentExampleMS-v1.0.0"
+//Add care connect profile manually
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Task-1"
 
 * basedOn = Reference(InterweaveSocialCareAssessmentExample-HD)
 
@@ -143,6 +151,7 @@ Description: "Interweave Social Care Assessment example - Must Support"
 * intent = http://hl7.org/fhir/request-intent#plan "Plan"
 
 * code = Interweave-SocialCareAssessmentType-1#RA "Reablement Assessment"
+* code.text = "First Reablement Team Assessment"
 
 * for = Reference(InterweavePatientExample-MustSupport) 
 * for.display = "Mr Fred BLOGGS"
@@ -151,6 +160,8 @@ Description: "Interweave Social Care Assessment example - Must Support"
 * executionPeriod.end = "2022-07-09T11:00:00Z" 
 
 * authoredOn = "2022-07-10T09:00:00Z" 
+
+* lastModified = "2022-07-10T09:00:00Z" 
 
 * owner = Reference(InterweaveSocialCareOrganisationalTeamExampleMS) 
 * owner.display = "The reablement team"
@@ -163,8 +174,12 @@ InstanceOf: InterweaveSocialCareAssessment
 Description: "Interweave Social Care Assessment example - Hospital Discharge"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareAssessment)
-* meta.versionId = "InterweaveSocialCareAssessmentExampleHD-v1.0.0"
+//Add care connect profile manually
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Task-1"
 
+//* text.status = https://www.hl7.org/fhir/STU3/codesystem-narrative-status.html#empty "Empty"
+//* text.div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Text Not Provided</div>"
+ 
 //* basedOn = Reference(InterweaveSocialCareContactExample-Full) TODO
 
 * status = http://hl7.org/fhir/stu3/codesystem-task-status#completed "Completed"
@@ -172,6 +187,7 @@ Description: "Interweave Social Care Assessment example - Hospital Discharge"
 * intent = http://hl7.org/fhir/request-intent#plan "Plan"
 
 * code = Interweave-SocialCareAssessmentType-1#HD	"Hospital Discharge Assessment"
+* code.text = "Hospital Discharge Assessment"
 
 * for = Reference(InterweavePatientExample-MustSupport) 
 * for.display = "Mr Fred BLOGGS"
@@ -180,6 +196,8 @@ Description: "Interweave Social Care Assessment example - Hospital Discharge"
 * executionPeriod.end = "2022-07-07T11:00:00Z" 
 
 * authoredOn = "2022-07-08T09:00:00Z" 
+
+* lastModified = "2022-07-10T09:00:00Z" 
 
 * owner = Reference(InterweaveSocialCareOrganisationalTeamExampleMS) 
 * owner.display = "The reablement team"
@@ -195,7 +213,8 @@ InstanceOf: InterweaveSocialCareAssessment
 Description: "Interweave Social Care Assessment example - Full"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareAssessment)
-* meta.versionId = "InterweaveSocialCareAssessmentExampleFull-v1.0.0"
+//Add care connect profile manually
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Task-1"
 
 * insert Ruleset-ExampleLocalId(SocialCareAssessment, XXX.ASS-ABC123)
 
@@ -206,6 +225,7 @@ Description: "Interweave Social Care Assessment example - Full"
 * intent = http://hl7.org/fhir/request-intent#plan "Plan"
 
 * code = Interweave-SocialCareAssessmentType-1#RA "Reablement Assessment"
+* code.text = "First Reablement Team Assessment"
 
 * description = "Reablement assessment with OT and daughter present."
 
@@ -226,6 +246,7 @@ Description: "Interweave Social Care Assessment example - Full"
 * owner.display = "The reablement team"
 
 //* output[0] = Reference(TODO reference to a document) 
+//* output[0].type = Interweave-SocialCareAssessmentOutputType-1#DOC "DocumentReference"
 
 * extension[Extension-Interweave-SocialCareAssessmentOutcome].valueCodeableConcept =  Interweave-SocialCareAssessmentOutcome-1#PRO-RASS "Progress to Re-assessment"
 

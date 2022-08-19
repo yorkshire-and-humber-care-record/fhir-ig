@@ -1,11 +1,10 @@
-Profile: InterweaveSocialCareRelatedPerson
+Profile: InterweaveRelatedPerson
 Parent: CareConnect-RelatedPerson-1
-Id: Interweave-SocialCareRelatedPerson
-Description: "Interweave Social Care RelatedPerson resource profile - DRAFT"
+Id: Interweave-RelatedPerson
+Description: "Interweave Related Person resource profile - DRAFT"
 * ^status = #draft
 
 * insert Ruleset-InterweaveBaseFields
-
 
 ///////////////////////////////////////
 // --- EXTENSIONS ---
@@ -13,14 +12,13 @@ Description: "Interweave Social Care RelatedPerson resource profile - DRAFT"
 
 //A MS extensiSon for Social Care Role, As requested by the Social Care Data Standards working group.
 * extension contains Extension-Interweave-SocialCareSupportRole named socialCareSupportRole 0..* MS
-* extension[Extension-Interweave-SocialCareSupportRole] ^short = "Social Care Support Role: The role which a person plays in a service user's support"
-
+* extension[Extension-Interweave-SocialCareSupportRole] ^short = "Social Care Support Role: The role which a person plays in this service user's support"
 
 ///////////////////////////////////////
 // --- Identifiers ---
 ///////////////////////////////////////
 * insert Ruleset-AddIdentifierSlicing
-* insert Ruleset-AddLocalIdentifierOptional(SocialCareRelatedPerson)
+* insert Ruleset-AddLocalIdentifierOptional(RelatedPerson)
 
 ///////////////////////////////////////
 // --- Core Demographics ---
@@ -46,7 +44,6 @@ Description: "Interweave Social Care RelatedPerson resource profile - DRAFT"
 * telecom.value 1..1 MS
 * telecom.use MS
 
-
 ///////////////////////////////////////
 // --- Other fields ---
 ///////////////////////////////////////
@@ -58,6 +55,7 @@ Description: "Interweave Social Care RelatedPerson resource profile - DRAFT"
 
 // Relationship must be populated, ensuring code, display and system are provided
 * relationship 1..1 MS
+* relationship from http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(relationship)
 
 // Period: useful, "Must Support"
@@ -79,12 +77,12 @@ Description: "Interweave Social Care RelatedPerson resource profile - DRAFT"
 // EXAMPLES
 // *************************************************************************************************************************
 
-Instance: InterweaveSocialCareRelatedPersonExample-MustSupport
-InstanceOf: InterweaveSocialCareRelatedPerson
-Description: "Interweave Social Care Related Person example - Must Support"
+Instance: InterweaveRelatedPersonExample-SocialCare-MustSupport
+InstanceOf: InterweaveRelatedPerson
+Description: "Interweave Related Person - Social Care - Must Support - Example"
 
-* insert Ruleset-ExampleMetaForSocialCare(SocialCareRelatedPerson)
-* meta.versionId = "InterweaveSocialCareRelatedPersonExampleMustSupport-v1.0.0"
+* insert Ruleset-ExampleMetaForSocialCare(RelatedPerson)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-RelatedPerson-1"
 
 * extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept = Interweave-SocialCareSupportRole-1#KH "Key Holder"
 * extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start = "2022-01-11T09:00:00Z"
@@ -96,7 +94,7 @@ Description: "Interweave Social Care Related Person example - Must Support"
 
 * relationship.coding = http://hl7.org/fhir/v3/RoleCode#MTH "mother"
 
-* name[0].use = #official "Official"
+* name[0].use = #usual "Usual"
 * name[0].given[0] = "Jane"
 * name[0].family = "Bloggs"
 
@@ -107,16 +105,18 @@ Description: "Interweave Social Care Related Person example - Must Support"
 * period.start = 2019-04-20
 
 
-Instance: InterweaveSocialCareRelatedPersonExample-Full
-InstanceOf: InterweaveSocialCareRelatedPerson
-Description: "Interweave Social Care Related Person example - Full"
+Instance: InterweaveRelatedPersonExample-SocialCare-Full
+InstanceOf: InterweaveRelatedPerson
+Description: "Interweave Related Person - Social Care - Full - Example"
 
-* insert Ruleset-ExampleMetaForSocialCare(SocialCareRelatedPerson)
-* meta.versionId = "InterweaveSocialCareRelatedPersonExampleFull-v1.0.0"
+* insert Ruleset-ExampleMetaForSocialCare(RelatedPerson)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-RelatedPerson-1"
 
+* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept[0] = Interweave-SocialCareSupportRole-1#KH "Key Holder"
+* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start[0] = "2022-01-11T09:00:00Z"
 
-* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept = Interweave-SocialCareSupportRole-1#KH "Key Holder"
-* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start = "2022-01-11T09:00:00Z"
+//* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept[1] = Interweave-SocialCareSupportRole-1#NR "Nearest Relative"
+//* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start[1] = "2022-01-11T09:00:00Z"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/local-relatedperson-identifier"
 * identifier[0].value = "ABC-456-XYZ"
@@ -128,19 +128,12 @@ Description: "Interweave Social Care Related Person example - Full"
 
 * relationship.coding = http://hl7.org/fhir/v3/RoleCode#MTH "mother"
 
-* name[0].use = #official "Official"
+* name[0].use = #usual "Usual"
 * name[0].given[0] = "Jane"
 * name[0].family = "Bloggs"
 * name[0].prefix = "Mrs"
 * name[0].suffix = "PhD"
 * name[0].period.start = 2019-04-20
-
-* name[1].use = #maiden "Maiden"
-* name[1].given[0] = "Jane"
-* name[1].family = "Smith"
-* name[1].prefix = "Miss"
-* name[1].period.end = 2019-04-19
-* name[1].period.start = 1992-01-27
 
 * telecom[0].system = #phone "Phone"
 * telecom[0].value = "07987 123456"
@@ -153,9 +146,6 @@ Description: "Interweave Social Care Related Person example - Full"
 
 * birthDate = 1992-01-27
 
-* telecom[1].system = #email "Email"
-* telecom[1].value = "jane.bloggs@email.com"
-
 * address[0].use = #home "Home"
 * address[0].line[0] = "42 Grove Street"
 * address[0].line[1] = "Northville"
@@ -165,12 +155,49 @@ Description: "Interweave Social Care Related Person example - Full"
 * address[0].country = "GBR"
 * address[0].period.start = 2019-04-20
 
-* address[1].use = #old "Old"
-* address[1].line[0] = "3 Acacia Avenue"
-* address[1].city = "Birmingham"
-* address[1].district = "West Midlands"
-* address[1].postalCode = "BH3 1UW"
-* address[1].period.end = 2019-04-19
-* address[1].period.start = 2010-07-21
+* period.start = 2019-04-20
+
+Instance: InterweaveRelatedPersonExample-Full
+InstanceOf: InterweaveRelatedPerson
+Description: "Interweave Related Person - Full - Example"
+
+* insert Ruleset-ExampleMetaForHospital(RelatedPerson)
+
+* identifier[0].system = "https://fhir.nhs.uk/Id/local-relatedperson-identifier"
+* identifier[0].value = "ABC-456-XYZ"
+
+* active = true
+
+* patient = Reference(InterweavePatientExample-MustSupport) 
+* patient.display = "Mr Fred Bloggs"
+
+* relationship.coding = http://hl7.org/fhir/v3/RoleCode#MTH "mother"
+
+* name[0].use = #usual "Usual"
+* name[0].given[0] = "Jane"
+* name[0].family = "Bloggs"
+* name[0].prefix = "Mrs"
+* name[0].suffix = "PhD"
+* name[0].period.start = 2019-04-20
+
+* telecom[0].system = #phone "Phone"
+* telecom[0].value = "07987 123456"
+* telecom[0].use = #mobile "Mobile"
+
+* telecom[1].system = #email "Email"
+* telecom[1].value = "jane.bloggs@email.com"
+
+* gender = http://hl7.org/fhir/administrative-gender#female "Female"
+
+* birthDate = 1992-01-27
+
+* address[0].use = #home "Home"
+* address[0].line[0] = "42 Grove Street"
+* address[0].line[1] = "Northville"
+* address[0].city = "Overtown"
+* address[0].district = "West Yorkshire"
+* address[0].postalCode = "LS21 1PF"
+* address[0].country = "GBR"
+* address[0].period.start = 2019-04-20
 
 * period.start = 2019-04-20

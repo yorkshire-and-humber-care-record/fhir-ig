@@ -8,7 +8,7 @@ This profile sets minimum expectations for the Social Care Service resource whic
 
 ### **Coverage and references**
 
- - A Data Provider MUST offer FHIR resources that represent its own Services. 
+ - A Data Provider MUST offer FHIR resources that represent the Services provided to its service users. These may be either in-house services and/or services commissioned from external 3rd parties
  
  - When referencing a Service from another resource, the provider must populate the reference.display with the value held in the Service type.display.
 
@@ -17,7 +17,7 @@ The following fields are mandatory:
 
 - **status** It is envisaged that only the following values will be used to describe the status of a Social Care service and therefore we restrict the valueset to these values: active; planned; onhold; finished; entered-in-error
 
-- **type** is used to house the 'type' of service. This should always be known, and vital for meaningful display purposes. We have defined a list of codes derived from the Service Component field of the Social Care Client Level Data V5 Specification. This list has been made extensible as it is foreseen that the list will grow. In addition to providing the 'display' field, the **type.text** must also be populated with the local description of the type of service being provided.
+- **type** is used to house the 'type' of service. This should always be known, and vital for meaningful display purposes. We have defined a list of codes derived from the Service Component field of the [Social Care Client Level Data V5 Specification](https://digital.nhs.uk/about-nhs-digital/corporate-information-and-documents/directions-and-data-provision-notices/data-provision-notices-dpns/client-level-adult-social-care-data). This list has been made extensible as it is foreseen that the list will grow. In addition to providing the 'display' field, the **type.text** must also be populated with the local description of the type of service being provided.
 
 - **category** An extension has been created which allows for a high-level grouping of service types. This should always be known, and vital for meaningful display purposes. We have defined a list of codes derived from the Service Type field of the Social Care Client Level Data V5 Specification. This list has been made extensible as it is foreseen that this list will grow.
 
@@ -41,7 +41,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
 - **careManager** This field can be used to provide a link to the practitioner delivering the service. Many social care organisations are unable to currently provide this information, however, it is envisaged that this will be something which is available in the future and will be useful if known. It is likely that this field's conformance will be increased to Must Support.
 
-- **trigger** An extension has been created which will allow an optional link to the assessment which triggered the service to be created. We make this optional, as not all services are triggered by an assessment.
+- **triggeringAssessment** An extension has been created which will allow an optional link to the assessment which triggered the service to be created. We make this optional, as not all services are triggered by an assessment.
 
 
  

@@ -3,7 +3,7 @@
 **Definition** A sub-unit of workers which act as a team within an Organisation.
 
 ## Introduction
-This profile sets minimum expectations for the Organizational team, represented by an Organization FHIR resource. An Organizational Team is a sub-unit of workers which act as a team within an organisation. However, we do not need to model the individual team members here. It is simply enough to provide the name of the team, their contact details and which organisation they belong to (e.g. a local authority or private care provider). The resource is intended to be used for the practical purpose of getting in touch about a person's support. Typically, organisational teams will be the owners of assessments and services. 
+This profile sets minimum expectations for the Organizational team, represented by an Organization FHIR resource. An Organizational Team is a sub-unit of workers which act as a team within an organisation. However, we do not need to model the individual team members here. It is simply enough to provide the name of the team, their contact details and which organisation they belong to (e.g. a local authority, NHS trust, private care provider etc). The resource is intended to be used for the practical purpose of getting in touch about a person's healthcare/support. In Social Care, organisational teams will typically be the owners of assessments and services. 
 
 
 ### **Organizational Team coverage and references**
@@ -12,7 +12,7 @@ This profile sets minimum expectations for the Organizational team, represented 
  - When referencing an Organizational Team then the "reference" (URL of FHIR Resource) and "display" (organizational team name) MUST be populated.
  
 ### **Organizational Team hierarchy** 
-We do not intend to model the full organizational structure here. This is a very simple two-tier hierarchy showing the very top (local authority or a private provider) and very bottom (Organizational Team) of the tree. This two-tier structure should be created by providing a reference to the Organization resource, to which the team belongs, within the “partOf” field.  
+We do not intend to model the full organizational structure here. This is a very simple two-tier hierarchy showing the very top (local authority, NHS trust etc) and very bottom (Organizational Team) of the tree. This two-tier structure should be created by providing a reference to the Organization resource, to which the team belongs, within the “partOf” field.  
 
 The diagram below depicts this hierarchy:
 
@@ -25,7 +25,7 @@ The following fields are mandatory:
 
 - **active** - A mandatory flag to indicate whether Organizational Team is active.
 
-- **type** - Default to SCT 310136008: Social Services department duty team
+- **type** - Default to #team - Organizational team
 
 - **partOf** - This is a mandatory field and is used to provide a reference to the organization to which the team belongs e.g. A local authority. (See notes above for further information)
 
@@ -38,6 +38,8 @@ In addition, the following fields are "Must Support" - i.e. they must be populat
 These fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them:
 
 - **identifier:localIdentifier** - As with most other resources, there is the option to include a local identifier which may help to identify the Organizational Team at a local level.
+
+- **alias** - Option to provide a list of alternate names that the organizational team is known as, or was known as in the past
 
 - **address** - Can be populated if known - although is not deemed to be that important.
 

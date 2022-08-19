@@ -13,5 +13,5 @@ Description: "An extension to add a categorisation to the type of service that a
 * valueCodeableConcept only CodeableConcept
 * valueCodeableConcept ^short = "A categorisation of the type of service that a person is receiving."
 
-* valueCodeableConcept from Interweave-SocialCareServiceCategory-1 (extensible)
+* valueCodeableConcept from Interweave-SocialCareServiceCategory-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)

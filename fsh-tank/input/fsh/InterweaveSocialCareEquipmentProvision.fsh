@@ -1,7 +1,7 @@
-Profile: InterweaveSocialCareDeviceRequest
+Profile: InterweaveSocialCareEquipmentProvision
 Parent: DeviceRequest
-Id: Interweave-SocialCareDeviceRequest
-Description: "Interweave Social Care Device Request resource profile - DRAFT"
+Id: Interweave-SocialCareEquipmentProvision
+Description: "Interweave Social Care Equipment Provision resource profile - DRAFT"
 * ^status = #draft
 
 * insert Ruleset-InterweaveBaseFields
@@ -22,7 +22,7 @@ Description: "Interweave Social Care Device Request resource profile - DRAFT"
 * code[x] only CodeableConcept or Reference
 * code[x] MS
 * codeCodeableConcept 1..1 MS
-* codeCodeableConcept from InterweaveSocialCareDeviceType (preferred)
+* codeCodeableConcept from InterweaveSocialCareEquipmentType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(codeCodeableConcept)
 
 // Subject: Every Device Request MUST be linked to a patient
@@ -42,7 +42,7 @@ Description: "Interweave Social Care Device Request resource profile - DRAFT"
 * occurrence[x] only Period 
 * occurrence[x].start MS
 * occurrence[x].end MS
-* occurrence[x] ^short = "The period during which the equipment/device was placed with the person." 
+* occurrence[x] ^short = "The period during which the equipment was placed with the person." 
 
 ///////////////////////////////////////
 // --- Other fields ---
@@ -51,13 +51,13 @@ Description: "Interweave Social Care Device Request resource profile - DRAFT"
 // Optional local id
 
 * insert Ruleset-AddIdentifierSlicing
-* insert Ruleset-AddLocalIdentifierOptional(socialcaredevicerequest)
+* insert Ruleset-AddLocalIdentifierOptional(socialcareequipmentrequest)
 
 // Patient reference must be provided, with reference and display populated
-* note ^short = "Most devices will be where the patient lives or on the person, where this is not the case, the notes field can be used to detail exceptions."
+* note ^short = "Most equipment will be where the patient lives or on the person, where this is not the case, the notes field can be used to detail exceptions."
 
 //STU3 has requester.agent
-* requester only Reference(CareConnect-Organization-1)
+//* requester only Reference(Organization) - TODO restrain to org only
 * insert Ruleset-ReferenceWithReferenceAndDisplay(requester)
 * requester ^short = "The organization or organizationalTeam that requested the equipment be placed with the person."
 
@@ -93,12 +93,12 @@ Description: "Interweave Social Care Device Request resource profile - DRAFT"
 // EXAMPLES 
 // *************************************************************************************************************************
 
-Instance: InterweaveSocialCareDeviceRequestExample-MS
-InstanceOf: InterweaveSocialCareDeviceRequest
-Description: "Interweave Social Care Device Request example - Must Support"
+Instance: InterweaveSocialCareEquipmentProvisionExample-MS
+InstanceOf: InterweaveSocialCareEquipmentProvision
+Description: "Interweave Social Care Equipment Provision example - Must Support"
 
-* insert Ruleset-ExampleMetaForSocialCare(SocialCareDeviceRequest)
-* meta.versionId = "InterweaveSocialCareDeviceRequestExampleMS-v1.0.0"
+* insert Ruleset-ExampleMetaForSocialCare(SocialCareEquipmentProvision)
+* meta.profile[1] = "https://www.hl7.org/fhir/STU3/devicerequest"
 
 * status = http://hl7.org/fhir/request-status#active "Active"
 
@@ -113,14 +113,14 @@ Description: "Interweave Social Care Device Request example - Must Support"
 
 * authoredOn =  2022-04-20
 
-Instance: InterweaveSocialCareDeviceRequestExample-Full
-InstanceOf: InterweaveSocialCareDeviceRequest
-Description: "Interweave Social Care Device Request example - Full"
+Instance: InterweaveSocialCareEquipmentProvisionExample-Full
+InstanceOf: InterweaveSocialCareEquipmentProvision
+Description: "Interweave Social Care Equipment Provision example - Full"
 
-* insert Ruleset-ExampleMetaForSocialCare(SocialCareDeviceRequest)
-* meta.versionId = "InterweaveSocialCareDeviceRequestExampleFull-v1.0.0"
+* insert Ruleset-ExampleMetaForSocialCare(SocialCareEquipmentProvision)
+* meta.profile[1] = "https://www.hl7.org/fhir/STU3/devicerequest"
 
-* insert Ruleset-ExampleLocalId(SocialCareDeviceRequest, XXX.OT-ABC123)
+* insert Ruleset-ExampleLocalId(SocialCareEquipmentProvision, XXX.OT-ABC123)
 
 * status = http://hl7.org/fhir/request-status#active "Active"
 
@@ -138,8 +138,8 @@ Description: "Interweave Social Care Device Request example - Full"
 * authoredOn =  2022-04-20
 
 //STU3 is requester.agent
-* requester = Reference(InterweaveSocialCareOrganizationalTeamExampleFull) 
+* requester = Reference(InterweaveOrganizationalTeamExampleFull) 
 * requester.display = "The reablement team"
 
-* performer = Reference(InterweaveSocialCareOrganizationalTeamExampleFull) 
+* performer = Reference(InterweaveOrganizationalTeamExampleFull) 
 * performer.display = "The reablement team"

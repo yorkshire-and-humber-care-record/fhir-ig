@@ -1,7 +1,7 @@
-ValueSet: InterweaveSocialCareFlagType
-Id: Interweave-SocialCareFlagType-1
-Description: "Defines the set of codes that can be used to identify the type of flag which has been placed against a person."
-* ^name = "Interweave Social Care Flag Type"
+ValueSet: InterweaveFlagType
+Id: Interweave-FlagType-1
+Description: "Defines the set of codes that can be used to identify the type of flag which has been placed against a patient."
+* ^name = "Interweave Flag Type"
 * ^copyright = "This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement."
 
 //This valueset combines SNOMED and locally created codes

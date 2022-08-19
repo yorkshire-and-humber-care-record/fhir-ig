@@ -515,7 +515,7 @@ function convertInterweaveSocialCareContactStructureDefinition(jsonObject) {
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.definition");
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.groupIdentifier");
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.specialty");
-  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.receipient");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.recipient");
   /************************************************************************* */
 
  //type MS TODO

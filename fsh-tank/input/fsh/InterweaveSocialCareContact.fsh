@@ -39,15 +39,14 @@ Description: "Interweave Social Care Contact resource profile (modelled using FH
 * authoredOn 1..1 MS 
 * authoredOn ^short = "The date/time that the contact was recorded."
 
+* reasonCode 1..1 MS
+* reasonCode from InterweaveSocialCareContactReason (required)
 
 ///////////////////////////////////////
 // --- MUST SUPPORT FIELDS ---
 ///////////////////////////////////////
 
 // * type MS - e.g. TODO Referral to social services for adult protection- not in R4
-
-* reasonCode 0..1 MS
-* reasonCode from InterweaveSocialCareContactReason (preferred)
 
 //description in STU3
 * patientInstruction 0..1 MS  
@@ -117,7 +116,8 @@ InstanceOf: InterweaveSocialCareContact
 Description: "Interweave Social Care Contact example - Must Support"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareContact)
-* meta.versionId = "InterweaveSocialCareContactExampleMS-v1.0.0"
+//Add care connect profile manually
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"
 
 * status = http://hl7.org/fhir/request-status#completed "Completed"
 
@@ -145,7 +145,7 @@ InstanceOf: InterweaveSocialCareContact
 Description: "Interweave Social Care Contact example - Full"
 
 * insert Ruleset-ExampleMetaForSocialCare(SocialCareContact)
-* meta.versionId = "InterweaveSocialCareContactExampleFull-v1.0.0"
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"
 
 * extension[Extension-CareConnect-ReferralRequestMethod-1].valueCodeableConcept = CareConnect-ReferralRequestMethod-1#2 "Phone"
 * extension[Extension-CareConnect-SourceOfReferral-1].valueCodeableConcept = http://snomed.info/sct#309013001 "Referred by person"
