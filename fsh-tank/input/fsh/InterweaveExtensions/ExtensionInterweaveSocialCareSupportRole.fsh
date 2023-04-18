@@ -15,12 +15,10 @@ Description: "An extension to add a social care support role to a RelatedPerson.
    supportRolePeriod 0..1
 
 * extension[supportRoleType].valueCodeableConcept only CodeableConcept
-* extension[supportRoleType].valueCodeableConcept ^sliceName = "valueCodeableConcept"
 * extension[supportRoleType].valueCodeableConcept from Interweave-SocialCareSupportRole (required)
 * extension[supportRoleType] ^short = "The role which a person plays in a service user's support"
 * extension[supportRoleType] ^definition = "Social Care Support Role"
 
 * extension[supportRolePeriod].valuePeriod only Period
-* extension[supportRolePeriod].valuePeriod ^sliceName = "valuePeriod"
 * extension[supportRolePeriod] ^short = "The period during which the support role is active"
 * extension[supportRolePeriod] ^definition = "Support role period."

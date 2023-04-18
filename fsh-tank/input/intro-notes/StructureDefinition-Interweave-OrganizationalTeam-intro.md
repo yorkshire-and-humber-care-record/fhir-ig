@@ -1,4 +1,4 @@
-      Status: DRAFT: Work in Progress
+      Status: Active: Approved (STU)
 
 **Definition** A sub-unit of workers which act as a team within an Organisation.
 

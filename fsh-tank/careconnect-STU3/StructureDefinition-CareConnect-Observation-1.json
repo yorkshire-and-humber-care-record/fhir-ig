@@ -4,6 +4,9 @@
   "meta": {
     "lastUpdated": "2017-08-25T14:06:37.813+01:00"
   },
+  "text": {
+    "status": "generated"
+  },
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",

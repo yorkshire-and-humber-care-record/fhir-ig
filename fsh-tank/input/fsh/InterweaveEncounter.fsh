@@ -68,7 +68,7 @@ Description: "Interweave Encounter resource profile."
 
 // Priority: This provides useful information about whether it was emergency, routine, elective, etc
 * priority MS
-* priority from http://hl7.org/fhir/ValueSet/v3-ActPriority (required)
+* priority from Interweave-EncounterPriority-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(priority)
 
 // Subject: Every Encounter MUST be linked to a patient
@@ -257,8 +257,6 @@ Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
 * statusHistory[+].status = #in-progress 
 * statusHistory[=].period.start = "2022-01-09T09:00:00Z"
 * statusHistory[=].period.end = "2022-01-11T14:30:00Z"
-* statusHistory[+].status = #finished 
-* statusHistory[=].period.start = "2022-01-11T14:30:00Z"
 
 // (Note: Not using the "planned" status also helps the period make more sense)
 * period.start = "2022-01-09T09:00:00Z" 
@@ -355,8 +353,7 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 1 of groupin
 * statusHistory[+].status = #in-progress 
 * statusHistory[=].period.start = "2022-01-08T11:03:00Z"
 * statusHistory[=].period.end = "2022-01-09T09:00:00Z"
-* statusHistory[+].status = #finished 
-* statusHistory[=].period.start = "2022-01-09T09:00:00Z"
+
 
 // (Note: Not using the "planned" status also helps the period make more sense)
 * period.start = "2022-01-08T11:03:00Z" 
@@ -438,8 +435,7 @@ Description: "Interweave Encounter example - Maturity Level 2 (part 2 of groupin
 * statusHistory[+].status = #in-progress 
 * statusHistory[=].period.start = "2022-01-09T09:00:00Z"
 * statusHistory[=].period.end = "2022-01-11T14:30:00Z"
-* statusHistory[+].status = #finished 
-* statusHistory[=].period.start = "2022-01-11T14:30:00Z"
+
 
 // (Note: Not using the "planned" status also helps the period make more sense)
 * period.start = "2022-01-09T09:00:00Z" 

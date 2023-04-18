@@ -1,8 +1,8 @@
 Profile: InterweaveSocialCareSupportReason
 Parent: CareConnect-Condition-1
 Id: Interweave-SocialCareSupportReason
-Description: "Interweave Social Care Support Reason resource profile (modelled using FHIR Condition) - DRAFT"
-* ^status = #draft
+Description: "Interweave Social Care Support Reason resource profile (modelled using FHIR Condition)"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

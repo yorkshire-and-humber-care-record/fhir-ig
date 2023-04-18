@@ -1,8 +1,8 @@
 Profile: InterweaveSocialCareEquipmentProvision
 Parent: DeviceRequest
 Id: Interweave-SocialCareEquipmentProvision
-Description: "Interweave Social Care Equipment Provision resource profile - DRAFT"
-* ^status = #draft
+Description: "Interweave Social Care Equipment Provision resource profile"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -57,11 +57,11 @@ Description: "Interweave Social Care Equipment Provision resource profile - DRAF
 * note ^short = "Most equipment will be where the patient lives or on the person, where this is not the case, the notes field can be used to detail exceptions."
 
 //STU3 has requester.agent
-//* requester only Reference(Organization) - TODO restrain to org only
+//* requester only Reference(Organization) - TODO
 * insert Ruleset-ReferenceWithReferenceAndDisplay(requester)
 * requester ^short = "The organization or organizationalTeam that requested the equipment be placed with the person."
 
-//* performer only Reference(CareConnect-Organization-1 or CareConnect-Practitioner-1) TODO
+//* performer only Reference(Organization or Practitioner) - TODO
 * insert Ruleset-ReferenceWithReferenceAndDisplay(performer)
 * performer ^short = "The practitioner, organization or organizationalTeam who placed or fitted the equipment with/on the person."
 
@@ -92,7 +92,7 @@ Description: "Interweave Social Care Equipment Provision resource profile - DRAF
 // *************************************************************************************************************************
 // EXAMPLES 
 // *************************************************************************************************************************
-
+/*
 Instance: InterweaveSocialCareEquipmentProvisionExample-MS
 InstanceOf: InterweaveSocialCareEquipmentProvision
 Description: "Interweave Social Care Equipment Provision example - Must Support"
@@ -143,3 +143,4 @@ Description: "Interweave Social Care Equipment Provision example - Full"
 
 * performer = Reference(InterweaveOrganizationalTeamExampleFull) 
 * performer.display = "The reablement team"
+*/

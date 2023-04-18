@@ -261,7 +261,7 @@
         ],
         "binding": {
           "strength": "extensible",
-          "description": " v2 Relevant Clincial Information",
+          "description": "v2 Relevant Clincial Information",
           "valueSetUri": "http://terminology.hl7.org/ValueSet/v2-0916"
         },
         "mapping": [
@@ -305,7 +305,7 @@
         ],
         "binding": {
           "strength": "extensible",
-          "description": " v2 Relevant Clincial Information",
+          "description": "v2 Relevant Clincial Information",
           "valueSetUri": "http://terminology.hl7.org/ValueSet/v2-0916"
         }
       }

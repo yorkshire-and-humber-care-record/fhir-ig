@@ -1,4 +1,4 @@
-      Status: DRAFT: Work in Progress
+      Status: Active: Approved (STU)
 
 **Definition:** Active information or a warning, about a patient or their situation, which may affect how their care or support is delivered.
 

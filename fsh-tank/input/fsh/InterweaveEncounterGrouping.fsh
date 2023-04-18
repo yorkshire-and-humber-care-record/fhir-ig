@@ -26,10 +26,10 @@ Description: "Interweave Encounter resource profile  to group other encounters i
 
 // Status History: Leave as optional - more likely to be captured on the underlying encounters
 
-// Class: Make mandatory, MS - must be "Visit Grouping"
+// Class: Make mandatory, MS - must be "Grouping"
 //      (Use our own list in case so we can add this to it
 * class 1..1 MS
-//* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute" (exactly)
+* class from Interweave-EncounterClass-1 (required)
 * class = Interweave-EncounterClass-1#GROUPING "Grouping of related Encounters" (exactly)
 * insert Ruleset-RawCodingWithSystemCodeDisplay(class)
 

@@ -20,4 +20,9 @@ Description: "A categorisation of the type of service that a person is receiving
 * #LTS-RS "Long Term Support: Residential Care"
 * #LTS-C "Long Term Support: Community"
 * #LTS-P "Long Term Support: Prison"
+* #CS-DC "Carer Support: Direct to Carer"
+* #CS-SIPC "Carer Support: Support involving the person cared-for"
+* #DNH-SL "Data Not Held- System Level"
+* #DNH-IL "Data Not Held-Individual Level"
+* #OTH "Other"
 

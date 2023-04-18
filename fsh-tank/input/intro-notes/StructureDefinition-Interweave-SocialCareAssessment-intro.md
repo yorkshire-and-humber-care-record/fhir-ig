@@ -1,4 +1,4 @@
-      Status: DRAFT: Work in Progress
+      Status: Active: Approved (STU)
 
 **Definition:** A record of an assessment to determine a person’s support needs. An assessment record may be in progress, has already taken place, or is planned to be performed in the future.
 
@@ -53,6 +53,8 @@ Other fields are optional and may be populated if known - on the understanding t
 - **context** Optional link back to an encounter resource – a use case has been identified to link Hospital Discharge assessment back to the hospitals encounter.
 
 - **output** We give the option here to attach a local document which contains further detail of the asssessment carried out such as detailed coding information, findings and plans.  Please ensure that any documents attached are relevant for regional sharing.
+
+- **performer** Option to provide the practitioner which either performed, is going to perform or is performing the assessment. 
  
 ### **Discouraged or Removed fields**
 

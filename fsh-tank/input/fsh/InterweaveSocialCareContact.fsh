@@ -3,8 +3,8 @@
 Profile: InterweaveSocialCareContact
 Parent: CareConnect-ReferralRequest-1 
 Id: Interweave-SocialCareContact
-Description: "Interweave Social Care Contact resource profile (modelled using FHIR ReferralRequest) - DRAFT"
-* ^status = #draft
+Description: "Interweave Social Care Contact resource profile (modelled using FHIR ReferralRequest)"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

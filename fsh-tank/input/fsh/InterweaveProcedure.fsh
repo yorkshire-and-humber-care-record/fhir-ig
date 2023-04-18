@@ -141,7 +141,7 @@ Description: "Interweave Procedure resource profile - DRAFT"
 ////////////////////////////////////////////////////////////////////////////////////////
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 Instance: InterweaveProcedureExample
 InstanceOf: InterweaveProcedure
 Description: "Interweave Procedure example"
@@ -177,3 +177,4 @@ Description: "Interweave Procedure example"
 //* focalDevice.manipulated.display = "Pacemaker"
 
 
+*/

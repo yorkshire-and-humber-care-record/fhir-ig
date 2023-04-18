@@ -1,4 +1,4 @@
-      Status: DRAFT: Work in Progress
+      Status: Active: Approved (STU)
 
 **Definition** Information about a person that has a relationship with a patient. The person may be involved in the care or support of a patient, but is not the target of the care/support.
 

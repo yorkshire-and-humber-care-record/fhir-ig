@@ -1,0 +1,475 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "CareConnect-Patient-1",
+  "meta": {
+    "lastUpdated": "2018-03-28T13:59:04.782+01:00"
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
+      "valueString": "Base.Individuals"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category",
+      "valueCode": "patient"
+    }
+  ],
+  "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1",
+  "version": "1.3.0",
+  "name": "CareConnectPatient1",
+  "status": "draft",
+  "date": "2019-05-31",
+  "publisher": "HL7 UK",
+  "contact": [
+    {
+      "name": "INTEROPen",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "admin@interopen.org",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "description": "The patient resource represents the patient involved in the provision of healthcare related services.",
+  "purpose": "CURATED BY INTEROPen see: http://www.interopen.org/careconnect-curation-methodology/",
+  "copyright": "Copyright © 2019 HL7 UK  Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.  HL7® FHIR® standard Copyright © 2011+ HL7  The HL7® FHIR® standard is used under the FHIR license. You may obtain a copy of the FHIR license at  https://www.hl7.org/fhir/license.html",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "cda",
+      "uri": "http://hl7.org/v3/cda",
+      "name": "CDA (R2)"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "v2",
+      "uri": "http://hl7.org/v2",
+      "name": "HL7 v2 Mapping"
+    },
+    {
+      "identity": "loinc",
+      "uri": "http://loinc.org",
+      "name": "LOINC code for the element"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "ordered": false,
+          "rules": "openAtEnd"
+        }
+      },
+      {
+        "id": "Patient.identifier:nhsNumber",
+        "path": "Patient.identifier",
+        "sliceName": "nhsNumber",
+        "short": "The patient's NHS number",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:nhsNumber.extension",
+        "path": "Patient.identifier.extension",
+        "min": 1
+      },
+      {
+        "id": "Patient.identifier:nhsNumber.extension:nhsNumberVerificationStatus",
+        "path": "Patient.identifier.extension",
+        "sliceName": "nhsNumberVerificationStatus",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.identifier:nhsNumber.system",
+        "path": "Patient.identifier.system",
+        "min": 1,
+        "fixedUri": "https://fhir.nhs.uk/Id/nhs-number"
+      },
+      {
+        "id": "Patient.identifier:nhsNumber.value",
+        "path": "Patient.identifier.value",
+        "min": 1,
+        "example": [
+          {
+            "label": "General",
+            "valueString": "1234567890"
+          }
+        ]
+      },
+      {
+        "id": "Patient.identifier:nhsNumber.assigner",
+        "path": "Patient.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.name",
+        "path": "Patient.name",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "use"
+            }
+          ],
+          "ordered": false,
+          "rules": "openAtEnd"
+        },
+        "min": 1
+      },
+      {
+        "id": "Patient.name:official",
+        "path": "Patient.name",
+        "sliceName": "official",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.name:official.use",
+        "path": "Patient.name.use",
+        "min": 1,
+        "fixedCode": "official",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "NameUse"
+            }
+          ],
+          "strength": "required",
+          "description": "The use of a human name.",
+          "valueSet": "CareConnect-NameUse-1"
+        }
+      },
+      {
+        "id": "Patient.name:official.family",
+        "path": "Patient.name.family",
+        "min": 1
+      },
+      {
+        "id": "Patient.telecom.system",
+        "path": "Patient.telecom.system",
+        "min": 1
+      },
+      {
+        "id": "Patient.telecom.value",
+        "path": "Patient.telecom.value",
+        "min": 1
+      },
+      {
+        "id": "Patient.gender",
+        "path": "Patient.gender",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdministrativeGender"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
+          "strength": "required",
+          "description": "The gender of a person used for administrative purposes.",
+          "valueSet": "CareConnect-AdministrativeGender-1"
+        }
+      },
+      {
+        "id": "Patient.address.text",
+        "path": "Patient.address.text",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "42 Grove Street, Overtown, West Yorkshire, LS21 1PF"
+          }
+        ]
+      },
+      {
+        "id": "Patient.address.line",
+        "path": "Patient.address.line",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "42 Grove Street"
+          }
+        ]
+      },
+      {
+        "id": "Patient.address.city",
+        "path": "Patient.address.city",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "Overtown"
+          }
+        ]
+      },
+      {
+        "id": "Patient.address.district",
+        "path": "Patient.address.district",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "West Yorkshire"
+          }
+        ]
+      },
+      {
+        "id": "Patient.address.postalCode",
+        "path": "Patient.address.postalCode",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "LS21 1PF"
+          }
+        ]
+      },
+      {
+        "id": "Patient.address.country",
+        "path": "Patient.address.country",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "GBR"
+          }
+        ]
+      },
+      {
+        "id": "Patient.maritalStatus",
+        "path": "Patient.maritalStatus",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "MaritalStatus"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
+          "strength": "required",
+          "description": "The domestic partnership status of a person.",
+          "valueSet": "CareConnect-MaritalStatus-1"
+        }
+      },
+      {
+        "id": "Patient.maritalStatus.coding",
+        "path": "Patient.maritalStatus.coding",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.maritalStatus.coding.system",
+        "path": "Patient.maritalStatus.coding.system",
+        "min": 1,
+        "example": [
+          {
+            "label": "General",
+            "valueUri": "http://hl7.org/fhir/v3/MaritalStatus"
+          }
+        ]
+      },
+      {
+        "id": "Patient.maritalStatus.coding.code",
+        "path": "Patient.maritalStatus.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Patient.maritalStatus.coding.display",
+        "path": "Patient.maritalStatus.coding.display",
+        "min": 1
+      },
+      {
+        "id": "Patient.contact.name",
+        "path": "Patient.contact.name",
+        "min": 1
+      },
+      {
+        "id": "Patient.contact.name.use",
+        "path": "Patient.contact.name.use",
+        "min": 1
+      },
+      {
+        "id": "Patient.contact.address.text",
+        "path": "Patient.contact.address.text",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "120, Grove Street, Overtown, West Yorkshire, LS21 1PT"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contact.address.line",
+        "path": "Patient.contact.address.line",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "120, Grove Street"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contact.address.city",
+        "path": "Patient.contact.address.city",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "Overtown"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contact.address.district",
+        "path": "Patient.contact.address.district",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "West Yorkshire"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contact.address.postalCode",
+        "path": "Patient.contact.address.postalCode",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "LS21 1PT"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contact.address.country",
+        "path": "Patient.contact.address.country",
+        "example": [
+          {
+            "label": "General",
+            "valueString": "GBR"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contact.gender",
+        "path": "Patient.contact.gender",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdministrativeGender"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
+          "strength": "required",
+          "description": "The gender of a person used for administrative purposes.",
+          "valueSet": "CareConnect-AdministrativeGender-1"
+        }
+      },
+      {
+        "id": "Patient.contact.organization",
+        "path": "Patient.contact.organization",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.communication",
+        "path": "Patient.communication",
+        "max": "0"
+      },
+      {
+        "id": "Patient.generalPractitioner",
+        "path": "Patient.generalPractitioner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1",
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.managingOrganization",
+        "path": "Patient.managingOrganization",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.link.other",
+        "path": "Patient.link.other",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+            ],
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-hierarchy",
+                "valueBoolean": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

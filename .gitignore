@@ -1,7 +1,6 @@
 .DS_Store
 Thumbs.db
 /input
-/input-cache
 /output
 /temp
 /template
@@ -9,3 +8,4 @@ Thumbs.db
 /fsh-tank/fsh-generated
 /fsh-tank/fsh-generated-STU3
 node_modules/
+/input-cache

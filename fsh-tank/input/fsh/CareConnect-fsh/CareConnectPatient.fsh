@@ -1,11 +1,4 @@
 Alias: $patient-cadavericDonor = http://hl7.org/fhir/StructureDefinition/patient-cadavericDonor
-Alias: $patient-birthTime = http://hl7.org/fhir/StructureDefinition/patient-birthTime
-
-//This appears to actually be a bug in CareConnect - as it should be referencing the standard HL7 extension "patient-birthPlace". 
-//However will NOT fix it to remain wire-compatible with CareConnect. To make it build therefore we will create this bogus extension locally.
-//(Not that it is unlikely we will ever even use this extension in reality!) 
-//Alias: $birthPlace = http://hl7.org/fhir/StructureDefinition/birthPlace
-
 
 Profile: CareConnectPatient1
 Parent: Patient
@@ -34,7 +27,7 @@ Description: "The patient resource represents the patient involved in the provis
     Extension-CareConnect-NHSCommunication-1 named nhsCommunication 0..* and
     birthPlace named birthPlace 0..1 and
     Extension-CareConnect-NominatedPharmacy-1 named nominatedPharmacy 0..1 and
-    Extension-CareConnect-DeathNotificationStatus-1 named deathNotificationStatus 0..1
+    Extension-CareConnect-DeathNotificationStatus-1 named deathNotificationStatus 0..1 
 * extension[residentialStatus] ^short = "The residential status of the patient"
 * identifier ^slicing.discriminator.type = #value
 * identifier ^slicing.discriminator.path = "system"
@@ -72,10 +65,9 @@ Description: "The patient resource represents the patient involved in the provis
 * gender ^binding.extension[=].valueBoolean = true
 * gender ^binding.strength = #required
 * gender ^binding.valueSet = CareConnect-AdministrativeGender-1
-* birthDate.extension ^slicing.discriminator.type = #value
-* birthDate.extension ^slicing.discriminator.path = "url"
-* birthDate.extension ^slicing.rules = #open
-* birthDate.extension contains $patient-birthTime named patient-birthTime 0..1
+
+* birthDate.extension contains http://hl7.org/fhir/StructureDefinition/patient-birthTime named patient-birthTime 0..1
+
 * address.text ^example.label = "General"
 * address.text ^example.valueString = "42 Grove Street, Overtown, West Yorkshire, LS21 1PF"
 * address.line ^example.label = "General"
@@ -123,14 +115,14 @@ Description: "The patient resource represents the patient involved in the provis
 * contact.gender ^binding.strength = #required
 * contact.gender ^binding.valueSet = CareConnect-AdministrativeGender-1
 * contact.organization only Reference(CareConnect-Organization-1)
-// (Not in R4)
-//* animal ..0
-//* animal ^extension.url = "http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name"
-//* animal ^extension.valueString = "Animal"
 * communication ..0
-* generalPractitioner only Reference(CareConnect-Organization-1 or CareConnect-Practitioner-1)
 * managingOrganization only Reference(CareConnect-Organization-1)
-* link.other only Reference(RelatedPerson or CareConnect-Patient-1)
+
+//compiler breaks if the fields below are in
+// had to edit JSON directly to remove animal in 'fsh-tank\careconnect-STU3\StructureDefinition-CareConnect-Patient-1.json'
+//* animal 0..0 not in R4 - 
+//* generalPractitioner only Reference(CareConnect-Organization-1 or CareConnect-Practitioner-1)
+//* link.other only Reference(CareConnect-Patient-1 or RelatedPerson)
 
 //Add correct Care Connect URL
 * ^url = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"

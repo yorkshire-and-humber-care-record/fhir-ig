@@ -15,9 +15,9 @@ Description: "The social care assessment outcome."
 
 
 * #PRO-R "Progress to Reablement/ST-Max"
-* #PRO-ASS "Progress to Assessment/Unplanned Review"
+* #PRO-ASS "Progress to Assessment"
 * #ADMH	"Admitted to hospital"
-* #PRO-RASS	"Progress to Re-assessment"
+* #PRO-RASS	"Progress to Re-assessment/Unplanned Review"
 * #PRO-SUP "Progress to Support Planning / Services"
 * #PRO-EOL "Progress to End of Life Care"
 * #NCP "No change in package"
@@ -30,6 +30,13 @@ Description: "The social care assessment outcome."
 * #NFA-D "NFA - Deceased"
 * #NFA-NSO "NFA - No services offered: Other reason"
 * #NFA-SEO "NFA - Support ended: Other reason"
+* #NFA-OTH "NFA - Other"
+* #PRO-FA "Progress to financial assessment"
+* #POS "Provision of service"
+* #DNH-SL "Data Not Held- System Level"
+* #DNH-IL "Data Not Held-Individual Level"
+* #OTH "Other"
+
 
 
 

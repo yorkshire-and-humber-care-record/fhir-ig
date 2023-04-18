@@ -97,6 +97,11 @@ Description: "Interweave Patient resource profile."
 * birthDate 1..1 MS
 * birthDate ^short = "The date of birth for the individual. NB: Must match PDS"
 
+//* birthDate.extension ^slicing.discriminator.type = #value
+//* birthDate.extension ^slicing.discriminator.path = "url"
+//* birthDate.extension ^slicing.rules = #open
+//* birthDate.extension contains $patient-birthTime named patient-birthTime 0..1
+
 // Gender - basics which we want to always capture, although not as vital as other fields so Must Support
 * gender MS
 
@@ -145,14 +150,16 @@ Description: "Interweave Patient resource profile."
 * contact.address.text ^short = "DISCOURAGED: Please do not rely on this. Providers might not populate and Consumers might not use. Instead display the address based on the detailed elements."
 
 * deceased[x] ^short = "Indicates if the individual is deceased or not. Do not populate - populated by PDS only."
+//TODO: Compilier is only recognising the first resource in the list - to investigate
+//* link.other only Reference(RelatedPerson or CareConnect-Patient-1)
 * link ^short = "Link to another patient resource that concerns the same actual person. (For example merged record)"
 
 ///////////////////////////////////////
 // --- Removed fields ---
 ///////////////////////////////////////
 * photo 0..0
-//Animal, communication - note that these fields have already been removed by CareConnect
-
+//communication - already been removed by CareConnect
+//animal - already been removed by CareConnect
 
 ///////////////////////////////////////
 // --- Notes on other standards ---

@@ -1,8 +1,8 @@
 Profile: InterweaveFlag
 Parent: CareConnect-Flag-1
 Id: Interweave-Flag
-Description: "Interweave Flag resource profile - DRAFT"
-* ^status = #draft
+Description: "Interweave Flag resource profile"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

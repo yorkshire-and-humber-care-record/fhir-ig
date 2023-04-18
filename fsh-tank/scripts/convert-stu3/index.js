@@ -13,7 +13,8 @@ var fileHelpers = require('./FileHelpers');
 
 var dirR4 = path.resolve(__dirname, '..\\..') + '\\fsh-generated';
 var dirSTU3 = path.resolve(__dirname, '..\\..') + '\\fsh-generated-STU3';
-var regexEscapedDirR4=dirR4.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+var dirCCSTU3 = path.resolve(__dirname, '..\\..') + '\\careconnect-STU3';
+var regexEscapedDirR4=dirR4.replace(/([.*+?^=!:><${}()|\[\]\/\\])/g, "\\$1");
 
 
 // Clean out and recreate the STU3 output folder
@@ -22,25 +23,22 @@ if (fs.existsSync(dirSTU3)) {
 }
 fs.mkdirSync(dirSTU3);
 
-
-
 // Go through all the R4 files output by fsh to the "fsh-generated" folder
 // Copy them across to "fsh-generated-STU3", converting the FHIR Version as we go
 fileArrayR4 = fileHelpers.getAllFiles(dirR4);
 fileArrayR4.forEach(function(filePathR4) {
 
+      var fileData = fs.readFileSync(filePathR4,'utf8');
 
-       var fileData = fs.readFileSync(filePathR4,'utf8');
-
-      var processContent = true;
+      var processContent = true;      
+      
       if(filePathR4.includes("menu.xml")) processContent = false;
       if(filePathR4.includes("CareConnect")) processContent = false;
 
       if(processContent) {
-
             // Find and replace the FHIR version in all files
             var findString = "4.0.1";
-            var escapedFindString=findString.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+            var escapedFindString=findString.replace(/([.*+?^=><!:${}()|\[\]\/\\])/g, "\\$1");
             fileData = fileData.replace(new RegExp(escapedFindString, 'g'), "3.0.2");
 
 
@@ -72,17 +70,56 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = convertInterweaveProcedureStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Interweave-AllergyIntolerance") {
+                jsonObject = convertInterweaveAllergyIntoleranceStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Medication") {
+                jsonObject = convertInterweaveMedicationStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-MedicationRequest") {
+                jsonObject = convertInterweaveMedicationRequestStructureDefinition(jsonObject);
+              }
+              // TODO: Refactor Obs functions 
+              if(jsonObject.id == "Interweave-Observation") {
+                jsonObject = convertInterweaveObservationStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-HeartRate") {
+                jsonObject = convertInterweaveObservationHeartRateStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-RespiratoryRate") {
+                jsonObject = convertInterweaveObservationRespiratoryRateStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-VitalSigns") {
+                jsonObject = convertInterweaveObservationVitalSignsStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-ACVPU") {
+                jsonObject = convertInterweaveObservationACVPUStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-BloodPressure") {
+                jsonObject = convertInterweaveObservationBloodPressureStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-BodyTemperature") {
+                jsonObject = convertInterweaveObservationBodyTemperatureStructureDefinition(jsonObject);
+              }
+
               if(jsonObject.id == "Interweave-DiagnosticReport") {
                 jsonObject = convertInterweaveDiagnosticReportStructureDefinition(jsonObject);
               }
 
-              if(jsonObject.id == "Interweave-SocialCareDeviceRequest"){
+              if(jsonObject.id == "Interweave-SocialCareEquipmentProvision"){
                 jsonObject = convertInterweaveSocialCareDeviceRequestStructureDefinition(jsonObject);
               }
 
               if(jsonObject.id == "Interweave-SocialCareSupportReason"){
                 jsonObject = convertInterweaveSocialCareSupportReasonStructureDefinition(jsonObject);
-              
               }
             
               if(jsonObject.id == "Interweave-SocialCareAssessment"){
@@ -94,6 +131,12 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = JSON.parse(JSON.stringify(jsonObject).replace(/ServiceRequest/g, "ReferralRequest"));
                 jsonObject = convertInterweaveSocialCareContactStructureDefinition(jsonObject);
               } 
+
+              if(jsonObject.id == "Interweave-ReferralRequest"){
+                //Need to replace all occurrences of ServiceRequest with ReferralRequest
+                jsonObject = JSON.parse(JSON.stringify(jsonObject).replace(/ServiceRequest/g, "ReferralRequest"));
+                jsonObject = convertInterweaveReferralRequestStructureDefinition(jsonObject);
+              } 
             }
 
             // Convert various types of instances
@@ -104,7 +147,7 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "Encounter") {
               jsonObject = convertEncounterInstance(jsonObject);
             }
-
+            
             if (jsonObject.resourceType == "DocumentReference") {
               jsonObject = convertDocumentReferenceInstance(jsonObject);
             }
@@ -130,6 +173,10 @@ fileArrayR4.forEach(function(filePathR4) {
               }
             }
            
+	    if (jsonObject.resourceType == "RelatedPerson") {
+              jsonObject = convertRelatedPersonInstance(jsonObject);
+            }
+
             //InterweaveSocialCareDeviceRequest
             if((jsonObject.resourceType == "DeviceRequest" )
                 && (jsonObject.id.includes("InterweaveSocialCareDeviceRequest"))){
@@ -160,7 +207,6 @@ fileArrayR4.forEach(function(filePathR4) {
                 }) //foreach contained
             }
 
-
             // Reserialise the JSON
             fileData = JSON.stringify(jsonObject, null, 2)
 
@@ -179,7 +225,72 @@ fileArrayR4.forEach(function(filePathR4) {
 console.log( "Completed R4 to STU3 conversion" );
 
 
+// One off script to update current code System JSON files to include mandatory
+// elements (title/ experimental/caseSensitive ) within ShareableCodeSystem profile. 
+// Start of one-off script
+ fileArraySTU3 = fileHelpers.getAllFiles(dirSTU3);
+fileArraySTU3.forEach(function(filePathSTU3) {
+var fileData = fs.readFileSync(filePathSTU3,'utf8');
 
+var process = false;     
+
+if(filePathSTU3.includes("CodeSystem")) process = true;
+if(filePathSTU3.includes("ValueSet")) process = true;
+
+if(process) {
+  var jsonObject = JSON.parse(fileData);
+  if(jsonObject.resourceType=="CodeSystem" || jsonObject.resourceType == "ValueSet") 
+  {
+    jsonObject = updateCodeSystemFiles(jsonObject);
+  }
+  fileData = JSON.stringify(jsonObject, null, 2);
+          
+}
+fs.writeFileSync(filePathSTU3, fileData, 'utf8')
+});
+
+// updating original Care connect JSON files as they are being overwritten during the publising process.
+/*
+fileArrayCCSTU3 = fileHelpers.getAllFiles(dirCCSTU3);
+fileArrayCCSTU3.forEach(function(filePathCCSTU3) {
+var fileData = fs.readFileSync(filePathCCSTU3,'utf8');
+
+var process = false;     
+
+if(filePathCCSTU3.includes("CodeSystem")) process = true;
+if(filePathCCSTU3.includes("ValueSet")) process = true;
+
+if(process) {
+  var jsonObject = JSON.parse(fileData);
+  if(jsonObject.resourceType=="CodeSystem" || jsonObject.resourceType == "ValueSet")
+  {
+    jsonObject = updateCodeSystemFiles(jsonObject);
+  }
+  fileData = JSON.stringify(jsonObject, null, 2);
+          
+}
+fs.writeFileSync(filePathCCSTU3, fileData, 'utf8')
+});
+*/
+function updateCodeSystemFiles(jsonObject){
+  if(!("title" in jsonObject)){
+    jsonObject.title = jsonObject.name;    
+  }
+
+  if(!("experimental" in jsonObject)){
+    jsonObject.experimental = false;    
+  }
+
+  if(jsonObject.resourceType=="CodeSystem"){
+    if(!("caseSensitive" in jsonObject)){
+      jsonObject.caseSensitive = true;
+    } 
+  }
+
+  return jsonObject;
+} 
+
+// end of one-off script
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function convertStructureDefinition(jsonObject) {
@@ -207,7 +318,6 @@ function convertStructureDefinition(jsonObject) {
 
     }
   }
-
 
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
@@ -361,16 +471,13 @@ function convertInterweaveAppointmentStructureDefinition(jsonObject) {
     if(objElement.id.includes("Appointment.basedOn"))  {
       objElement.id = objElement.id.replace("Appointment.basedOn", "Appointment.incomingReferral");
       objElement.path = objElement.id;
-    };
-      
+    };     
 
 
   }); //Element
 
   return jsonObject;
 }
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -392,7 +499,6 @@ function convertInterweaveConditionStructureDefinition(jsonObject) {
     objElement.id = objElement.id.replace("Condition.recordedDate", "Condition.assertedDate");
     objElement.path = objElement.id;
   };
-
 
   }); //Element
 
@@ -420,8 +526,60 @@ function convertInterweaveProcedureStructureDefinition(jsonObject) {
   return jsonObject;
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationStructureDefinition(jsonObject) {
+  related = new Object;
+  related.id = "Observation.related";
+  related.path = "Observation.related";
+  related.min = 0;
+  related.max = "*";
+  related.short = "Resources related to this observation";
+  jsonObject.differential.element.push(related);
+
+  relatedType = new Object;
+  relatedType.id = "Observation.related.type";
+  relatedType.path = "Observation.related.type";
+  relatedType.min = 1;
+  relatedType.max = "1";
+  relatedType.fixedCode = "derived-from"
+  relatedType.mustSupport = true;
+  jsonObject.differential.element.push(relatedType);
+
+  var reference = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
+  }
+
+  relatedTarget = new Object;
+  relatedTarget.id = "Observation.related.target";
+  relatedTarget.path = "Observation.related.target";
+  relatedTarget.min = 1;
+  relatedTarget.max = "1";
+  relatedTarget.mustSupport = true;
+  relatedTarget.short = "we limit the related field’s usage to only allow links to observation resources, from which the primary observation’s value was derived. E.g. An observation may have a value which is a score, and that score may have been derived from several other observations."
+  relatedTarget.type = []
+  relatedTarget.type.push(reference);
+  jsonObject.differential.element.push(relatedTarget);
+
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+    //console.log(objElement);
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;
+    };     
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
 
 function convertInterweaveDiagnosticReportStructureDefinition(jsonObject) {
  
@@ -462,11 +620,28 @@ function convertInterweaveSocialCareDeviceRequestStructureDefinition(jsonObject)
     if(objElement.id.includes("DeviceRequest.requester"))  {
       objElement.id = objElement.id.replace("DeviceRequest.requester", "DeviceRequest.requester.agent");
       objElement.path = objElement.id;   
-    };       
+    };   
+    
+    if(objElement.id.includes("DeviceRequest.requester.reference"))  {
+      objElement.id = objElement.id.replace("DeviceRequest.requester.reference", "DeviceRequest.requester.agent.reference");
+      objElement.path = objElement.id;   
+    };   
+
+    if(objElement.id.includes("DeviceRequest.requester.identifier"))  {
+      objElement.id = objElement.id.replace("DeviceRequest.requester.identifier", "DeviceRequest.requester.agent.identifier");
+      objElement.path = objElement.id;   
+    };   
+
+    if(objElement.id.includes("DeviceRequest.requester.display"))  {
+      objElement.id = objElement.id.replace("DeviceRequest.requester.display", "DeviceRequest.requester.agent.display");
+      objElement.path = objElement.id;   
+    };   
+
   });
   
   return jsonObject;
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////
 
 function convertInterweaveSocialCareSupportReasonStructureDefinition(jsonObject) {
@@ -577,7 +752,6 @@ function convertEncounterInstance(jsonObject) {
     jsonObject.appointment = jsonObject.appointment[0];
   }
 
-
   return jsonObject;
 }
 
@@ -593,7 +767,6 @@ function convertDocumentReferenceInstance(jsonObject) {
   if(jsonObject.context && jsonObject.context.encounter) {
     jsonObject.context.encounter = jsonObject.context.encounter[0];
   }
-
 
   return jsonObject;
 }
@@ -615,11 +788,9 @@ function convertAppointmentInstance(jsonObject) {
     jsonObject.indication = jsonObject.reasonReference;
     delete jsonObject.reasonReference;
   }
- 
 
   return jsonObject;
 }
-
 
 
 function convertConditionInstance(jsonObject) {
@@ -650,7 +821,6 @@ function convertProcedureInstance(jsonObject) {
     delete jsonObject.encounter;
   }
 
-
   return jsonObject;
 }
 
@@ -672,6 +842,14 @@ function convertDiagnosticReportInstance(jsonObject) {
     jsonObject.category = jsonObject.category[0];
   }
 
+  return jsonObject;
+}
+
+function convertRelatedPersonInstance(jsonObject) {
+  // Convert from an array in R4 to a single value in STU3
+  if(jsonObject.relationship) {
+    jsonObject.relationship = jsonObject.relationship[0];
+  }
   return jsonObject;
 }
 
@@ -725,13 +903,339 @@ function convertSocialCareContactInstance(jsonObject) {
   return jsonObject;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveMedicationStructureDefinition(jsonObject) {
+   
+  // * The following fields are removed and are deprecated in R4
+   jsonObject = insertDeprectatedR4Field(jsonObject, "Medication.isBrand");
+   jsonObject = insertDeprectatedR4Field(jsonObject, "Medication.isOverTheCounter");
+   jsonObject = insertDeprectatedR4Field(jsonObject, "Medication.package");
+   jsonObject = insertDeprectatedR4Field(jsonObject, "Medication.image");
+   jsonObject = insertDeprectatedR4Field(jsonObject, "Medication.ingredient.amount");
+
+   return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveMedicationRequestStructureDefinition(jsonObject) {
+   
+  // * The following fields are removed and are deprecated in R4
+  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.definition");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
+  
+   // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("MedicationRequest.encounter"))  {      
+      objElement.id = objElement.id.replace("MedicationRequest.encounter", "MedicationRequest.context");
+      objElement.path = objElement.id;      
+    };
+
+    if(objElement.id.includes("MedicationRequest.requester"))  {      
+      objElement.id = objElement.id.replace("MedicationRequest.requester", "MedicationRequest.requester.agent");
+      objElement.path = objElement.id;      
+    };
+
+  }); //Element
+   return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationBodyTemperatureStructureDefinition(jsonObject) {
+  
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationACVPUStructureDefinition(jsonObject) {
+  related = new Object;
+  related.id = "Observation.related";
+  related.path = "Observation.related";
+  related.min = 0;
+  related.max = "*";
+  related.short = "Resources related to this observation";
+  jsonObject.differential.element.push(related);
+
+  relatedType = new Object;
+  relatedType.id = "Observation.related.type";
+  relatedType.path = "Observation.related.type";
+  relatedType.min = 1;
+  relatedType.max = "1";
+  relatedType.short = "Fixed value: derived-from";
+  relatedType.mustSupport = true;
+  jsonObject.differential.element.push(relatedType);
+
+  var reference = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
+  }
+
+  relatedTarget = new Object;
+  relatedTarget.id = "Observation.related.target";
+  relatedTarget.path = "Observation.related.target";
+  relatedTarget.min = 1;
+  relatedTarget.max = "1";
+  relatedTarget.mustSupport = true;
+  relatedTarget.short = "we limit the related field’s usage to only allow links to observation resources, from which the primary observation’s value was derived. E.g. An observation may have a value which is a score, and that score may have been derived from several other observations."
+  relatedTarget.type = []
+  relatedTarget.type.push(reference);
+  jsonObject.differential.element.push(relatedTarget);
+
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationBloodPressureStructureDefinition(jsonObject) {
+  related = new Object;
+  related.id = "Observation.related";
+  related.path = "Observation.related";
+  related.min = 0;
+  related.max = "*";
+  related.short = "Resources related to this observation";
+  jsonObject.differential.element.push(related);
+
+  relatedType = new Object;
+  relatedType.id = "Observation.related.type";
+  relatedType.path = "Observation.related.type";
+  relatedType.min = 1;
+  relatedType.max = "1";
+  relatedType.short = "Fixed value: derived-from";
+  relatedType.mustSupport = true;
+  jsonObject.differential.element.push(relatedType);
+
+  var reference = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
+  }
+
+  relatedTarget = new Object;
+  relatedTarget.id = "Observation.related.target";
+  relatedTarget.path = "Observation.related.target";
+  relatedTarget.min = 1;
+  relatedTarget.max = "1";
+  relatedTarget.mustSupport = true;
+  relatedTarget.short = "we limit the related field’s usage to only allow links to observation resources, from which the primary observation’s value was derived. E.g. An observation may have a value which is a score, and that score may have been derived from several other observations."
+  relatedTarget.type = []
+  relatedTarget.type.push(reference);
+  jsonObject.differential.element.push(relatedTarget);
+
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };     
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationHeartRateStructureDefinition(jsonObject) {
+  
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };     
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationRespiratoryRateStructureDefinition(jsonObject) {
+  
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };     
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationVitalSignsStructureDefinition(jsonObject) {
+  related = new Object;
+  related.id = "Observation.related";
+  related.path = "Observation.related";
+  related.min = 0;
+  related.max = "*";
+  related.short = "Resources related to this observation";
+  jsonObject.differential.element.push(related);
+
+  relatedType = new Object;
+  relatedType.id = "Observation.related.type";
+  relatedType.path = "Observation.related.type";
+  relatedType.min = 1;
+  relatedType.max = "1";
+  relatedType.short = "Fixed value: derived-from";
+  relatedType.mustSupport = true;
+  jsonObject.differential.element.push(relatedType);
+
+  var reference = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
+  }
+
+  relatedTarget = new Object;
+  relatedTarget.id = "Observation.related.target";
+  relatedTarget.path = "Observation.related.target";
+  relatedTarget.min = 1;
+  relatedTarget.max = "1";
+  relatedTarget.mustSupport = true;
+  relatedTarget.short = "we limit the related field’s usage to only allow links to observation resources, from which the primary observation’s value was derived. E.g. An observation may have a value which is a score, and that score may have been derived from several other observations."
+  relatedTarget.type = []
+  relatedTarget.type.push(reference);
+  jsonObject.differential.element.push(relatedTarget);
+
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };     
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveAllergyIntoleranceStructureDefinition(jsonObject) {
+  
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "recordedDate" to "context"
+    if(objElement.id.includes("AllergyIntolerance.recordedDate"))  {      
+      objElement.id = objElement.id.replace("AllergyIntolerance.recordedDate", "AllergyIntolerance.assertedDate");
+      objElement.path = objElement.id;      
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function insertDeprectatedR4Field(jsonObject, fieldId){
   field = new Object;
   field.id = fieldId;
   field.path = fieldId;
-  field.min = "0";
+  field.min = 0;
   field.max = "0";
   field.short = "REMOVED - deprecated in R4";
   jsonObject.differential.element.push(field);
   return jsonObject;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveReferralRequestStructureDefinition(jsonObject) {
+  
+  /* This section inserts the fields which have been deprecated in R4 */
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.definition");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.groupIdentifier");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.specialty");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.recipient");
+  /************************************************************************* */
+
+ //type MS TODO
+ 
+ // Loop through the elements
+ jsonObject.differential.element.forEach(function(objElement) {
+
+  //convert requester to requester.agent
+  if(objElement.id.includes("ReferralRequest.requester"))  {
+    objElement.id = objElement.id.replace("ReferralRequest.requester", "ReferralRequest.requester.agent");
+    objElement.path = objElement.id;
+  };     
+  
+  // //convert patientInstruction to description
+  // if(objElement.id.includes("ReferralRequest.patientInstruction"))  {
+  //     objElement.id = objElement.id.replace("ReferralRequest.patientInstruction", "ReferralRequest.description");
+  //     objElement.path = objElement.id;
+  //   }; 
+    
+  //convert encounter to context
+  if(objElement.id.includes("ReferralRequest.encounter"))  {
+      objElement.id = objElement.id.replace("ReferralRequest.encounter", "ReferralRequest.context");
+      objElement.path = objElement.id;
+    }; 
+});
+
+  return jsonObject;
+}
+////////////////////////////////////////////////////////////////////////////////////////

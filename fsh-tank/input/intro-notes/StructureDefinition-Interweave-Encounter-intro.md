@@ -128,7 +128,7 @@ A significant set of mandatory fields are defined in order to properly describe 
 4. **Participant** - it is required to include EXACTLY ONE practitioner who has the "type" of "Primary Performer". This should be the main person responsible - someone who it would be useful to contact if further information is desired. (If this person changed during the course of the encounter then please pick just ONE to finally hold this key role, and demote the others to "participant")
 
    Also included in the list of participants might be:
-     - Admitter and Discharger - should be included if known/relevant and different to the Primary Performer
+     - Admitter and Discharger - should be included if known and relevant.
      - Participant - FHIR offers a wealth of other participant type codes, however it is suggested that simply classifying others as "participant" is likely to be adequate in most cases.
 
    Participants can be given a "period" and this is optional. For regional sharing the most important thing is to see who has been involved with the patient, rather than to construct a forensic timeline of involvements. However this information might be useful in the case of a long Encounter with many brief involvements, and so may be provided if desired.

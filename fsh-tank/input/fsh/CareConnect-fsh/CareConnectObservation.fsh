@@ -131,7 +131,5 @@ Description: "The Observation resource is used for tracking the current and hist
 * component.code.coding[snomedCT].display ^extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable"
 * component.code.coding[snomedCT].display ^extension.valueBoolean = true
 
-
-
 //Add correct Care Connect URL
 * ^url = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"

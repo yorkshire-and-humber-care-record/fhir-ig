@@ -13,5 +13,5 @@ Description: "An extension to add a coded value for the outcome of an assessment
 * valueCodeableConcept only CodeableConcept
 * valueCodeableConcept ^short = "The outcome of the assessment"
 
-* valueCodeableConcept from Interweave-SocialCareAssessmentOutcome-1 (extensible)
+* valueCodeableConcept from Interweave-SocialCareAssessmentOutcome-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)

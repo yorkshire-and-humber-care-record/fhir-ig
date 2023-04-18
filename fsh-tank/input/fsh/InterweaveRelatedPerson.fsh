@@ -1,8 +1,10 @@
+Alias: $RC = http://hl7.org/fhir/v3/RoleCode
+
 Profile: InterweaveRelatedPerson
 Parent: CareConnect-RelatedPerson-1
 Id: Interweave-RelatedPerson
-Description: "Interweave Related Person resource profile - DRAFT"
-* ^status = #draft
+Description: "Interweave Related Person resource profile"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -85,14 +87,14 @@ Description: "Interweave Related Person - Social Care - Must Support - Example"
 * meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-RelatedPerson-1"
 
 * extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept = Interweave-SocialCareSupportRole-1#KH "Key Holder"
-* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start = "2022-01-11T09:00:00Z"
+* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start = "2022-01-11"
 
 * active = true
 
 * patient = Reference(InterweavePatientExample-MustSupport) 
 * patient.display = "Mr Fred BLOGGS"
 
-* relationship.coding = http://hl7.org/fhir/v3/RoleCode#MTH "mother"
+* relationship.coding = $RC#MTH "mother"
 
 * name[0].use = #usual "Usual"
 * name[0].given[0] = "Jane"
@@ -112,11 +114,8 @@ Description: "Interweave Related Person - Social Care - Full - Example"
 * insert Ruleset-ExampleMetaForSocialCare(RelatedPerson)
 * meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-RelatedPerson-1"
 
-* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept[0] = Interweave-SocialCareSupportRole-1#KH "Key Holder"
-* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start[0] = "2022-01-11T09:00:00Z"
-
-//* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept[1] = Interweave-SocialCareSupportRole-1#NR "Nearest Relative"
-//* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start[1] = "2022-01-11T09:00:00Z"
+* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRoleType].valueCodeableConcept = Interweave-SocialCareSupportRole-1#KH "Key Holder"
+* extension[Extension-Interweave-SocialCareSupportRole].extension[supportRolePeriod].valuePeriod.start = "2022-01-11"
 
 * identifier[0].system = "https://fhir.nhs.uk/Id/local-relatedperson-identifier"
 * identifier[0].value = "ABC-456-XYZ"
@@ -126,7 +125,7 @@ Description: "Interweave Related Person - Social Care - Full - Example"
 * patient = Reference(InterweavePatientExample-MustSupport) 
 * patient.display = "Mr Fred Bloggs"
 
-* relationship.coding = http://hl7.org/fhir/v3/RoleCode#MTH "mother"
+* relationship.coding = $RC#MTH "mother"
 
 * name[0].use = #usual "Usual"
 * name[0].given[0] = "Jane"
@@ -171,7 +170,7 @@ Description: "Interweave Related Person - Full - Example"
 * patient = Reference(InterweavePatientExample-MustSupport) 
 * patient.display = "Mr Fred Bloggs"
 
-* relationship.coding = http://hl7.org/fhir/v3/RoleCode#MTH "mother"
+* relationship.coding = $RC#MTH "mother"
 
 * name[0].use = #usual "Usual"
 * name[0].given[0] = "Jane"

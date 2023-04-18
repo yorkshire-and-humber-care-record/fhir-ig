@@ -1,7 +1,7 @@
 Profile: InterweaveOrganizationalTeam
 Parent: CareConnect-Organization-1
 Id: Interweave-OrganizationalTeam
-Description: "Interweave Organizational Team resource profile (modelled using FHIR Organization) - DRAFT"
+Description: "Interweave Organizational Team resource profile (modelled using FHIR Organization)"
 * ^status = #active
 
 * insert Ruleset-InterweaveBaseFields

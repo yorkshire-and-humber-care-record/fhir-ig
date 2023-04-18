@@ -1,8 +1,8 @@
 Profile: InterweaveSocialCareService
 Parent: CareConnect-EpisodeOfCare-1
 Id: Interweave-SocialCareService
-Description: "Interweave Social Care Service resource profile (modelled using FHIR EpisodeOfCare) - DRAFT"
-* ^status = #draft
+Description: "Interweave Social Care Service resource profile (modelled using FHIR EpisodeOfCare)"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

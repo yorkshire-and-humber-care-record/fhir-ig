@@ -1,8 +1,8 @@
 Profile: InterweaveSocialCareAssessment
 Parent: CareConnect-Task-1
 Id: Interweave-SocialCareAssessment
-Description: "Interweave Social Care Assessment resource profile (modelled using FHIR Task) - DRAFT"
-* ^status = #draft
+Description: "Interweave Social Care Assessment resource profile (modelled using FHIR Task)"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -12,6 +12,9 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 
 * extension contains Extension-Interweave-SocialCareAssessmentOutcome named outcome 0..* MS
 * extension[Extension-Interweave-SocialCareAssessmentOutcome] ^short = "The outcome of the assessment."
+
+* extension contains Extension-Interweave-SocialCareAssessmentPerformer named performer 0..1 
+* extension[Extension-Interweave-SocialCareAssessmentPerformer] ^short = "The practitioner performing the assessment."
 
 ///////////////////////////////////////
 // --- MANDATORY FIELDS ---
@@ -76,7 +79,7 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 
 * output.value[x] only Reference(CareConnect-DocumentReference-1) // TODO: limit to document reference only
 * output.type from InterweaveSocialCareAssessmentOutputType (required)
-* output.type.coding.system = #DOC (exactly)
+* output.type.coding.code = #DOC (exactly)
 
 
 ///////////////////////////////////////
@@ -135,7 +138,7 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 // *************************************************************************************************************************
 // EXAMPLES -
 // *************************************************************************************************************************
-
+/*
 Instance: InterweaveSocialCareAssessmentExample-MS
 InstanceOf: InterweaveSocialCareAssessment
 Description: "Interweave Social Care Assessment example - Must Support"
@@ -245,8 +248,11 @@ Description: "Interweave Social Care Assessment example - Full"
 * owner = Reference(InterweaveSocialCareOrganisationalTeamExampleMS) 
 * owner.display = "The reablement team"
 
+* performer = Reference(InterweavePractitionerExample)
+
 //* output[0] = Reference(TODO reference to a document) 
 //* output[0].type = Interweave-SocialCareAssessmentOutputType-1#DOC "DocumentReference"
 
 * extension[Extension-Interweave-SocialCareAssessmentOutcome].valueCodeableConcept =  Interweave-SocialCareAssessmentOutcome-1#PRO-RASS "Progress to Re-assessment"
 
+*/
