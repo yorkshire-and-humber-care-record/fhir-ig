@@ -155,6 +155,14 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "Appointment") {
               jsonObject = convertAppointmentInstance(jsonObject);
             }
+			
+			      if (jsonObject.resourceType == "Observation") {
+              jsonObject = convertObservationInstance(jsonObject);
+            }
+
+            if (jsonObject.resourceType == "AllergyIntolerance") {
+              jsonObject = convertAllergyIntoleranceInstance(jsonObject);
+            }
 
             if (jsonObject.resourceType == "Procedure") {
               jsonObject = convertProcedureInstance(jsonObject);
@@ -172,11 +180,11 @@ fileArrayR4.forEach(function(filePathR4) {
                jsonObject = convertConditionInstance(jsonObject);
               }
             }
-           
-	    if (jsonObject.resourceType == "RelatedPerson") {
+
+            if (jsonObject.resourceType == "RelatedPerson") {
               jsonObject = convertRelatedPersonInstance(jsonObject);
             }
-
+           
             //InterweaveSocialCareDeviceRequest
             if((jsonObject.resourceType == "DeviceRequest" )
                 && (jsonObject.id.includes("InterweaveSocialCareDeviceRequest"))){
@@ -221,77 +229,7 @@ fileArrayR4.forEach(function(filePathR4) {
 
 });
 
-
 console.log( "Completed R4 to STU3 conversion" );
-
-
-// One off script to update current code System JSON files to include mandatory
-// elements (title/ experimental/caseSensitive ) within ShareableCodeSystem profile. 
-// Start of one-off script
- fileArraySTU3 = fileHelpers.getAllFiles(dirSTU3);
-fileArraySTU3.forEach(function(filePathSTU3) {
-var fileData = fs.readFileSync(filePathSTU3,'utf8');
-
-var process = false;     
-
-if(filePathSTU3.includes("CodeSystem")) process = true;
-if(filePathSTU3.includes("ValueSet")) process = true;
-
-if(process) {
-  var jsonObject = JSON.parse(fileData);
-  if(jsonObject.resourceType=="CodeSystem" || jsonObject.resourceType == "ValueSet") 
-  {
-    jsonObject = updateCodeSystemFiles(jsonObject);
-  }
-  fileData = JSON.stringify(jsonObject, null, 2);
-          
-}
-fs.writeFileSync(filePathSTU3, fileData, 'utf8')
-});
-
-// updating original Care connect JSON files as they are being overwritten during the publising process.
-/*
-fileArrayCCSTU3 = fileHelpers.getAllFiles(dirCCSTU3);
-fileArrayCCSTU3.forEach(function(filePathCCSTU3) {
-var fileData = fs.readFileSync(filePathCCSTU3,'utf8');
-
-var process = false;     
-
-if(filePathCCSTU3.includes("CodeSystem")) process = true;
-if(filePathCCSTU3.includes("ValueSet")) process = true;
-
-if(process) {
-  var jsonObject = JSON.parse(fileData);
-  if(jsonObject.resourceType=="CodeSystem" || jsonObject.resourceType == "ValueSet")
-  {
-    jsonObject = updateCodeSystemFiles(jsonObject);
-  }
-  fileData = JSON.stringify(jsonObject, null, 2);
-          
-}
-fs.writeFileSync(filePathCCSTU3, fileData, 'utf8')
-});
-*/
-function updateCodeSystemFiles(jsonObject){
-  if(!("title" in jsonObject)){
-    jsonObject.title = jsonObject.name;    
-  }
-
-  if(!("experimental" in jsonObject)){
-    jsonObject.experimental = false;    
-  }
-
-  if(jsonObject.resourceType=="CodeSystem"){
-    if(!("caseSensitive" in jsonObject)){
-      jsonObject.caseSensitive = true;
-    } 
-  }
-
-  return jsonObject;
-} 
-
-// end of one-off script
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function convertStructureDefinition(jsonObject) {
 
@@ -302,7 +240,6 @@ function convertStructureDefinition(jsonObject) {
       jsonObject.extension.splice(index,1);
     }
   }
-
 
   // For extensions then "context" is done differently
   if(jsonObject.type == "Extension") {
@@ -731,6 +668,40 @@ function convertLocationInstance(jsonObject) {
   return jsonObject;
 }
 
+function convertObservationInstance(jsonObject) {
+
+  if(jsonObject.note) {   
+    jsonObject.comment = jsonObject.note[0].text;
+    delete jsonObject.note;
+  }
+
+  if(jsonObject.encounter) {
+    jsonObject.context = jsonObject.encounter;
+    delete jsonObject.encounter;
+  }
+
+  return jsonObject;
+}
+
+function convertAllergyIntoleranceInstance(jsonObject) {
+  if(jsonObject.recordedDate) {
+    jsonObject.assertedDate = jsonObject.recordedDate;
+    delete jsonObject.recordedDate;
+  }
+
+  //Clinical status is just a simple code (not codableconcept) in STU3
+  if(jsonObject.clinicalStatus) {
+    jsonObject.clinicalStatus = jsonObject.clinicalStatus.coding[0].code;
+  }
+
+  //verification status is just a simple code (not codableconcept) in STU3
+  if(jsonObject.verificationStatus) {
+    jsonObject.verificationStatus = jsonObject.verificationStatus.coding[0].code;
+  }
+  
+  return jsonObject;
+}
+
 function convertEncounterInstance(jsonObject) {
 
   if(jsonObject.basedOn) {
@@ -923,7 +894,7 @@ function convertInterweaveMedicationRequestStructureDefinition(jsonObject) {
    
   // * The following fields are removed and are deprecated in R4
   jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.definition");
-  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
+  //jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
   
    // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {    
@@ -1088,6 +1059,11 @@ function convertInterweaveObservationHeartRateStructureDefinition(jsonObject) {
       objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
       objElement.path = objElement.id;
     };
+
+    // Make class mandatory. (It already is in R4, so not considered a "differential" otherwise!)
+    if(objElement.id == "Observation.basedOn")  {
+      objElement.min = 0;
+    } 
 
   }); //Element
 

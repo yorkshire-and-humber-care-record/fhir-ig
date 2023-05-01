@@ -1,3 +1,6 @@
+Alias: $SCT = http://snomed.info/sct
+Alias: $v3-ObservationInterpretation = http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation
+
 Profile: InterweaveObservationBloodPressure
 Parent: CareConnect-BloodPressure-Observation-1
 Id: Interweave-Observation-BloodPressure
@@ -65,17 +68,11 @@ Description: "Interweave BloodPressure Observation resource profile - DRAFT."
 
 * referenceRange 0..* MS
 
-// * component ^slicing.discriminator.type = #value
-// * component ^slicing.discriminator.path = "code"
-// * component ^slicing.rules = #open
-// //* component ^slicing.ordered = false   // can be omitted, since false is the default
-// * component ^slicing.description = "Slice based on the component.code pattern"
+* component[systolicComponent].code.coding[snomedCT].code = #271649006 (exactly)
+* component[systolicComponent].code.coding[snomedCT].display = "Systolic blood pressure" (exactly)
 
-// //* component 0..2 MS
-// * component contains 
-//         systolic 1..1 MS and
-//         dystolic 1..1 MS
 * component[diastolicComponent].code.coding[snomedCT].code = #271650006 (exactly)
+* component[diastolicComponent].code.coding[snomedCT].display = "Diastolic blood pressure" (exactly)
 
 ///////////////////////////////////////
 // --- Removed fields ---
@@ -83,3 +80,42 @@ Description: "Interweave BloodPressure Observation resource profile - DRAFT."
 
 * issued 0..0
 //* code.coding[loinc] 0..0
+
+// *************************************************************************************************************************
+// EXAMPLES
+// *************************************************************************************************************************
+Instance: InterweaveObservationBloodPressureExample
+InstanceOf: InterweaveObservationBloodPressure
+Description: "Interweave Observation BloodPressure Example"
+//Usage: #example
+
+* insert Ruleset-ExampleMetaForHospital(Observation-BloodPressure)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-BloodPressure-Observation-1"
+
+* insert Ruleset-ExampleLocalId(Observation-BloodPressure, RCB.HRTRate123)
+
+* status = #final
+
+* category = http://hl7.org/fhir/observation-category#vital-signs "Vital Signs"
+
+* code = $SCT#75367002 "Blood pressure"
+
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
+
+* subject = Reference(InterweavePatientExample-MustSupport) 
+* subject.display = "Mr Fred BLOGGS"
+
+* performer = Reference(InterweavePractitionerExample)
+
+* effectiveDateTime = "2022-07-02"
+* bodySite = $SCT#368209003 "Right arm"
+
+// need to check why interpretation does not work!!
+* interpretation = $v3-ObservationInterpretation#L "low"
+
+* component[systolicComponent].valueQuantity = 107 'mm[Hg]' "mmHg"
+* component[systolicComponent].interpretation = $v3-ObservationInterpretation#N "normal"
+* component[diastolicComponent].valueQuantity = 60 'mm[Hg]' "mmHg"
+* component[diastolicComponent].interpretation = $v3-ObservationInterpretation#L "low"
+
+* note.text = "this is comment." //R4 note -> STU3 comment

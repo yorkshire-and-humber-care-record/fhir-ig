@@ -70,3 +70,39 @@ Description: "Interweave RespiratoryRate Observation resource profile - DRAFT."
 
 * issued 0..0
 * component 0..0
+
+// *************************************************************************************************************************
+// EXAMPLES
+// *************************************************************************************************************************
+Instance: InterweaveObservationRespiratoryRateExample
+InstanceOf: InterweaveObservationRespiratoryRate
+Description: "Interweave Observation RespiratoryRate Example"
+//Usage: #example
+
+* insert Ruleset-ExampleMetaForHospital(Observation-RespiratoryRate)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-RespiratoryRate-Observation-1"
+
+* insert Ruleset-ExampleLocalId(Observation-RespiratoryRate, RCB.RRObs123)
+
+* status = #final
+
+* category = http://hl7.org/fhir/observation-category#vital-signs "Vital Signs"
+
+* code = $SCT#86290005 "Respiratory rate"
+
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
+
+* subject = Reference(InterweavePatientExample-MustSupport) 
+* subject.display = "Mr Fred BLOGGS"
+
+* performer = Reference(InterweavePractitionerExample)
+
+* effectiveDateTime = "2022-07-02"
+* bodySite = $SCT#368209003 "Right arm"
+
+* valueQuantity = 26 '/min' "breaths/minute"
+
+// need to check why interpretation does not work!!
+* interpretation = $v3-ObservationInterpretation#L "low"
+
+* note.text = "this is comment." //R4 note -> STU3 comment

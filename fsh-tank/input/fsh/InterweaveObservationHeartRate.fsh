@@ -1,3 +1,7 @@
+Alias: $SCT = http://snomed.info/sct
+Alias: $v3-ObservationInterpretation = http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation
+
+
 Profile: InterweaveObservationHeartRate
 Parent: CareConnect-HeartRate-Observation-1
 Id: Interweave-Observation-HeartRate
@@ -45,6 +49,7 @@ Description: "Interweave HeartRate Observation resource profile - DRAFT."
 
 * interpretation 0..1 MS
 * interpretation from http://hl7.org/fhir/ValueSet/observation-interpretation (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(interpretation)
 
 //comment in STU3
 * note 0..1 MS
@@ -75,3 +80,42 @@ Description: "Interweave HeartRate Observation resource profile - DRAFT."
 
 * issued 0..0
 * component 0..0
+
+
+// *************************************************************************************************************************
+// EXAMPLES
+// *************************************************************************************************************************
+Instance: InterweaveObservationHeartRateExample-Full
+InstanceOf: InterweaveObservationHeartRate
+Description: "Interweave Observation HeartRate Example"
+
+* insert Ruleset-ExampleMetaForHospital(Observation-HeartRate)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-HeartRate-Observation-1"
+* insert Ruleset-ExampleLocalId(Observation-HeartRate, RCB.HRTRate123)
+
+* status = #final
+
+* category = http://hl7.org/fhir/observation-category#vital-signs "Vital Signs"
+
+* code = $SCT#364075005 "Heart rate"
+
+* subject = Reference(InterweavePatientExample-MustSupport) 
+* subject.display = "Mr Fred BLOGGS"
+
+* performer = Reference(InterweavePractitionerExample)
+
+//* interpretation = http://hl7.org/fhir/ValueSet/observation-interpretation#L "low"
+
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
+
+* referenceRange.low = 60 '/min' "beats/minute"
+* referenceRange.high = 100 '/min' "beats/minute"
+
+* bodySite = $SCT#89971009 "Entire right radial artery"
+
+* method = $SCT#37931006 "Auscultation"
+
+* note.text = "this is comment." //R4 note -> STU3 comment
+
+* effectiveDateTime = "1999-07-02"
+* valueQuantity = 44 '/min' "beats/minute"

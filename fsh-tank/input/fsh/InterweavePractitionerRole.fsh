@@ -1,3 +1,5 @@
+Alias: $SCT = http://snomed.info/sct
+
 Profile: InterweavePractitionerRole
 Parent: CareConnect-PractitionerRole-1
 Id: Interweave-PractitionerRole
@@ -61,3 +63,25 @@ Description: "Interweave Practitioner role resource profile - DRAFT."
 * notAvailable 0..0
 * availabilityExceptions 0..0
 * endpoint 0..0
+
+// *************************************************************************************************************************
+// EXAMPLES
+// *************************************************************************************************************************
+Instance: InterweavePractitionerRoleExample
+InstanceOf: InterweavePractitionerRole
+Description: "Interweave PractitionerRole Example"
+
+* insert Ruleset-ExampleMetaForHospital(PractitionerRole)
+
+* insert Ruleset-ExampleLocalId(PractitionerRole, RCB.PRLE-R0050)
+
+* active = true
+* period.start = "2012-01-01"
+* period.end = "2012-03-31"
+* practitioner = Reference(InterweavePractitionerExample) "Dr Jane BLOGGS"
+* organization = Reference(InterweaveOrganizationExample)
+* code = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1#R0050 "Consultant"
+* specialty = https://fhir.yhcr.nhs.uk/CodeSystem/Interweave-UKCorePracticeSettingCode#180 "Emergency Medicine"
+* location = Reference(InterweaveLocationWardExampleAandE) "York Hospital: Accident and Emergency"
+
+* extension[Extension-Interweave-R4ServiceType].valueCodeableConcept = $SCT#409971007 "Emergency medical services"

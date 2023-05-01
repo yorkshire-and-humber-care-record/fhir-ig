@@ -30,7 +30,7 @@ Description: "Interweave Observation resource profile - DRAFT."
 * category.coding contains observationCategory 1..1
 
 * category.coding[observationCategory].system 1..
-* category.coding[observationCategory].system = "http://hl7.org/fhir/ValueSet/observation-category" (exactly)
+* category.coding[observationCategory].system = "http://hl7.org/fhir/observation-category" (exactly)
 * category.coding[observationCategory].version ..0
 * category.coding[observationCategory].code 1..
 * category.coding[observationCategory].display 1..

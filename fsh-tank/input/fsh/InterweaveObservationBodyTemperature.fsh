@@ -80,3 +80,34 @@ Description: "Interweave BodyTemperature Observation resource profile - DRAFT."
 // Cannot constrain cardinality to 0..0, 
 //          as it does not fit within the original 1..1 cardinality.
 //* code.coding[loinc] 0..0
+
+// *************************************************************************************************************************
+// EXAMPLES
+// *************************************************************************************************************************
+Instance: InterweaveObservationBodyTemperatureExample
+InstanceOf: InterweaveObservationBodyTemperature
+Description: "Interweave Observation BodyTemperature Example"
+//Usage: #example
+
+* insert Ruleset-ExampleMetaForHospital(Observation-BodyTemperature)
+* meta.profile[1] = "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-BodyTemperature-Observation-1"
+
+* insert Ruleset-ExampleLocalId(Observation-BodyTemperature, RCB.BodyTemp123)
+
+* status = #final
+
+* category = http://hl7.org/fhir/observation-category#vital-signs "Vital Signs"
+
+* subject = Reference(InterweavePatientExample-MustSupport) 
+* subject.display = "Mr Fred BLOGGS"
+
+* performer = Reference(InterweavePractitionerExample)
+
+//* interpretation = http://hl7.org/fhir/ValueSet/observation-interpretation#L "low"
+
+* encounter = Reference(InterweaveEncounterExample-MaturityLevel1) // R4 encounter -> STU3 context
+
+* note.text = "this is comment." //R4 note -> STU3 comment
+
+* effectiveDateTime = "1999-07-02"
+* valueQuantity = 36.5 'Cel' "C"

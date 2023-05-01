@@ -4,7 +4,8 @@
 # │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 id: fhir.interweave
-canonical: https://fhir.hl7.org.uk/STU3
+canonical: https://fhir.yhcr.nhs.uk
+# canonical: https://fhir.hl7.org.uk/STU3
 name: Interweave-IG
 title: Interweave Implementation Guide
 description: Implementation Guide for Interweave

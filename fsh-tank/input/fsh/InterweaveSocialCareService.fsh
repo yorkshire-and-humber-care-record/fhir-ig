@@ -101,7 +101,7 @@ Description: "Interweave Social Care Service example - Must Support"
 * patient = Reference(InterweavePatientExample-MustSupport) 
 * patient.display = "Mr Fred BLOGGS"
 
-* managingOrganization = Reference(InterweaveSocialCareOrganisationalTeamExampleMS) 
+* managingOrganization = Reference(InterweaveOrganizationalTeamExampleMS) 
 * managingOrganization.display = "The reablement team"
 
 * period.start = "2022-06-09T09:00:00Z" 
@@ -137,7 +137,7 @@ Description: "Interweave Social Care Service example - Full"
 * patient = Reference(InterweavePatientExample-MustSupport) 
 * patient.display = "Mr Fred BLOGGS"
 
-* managingOrganization = Reference(InterweaveSocialCareOrganisationalTeamExampleMS) 
+* managingOrganization = Reference(InterweaveOrganizationalTeamExampleMS) 
 * managingOrganization.display = "The reablement team"
 
 * period.start = "2022-06-09T09:00:00Z" 
