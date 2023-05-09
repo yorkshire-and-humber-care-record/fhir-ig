@@ -14,7 +14,7 @@ Description: "A Vital Signs profile to carry a patient's heart rate or pulse."
 * identifier.system 1..
 * identifier.value 1..
 * identifier.assigner only Reference(CareConnect-Organization-1)
-* basedOn 1..1
+//* basedOn 1..1
 * basedOn only Reference(CareConnect-CarePlan-1 or DeviceRequest or ImmunizationRecommendation or CareConnect-MedicationRequest-1 or NutritionOrder or CareConnect-ReferralRequest-1 or CareConnect-ProcedureRequest-1)
 * status = #final (exactly)
 * status MS

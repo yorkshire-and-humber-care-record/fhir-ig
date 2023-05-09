@@ -164,9 +164,9 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * component[systolicComponent].code.coding[snomedCT].system = "http://snomed.info/sct" (exactly)
 * component[systolicComponent].code.coding[snomedCT].version ..0
 * component[systolicComponent].code.coding[snomedCT].code 1..
-* component[systolicComponent].code.coding[snomedCT].code = #72313002 (exactly)
+//* component[systolicComponent].code.coding[snomedCT].code = #72313002 (exactly)
 * component[systolicComponent].code.coding[snomedCT].display 1..
-* component[systolicComponent].code.coding[snomedCT].display = "Systolic arterial pressure" (exactly)
+//* component[systolicComponent].code.coding[snomedCT].display = "Systolic arterial pressure" (exactly)
 * component[systolicComponent].code.coding[snomedCT].display ^extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable"
 * component[systolicComponent].code.coding[snomedCT].display ^extension.valueBoolean = true
 // * component[systolicComponent].valueQuantity contains valueQuantity 0..1
@@ -212,9 +212,9 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * component[diastolicComponent].code.coding[snomedCT].system = "http://snomed.info/sct" (exactly)
 * component[diastolicComponent].code.coding[snomedCT].version ..0
 * component[diastolicComponent].code.coding[snomedCT].code 1..
-* component[diastolicComponent].code.coding[snomedCT].code = #1091811000000102 (exactly)
+//* component[diastolicComponent].code.coding[snomedCT].code = #1091811000000102 (exactly)
 * component[diastolicComponent].code.coding[snomedCT].display 1..
-* component[diastolicComponent].code.coding[snomedCT].display = "Diastolic arterial pressure" (exactly)
+//* component[diastolicComponent].code.coding[snomedCT].display = "Diastolic arterial pressure" (exactly)
 * component[diastolicComponent].code.coding[snomedCT].display ^extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable"
 * component[diastolicComponent].code.coding[snomedCT].display ^extension.valueBoolean = true
 // * component[diastolicComponent].valueQuantity contains valueQuantity 0..1
