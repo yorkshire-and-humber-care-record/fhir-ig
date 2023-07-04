@@ -28,12 +28,12 @@ Description: "This MedicationRequest Resource represents an order for both suppl
 //* basedOn only Reference(CarePlan or ProcedureRequest or ReferralRequest or CareConnect-MedicationRequest-1)
 
 * groupIdentifier.assigner only Reference(CareConnect-Organization-1)
-//* medicationReference contains medicationReference 1..1
-* medicationReference[medicationReference] only Reference(CareConnect-Medication-1)
-* medicationReference[medicationReference] ^binding.extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName"
-* medicationReference[medicationReference] ^binding.extension.valueString = "MedicationCode"
-* medicationReference[medicationReference] ^binding.strength = #example
-* medicationReference[medicationReference] ^binding.valueSet = "http://hl7.org/fhir/ValueSet/medication-codes"
+// * medicationReference contains medicationReference 1..1
+// * medicationReference[medicationReference] only Reference(CareConnect-Medication-1)
+// * medicationReference[medicationReference] ^binding.extension.url = "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName"
+// * medicationReference[medicationReference] ^binding.extension.valueString = "MedicationCode"
+// * medicationReference[medicationReference] ^binding.strength = #example
+// * medicationReference[medicationReference] ^binding.valueSet = "http://hl7.org/fhir/ValueSet/medication-codes"
 * subject only Reference(Group or CareConnect-Patient-1)
 
 // Renambed to encounter in R4

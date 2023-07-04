@@ -1,4 +1,4 @@
-      Status: Draft - For Review
+      Status: Active: Approved (STU)
 
 
 ## Introduction
@@ -25,13 +25,13 @@ In addition the following fields are "Must Support" - i.e., they must be populat
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
-1. **identifier** - option to provide a business identifier that is for a specific practitioner’s role.
-2. **Telecom** - It can be useful to provide a contact phone number and/or email if at all possible – to enable further enquiries. However, caution is needed, as these contact details may be widely seen throughout the region. Only work details suitable for receiving external enquires should be included. Specifically, home phone numbers should not be shared.
-3. **Location** – Option to provide the locations at which the practitioner provides care.
+ - **identifier** - option to provide a business identifier that is for a specific practitioner’s role.
+ - **Telecom** - It can be useful to provide a contact phone number and/or email if at all possible – to enable further enquiries. However, caution is needed, as these contact details may be widely seen throughout the region. Only work details suitable for receiving external enquires should be included. Specifically, home phone numbers should not be shared.
+ - **Location** – Option to provide the locations at which the practitioner provides care.
 
 ### **Discouraged or Removed fields**
-1. **healthCareService** - Removed. The information held in the serviceType extension is adequate to represent the services at a high level, and therefore this reference field is removed to avoid any confusion with the serviceType field.
-2. **endpoint** - Removed. Technical endpoints are captured elsewhere (i.e. via the Participant Registry)
+ - **healthCareService** - Removed. The information held in the serviceType extension is adequate to represent the services at a high level, and therefore this reference field is removed to avoid any confusion with the serviceType field.
+ - **endpoint** - Removed. Technical endpoints are captured elsewhere (i.e. via the Participant Registry)
 
 The following fields have also been removed as they are more relevant to a scheduling system rather than a shared care record:
  -	availableTime 

@@ -177,6 +177,8 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
    These provide valuable information which is important to populate. However it is expected that only **one** of the three will be populated, as relevant for the type of encounter
 
+   - **Emergency Care Discharge Destination** - This extension has been added to record the discharge destination of patients which have attended ED. (based on SNOMED refset 999003011000000105: Emergency care discharge destination simple reference set)
+
 10. **Hospitalization**: To provide details of admission and discharge. As described above then, depending on circumstances, it might be actually populated fully, partially, or not at all. See below for further details of the fields contained 
 
 11. **Status History** - this is seen as important - to understand the timeline of the Encounter.  
@@ -195,14 +197,10 @@ Other fields are optional and may be populated if known - on the understanding t
  - **Encounter Transport** - may be useful if relevant and known (however noting that it no longer exists in UK Core)
 
 
-
 ### **Discouraged or Removed fields**
  - **Class History** - as described in the introduction, a change of care setting would constitute a new Encounter. Therefore by definition an Encounter will only ever have a single Class.
   - **Account** - for billing purposes, not relevant.   
   - **Service Provider** - duplicates information already available in the provenance tags
-
-
-
 
 
 ### **Hospitalization Structure**

@@ -3,21 +3,22 @@ Alias: $v3-ObservationInterpretation = http://terminology.hl7.org/CodeSystem/v3-
 
 
 Profile: InterweaveObservationHeartRate
-Parent: CareConnect-HeartRate-Observation-1
+Parent: CareConnect-Observation-1
 Id: Interweave-Observation-HeartRate
 Description: "Interweave HeartRate Observation resource profile - DRAFT."
 * ^status = #draft
 
 * insert Ruleset-InterweaveBaseFields
 
-* extension contains Extension-CareConnect-ReasonCondition-1 named reason 0..*
-* extension[Extension-CareConnect-ReasonCondition-1] ^short = "Reason resource added/performed/given."
+//* extension contains Extension-CareConnect-ReasonCondition-1 named reason 0..*
+//* extension[Extension-CareConnect-ReasonCondition-1] ^short = "Reason resource added/performed/given."
 
 * identifier 0..* MS
 
 * basedOn ^short = "DISCOURAGED -  This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
 
 * status 1..1 MS
+* status ^short = "Fixed value of ‘final’."
 
 * category 1..1 MS
 
@@ -37,7 +38,7 @@ Description: "Interweave HeartRate Observation resource profile - DRAFT."
 
 * performer 0..* MS
 * performer only Reference(CareConnect-Practitioner-1)
-* insert Ruleset-ReferenceWithReferenceOnly(performer)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(performer)
 * performer ^short = "Who is responsible for the observation."
 
 * value[x] only Quantity
@@ -46,6 +47,7 @@ Description: "Interweave HeartRate Observation resource profile - DRAFT."
 
 * dataAbsentReason 0..1 MS
 * dataAbsentReason from http://hl7.org/fhir/ValueSet/observation-valueabsentreason (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(dataAbsentReason)
 
 * interpretation 0..1 MS
 * interpretation from http://hl7.org/fhir/ValueSet/observation-interpretation (required)
@@ -103,6 +105,7 @@ Description: "Interweave Observation HeartRate Example"
 * subject.display = "Mr Fred BLOGGS"
 
 * performer = Reference(InterweavePractitionerExample)
+* performer.display = "Dr Jane BLOGGS"
 
 //* interpretation = http://hl7.org/fhir/ValueSet/observation-interpretation#L "low"
 

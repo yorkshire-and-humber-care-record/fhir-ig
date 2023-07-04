@@ -27,7 +27,7 @@ Description: "Interweave Vital Signs Observation resource profile - DRAFT."
 
 * performer 0..* MS
 * performer only Reference(CareConnect-Practitioner-1)
-* insert Ruleset-ReferenceWithReferenceOnly(performer)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(performer)
 * performer ^short = "Who is responsible for the observation."
 
 * value[x] only Quantity
@@ -36,9 +36,11 @@ Description: "Interweave Vital Signs Observation resource profile - DRAFT."
 
 * dataAbsentReason 0..1 MS
 * dataAbsentReason from http://hl7.org/fhir/ValueSet/observation-valueabsentreason (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(dataAbsentReason)
 
 * interpretation 0..1 MS
 * interpretation from http://hl7.org/fhir/ValueSet/observation-interpretation (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(interpretation)
 
 //comment in STU3
 * note 0..1 MS

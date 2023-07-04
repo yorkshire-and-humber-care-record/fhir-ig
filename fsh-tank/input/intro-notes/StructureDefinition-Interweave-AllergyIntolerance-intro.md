@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave allergy intolerance resource. We use the [CareConnect-AllergyIntolerance-1](https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-AllergyIntolerance-1) structure definition as a base to this profile.
@@ -16,7 +16,7 @@ The following mandatory fields are defined:
 
 5. **code** – What is the allergy or intolerance. We stipulate a preferred binding to the SNOMED concepts below, with the understanding that local code sets are widely in use and mapping from these to SNOMED maybe troublesome. However, every effort should be made to map to SNOMED, and where it is deemed unachievable, you will need to contact interweave to gain explicit permission to use your own local code set: 
 
-    - Include codes from SNOMED_CT where constraint Equal (<<105590001 |Substance OR <<373873005 |Pharmaceutical / biologic product| OR <<716186003 |No known allergy| OR 196461000000101 |Transfer-degraded drug allergy| OR 196471000000108 |Transfer-degraded non-drug allergy)
+    - Include codes from SNOMED_CT where constraint Equal (<<105590001 (Substance) OR <<373873005 (Pharmaceutical / biologic product) OR <<716186003 (No known allergy) OR 196461000000101 (Transfer-degraded drug allergy) OR 196471000000108 (Transfer-degraded non-drug allergy))
 
 
 
@@ -47,18 +47,18 @@ In addition the following fields are "Must Support" – ie they must be populate
 ### **Optional fields**
 Other fields are optional and may be populated if known – on the understanding that not all data consumers will necessarily make use of them. Points of note include:
 
- – **identifier** – Usually a Local Id that is provided which can be quoted if manually getting in touch to find out more information. In most Interweave profiles this is a must support field, however, it is more likely that a patient identifier(NHS number) would be quoted when wanting to find out more about a persons allergies, and therefore this is marked as optional.
+ - **identifier** – Usually a Local Id that is provided which can be quoted if manually getting in touch to find out more information. In most Interweave profiles this is a must support field, however, it is more likely that a patient identifier(NHS number) would be quoted when wanting to find out more about a persons allergies, and therefore this is marked as optional.
 
- – **encounter** – This is an extension introduced by care connect to pre-adopt the new ‘encounter’ field which is present in R4. It can be used to provide a link to the encounter where the allergy or intolerance was asserted.
+ - **encounter** – This is an extension introduced by care connect to pre-adopt the new ‘encounter’ field which is present in R4. It can be used to provide a link to the encounter where the allergy or intolerance was asserted.
 
- – **allergyEnd** – Option to provide the date and reason that the allergy is not longer valid.
+ - **allergyEnd** – Option to provide the date and reason that the allergy is not longer valid.
    
- – **evidence** – Option to provide a reference to a diagnostic report which confirms the presence of an allergy or an intolerance.
+ - **evidence** – Option to provide a reference to a diagnostic report which confirms the presence of an allergy or an intolerance.
 
- – **recorder**: Option to provide the practitioner or patient who recorded the adverse reaction.
+ - **recorder**: Option to provide the practitioner or patient who recorded the adverse reaction.
 
- – **note** – Additional information about the allergy/intolerance, which is not captured elsewhere, can be entered within the notes section. For example, this could be information about how to care for an individual after exposure to a reactive substance. Care must be taken when populating this field, and only information which is deemed suitable for use within the shared care record should be populated here.
+ - **note** – Additional information about the allergy/intolerance, which is not captured elsewhere, can be entered within the notes section. For example, this could be information about how to care for an individual after exposure to a reactive substance. Care must be taken when populating this field, and only information which is deemed suitable for use within the shared care record should be populated here.
 
 ### **Discouraged or Removed fields**
 
- – **last Occurrence** – This field has been discouraged. It is used to record the date/time of the last known occurrence of a reaction. However, it is deemed that this could be misleading unless records are routinely checked and kept up to date.
+ - **last Occurrence** – This field has been discouraged. It is used to record the date/time of the last known occurrence of a reaction. However, it is deemed that this could be misleading unless records are routinely checked and kept up to date.

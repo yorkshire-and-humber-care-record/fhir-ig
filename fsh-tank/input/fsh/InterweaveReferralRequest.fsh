@@ -15,11 +15,18 @@
 Profile: InterweaveReferralRequest
 Parent: CareConnect-ReferralRequest-1
 Id: Interweave-ReferralRequest
-Description: "Interweave Referral Request resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Referral Request resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
+* extension[Extension-CareConnect-ReferralRequestMethod-1] MS
+* extension[Extension-CareConnect-SourceOfReferral-1] MS
+//* extension[Extension-CareConnect-SourceOfReferral-1].valueCodeableConcept from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SourceOfReferral-1 (preferred)
+* extension[Extension-Interweave-R4LocationReference]
+
+
+* identifier MS
 
 * status 1..1 MS
 
@@ -27,6 +34,9 @@ Description: "Interweave Referral Request resource profile - DRAFT."
 
 * intent 1..1 MS
 * intent = #order (exactly)
+
+// * specialty 0..1
+// * specialty from Interweave-UKCorePracticeSettingCode (preferred)
 
 // * type 1..1 MS
 // * type from http://hl7.org/fhir/ValueSet/referral-type (preferred)
@@ -43,19 +53,25 @@ Description: "Interweave Referral Request resource profile - DRAFT."
 
 //   Replace the FHIR valueset with the list of clinical specialty of the clinician or provider - 
 //   which appears to be more complete and relevant to the UK, and which offers better coverage of Social Care.
-//* specialty from Interweave-UKCorePracticeSettingCode (preferred)
-//* insert Ruleset-CodingWithSystemCodeDisplay(specialty)
+// * specialty from Interweave-UKCorePracticeSettingCode (preferred)
+// * insert Ruleset-CodingWithSystemCodeDisplay(specialty)
 
 * supportingInfo 0..*
 * supportingInfo only Reference(Questionnaire)
 
 //context in STU3
+* encounter MS
 * encounter only Reference(CareConnect-Encounter-1)
 * encounter ^short = "Optional link to an encounter resource. e.g. contact for hospital discharge assessments linked back to a hospital encounter."
 
 * authoredOn 1..1 MS
 
+* reasonCode MS
+* reasonCode from Interweave-R4EncounterReason (preferred)
+* insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
+* requester 0..1 MS
+//* requester only reference(CareConnect-Practitioner-1 or CareConnect-Organization-1 or CareConnect-Patient-1)
 
 ///////////////////////////////////////
 // --- Removed fields ---
@@ -65,3 +81,4 @@ Description: "Interweave Referral Request resource profile - DRAFT."
 * replaces 0..0
 //* groupIdentifier 0..0
 * occurrence[x] 0..0
+* relevantHistory 0..0

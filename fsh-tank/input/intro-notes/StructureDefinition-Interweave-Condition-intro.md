@@ -30,7 +30,23 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
    *Note: Do not link to an Episode of Care, as this is deprecated in FHIR R4*
 
-4. **Onset and Abatement** - these are important to provide if at all possible. 
+4. **Category** - There are a few codes here to classify a Condition eg “Encounter Diagnosis” or “Problem List Item”. (The original FHIR spec only has these two, but Care Connect adds a few more which perhaps makes it a bit more useful).
+
+
+### **Optional fields**
+Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
+
+ - **Stage** - Additional information that may be useful for relevant conditions eg cancer
+
+- **Evidence** - To some extent duplicates the “code”, but may optionally provide further information about what led to this code being assigned
+
+ - **Note** - Only to be used with caution. Any notes may be shared widely across the region, including being viewed by the patient themselves
+
+-  **Asserter** - Required to populate if known. The main purpose would be to provide details of a Practitioner who can give more information about the condition. Therefore it should not be populated with details of purely admin staff who may have keyed in the data. If the asserter is not populated then an unknown Practitioner should be assumed.
+
+   *A further consideration is the possibility of a Condition being asserted by a non-care-professional, for example the Patient themselves or a relative. FHIR caters for this possibiity by allowing the asserter to be a Patient or RelatedPerson, and this option is left open here.*
+
+- **Onset and Abatement** - these are important to provide if at all possible. 
     - Onset might be omitted if genuinely not known (eg a long-standing historical condition), but should normally be populated
    - Abatement is obviously only relevant if the condition has actually abated – in which case useful and important to populate
    - Note that in both cases there are a variety of options for how to express this (eg datetime, age, period, etc). These do seem relevant for accurately conveying what is known - with the implication that Data Consumers will need corresponding flexibility in displaying this information.
@@ -38,28 +54,9 @@ In addition the following fields are "Must Support" - ie they must be populated 
    *Note: Do not use abatementBoolean, as this is deprecated in FHIR R4*
 
 
-5. **Asserter** - Required to populate if known. The main purpose would be to provide details of a Practitioner who can give more information about the condition. Therefore it should not be populated with details of purely admin staff who may have keyed in the data. If the asserter is not populated then an unknown Practitioner should be assumed.
-
-   *A further consideration is the possibility of a Condition being asserted by a non-care-professional, for example the Patient themselves or a relative. FHIR caters for this possibiity by allowing the asserter to be a Patient or RelatedPerson, and this option is left open here. However if you have a use-case of this type then please get in touch so that the implications can be more fully considered.*
-
-
-
-### **Optional fields**
-Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Points of note include:
-
- - **Episodicity (Care Connect Extension)** - Optional additional information if available
-
- - **Stage** - Additional information that may be useful for relevant conditions eg cancer
-
-  - **Evidence** - To some extent duplicates the “code”, but may optionally provide further information about what led to this code being assigned
-
-    *NB: The option to provide a “detail” link to any other resource must NOT be used – as it is difficult for a Data Consumer to interpret and display*
-
- - **Note** - Only to be used with caution. Any notes may be shared widely across the region, including being viewed by the patient themselves
-
-- **Category** - There are a few codes here to classify a Condition eg “Encounter Diagnosis” or “Problem List Item”. (The original FHIR spec only has these two, but Care Connect adds a few more which perhaps makes it a bit more useful)
-
-
 
 ### **Discouraged or Removed fields**
+
+ - **Episodicity (Care Connect Extension)** - Discouraged.
+
  - **Verification Status** - This appears to be a significant modifier of the Condition, however it has been removed by Care Connect. Note that an implication of this decision by Care Connect is that this becomes a set of Conditions which DO apply to the subject. Ie there is no mechanism to capture a "refuted" Condition.

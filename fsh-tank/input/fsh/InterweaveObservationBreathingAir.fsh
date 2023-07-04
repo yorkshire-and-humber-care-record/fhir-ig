@@ -11,6 +11,7 @@ Description: "Interweave BreathingAir Observation resource profile - DRAFT."
 * category.coding.system = "http://hl7.org/fhir/observation-category" (exactly)
 * category.coding.code = #vital-signs (exactly)
 * category.coding.display = "Vital Signs" (exactly)
+* category.coding.display 1..1
 
 * code 1..1 MS
 * code.coding[snomedCT].code = #722742002 (exactly)
@@ -19,6 +20,8 @@ Description: "Interweave BreathingAir Observation resource profile - DRAFT."
 * value[x] only boolean
 * value[x] 0..1 MS
 * value[x] ^short = "Actual result."
+
+* insert Ruleset-CodingWithSystemCodeDisplay(interpretation)
 
 ///////////////////////////////////////
 // --- Removed fields ---

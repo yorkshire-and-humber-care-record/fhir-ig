@@ -14,10 +14,10 @@ Description: "Interweave Observation resource profile - DRAFT."
 * identifier 0..* MS
 
 * code 1..1 MS
-* code from CareConnect-ObservationType-1 (preferred)
+* code from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ObservationType-1 (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
 * code.coding[snomedCT] 0..1 MS
-* code.coding[snomedCT] from CareConnect-ObservationType-1 (preferred)
+* code.coding[snomedCT] from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ObservationType-1 (preferred)
 
 * basedOn ^short = "DISCOURAGED - This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
 
@@ -54,7 +54,7 @@ Description: "Interweave Observation resource profile - DRAFT."
 
 * performer 0..* MS
 * performer only Reference(CareConnect-Practitioner-1)
-* insert Ruleset-ReferenceWithReferenceOnly(performer)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(performer)
 * performer ^short = "Who is responsible for the observation."
 
 * specimen 0..1
@@ -71,6 +71,7 @@ Description: "Interweave Observation resource profile - DRAFT."
 
 * dataAbsentReason 0..1 MS
 * dataAbsentReason from http://hl7.org/fhir/ValueSet/observation-valueabsentreason (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(dataAbsentReason)
 
 * interpretation 0..1 MS
 * interpretation from http://hl7.org/fhir/ValueSet/observation-interpretation (required)
@@ -91,15 +92,17 @@ Description: "Interweave Observation resource profile - DRAFT."
 * note ^short = "Comments about the result"
 
 * component 0..* MS
-* component.code MS
-* component.code from CareConnect-ObservationType-1 (preferred)
-* insert Ruleset-CodingWithSystemCodeDisplay(component.code)
-* component.code.coding[snomedCT] 0..1 MS
-* component.code.coding[snomedCT] from CareConnect-ObservationType-1 (preferred)
+* component.extension contains Extension-Interweave-ValuePrecision named valuePrecision 0..1
 * component.value[x] only Quantity or CodeableConcept or string or Range or Ratio or SampledData or time or dateTime or Period
 * component.value[x].extension contains Extension-Interweave-R4ValueInteger named valueInteger 0..1
 * component.value[x] 0..1 MS
-* component.extension contains Extension-Interweave-ValuePrecision named valuePrecision 0..1
+* component.code MS
+* component.code from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ObservationType-1 (preferred)
+* insert Ruleset-CodingWithSystemCodeDisplay(component.code)
+* component.code.coding[snomedCT] 0..1 MS
+* component.code.coding[snomedCT] from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ObservationType-1 (preferred)
+
+
 
 * issued 0..0
 * category.coding[snomedCT] 0..0

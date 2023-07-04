@@ -43,10 +43,12 @@ Description: "Interweave Procedure resource profile - DRAFT"
 // Status: Already mandatory in FHIR
 * status MS
 
-// Category: Mandatory
+* statusReason 0..1 MS
+* statusReason from http://hl7.org/fhir/ValueSet/procedure-not-performed-reason (preferred)
+// Category: Must Support
 //   A simple and short list of SNOMED codes to describe the overall category of procedure eg “Surgical Procedure”, “Diagnostic Procedure”
 //   We pre-adopt the R4 list which adds one extra code for "Social Service Procedure"
-* category 1..1 MS
+* category 0..1 MS
 * category from Interweave-R4ProcedureCategory (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(category)
 	
@@ -78,14 +80,16 @@ Description: "Interweave Procedure resource profile - DRAFT"
 // Performed: (Mandatory) (But difficult to specify this for a choice!)
 //  performedDateTime is easier to deal with, and would be simpler to exclude performedPeriod, but perhaps over-simplistic.
 //  However implication is that consumers must be able to deal with both - eg on a timeline
+* performed[x] only Period
 * performed[x] 1..1 MS
+* performedPeriod.start 1..1 MS
 
 
 // Performer: (leave optional)
 //  Useful to provide if known, although it may be more relevant in some scenarios than others. 
 //  For example some procedures are quite transactional and the person in overall charge of the care may be more useful as a contact.
-
-// Location: (leave optional)
+* performer.function from http://hl7.org/fhir/ValueSet/performer-role (preferred)
+// Location (optional)
 //  Generally speaking the exact location where the procedure was performed is unlikely to be vital for a regional care record. 
 //  The organisation involved (from the source tags) is often likely to be sufficient, 
 //  and further details can also be provided by the Context linking to an Encounter.
@@ -93,9 +97,11 @@ Description: "Interweave Procedure resource profile - DRAFT"
 // Reason Code and Reason Reference (leave optional)
 //  Could be useful to provide more detail, or Could be useful to link to a Condition or Observation. 
 //  But unlikely to be available in early implementations? Return to in future when and if being offered
+* reasonCode from http://hl7.org/fhir/ValueSet/procedure-reason (preferred)
 
-// Body Site: (leave Optional)
 //  Useful to populate if known, and if not already obvious from the definition of the procedure
+* bodySite 0..1 MS
+* bodySite from http://hl7.org/fhir/ValueSet/body-site (required)
 
 // Outcome (MS)
 //   A short and simple list of “successful”, “unsuccessful”, “partially successful”. Must be populated when relevant and known.
@@ -109,12 +115,14 @@ Description: "Interweave Procedure resource profile - DRAFT"
 
 // Complication and Complication Detail (leave optional)
 //  Optional, to populate with any complication codes / Conditions if relevant and known
-
+* complication 
+* complication from http://hl7.org/fhir/ValueSet/condition-code (preferred)
+* insert Ruleset-CodingWithSystemCodeDisplay(complication)
 // Follow Up (MS)
 //  This is very useful to populate in a regional care record as, 
 //  for example, it allows community teams to see that follow up care is needed
 //  FHIR does not provide a great list, and there seems to be no well-accepted alternative. So mark as only "preferred" for now
-* followUp MS
+* followUp 0..*
 * followUp from http://hl7.org/fhir/ValueSet/procedure-followup (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(followUp)
 
@@ -125,18 +133,28 @@ Description: "Interweave Procedure resource profile - DRAFT"
 // Focal Device (MS)
 //  This is useful to provide if relevant (ie if a device has been fitted or changed).
 //  May inform community teams with follow up care.
-* focalDevice MS
-* focalDevice.action MS
-* focalDevice.action from http://hl7.org/fhir/ValueSet/device-action (required)
+* focalDevice 0..* MS
+* focalDevice.action 0..1
+* focalDevice.action from http://hl7.org/fhir/ValueSet/device-action (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(focalDevice.action)
 * focalDevice.manipulated MS
 * insert Ruleset-ReferenceWithReferenceOnly(focalDevice.manipulated)
 
-// Used Code and Used Reference (discouraged)
-* usedCode ^short = "DISCOURAGED: relevant to stock control within an organisation, but less so for a regional record"
-* usedReference ^short = "DISCOURAGED: relevant to stock control within an organisation, but less so for a regional record"
+// Used Code and Used Reference
+* usedCode 0..*
+* usedCode from http://hl7.org/fhir/ValueSet/device-kind (preferred)
+//* usedCode ^short = "DISCOURAGED: relevant to stock control within an organisation, but less so for a regional record"
+//* usedReference ^short = "DISCOURAGED: relevant to stock control within an organisation, but less so for a regional record"
 
+///////////////////////////////////////
+// --- Removed fields ---
+///////////////////////////////////////
 
+//* definition 0..0
+* basedOn 0..0
+* partOf 0..0
+// * notDone 0..0
+// * notDoneReason 0..0
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Examples

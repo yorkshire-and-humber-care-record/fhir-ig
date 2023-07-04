@@ -3,8 +3,8 @@ Alias: $SCT = http://snomed.info/sct
 Profile: InterweaveAllergyIntolerance
 Parent: CareConnect-AllergyIntolerance-1
 Id: Interweave-AllergyIntolerance
-Description: "Interweave AllergyIntolerance resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave AllergyIntolerance resource profile"
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -32,7 +32,7 @@ Description: "Interweave AllergyIntolerance resource profile - DRAFT."
 * lastOccurrence ^short = "DISCOURAGED – maybe misleading unless information is kept acutely up to date."
 
 * reaction 0..* MS
-* reaction.substance from CareConnect-AllergyCode-1 (preferred)
+* reaction.substance from http://hl7.org/fhir/ValueSet/substance-code (preferred)
 * reaction.manifestation 1..* MS
 * reaction.manifestation from CareConnect-AllergyManifestation-1 (required)
 * reaction.onset 0..1 MS

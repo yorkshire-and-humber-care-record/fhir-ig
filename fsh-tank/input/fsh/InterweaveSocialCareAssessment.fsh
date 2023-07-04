@@ -47,8 +47,8 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 * lastModified ^short = "The date that the assessment was last updated."
 
 * owner 1..1 MS
-* owner only Reference(CareConnect-Organization-1)
-* owner ^short = "A reference to the Organizational team which is performing the assessment"
+* owner only Reference(Interweave-OrganizationalTeam)
+* owner ^short = "A reference to the Organizational team which is performing the assessment."
 
 
 ///////////////////////////////////////

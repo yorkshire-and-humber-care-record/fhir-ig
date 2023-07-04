@@ -6,7 +6,6 @@ Description: "An extension to add UK Core Service Type to the resource. This is 
 //* ^context[+].type = #element   // R3 is contextType = resource
 //* ^context[=].expression = "Encounter" //R3 is just context
 
-* . ..1
 * . ^short = "Specific type of service (pre-adopted from R4)"
 * . ^definition = "Broad categorization of the service that is to be provided (e.g. cardiology). This is missing in STU3, but added in R4."
 

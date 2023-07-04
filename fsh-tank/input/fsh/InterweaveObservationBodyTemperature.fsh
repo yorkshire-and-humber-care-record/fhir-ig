@@ -14,8 +14,10 @@ Description: "Interweave BodyTemperature Observation resource profile - DRAFT."
 * basedOn ^short = "DISCOURAGED -  This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
 
 * status 1..1 MS
+* status ^short = "Fixed value of ‘final’."
 
 * category 1..1 MS
+* category.coding.display 1..1
 
 * code 1..1 MS
 
@@ -33,7 +35,7 @@ Description: "Interweave BodyTemperature Observation resource profile - DRAFT."
 
 * performer 0..* MS
 * performer only Reference(CareConnect-Practitioner-1)
-* insert Ruleset-ReferenceWithReferenceOnly(performer)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(performer)
 * performer ^short = "Who is responsible for the observation."
 
 * value[x] only Quantity
@@ -42,6 +44,7 @@ Description: "Interweave BodyTemperature Observation resource profile - DRAFT."
 
 * dataAbsentReason 0..1 MS
 * dataAbsentReason from http://hl7.org/fhir/ValueSet/observation-valueabsentreason (required)
+* insert Ruleset-CodingWithSystemCodeDisplay(dataAbsentReason)
 
 * interpretation 0..1 MS
 * interpretation from http://hl7.org/fhir/ValueSet/observation-interpretation (required)
@@ -102,6 +105,7 @@ Description: "Interweave Observation BodyTemperature Example"
 * subject.display = "Mr Fred BLOGGS"
 
 * performer = Reference(InterweavePractitionerExample)
+* performer.display = "Dr Jane BLOGGS"
 
 //* interpretation = http://hl7.org/fhir/ValueSet/observation-interpretation#L "low"
 

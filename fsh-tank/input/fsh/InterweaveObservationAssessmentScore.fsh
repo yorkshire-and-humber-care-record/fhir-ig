@@ -12,6 +12,8 @@ Description: "Interweave AssessmentScore Observation resource profile - DRAFT."
 * category.coding.code = #survey (exactly)
 * category.coding.display = "Survey" (exactly)
 
+* insert Ruleset-CodingWithSystemCodeDisplay(interpretation)
+
 ///////////////////////////////////////
 // --- Removed fields ---
 ///////////////////////////////////////

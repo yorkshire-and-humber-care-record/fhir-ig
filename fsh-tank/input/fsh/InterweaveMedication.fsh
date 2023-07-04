@@ -3,21 +3,20 @@ Alias: $SCT = http://snomed.info/sct
 Profile: InterweaveMedication
 Parent: CareConnect-Medication-1
 Id: Interweave-Medication
-Description: "Interweave Medication resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Medication resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
-* extension contains Extension-Interweave-R4Identifier named R4Identifier 0..* MS
-//* extension[Extension-Interweave-R4Identifier] ^short = "The coded reason for the appointment being cancelled (pre-adopted from R4)"
-//* extension[Extension-Interweave-R4Identifier] MS
+* extension contains Extension-Interweave-R4Identifier named R4Identifier 0..*
 
 * code 1..1 MS
+* insert Ruleset-CodingWithSystemCodeDisplay(code)
 
 * form 0..1 MS
 
 * ingredient.item[x] 1..1 MS
-* ingredient.extension contains Extension-Interweave-R4IngredientStrength named strengthR4 1..1 MS
+* ingredient.extension contains Extension-Interweave-R4IngredientStrength named strengthR4 0..1
 
 ///////////////////////////////////////
 // --- Removed fields ---

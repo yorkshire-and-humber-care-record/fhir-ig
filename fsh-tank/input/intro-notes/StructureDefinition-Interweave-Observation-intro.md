@@ -9,12 +9,11 @@ This profile can be used to represent observations which are perhaps less common
 ### **Mandatory fields**
 The following mandatory fields are defined:
 
-1. **status** –  As stated in the introduction, only finalised observations should be shared. We do also allow for amendments and corrections to the final observation to take place. We therefore limit the list of statuses which can be used to the following - final; amended; corrected
-2. **category** – The classification of the type of observation e.g. exam, survey, vital-signs etc. Unlike care connect, we restrict this field so that only one category can be specified per observation. 
+1. **status** –  We use the required binding supplied by care connect for the observation status. As stated in the introduction, only finalised observations should be shared. We do also allow for amendments and corrections to the final observation to take place. We therefore limit the list of statuses which can be used to the following - final; amended; corrected
+2. **category** – The classification of the type of observation e.g. exam, survey, vital-signs etc. We require that the FHIR Observation category is always populated. There is also an option to provide additional local categories to enable FHIR searching on local categories. 
 3. **code** – This is the type of observation. We state a preferred binding on this field of the SNOMED concept: 363788007 (observable entity). This is in recognition of the large amount of local code sets which are currently in use and the difficulties which data providers may have mapping their local codes to SNOMED. Should you wish to use a local code set to populate this field, as detailed in the conformance section of this implementation guide, you must contact us for explicit approval to do so.
 4. **subject** – Every observation must be linked to a patient.
 5. **effective** – An important field to provide details of the time/time period during which the observation was taken.
-
 
 
 ### **Must Support fields**

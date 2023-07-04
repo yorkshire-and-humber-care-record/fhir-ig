@@ -3,3 +3,10 @@
 # Add warning and/or information messages here after you've confirmed that they aren't really a problem
 # (And include comments like this justifying why)
 # See https://github.com/FHIR/sample-ig/blob/master/input/ignoreWarnings.txt for examples
+
+# These examples are custom code systems used in Meta fields - they're not expected to be checked
+Code System URI 'https://yhcr.nhs.uk/Source' is unknown so the code cannot be validated
+Code System URI 'https://yhcr.nhs.uk/Provenance' is unknown so the code cannot be validated
+The Implementation Guide contains no examples for this extension
+The Implementation Guide contains no examples for this profile
+The markdown contains content that appears to be an embedded HTML tag starting at 'No'. This will (or SHOULD) be escaped by the presentation layer. The content should be checked to confirm that this is the desired behaviour

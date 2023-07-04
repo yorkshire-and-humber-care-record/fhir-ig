@@ -1,4 +1,4 @@
-     Status: DRAFT: For Review.
+     Status: Active: Approved (STU)
 
 
 ## **Introduction**
@@ -8,7 +8,7 @@ This profile sets out the expectations for the interweave medication request res
 ### **Mandatory fields**
 The following fields are mandatory:
 
-- **prescriptionType** – This field records the type of prescription rather than having to derive this information from other fields.   We use the required binding supplied by care connect, further details on how the codes should be used are outlined in the table below:
+- **prescriptionType** – This field records the type of prescription rather than having to derive this information from other fields. We use the required binding supplied by care connect, further details on how the codes should be used are outlined in the table below:
 
 <table class="grid">
      <tr>

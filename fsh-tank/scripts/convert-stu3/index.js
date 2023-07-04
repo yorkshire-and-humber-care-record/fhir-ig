@@ -81,9 +81,17 @@ fileArrayR4.forEach(function(filePathR4) {
               if(jsonObject.id == "Interweave-MedicationRequest") {
                 jsonObject = convertInterweaveMedicationRequestStructureDefinition(jsonObject);
               }
+
+              if(jsonObject.id == "Interweave-MedicationAdministration") {
+                jsonObject = convertInterweaveMedicationAdministrationStructureDefinition(jsonObject);
+              }
               // TODO: Refactor Obs functions 
               if(jsonObject.id == "Interweave-Observation") {
                 jsonObject = convertInterweaveObservationStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-AssessmentScore") {
+                jsonObject = convertInterweaveObservationAssessmentScoreStructureDefinition(jsonObject);
               }
 
               if(jsonObject.id == "Interweave-Observation-HeartRate") {
@@ -167,6 +175,7 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "Procedure") {
               jsonObject = convertProcedureInstance(jsonObject);
             }
+
             if (jsonObject.resourceType == "DiagnosticReport") {
               jsonObject = convertDiagnosticReportInstance(jsonObject);
             }
@@ -424,6 +433,23 @@ function convertInterweaveConditionStructureDefinition(jsonObject) {
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
 
+    var stageAssessmentReference1 = {
+      "code": "Reference",
+      "targetProfile": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport"
+    }
+  
+    var stageAssessmentReference2 = {
+      "code": "Reference",
+      "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
+    }
+  
+    
+    if(objElement.id.includes("Condition.stage.assessment"))  {
+      objElement.type = [];    
+      objElement.type.push(stageAssessmentReference1);
+      objElement.type.push(stageAssessmentReference2);       
+    };
+
     // Convert "encounter" to "context"
     if(objElement.id.includes("Condition.encounter"))  {
       objElement.id = objElement.id.replace("Condition.encounter", "Condition.context");
@@ -446,7 +472,9 @@ function convertInterweaveConditionStructureDefinition(jsonObject) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function convertInterweaveProcedureStructureDefinition(jsonObject) {
- 
+  jsonObject = insertDeprectatedR4Field(jsonObject, "Procedure.definition");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "Procedure.notDone");
+  
   // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {
 
@@ -455,7 +483,19 @@ function convertInterweaveProcedureStructureDefinition(jsonObject) {
     if(objElement.id.includes("Procedure.encounter"))  {
       objElement.id = objElement.id.replace("Procedure.encounter", "Procedure.context");
       objElement.path = objElement.id;
-    };     
+    };
+
+    // Convert "function" to "role"
+    if(objElement.id.includes("Procedure.performer.function"))  {
+      objElement.id = objElement.id.replace("Procedure.performer.function", "Procedure.performer.role");
+      objElement.path = objElement.id;
+    };
+
+    // Convert "statusReason" to "notDoneReason"
+    if(objElement.id.includes("Procedure.statusReason"))  {
+      objElement.id = objElement.id.replace("Procedure.statusReason", "Procedure.notDoneReason");
+      objElement.path = objElement.id;
+    };
     
 
   }); //Element
@@ -894,19 +934,24 @@ function convertInterweaveMedicationRequestStructureDefinition(jsonObject) {
    
   // * The following fields are removed and are deprecated in R4
   jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.definition");
-  //jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
   
    // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {    
     // Convert "encounter" to "context"
     if(objElement.id.includes("MedicationRequest.encounter"))  {      
       objElement.id = objElement.id.replace("MedicationRequest.encounter", "MedicationRequest.context");
-      objElement.path = objElement.id;      
+      objElement.path = objElement.id;
+      objElement.mustSupport = true;      
     };
 
     if(objElement.id.includes("MedicationRequest.requester"))  {      
       objElement.id = objElement.id.replace("MedicationRequest.requester", "MedicationRequest.requester.agent");
       objElement.path = objElement.id;      
+    };
+
+    if(objElement.id.includes("MedicationRequest.status"))  {      
+      objElement.min = 1;
     };
 
   }); //Element
@@ -1184,11 +1229,45 @@ function convertInterweaveReferralRequestStructureDefinition(jsonObject) {
   /* This section inserts the fields which have been deprecated in R4 */
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.definition");
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.groupIdentifier");
-  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.specialty");
-  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.recipient");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.patientInstruction");
+  //jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.relevantHistory");
   /************************************************************************* */
 
  //type MS TODO
+
+TypeValueSet = new Object;
+TypeValueSet.reference = "http://hl7.org/fhir/ValueSet/referral-type";
+
+TypeBinding = new Object;
+TypeBinding.strength = "preferred";
+TypeBinding.valueSetReference = TypeValueSet;
+
+Type = new Object;
+Type.id = "ReferralRequest.type";
+Type.path = "ReferralRequest.type";
+Type.min = 1;
+Type.max = "1";
+Type.mustSupport = true;
+Type.short = "Referral/Transition of care request type."
+Type.binding = TypeBinding;
+jsonObject.differential.element.push(Type);
+
+ServiceRequestedValueSet = new Object;
+ServiceRequestedValueSet.reference = "https://fhir.yhcr.nhs.uk/ValueSet/Interweave-UkCoreCareServiceType"
+
+ServiceRequestedBinding = new Object;
+ServiceRequestedBinding.strength = "preferred";
+ServiceRequestedBinding.valueSetReference = ServiceRequestedValueSet;
+
+ServiceRequested = new Object;
+ServiceRequested.id = "ReferralRequest.serviceRequested";
+ServiceRequested.path = "ReferralRequest.serviceRequested";
+ServiceRequested.min = 0;
+ServiceRequested.max = "1";
+ServiceRequested.mustSupport = true;
+ServiceRequested.short = "The service(s) that is/are requested to be provided to the patient."
+ServiceRequested.binding = ServiceRequestedBinding;
+jsonObject.differential.element.push(ServiceRequested);
  
  // Loop through the elements
  jsonObject.differential.element.forEach(function(objElement) {
@@ -1199,19 +1278,73 @@ function convertInterweaveReferralRequestStructureDefinition(jsonObject) {
     objElement.path = objElement.id;
   };     
   
-  // //convert patientInstruction to description
-  // if(objElement.id.includes("ReferralRequest.patientInstruction"))  {
-  //     objElement.id = objElement.id.replace("ReferralRequest.patientInstruction", "ReferralRequest.description");
-  //     objElement.path = objElement.id;
-  //   }; 
+  var basedOnReference1 = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ProcedureRequest-1"      
+  }
+
+  var basedOnReference2 = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"
+  }
+  
+  if(objElement.id.includes("ReferralRequest.basedOn"))  {
+    objElement.type = [];    
+    objElement.type.push(basedOnReference1);
+    objElement.type.push(basedOnReference2);    
+  };
+
+  //convert patientInstruction to description
+  if(objElement.id.includes("ReferralRequest.patientInstruction"))  {
+      objElement.id = objElement.id.replace("ReferralRequest.patientInstruction", "ReferralRequest.description");
+      objElement.path = objElement.id;
+    }; 
     
   //convert encounter to context
   if(objElement.id.includes("ReferralRequest.encounter"))  {
       objElement.id = objElement.id.replace("ReferralRequest.encounter", "ReferralRequest.context");
       objElement.path = objElement.id;
-    }; 
+    };     
 });
 
+  return jsonObject;
+}
+
+function convertInterweaveObservationAssessmentScoreStructureDefinition(jsonObject){
+
+  // Loop through the elements
+ jsonObject.differential.element.forEach(function(objElement) {
+  if(objElement.id.includes("Observation.related"))  {   
+    console.log(objElement);   
+    objElement.mustSupport = true;      
+  };  
+
+ });
+  return jsonObject;
+}
+
+function convertInterweaveMedicationAdministrationStructureDefinition(jsonObject){
+
+  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationAdministration.definition");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationAdministration.performer.onBehalfOf");
+
+  ReasonNotGivenValueSet = new Object;
+  ReasonNotGivenValueSet.reference = "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes"
+
+  ReasonNotGivenBinding = new Object;
+  ReasonNotGivenBinding.strength = "preferred";
+  ReasonNotGivenBinding.valueSetReference = ReasonNotGivenValueSet;
+
+  ReasonNotGiven = new Object;
+  ReasonNotGiven.id = "MedicationAdministration.ReasonNotGiven";
+  ReasonNotGiven.path = "MedicationAdministration.ReasonNotGiven";
+  ReasonNotGiven.min = 0;
+  ReasonNotGiven.max = "*";
+  ReasonNotGiven.short = "Reason administration not performed."
+  ReasonNotGiven.binding = ReasonNotGivenBinding;
+  jsonObject.differential.element.push(ReasonNotGiven);
+
+  
   return jsonObject;
 }
 ////////////////////////////////////////////////////////////////////////////////////////

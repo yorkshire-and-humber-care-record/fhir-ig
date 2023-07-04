@@ -3,8 +3,8 @@ Alias: $SCT = http://snomed.info/sct
 Profile: InterweavePractitionerRole
 Parent: CareConnect-PractitionerRole-1
 Id: Interweave-PractitionerRole
-Description: "Interweave Practitioner role resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Practitioner role resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -42,7 +42,7 @@ Description: "Interweave Practitioner role resource profile - DRAFT."
 
 * organization 0..1 MS
 * organization only Reference(CareConnect-Organization-1)
-* insert Ruleset-ReferenceWithReferenceOnly(organization)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(organization)
 * organization ^short = "The organization where the Practitioner performs the roles associated."
 
 * location 0..*
@@ -52,6 +52,7 @@ Description: "Interweave Practitioner role resource profile - DRAFT."
 
 //   Replace the FHIR valueset with the list of clinical specialty of the clinician or provider - 
 //   which appears to be more complete and relevant to the UK, and which offers better coverage of Social Care.
+* specialty MS
 * specialty from Interweave-UKCorePracticeSettingCode (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(specialty)
 
@@ -79,7 +80,7 @@ Description: "Interweave PractitionerRole Example"
 * period.start = "2012-01-01"
 * period.end = "2012-03-31"
 * practitioner = Reference(InterweavePractitionerExample) "Dr Jane BLOGGS"
-* organization = Reference(InterweaveOrganizationExample)
+* organization = Reference(InterweaveOrganizationExample) "York and Scarborough Teaching Hospitals NHS Foundation Trust"
 * code = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1#R0050 "Consultant"
 * specialty = https://fhir.yhcr.nhs.uk/CodeSystem/Interweave-UKCorePracticeSettingCode#180 "Emergency Medicine"
 * location = Reference(InterweaveLocationWardExampleAandE) "York Hospital: Accident and Emergency"
