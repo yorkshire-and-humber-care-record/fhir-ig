@@ -284,9 +284,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": [
-              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
-            ]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"            
           }
         ]
       },
@@ -593,9 +591,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": [
-              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
-            ]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
           }
         ]
       },
@@ -615,9 +611,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": [
-              "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
-            ]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"            
           }
         ]
       }

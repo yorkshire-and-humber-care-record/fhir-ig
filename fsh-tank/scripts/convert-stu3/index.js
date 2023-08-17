@@ -118,6 +118,10 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = convertInterweaveObservationBodyTemperatureStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Interweave-Observation-BloodOxygenSaturation") {
+                jsonObject = convertInterweaveObservationBloodOxygenSaturationStructureDefinition(jsonObject);
+              }
+
               if(jsonObject.id == "Interweave-DiagnosticReport") {
                 jsonObject = convertInterweaveDiagnosticReportStructureDefinition(jsonObject);
               }
@@ -316,20 +320,17 @@ function convertInterweaveEncounterStructureDefinition(jsonObject) {
     if(objElement.id.includes("Encounter.basedOn"))  {
       objElement.id = objElement.id.replace("Encounter.basedOn", "Encounter.incomingReferral");
       objElement.path = objElement.id;
-    };
-      
+    };      
 
     // Make class mandatory. (It already is in R4, so not considered a "differential" otherwise!)
     if(objElement.id == "Encounter.class")  {
       objElement.min = 1;
-    } // Encounter.diagnosis
-    
+    } // Encounter.diagnosis    
 
     // Convert "diagnosis.use" to "diagnosis.role"
     if(objElement.id == "Encounter.diagnosis")  {
       if(objElement.slicing) {
-        objElement.slicing.discriminator[0].path = "role";
-        //console.log(objElement);
+        objElement.slicing.discriminator[0].path = "role";        
       }
     } // Encounter.diagnosis
 
@@ -511,6 +512,7 @@ function convertInterweaveObservationStructureDefinition(jsonObject) {
   related.path = "Observation.related";
   related.min = 0;
   related.max = "*";
+  related.mustSupport = true;
   related.short = "Resources related to this observation";
   jsonObject.differential.element.push(related);
 
@@ -540,8 +542,7 @@ function convertInterweaveObservationStructureDefinition(jsonObject) {
   jsonObject.differential.element.push(relatedTarget);
 
   // Loop through the elements
-  jsonObject.differential.element.forEach(function(objElement) {
-    //console.log(objElement);
+  jsonObject.differential.element.forEach(function(objElement) {    
     // Convert "encounter" to "context"
     if(objElement.id.includes("Observation.encounter"))  {
       objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
@@ -551,7 +552,7 @@ function convertInterweaveObservationStructureDefinition(jsonObject) {
     if(objElement.id.includes("Observation.note"))  {
       objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
       objElement.path = objElement.id;
-    };
+    };    
 
   }); //Element
 
@@ -934,8 +935,7 @@ function convertInterweaveMedicationRequestStructureDefinition(jsonObject) {
    
   // * The following fields are removed and are deprecated in R4
   jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.definition");
-  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
-  
+    
    // Loop through the elements
   jsonObject.differential.element.forEach(function(objElement) {    
     // Convert "encounter" to "context"
@@ -949,12 +949,31 @@ function convertInterweaveMedicationRequestStructureDefinition(jsonObject) {
       objElement.id = objElement.id.replace("MedicationRequest.requester", "MedicationRequest.requester.agent");
       objElement.path = objElement.id;      
     };
+     
+    var requesterAgentReference1 = {
+      "code": "Reference",
+      "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
+    }
+  
+    var requesterAgentReference2 = {
+      "code": "Reference",
+      "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
+    }
+  
+    if(objElement.id.includes("MedicationRequest.requester"))  {      
+      objElement.type = [];
+      objElement.type.push(requesterAgentReference1);
+      objElement.type.push(requesterAgentReference2);      
+    };
 
     if(objElement.id.includes("MedicationRequest.status"))  {      
       objElement.min = 1;
     };
 
   }); //Element
+
+  jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationRequest.requester.onBehalfOf");
+
    return jsonObject;
 }
 
@@ -1081,6 +1100,10 @@ function convertInterweaveObservationBloodPressureStructureDefinition(jsonObject
     if(objElement.id.includes("Observation.note"))  {
       objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
       objElement.path = objElement.id;
+    };
+
+    if(objElement.id == "Observation.component")  {
+      objElement.min = 0;      
     };
 
   }); //Element
@@ -1230,7 +1253,7 @@ function convertInterweaveReferralRequestStructureDefinition(jsonObject) {
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.definition");
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.groupIdentifier");
   jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.patientInstruction");
-  //jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.relevantHistory");
+  
   /************************************************************************* */
 
  //type MS TODO
@@ -1280,7 +1303,7 @@ jsonObject.differential.element.push(ServiceRequested);
   
   var basedOnReference1 = {
     "code": "Reference",
-    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ProcedureRequest-1"      
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ProcedureRequest-1"
   }
 
   var basedOnReference2 = {
@@ -1289,9 +1312,31 @@ jsonObject.differential.element.push(ServiceRequested);
   }
   
   if(objElement.id.includes("ReferralRequest.basedOn"))  {
-    objElement.type = [];    
+    objElement.type = [];
     objElement.type.push(basedOnReference1);
-    objElement.type.push(basedOnReference2);    
+    objElement.type.push(basedOnReference2);
+  };
+
+  var requesterAgentReference1 = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
+  }
+
+  var requesterAgentReference2 = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
+  }
+
+  var requesterAgentReference3 = {
+    "code": "Reference",
+    "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
+  }
+
+  if(objElement.id.includes("ReferralRequest.requester"))  {
+    objElement.type = [];
+    objElement.type.push(requesterAgentReference1);
+    objElement.type.push(requesterAgentReference2);
+    objElement.type.push(requesterAgentReference3);
   };
 
   //convert patientInstruction to description
@@ -1307,6 +1352,8 @@ jsonObject.differential.element.push(ServiceRequested);
     };     
 });
 
+jsonObject = insertDeprectatedR4Field(jsonObject, "ReferralRequest.requester.onBehalfOf");
+
   return jsonObject;
 }
 
@@ -1314,9 +1361,8 @@ function convertInterweaveObservationAssessmentScoreStructureDefinition(jsonObje
 
   // Loop through the elements
  jsonObject.differential.element.forEach(function(objElement) {
-  if(objElement.id.includes("Observation.related"))  {   
-    console.log(objElement);   
-    objElement.mustSupport = true;      
+  if(objElement.id.includes("Observation.related"))  {     
+    objElement.mustSupport = true;
   };  
 
  });
@@ -1348,3 +1394,18 @@ function convertInterweaveMedicationAdministrationStructureDefinition(jsonObject
   return jsonObject;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveObservationBloodOxygenSaturationStructureDefinition(jsonObject) {
+
+  jsonObject.differential.element.forEach(function(objElement) {
+    var valueType = {
+      "code": "Quantity"
+    }
+    if(objElement.id == "Observation.value[x]")  {   
+      objElement.type = [];
+      objElement.type.push(valueType);     
+      }  
+   });
+
+  return jsonObject;
+} 

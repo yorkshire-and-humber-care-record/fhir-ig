@@ -36,7 +36,7 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * code ^binding.extension.valueString = "ObservationCode"
 * code ^binding.strength = #extensible
 * code ^binding.description = "This value set indicates the allowed vital sign result types."
-* code ^binding.valueSet = observation-vitalsignresult
+* code ^binding.valueSet = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
 * code.coding 1..
 * code.coding ^slicing.discriminator.type = #value
 * code.coding ^slicing.discriminator.path = "code"
@@ -47,7 +47,7 @@ Description: "A Vital Signs profile to carry blood pressure information that con
     snomedCT 1..1
 * code.coding[loinc] ^binding.strength = #extensible
 * code.coding[loinc] ^binding.description = "This value set indicates the allowed vital sign result types"
-* code.coding[loinc] ^binding.valueSet = observation-vitalsignresult
+* code.coding[loinc] ^binding.valueSet = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
 * code.coding[loinc].system 1..
 * code.coding[loinc].system = "http://loinc.org" (exactly)
 * code.coding[loinc].code 1..
@@ -140,7 +140,7 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * component[systolicComponent].code ^binding.extension.valueString = "ObservationCode"
 * component[systolicComponent].code ^binding.strength = #extensible
 * component[systolicComponent].code ^binding.description = "This value set indicates the allowed vital sign result types."
-* component[systolicComponent].code ^binding.valueSet = observation-vitalsignresult
+* component[systolicComponent].code ^binding.valueSet = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
 * component[systolicComponent].code.coding ^slicing.discriminator.type = #value
 * component[systolicComponent].code.coding ^slicing.discriminator.path = "code"
 * component[systolicComponent].code.coding ^slicing.rules = #open
@@ -150,7 +150,7 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * component[systolicComponent].code.coding[loinc] ^short = "Systolic Blood Pressure"
 * component[systolicComponent].code.coding[loinc] ^binding.strength = #extensible
 * component[systolicComponent].code.coding[loinc] ^binding.description = "This value set indicates the allowed vital sign result types"
-* component[systolicComponent].code.coding[loinc] ^binding.valueSet = observation-vitalsignresult
+* component[systolicComponent].code.coding[loinc] ^binding.valueSet = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
 * component[systolicComponent].code.coding[loinc].system 1..
 * component[systolicComponent].code.coding[loinc].system = "http://loinc.org" (exactly)
 * component[systolicComponent].code.coding[loinc].code 1..
@@ -188,7 +188,7 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * component[diastolicComponent].code ^binding.extension.valueString = "ObservationCode"
 * component[diastolicComponent].code ^binding.strength = #extensible
 * component[diastolicComponent].code ^binding.description = "This value set indicates the allowed vital sign result types"
-* component[diastolicComponent].code ^binding.valueSet = observation-vitalsignresult
+* component[diastolicComponent].code ^binding.valueSet = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
 * component[diastolicComponent].code.coding ^slicing.discriminator.type = #value
 * component[diastolicComponent].code.coding ^slicing.discriminator.path = "code"
 * component[diastolicComponent].code.coding ^slicing.rules = #open
@@ -198,7 +198,7 @@ Description: "A Vital Signs profile to carry blood pressure information that con
 * component[diastolicComponent].code.coding[loinc] ^short = "Diastolic Blood Pressure"
 * component[diastolicComponent].code.coding[loinc] ^binding.strength = #extensible
 * component[diastolicComponent].code.coding[loinc] ^binding.description = "This value set indicates the allowed vital sign result types"
-* component[diastolicComponent].code.coding[loinc] ^binding.valueSet = observation-vitalsignresult
+* component[diastolicComponent].code.coding[loinc] ^binding.valueSet = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
 * component[diastolicComponent].code.coding[loinc].system 1..
 * component[diastolicComponent].code.coding[loinc].system = "http://loinc.org" (exactly)
 * component[diastolicComponent].code.coding[loinc].code 1..

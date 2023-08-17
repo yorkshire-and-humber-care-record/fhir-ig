@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review.
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave NEWS2 score observation resource. Care connect do not have a profile for this observation, and therefore the base for this profile is the [Interweave-Observation-AssessmentScore](https://fhir.yhcr.nhs.uk/StructureDefinition/Interweave-Observation-AssessmentScore). We stipulate the use of SNOMED concept codes where possible, and the score should be provided within the valueQuantity field. 

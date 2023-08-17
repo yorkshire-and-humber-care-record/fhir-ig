@@ -1,8 +1,8 @@
 Profile: InterweaveObservationACVPU
 Parent: CareConnect-ACVPU-Observation-1
 Id: Interweave-Observation-ACVPU
-Description: "Interweave ACVPU Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave ACVPU Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

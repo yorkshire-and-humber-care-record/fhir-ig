@@ -8159,7 +8159,7 @@
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
           }
         },
         "mapping": [
@@ -8408,7 +8408,7 @@
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
           }
         },
         "mapping": [
@@ -9390,7 +9390,7 @@
           "strength": "required",
           "description": "A value set describing common UCUM units for recording vital signs",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-ucum-vitals-common.html"
+            "reference": "http://hl7.org/fhir/ValueSet/ucum-vitals-common"
           }
         },
         "mapping": [
@@ -10212,7 +10212,7 @@
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
           }
         },
         "mapping": [
@@ -10460,7 +10460,7 @@
         "binding": {
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types",
-          "valueSetUri": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+          "valueSetUri": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
         },
         "mapping": [
           {
@@ -11441,7 +11441,7 @@
           "strength": "required",
           "description": "A value set describing common UCUM units for recording vital signs",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-ucum-vitals-common.html"
+            "reference": "http://hl7.org/fhir/ValueSet/ucum-vitals-common"
           }
         },
         "mapping": [
@@ -12601,7 +12601,7 @@
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
           }
         }
       },
@@ -12629,7 +12629,7 @@
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
           }
         }
       },
@@ -12720,7 +12720,7 @@
           "strength": "required",
           "description": "A value set describing common UCUM units for recording vital signs",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-ucum-vitals-common.html"
+            "reference": "http://hl7.org/fhir/ValueSet/ucum-vitals-common"
           }
         }
       },
@@ -12771,7 +12771,7 @@
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
           }
         }
       },
@@ -12798,7 +12798,7 @@
         "binding": {
           "strength": "extensible",
           "description": "This value set indicates the allowed vital sign result types",
-          "valueSetUri": "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+          "valueSetUri": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
         }
       },
       {
@@ -12888,7 +12888,7 @@
           "strength": "required",
           "description": "A value set describing common UCUM units for recording vital signs",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/stu3/valueset-ucum-vitals-common.html"
+            "reference": "http://hl7.org/fhir/ValueSet/ucum-vitals-common"
           }
         }
       },

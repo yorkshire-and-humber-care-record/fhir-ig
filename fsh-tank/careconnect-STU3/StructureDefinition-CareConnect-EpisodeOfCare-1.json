@@ -1745,7 +1745,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
           }
         ],
         "condition": [
@@ -3453,7 +3453,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"
           }
         ],
         "condition": [
@@ -4443,7 +4443,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
           }
         ],
         "condition": [
@@ -4744,7 +4744,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
           }
         ],
         "condition": [
@@ -5295,7 +5295,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"
           }
         ],
         "condition": [
@@ -5591,7 +5591,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
           }
         ],
         "condition": [
@@ -5890,7 +5890,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-CareTeam-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-CareTeam-1"
           }
         ],
         "condition": [
@@ -6186,7 +6186,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["http://hl7.org/fhir/StructureDefinition/Account"]
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Account"
           }
         ],
         "condition": [
@@ -6476,7 +6476,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
           }
         ]
       },
@@ -6486,7 +6486,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Condition-1"
           }
         ]
       },
@@ -6496,7 +6496,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"
           }
         ]
       },
@@ -6506,7 +6506,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Organization-1"
           }
         ]
       },
@@ -6516,7 +6516,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-ReferralRequest-1"
           }
         ]
       },
@@ -6526,7 +6526,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Practitioner-1"
           }
         ]
       },
@@ -6536,7 +6536,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": ["https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-CareTeam-1"]
+            "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-CareTeam-1"
           }
         ]
       }

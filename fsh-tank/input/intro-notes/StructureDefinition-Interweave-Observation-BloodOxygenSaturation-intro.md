@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review.
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave blood oxygen saturation observation resource. Care connect do not have a profile for blood oxygen saturation, and therefore the base for this profile is the [Interweave-Observation](https://fhir.yhcr.nhs.uk/StructureDefinition/Interweave-Observation). We stipulate the use of SNOMED concept codes where possible, and the result should be provided as a Quantity within the valueQuantity field. 

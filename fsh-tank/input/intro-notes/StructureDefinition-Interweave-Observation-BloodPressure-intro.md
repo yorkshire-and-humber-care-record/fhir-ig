@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave blood pressure observation resource. The base for this profile is the [CareConnect-BloodPressure-Observation-1](https://simplifier.net/HL7FHIRCareConnectBaselineforSTU3/CareConnect-BloodPressure-Observation-1) and we have made little adjustment to this base profile. We have enforced the use of SNOMED codes where possible.

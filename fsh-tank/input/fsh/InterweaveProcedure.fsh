@@ -3,8 +3,8 @@ Alias: $SCT = http://snomed.info/sct
 Profile: InterweaveProcedure
 Parent: CareConnect-Procedure-1
 Id: Interweave-Procedure
-Description: "Interweave Procedure resource profile - DRAFT"
-* ^status = #draft
+Description: "Interweave Procedure resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

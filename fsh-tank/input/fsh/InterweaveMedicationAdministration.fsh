@@ -1,8 +1,8 @@
 Profile: InterweaveMedicationAdministration
 Parent: CareConnect-MedicationAdministration-1
 Id: Interweave-MedicationAdministration
-Description: "Interweave Medication Administration resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Medication Administration resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

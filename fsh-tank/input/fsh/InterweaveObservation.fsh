@@ -1,8 +1,8 @@
 Profile: InterweaveObservation
 Parent: CareConnect-Observation-1
 Id: Interweave-Observation
-Description: "Interweave Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

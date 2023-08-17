@@ -14,6 +14,7 @@ Description: "The type of person making contact with social services"
 
 * #ADV "Advocate"
 * #ANON "Anonymous"
+* #ASCP "Adult Social Care Provider"
 * #FFN  "Family/Friend/Neighbour"
 * #ICC "Integrated Care Centre"
 * #IC "Intermediate Care"

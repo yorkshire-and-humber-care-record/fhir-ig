@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave Heart rate observation resource. The base for this profile is the [CareConnect-HeartRate-Observation-1](https://simplifier.net/hl7fhircareconnectbaselineforstu3/careconnect-heartrate-observation-1). We have enforced the use of SNOMED codes where possible and have removed the component field. This is to ensure that the valueQuantity field is used to provide the result. 

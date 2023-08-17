@@ -1,8 +1,8 @@
 Profile: InterweaveObservationVitalSigns
 Parent: CareConnect-VitalSigns-Observation-1
 Id: Interweave-Observation-VitalSigns
-Description: "Interweave Vital Signs Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Vital Signs Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -13,10 +13,19 @@ Description: "Interweave Vital Signs Observation resource profile - DRAFT."
 
 * basedOn ^short = "DISCOURAGED -  This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
 
+* status 1..1 MS
+* status ^short = "Fixed value of ‘final’."
+
+* category 1..1 MS
+* category.coding.display 1..1
+
 * subject 1..1 MS
 * subject only Reference(CareConnect-Patient-1)
 * insert Ruleset-ReferenceWithReferenceAndDisplay(subject)
 * subject ^short = "The patient whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed."
+
+* code.coding[loinc].display 1..1
+* code.coding[loinc].display = "Vital signs, weight, height, head circumference, oxygen saturation & BMI panel" (exactly)
 
 //context in STU3
 * encounter only Reference(CareConnect-Encounter-1)

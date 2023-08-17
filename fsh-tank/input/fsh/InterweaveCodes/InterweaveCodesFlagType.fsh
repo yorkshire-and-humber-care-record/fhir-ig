@@ -34,7 +34,7 @@ Description: "The type of social care flag which can be placed against a person.
 * #ABUSIVE "Know to be abusive"
 * #ALPERP "Alleged perpetrator"
 * #COMM "Communication"
-* #COVID19 "COVID-19 "
+* #COVID19 "COVID-19"
 * #DOLS	"Community DoLs (Deprivation of Livery Safeguards)"
 * #EOL "End of life"
 * #HCU "Home Checks for the Ukraine"

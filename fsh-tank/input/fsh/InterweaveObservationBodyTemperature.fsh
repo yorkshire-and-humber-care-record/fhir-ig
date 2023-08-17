@@ -1,8 +1,8 @@
 Profile: InterweaveObservationBodyTemperature
 Parent: CareConnect-BodyTemperature-Observation-1
 Id: Interweave-Observation-BodyTemperature
-Description: "Interweave BodyTemperature Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave BodyTemperature Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -20,6 +20,8 @@ Description: "Interweave BodyTemperature Observation resource profile - DRAFT."
 * category.coding.display 1..1
 
 * code 1..1 MS
+* code.coding[loinc].display 1..1
+* code.coding[loinc].display = "Body temperature" (exactly)
 
 * subject 1..1 MS
 * subject only Reference(CareConnect-Patient-1)

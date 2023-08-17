@@ -70,7 +70,7 @@ Description: "Interweave Social Care Contact resource profile (modelled using FH
 
 //requester.agent in STU3
 //* requester only Reference(CareConnect-Practitioner-1 or CareConnect-Organization-1) TODO
-* requester ^short = "Use agent to provide a reference to the organisation, organisational team or practitioner making the contact. "
+* requester ^short = "Use agent to provide a reference to the organisation, organisational team or practitioner making the contact."
 
 
 

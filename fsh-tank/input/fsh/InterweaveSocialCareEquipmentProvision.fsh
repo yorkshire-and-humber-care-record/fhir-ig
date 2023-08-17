@@ -21,9 +21,11 @@ Description: "Interweave Social Care Equipment Provision resource profile"
 
 * code[x] only CodeableConcept or Reference
 * code[x] MS
-* codeCodeableConcept 1..1 MS
+* codeCodeableConcept 0..1 MS
 * codeCodeableConcept from InterweaveSocialCareEquipmentType (preferred)
 * insert Ruleset-CodingWithSystemCodeDisplay(codeCodeableConcept)
+* codeReference 0..1 MS
+* codeReference only Reference(Device)
 
 // Subject: Every Device Request MUST be linked to a patient
 * subject 1..1 MS 

@@ -1,4 +1,4 @@
-      Status: Draft - Work In Progress
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets minimum expectations for the Condition resource.

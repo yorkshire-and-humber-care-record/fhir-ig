@@ -17,7 +17,7 @@ Description: "Interweave Encounter resource profile."
 * extension[Extension-CareConnect-OutcomeOfAttendance-1] MS
 * extension[Extension-CareConnect-EmergencyCareDischargeStatus-1] MS
 
-* extension contains Extension-Interweave-EDDischargeDestination named EmergencyCareDischargeDestination 0..1
+* extension contains Extension-Interweave-EDDischargeDestination named emergencyCareDischargeDestination 0..1
 * extension[Extension-Interweave-EDDischargeDestination] MS
 
 // Service Type is perhaps one of the most useful and important fields about an Encounter - but missing from STU3!

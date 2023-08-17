@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave vital signs observation resource. The base for this profile is the [CareConnect-VitalSigns-Observation-1](https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-VitalSigns-Observation-1) and we have made little adjustment to this base profile. We have enforced the use of SNOMED codes where possible. 

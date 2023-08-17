@@ -1,8 +1,8 @@
 Profile: InterweaveObservationAssessmentScore
 Parent: Interweave-Observation
 Id: Interweave-Observation-AssessmentScore
-Description: "Interweave AssessmentScore Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave AssessmentScore Observation resource profile."
+* ^status = #active
 
 * status 1..1 MS
 * status = #final (exactly)

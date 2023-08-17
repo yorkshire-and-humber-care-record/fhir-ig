@@ -4,8 +4,8 @@ Alias: $v3-ObservationInterpretation = http://terminology.hl7.org/CodeSystem/v3-
 Profile: InterweaveObservationBloodPressure
 Parent: CareConnect-BloodPressure-Observation-1
 Id: Interweave-Observation-BloodPressure
-Description: "Interweave BloodPressure Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave BloodPressure Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -71,17 +71,29 @@ Description: "Interweave BloodPressure Observation resource profile - DRAFT."
 
 * referenceRange 0..* MS
 
+* component 0..2 
+* component[systolicComponent] 1..1 MS
 * component[systolicComponent].code.coding[snomedCT].code = #271649006 (exactly)
 * component[systolicComponent].code.coding[snomedCT].display = "Systolic blood pressure" (exactly)
+* component[systolicComponent].code.coding[loinc].display 1..1
+* component[systolicComponent].code.coding[loinc].display = "Systolic blood pressure" (exactly)
 
+* component[diastolicComponent] 1..1 MS
 * component[diastolicComponent].code.coding[snomedCT].code = #271650006 (exactly)
 * component[diastolicComponent].code.coding[snomedCT].display = "Diastolic blood pressure" (exactly)
+* component[diastolicComponent].code.coding[loinc].display 1..1
+* component[diastolicComponent].code.coding[loinc].display = "Diastolic blood pressure" (exactly)
 
 ///////////////////////////////////////
 // --- Removed fields ---
 ///////////////////////////////////////
 
 * issued 0..0
+* value[x] 0..0
+* component[diastolicComponent].code.coding[snomedCT].extension[Extension-coding-sctdescid] 0..0
+* component[diastolicComponent].code.coding[snomedCT].extension 0..0
+* component[systolicComponent].code.coding[snomedCT].extension[Extension-coding-sctdescid] 0..0
+* component[systolicComponent].code.coding[snomedCT].extension 0..0
 //* code.coding[loinc] 0..0
 
 // *************************************************************************************************************************

@@ -22,8 +22,8 @@ Description: "Interweave Referral Request resource profile."
 
 * extension[Extension-CareConnect-ReferralRequestMethod-1] MS
 * extension[Extension-CareConnect-SourceOfReferral-1] MS
-//* extension[Extension-CareConnect-SourceOfReferral-1].valueCodeableConcept from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SourceOfReferral-1 (preferred)
-* extension[Extension-Interweave-R4LocationReference]
+* extension[Extension-CareConnect-SourceOfReferral-1].valueCodeableConcept from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SourceOfReferral-1 (required)
+* extension contains Extension-Interweave-R4LocationReference named locationReferenceR4 0..1
 
 
 * identifier MS
@@ -71,7 +71,7 @@ Description: "Interweave Referral Request resource profile."
 * insert Ruleset-CodingWithSystemCodeDisplay(reasonCode)
 
 * requester 0..1 MS
-//* requester only reference(CareConnect-Practitioner-1 or CareConnect-Organization-1 or CareConnect-Patient-1)
+* requester only Reference(CareConnect-Practitioner-1 or CareConnect-Organization-1 or CareConnect-Patient-1)
 
 ///////////////////////////////////////
 // --- Removed fields ---

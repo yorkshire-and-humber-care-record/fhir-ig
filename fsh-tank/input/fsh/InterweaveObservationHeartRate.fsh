@@ -3,10 +3,10 @@ Alias: $v3-ObservationInterpretation = http://terminology.hl7.org/CodeSystem/v3-
 
 
 Profile: InterweaveObservationHeartRate
-Parent: CareConnect-Observation-1
+Parent: CareConnect-HeartRate-Observation-1 //CareConnect-Observation-1
 Id: Interweave-Observation-HeartRate
-Description: "Interweave HeartRate Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave HeartRate Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -21,8 +21,11 @@ Description: "Interweave HeartRate Observation resource profile - DRAFT."
 * status ^short = "Fixed value of ‘final’."
 
 * category 1..1 MS
+* category.coding.display 1..1
 
 * code 1..1 MS
+* code.coding[loinc].display 1..1
+* code.coding[loinc].display = "Heart rate" (exactly)
 
 * subject 1..1 MS
 * subject only Reference(CareConnect-Patient-1)

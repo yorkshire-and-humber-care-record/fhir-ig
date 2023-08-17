@@ -37,4 +37,4 @@ Description: "This value set indicates the allowed vital sign result types.   Th
 * $loinc#8478-0
 
 //Add correct Care Connect URL
-//* ^url = "http://hl7.org/fhir/stu3/valueset-observation-vitalsignresult.html"
+//* ^url = "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"

@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave body temperature observation resource. The base for this profile is the [CareConnect-BodyTemperature-Observation-1](https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-BodyTemperature-Observation-1). We have enforced the use of SNOMED codes where possible and have removed the component field. This is to ensure that the valueQuantity field is used to provide the result. 

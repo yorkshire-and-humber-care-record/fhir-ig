@@ -2,7 +2,7 @@ Profile: InterweaveEpisodeOfCare
 Parent: CareConnect-EpisodeOfCare-1
 Id: Interweave-EpisodeOfCare
 Description: "Interweave Episode Of Care resource profile"
-* ^status = #draft
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

@@ -1,4 +1,4 @@
-      Status: DRAFT: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets out the expectations for the interweave observation resource. Our profile models measurements and simple assertions which are made about a patient. Modelling observations can be quite complex. This is due to the way in which result formats vary for the different types of observation. In line with care connect, this has led us to design specific profiles for the some of the most commonly recorded/shared observation types such as blood pressure; heart rate; NEWS 2 score etc (see the artifacts section for the full list). We are aware at that we will not have modelled every type of observation, if you identify a type of observation, which you believe requires a specific profile, then please get in touch.

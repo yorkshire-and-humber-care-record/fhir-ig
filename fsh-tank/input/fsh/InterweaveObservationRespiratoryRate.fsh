@@ -1,8 +1,8 @@
 Profile: InterweaveObservationRespiratoryRate
 Parent: CareConnect-RespiratoryRate-Observation-1
 Id: Interweave-Observation-RespiratoryRate
-Description: "Interweave RespiratoryRate Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave RespiratoryRate Observation resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
@@ -12,6 +12,9 @@ Description: "Interweave RespiratoryRate Observation resource profile - DRAFT."
 * identifier 0..* MS
 
 * basedOn ^short = "DISCOURAGED -  This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
+
+* status 1..1 MS
+* status ^short = "Fixed value of ‘final’."
 
 * subject 1..1 MS
 * subject only Reference(CareConnect-Patient-1)

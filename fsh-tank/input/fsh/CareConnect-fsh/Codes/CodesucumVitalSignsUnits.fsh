@@ -33,4 +33,4 @@ Description: "Common UCUM units for recording Vital Signs"
 * $unitsofmeasure#m2 "square meter"
 
 //Add correct Care Connect URL
-* ^url = "http://hl7.org/fhir/stu3/valueset-ucum-vitals-common.html"
+* ^url = "http://hl7.org/fhir/ValueSet/ucum-vitals-common"

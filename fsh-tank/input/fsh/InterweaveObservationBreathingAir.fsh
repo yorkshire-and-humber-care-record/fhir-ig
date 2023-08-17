@@ -1,11 +1,12 @@
 Profile: InterweaveObservationBreathingAir
 Parent: Interweave-Observation
 Id: Interweave-Observation-BreathingAir
-Description: "Interweave BreathingAir Observation resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave BreathingAir Observation resource profile."
+* ^status = #active
 
 * status 1..1 MS
 * status = #final (exactly)
+* status ^short = "Fixed value of ‘final’."
 
 * category 1..1 MS
 * category.coding.system = "http://hl7.org/fhir/observation-category" (exactly)
@@ -18,8 +19,8 @@ Description: "Interweave BreathingAir Observation resource profile - DRAFT."
 * code.coding[snomedCT].display = "Breathing room air" (exactly)
 
 * value[x] only boolean
-* value[x] 0..1 MS
 * value[x] ^short = "Actual result."
+* valueBoolean 0..1 MS
 
 * insert Ruleset-CodingWithSystemCodeDisplay(interpretation)
 
@@ -30,3 +31,4 @@ Description: "Interweave BreathingAir Observation resource profile - DRAFT."
 * component 0..0
 * extension[Extension-Interweave-ValuePrecision] 0..0
 * value[x].extension[Extension-Interweave-R4ValueInteger] 0..0
+* valueBoolean.extension[Extension-Interweave-R4ValueInteger] 0..0
