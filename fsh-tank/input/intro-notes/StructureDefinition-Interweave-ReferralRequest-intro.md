@@ -25,7 +25,8 @@ The following fields are mandatory:
 In addition, the following fields are "Must Support" - i.e. they must be populated if relevant and known:
 
 - **referralRequestMethod** – This is a care connect extension which was introduced to capture the method used to communicate the referral such as e-referral, secure email etc. 
-sourceOfReferral – Another useful care connect extension which is used to specify the source of the referral e.g SCT 309013001 |Referred by person OR
+
+- **sourceOfReferral** – Another useful care connect extension which is used to specify the source of the referral e.g SCT 309013001 |Referred by person OR
 SCT 306098008 |Self-referral.
 
 - **Identifier** – A Local Id should be provided, such that could be quoted if manually getting in touch to find out more.

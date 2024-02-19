@@ -32,14 +32,14 @@ In addition, the following fields are "Must Support" - i.e. they must be populat
 
 - **period** The duration of the service as a whole, including the time when the service may have been in the planning and onhold statuses. Status history can be used to determine the amount of time that the service was in a particular status.
 
+- **careManager** This field can be used to provide a link to the practitioner delivering the service. Many social care organisations are unable to currently provide this information, however, it is envisaged that this will be something which is available in the future and will be useful if known.
+
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Optional fields to note include:
 
 - **identifier:localIdentifier** - As with most other resources, there is the option to include a local identifier which may help to identify the record at a local level.
 
 - **referralRequest** - An optional link to a Social Care Contact which is modelled using a referralRequest FHIR resource.
-
-- **careManager** This field can be used to provide a link to the practitioner delivering the service. Many social care organisations are unable to currently provide this information, however, it is envisaged that this will be something which is available in the future and will be useful if known. It is likely that this field's conformance will be increased to Must Support.
 
 - **triggeringAssessment** An extension has been created which will allow an optional link to the assessment which triggered the service to be created. We make this optional, as not all services are triggered by an assessment.
 

@@ -142,7 +142,7 @@ Description: "Interweave Diagnostic Report - basic example"
 
 * category = http://hl7.org/fhir/v2/0074#RAD "Radiology"
 
-* code.coding[0] = $SCT#169070004 "Computed tomography of abdomen (procedure)"
+* code.coding[0] = $SCT#4261000179100 "Computed tomography imaging report (record artifact)"
 * code.coding[1] = Interweave-NICIP-1#CABDO "CT Abdomen"
 
 * subject = Reference(InterweavePatientExample-MustSupport) 

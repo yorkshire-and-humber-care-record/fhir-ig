@@ -14,5 +14,6 @@ Description: "The categorisation of social care flags which can be placed agains
 
 * #RTO "Risk to other"
 * #RTS "Risk to self"
+* #RSO "Risk to self & others"
 * #SGC "Safeguarding concern"
 * #OTH "Other"

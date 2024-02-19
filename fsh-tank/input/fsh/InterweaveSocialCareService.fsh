@@ -37,6 +37,9 @@ Description: "Interweave Social Care Service resource profile (modelled using FH
 
 * statusHistory MS
 
+* careManager 0..1 MS
+* careManager ^short = "An optional link to a practitioner delivering the service."
+
 * period.start MS
 * period.start ^short = "The date/time when a service commences"
 
@@ -53,7 +56,7 @@ Description: "Interweave Social Care Service resource profile (modelled using FH
 
 * referralRequest ^short = "An optional link to a Social Care Contact (FHIR STU3 ReferralRequest)."
 
-* careManager ^short = "An optional link to a practitioner delivering the service."
+
 
 
 ///////////////////////////////////////

@@ -46,11 +46,12 @@ In addition the following fields are "Must Support" - ie they must be populated 
 
    - Within "presented form" it is mandatory to populate the Content Type, so that consumers can be aware and process accordingly.  
 
-        > Data Providers and Data Consumers SHOULD support the following contentTypes:
+        Data Providers and Data Consumers SHOULD support the following contentTypes:
         >    - application/pdf
         >    - text/html
-        >    - image/tiff
+        >    - image/tiff (no longer supported and is not recommended for web use)
         >    - image/jpeg
+        >    - image/png (currently not supported in Interweave Portal, however it is on the roadmap)
         >
         >    (This list may be added to by request and discussion)
         >

@@ -22,7 +22,6 @@ if (fs.existsSync(dirSTU3)) {
     fs.rmdirSync(dirSTU3, { recursive: true });
 }
 fs.mkdirSync(dirSTU3);
-
 // Go through all the R4 files output by fsh to the "fsh-generated" folder
 // Copy them across to "fsh-generated-STU3", converting the FHIR Version as we go
 fileArrayR4 = fileHelpers.getAllFiles(dirR4);
@@ -66,12 +65,24 @@ fileArrayR4.forEach(function(filePathR4) {
                 jsonObject = convertInterweaveConditionStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Interweave-CarePlan") {
+                jsonObject = convertInterweaveCarePlanStructureDefinition(jsonObject);
+              }
+
               if(jsonObject.id == "Interweave-Procedure") {
                 jsonObject = convertInterweaveProcedureStructureDefinition(jsonObject);
               }
 
+              if(jsonObject.id == "Interweave-HealthcareService") {
+                jsonObject = convertInterweaveHealthcareServiceStructureDefinition(jsonObject);
+              }
+
               if(jsonObject.id == "Interweave-AllergyIntolerance") {
                 jsonObject = convertInterweaveAllergyIntoleranceStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-QuestionnaireResponse") {
+                jsonObject = convertInterweaveQuestionnaireResponseStructureDefinition(jsonObject);
               }
 
               if(jsonObject.id == "Interweave-Medication") {
@@ -116,6 +127,18 @@ fileArrayR4.forEach(function(filePathR4) {
 
               if(jsonObject.id == "Interweave-Observation-BodyTemperature") {
                 jsonObject = convertInterweaveObservationBodyTemperatureStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-Pregnancy-EDD") {
+                jsonObject = convertInterweaveObservationPregnancyEDDStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-Height") {
+                jsonObject = convertInterweaveObservationHeightStructureDefinition(jsonObject);
+              }
+
+              if(jsonObject.id == "Interweave-Observation-Weight") {
+                jsonObject = convertInterweaveObservationWeightStructureDefinition(jsonObject);
               }
 
               if(jsonObject.id == "Interweave-Observation-BloodOxygenSaturation") {
@@ -804,7 +827,6 @@ function convertAppointmentInstance(jsonObject) {
   return jsonObject;
 }
 
-
 function convertConditionInstance(jsonObject) {
 
   if(jsonObject.encounter) {
@@ -1113,6 +1135,20 @@ function convertInterweaveObservationBloodPressureStructureDefinition(jsonObject
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function convertInterweaveQuestionnaireResponseStructureDefinition(jsonObject) {
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("QuestionnaireResponse.encounter"))  {      
+      objElement.id = objElement.id.replace("QuestionnaireResponse.encounter", "QuestionnaireResponse.context");
+      objElement.path = objElement.id;      
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
 function convertInterweaveObservationHeartRateStructureDefinition(jsonObject) {
   
   // Loop through the elements
@@ -1128,7 +1164,6 @@ function convertInterweaveObservationHeartRateStructureDefinition(jsonObject) {
       objElement.path = objElement.id;
     };
 
-    // Make class mandatory. (It already is in R4, so not considered a "differential" otherwise!)
     if(objElement.id == "Observation.basedOn")  {
       objElement.min = 0;
     } 
@@ -1231,20 +1266,6 @@ function convertInterweaveAllergyIntoleranceStructureDefinition(jsonObject) {
   return jsonObject;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-function insertDeprectatedR4Field(jsonObject, fieldId){
-  field = new Object;
-  field.id = fieldId;
-  field.path = fieldId;
-  field.min = 0;
-  field.max = "0";
-  field.short = "REMOVED - deprecated in R4";
-  jsonObject.differential.element.push(field);
-  return jsonObject;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////
 
 function convertInterweaveReferralRequestStructureDefinition(jsonObject) {
@@ -1274,6 +1295,22 @@ Type.mustSupport = true;
 Type.short = "Referral/Transition of care request type."
 Type.binding = TypeBinding;
 jsonObject.differential.element.push(Type);
+
+specialtyValueSet = new Object;
+specialtyValueSet.reference = "https://fhir.yhcr.nhs.uk/ValueSet/Interweave-UKCorePracticeSettingCode"
+
+specialtyBinding = new Object;
+specialtyBinding.strength = "preferred";
+specialtyBinding.valueSetReference = specialtyValueSet;
+
+specialty = new Object;
+specialty.id = "ReferralRequest.specialty";
+specialty.path = "ReferralRequest.specialty";
+specialty.min = 0;
+specialty.max = "1";
+specialty.short = "The service(s) that is/are requested to be provided to the patient."
+specialty.binding = specialtyBinding;
+jsonObject.differential.element.push(specialty);
 
 ServiceRequestedValueSet = new Object;
 ServiceRequestedValueSet.reference = "https://fhir.yhcr.nhs.uk/ValueSet/Interweave-UkCoreCareServiceType"
@@ -1375,15 +1412,15 @@ function convertInterweaveMedicationAdministrationStructureDefinition(jsonObject
   jsonObject = insertDeprectatedR4Field(jsonObject, "MedicationAdministration.performer.onBehalfOf");
 
   ReasonNotGivenValueSet = new Object;
-  ReasonNotGivenValueSet.reference = "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes"
+  ReasonNotGivenValueSet.reference = "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes";
 
   ReasonNotGivenBinding = new Object;
   ReasonNotGivenBinding.strength = "preferred";
   ReasonNotGivenBinding.valueSetReference = ReasonNotGivenValueSet;
 
   ReasonNotGiven = new Object;
-  ReasonNotGiven.id = "MedicationAdministration.ReasonNotGiven";
-  ReasonNotGiven.path = "MedicationAdministration.ReasonNotGiven";
+  ReasonNotGiven.id = "MedicationAdministration.reasonNotGiven";
+  ReasonNotGiven.path = "MedicationAdministration.reasonNotGiven";
   ReasonNotGiven.min = 0;
   ReasonNotGiven.max = "*";
   ReasonNotGiven.short = "Reason administration not performed."
@@ -1409,3 +1446,102 @@ function convertInterweaveObservationBloodOxygenSaturationStructureDefinition(js
 
   return jsonObject;
 } 
+
+function convertInterweaveObservationPregnancyEDDStructureDefinition(jsonObject) {
+  // Loop through the elements
+  //jsonObject = insertDeprectatedR4Field(jsonObject, "observation.related");
+  
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("Observation.encounter"))  {      
+      objElement.id = objElement.id.replace("Observation.encounter", "Observation.context");
+      objElement.path = objElement.id;      
+    };     
+    
+    if(objElement.id.includes("Observation.note"))  {
+      objElement.id = objElement.id.replace("Observation.note", "Observation.comment");
+      objElement.path = objElement.id;
+    }; 
+
+    var valueType = {
+      "code": "dateTime"
+    }
+    if(objElement.id == "Observation.value[x]")  {   
+      objElement.type = [];
+      objElement.type.push(valueType);     
+      }
+
+  }); //Element
+
+  return jsonObject;
+}
+
+function convertInterweaveObservationHeightStructureDefinition(jsonObject) {
+  // Loop through the elements
+  
+  jsonObject.differential.element.forEach(function(objElement) {
+    var valueType = {
+      "code": "Quantity"
+    }
+    if(objElement.id == "Observation.value[x]")  {   
+      objElement.type = [];
+      objElement.type.push(valueType);     
+      }       
+   });
+
+  return jsonObject;  
+}
+
+function convertInterweaveObservationWeightStructureDefinition(jsonObject) {
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+    var valueType = {
+      "code": "Quantity"
+    }
+    if(objElement.id == "Observation.value[x]")  {   
+      objElement.type = [];
+      objElement.type.push(valueType);     
+      }  
+   });
+
+  return jsonObject;
+  
+}
+
+function convertInterweaveCarePlanStructureDefinition(jsonObject){
+
+  jsonObject = insertDeprectatedR4Field(jsonObject, "CarePlan.definition");
+
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {    
+    // Convert "encounter" to "context"
+    if(objElement.id.includes("CarePlan.encounter"))  {      
+      objElement.id = objElement.id.replace("CarePlan.encounter", "CarePlan.context");
+      objElement.path = objElement.id;      
+    };
+
+  }); //Element
+
+  return jsonObject;
+}
+
+function convertInterweaveHealthcareServiceStructureDefinition(jsonObject){  
+  
+  jsonObject = insertDeprectatedR4Field(jsonObject, "HealthcareService.programName");
+  jsonObject = insertDeprectatedR4Field(jsonObject, "HealthcareService.eligibilityNote");
+
+  return jsonObject;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function insertDeprectatedR4Field(jsonObject, fieldId){
+  field = new Object;
+  field.id = fieldId;
+  field.path = fieldId;
+  field.min = 0;
+  field.max = "0";
+  field.short = "REMOVED - deprecated in R4";
+  jsonObject.differential.element.push(field);
+  return jsonObject;
+}

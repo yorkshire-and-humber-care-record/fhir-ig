@@ -42,6 +42,8 @@ In addition, the following fields are "Must Support" - i.e. they must be populat
 
 - **outcome** This is an extension required by social care to specify the outcome of the assessment. The list of available codes has been derived from the "Event Outcome" field of the ["V5 Adult Social Care - Client Level Data"](https://digital.nhs.uk/about-nhs-digital/corporate-information-and-documents/directions-and-data-provision-notices/secretary-of-state-directions/collection-of-client-level-adult-social-care-data-no-2) specification and has been made extensible as it is foreseen that this list will grow.
 
+- **performer** Option to provide the practitioner which either performed, is going to perform or is performing the assessment. 
+
 
 ### **Optional fields**
 Other fields are optional and may be populated if known - on the understanding that not all data consumers will necessarily make use of them. Optional fields to note include:
@@ -54,8 +56,6 @@ Other fields are optional and may be populated if known - on the understanding t
 
 - **output** We give the option here to attach a local document which contains further detail of the asssessment carried out such as detailed coding information, findings and plans.  Please ensure that any documents attached are relevant for regional sharing.
 
-- **performer** Option to provide the practitioner which either performed, is going to perform or is performing the assessment. 
- 
 ### **Discouraged or Removed fields**
 
 - **groupIdentifier** and **partOf** - It is not the intention to create a complex grouping or hierarchy of assessments, a simple flat structure is informative and preferred. Therefore, both these fields have been removed.

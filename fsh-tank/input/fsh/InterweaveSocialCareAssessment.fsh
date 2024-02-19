@@ -13,7 +13,7 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 * extension contains Extension-Interweave-SocialCareAssessmentOutcome named outcome 0..* MS
 * extension[Extension-Interweave-SocialCareAssessmentOutcome] ^short = "The outcome of the assessment."
 
-* extension contains Extension-Interweave-SocialCareAssessmentPerformer named performer 0..1 
+* extension contains Extension-Interweave-SocialCareAssessmentPerformer named performer 0..1 MS
 * extension[Extension-Interweave-SocialCareAssessmentPerformer] ^short = "The practitioner performing the assessment."
 
 ///////////////////////////////////////

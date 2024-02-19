@@ -9,7 +9,7 @@ Description: "A ValueSet that identifies the job role associated with the person
 * include codes from system CareConnect-SDSJobRoleName-1
 
 
-* ^url = https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SDSJobRoleName-1
+* ^url = "https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-SDSJobRoleName-1"
 
 
 CodeSystem: CareConnectSDSJobRoleName
@@ -23,7 +23,7 @@ Description: "A CodeSystem that identifies the job role associated with the pers
 * ^caseSensitive = true
 * ^content = #complete
 
-* ^url = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1
+* ^url = "https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1"
 
 
 * #R0010 "Medical Director"

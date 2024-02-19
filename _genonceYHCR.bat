@@ -20,6 +20,10 @@ SET input_intro-notes_path=%CD%\input\intro-notes
 SET input_images_path=%CD%\input\images
 SET original_cd=%CD%
 
+REM cd fsh-tank\fsh-generated\includes
+REM IF EXIST "fsh-link-references.md" del "fsh-link-references.md"
+REM cd %original_cd%
+
 REM Run the sushi tool to process the fsh files and generate FHIR definition artefacts (initally R4)
 call sushi "%CD%\fsh-tank"
 ECHO .
@@ -40,6 +44,9 @@ cd %original_cd%
 ECHO .
 ECHO .
 
+cd fsh-tank\fsh-generated\includes
+IF EXIST "fsh-link-references.md" del "fsh-link-references.md"
+cd %original_cd%
 
 REM Here we call a script that does conversion
 call node "%CD%\fsh-tank\scripts\convert-stu3"
@@ -79,7 +86,7 @@ xcopy "%CD%\fsh-tank\careconnect-STU3" "%input_resources_path%" /E /y /I /q
 
 ECHO Running the publisher tool
 ECHO .
-ECHO .
+ECHO %CD%
 
 call "%CD%\_genonce"
 

@@ -24,8 +24,9 @@ However there may be exceptions where it is useful to collaborate on preliminary
 > Data Providers and Data Consumers SHOULD support the following contentTypes:
 >    - application/pdf
 >    - text/html
->    - image/tiff
+>    - image/tiff (no longer supported and is not recommended for web use)
 >    - image/jpeg
+>    - image/png (currently not supported in Interweave Portal, however it is on the roadmap)
 >
 >    (This list may be added to by request and discussion)
 >
