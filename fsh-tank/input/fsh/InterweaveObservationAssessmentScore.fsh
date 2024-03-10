@@ -8,9 +8,9 @@ Description: "Interweave AssessmentScore Observation resource profile."
 * status = #final (exactly)
 
 * category 1..1 MS
-* category.coding.system = "http://hl7.org/fhir/observation-category" (exactly)
-* category.coding.code = #survey (exactly)
-* category.coding.display = "Survey" (exactly)
+* category[observationCategory].coding.system = "http://hl7.org/fhir/observation-category" (exactly)
+* category[observationCategory].coding.code = #survey (exactly)
+* category[observationCategory].coding.display = "Survey" (exactly)
 
 * insert Ruleset-CodingWithSystemCodeDisplay(interpretation)
 

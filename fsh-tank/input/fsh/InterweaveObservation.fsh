@@ -11,6 +11,9 @@ Description: "Interweave Observation resource profile."
 * extension contains Extension-Interweave-ValuePrecision named valuePrecision 0..1
 * extension[Extension-Interweave-ValuePrecision] ^short = "Explicit precision of the number"
 
+// * extension contains Extension-Interweave-R4ValueInteger named valueInteger 0..1
+// * extension[Extension-Interweave-R4ValueInteger] ^short = "valueInteger"
+
 * identifier 0..* MS
 
 * code 1..1 MS
@@ -22,18 +25,26 @@ Description: "Interweave Observation resource profile."
 * basedOn ^short = "DISCOURAGED - This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
 
 * category 1..* MS
-* category from observation-category (preferred)
-* category.coding ^slicing.discriminator.type = #value
-* category.coding ^slicing.discriminator.path = "system"
-* category.coding ^slicing.ordered = false
-* category.coding ^slicing.rules = #open
-* category.coding contains observationCategory 1..1
+* category ^slicing.discriminator.type = #value
+* category ^slicing.discriminator.path = "system"
+* category ^slicing.rules = #open
+* category contains observationCategory 1..1
+* category[observationCategory] ^binding.strength = #required
 
-* category.coding[observationCategory].system 1..
-* category.coding[observationCategory].system = "http://hl7.org/fhir/observation-category" (exactly)
-* category.coding[observationCategory].version ..0
-* category.coding[observationCategory].code 1..
-* category.coding[observationCategory].display 1..
+
+// * category 1..* MS
+// * category from observation-category (preferred)
+// * category.coding ^slicing.discriminator.type = #value
+// * category.coding ^slicing.discriminator.path = "system"
+// * category.coding ^slicing.ordered = false
+// * category.coding ^slicing.rules = #open
+// * category.coding contains observationCategory 1..1
+
+* category[observationCategory].coding.system 1..
+* category[observationCategory].coding.system = "http://hl7.org/fhir/observation-category" (exactly)
+* category[observationCategory].coding.version ..0
+* category[observationCategory].coding.code 1..
+* category[observationCategory].coding.display 1..
 * insert Ruleset-CodingWithSystemCodeDisplay(category)
 
 * status 1..1 MS
@@ -84,7 +95,7 @@ Description: "Interweave Observation resource profile."
 * insert Ruleset-CodingWithSystemCodeDisplay(method)
 
 * value[x] only Quantity or CodeableConcept or string or boolean or Range or Ratio or SampledData or time or dateTime or Period
-* value[x].extension contains Extension-Interweave-R4ValueInteger named valueInteger 0..1
+//* value[x].extension contains Extension-Interweave-R4ValueInteger named valueInteger 0..1
 * value[x] 0..1 MS
 
 //comment in STU3
@@ -94,7 +105,7 @@ Description: "Interweave Observation resource profile."
 * component 0..* MS
 * component.extension contains Extension-Interweave-ValuePrecision named valuePrecision 0..1
 * component.value[x] only Quantity or CodeableConcept or string or Range or Ratio or SampledData or time or dateTime or Period
-* component.value[x].extension contains Extension-Interweave-R4ValueInteger named valueInteger 0..1
+//* component.value[x].extension contains Extension-Interweave-R4ValueInteger named valueInteger 0..1
 * component.value[x] 0..1 MS
 * component.code MS
 * component.code from https://fhir.hl7.org.uk/STU3/ValueSet/CareConnect-ObservationType-1 (preferred)
@@ -105,7 +116,13 @@ Description: "Interweave Observation resource profile."
 
 
 * issued 0..0
-* category.coding[snomedCT] 0..0
+* category[observationCategory].coding[snomedCT] 0..0
+
+
+Invariant: valint-1
+Description: "Cannot have both valueInteger and value[x]"
+* severity = #error
+* expression = "valueInteger.exists() != value.exists()"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Examples

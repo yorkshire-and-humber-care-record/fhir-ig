@@ -1,8 +1,8 @@
 Profile: InterweaveHealthcareService
 Parent: CareConnect-HealthcareService-1
 Id: Interweave-HealthcareService
-Description: "Interweave HealthcareService resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave HealthcareService resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

@@ -1,11 +1,11 @@
 Profile: InterweaveSlot
 Parent: CareConnect-Slot-1
 Id: Interweave-Slot
-Description: "Interweave Slot resource profile - DRAFT."
-* ^version = "1.0.0"
-* ^status = #draft
-* ^date = "2023-12-09"
-* ^publisher = "Interweave"
+Description: "Interweave Slot resource profile."
+// * ^version = "1.0.0"
+* ^status = #active
+// * ^date = "2023-12-09"
+// * ^publisher = "Interweave"
 
 * insert Ruleset-InterweaveBaseFields
 

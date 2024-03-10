@@ -1,4 +1,4 @@
-      Status: Draft: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets minimum expectations for the QuestionnaireResponse resource.
@@ -54,8 +54,6 @@ Other fields are optional and may be populated if known - on the understanding t
 QuestioinnaireResponse has two different mechanisms to support nesting of items - item.item and item.answer.item. The former is used when nesting items within a 'group' and the latter is always used when nesting items within a question. This is because items nested within a question always nest within each answer to the question. If the question allows multiple answers, each will have its own set of nested items.
 
 ***Note*** - The Interweave portal only supports flat structure within questionnaireResponse.item element at this time, although there is an intention to support nested items structure in the future. 
-
-
 
 ### **Discouraged or Removed fields**
 

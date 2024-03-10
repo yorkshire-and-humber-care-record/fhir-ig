@@ -155,7 +155,7 @@ Description: "Interweave Appointment resource profile."
 // Now we can slice it - to specify that we need the Subject, and want the Location and Primary Performer
 // (Leave the slicing open to not exclude others in future, but it is these three that we are expecting)
 * participant ^slicing.discriminator.type = #value
-* participant ^slicing.discriminator.path = "type"
+* participant ^slicing.discriminator.path = "type.coding.code"
 * participant ^slicing.ordered = false
 * participant ^slicing.rules = #open
 * participant contains
@@ -164,17 +164,26 @@ Description: "Interweave Appointment resource profile."
     primaryPerformer 0..1 MS
 
 // TODO - but... how do we find this by NHS Number. (Could include the id here, but is that enough?)
-* participant[subject].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" (exactly)
+//* participant[subject].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" (exactly)
+* participant[subject].type.coding.system =  "http://hl7.org/fhir/v3/ParticipationType" (exactly)
+* participant[subject].type.coding.code =  #SBJ (exactly)
+* participant[subject].type.coding.display =  "subject" (exactly)
 * participant[subject].actor 1..1 MS
 * participant[subject].actor only Reference(Patient)
 * insert Ruleset-ReferenceWithReferenceAndDisplay(participant[subject].actor)
 
-* participant[location].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" (exactly)
+//* participant[location].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" (exactly)
+* participant[location].type.coding.system =  "http://hl7.org/fhir/v3/ParticipationType" (exactly)
+* participant[location].type.coding.code =  #LOC (exactly)
+* participant[location].type.coding.display =  "location" (exactly)
 * participant[location].actor 1..1 MS
 * participant[location].actor only Reference(Location)
 * insert Ruleset-ReferenceWithReferenceAndDisplay(participant[location].actor)
 
-* participant[primaryPerformer].type =  http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer" (exactly)
+//* participant[primaryPerformer].type =  http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer" (exactly)
+* participant[primaryPerformer].type.coding.system =  "http://hl7.org/fhir/v3/ParticipationType" (exactly)
+* participant[primaryPerformer].type.coding.code =  #PPRF (exactly)
+* participant[primaryPerformer].type.coding.display =  "primary performer" (exactly)
 * participant[primaryPerformer].actor 1..1 MS
 * participant[primaryPerformer].actor only Reference(Practitioner)
 * insert Ruleset-ReferenceWithReferenceAndDisplay(participant[primaryPerformer].actor)

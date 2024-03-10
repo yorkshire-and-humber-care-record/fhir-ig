@@ -9,9 +9,9 @@ Description: "Interweave BreathingAir Observation resource profile."
 * status ^short = "Fixed value of ‘final’."
 
 * category 1..1 MS
-* category.coding.system = "http://hl7.org/fhir/observation-category" (exactly)
-* category.coding.code = #vital-signs (exactly)
-* category.coding.display = "Vital Signs" (exactly)
+* category[observationCategory].coding.system = "http://hl7.org/fhir/observation-category" (exactly)
+* category[observationCategory].coding.code = #vital-signs (exactly)
+* category[observationCategory].coding.display = "Vital Signs" (exactly)
 * category.coding.display 1..1
 
 * code 1..1 MS
@@ -30,5 +30,5 @@ Description: "Interweave BreathingAir Observation resource profile."
 
 * component 0..0
 * extension[Extension-Interweave-ValuePrecision] 0..0
-* value[x].extension[Extension-Interweave-R4ValueInteger] 0..0
-* valueBoolean.extension[Extension-Interweave-R4ValueInteger] 0..0
+//* value[x].extension[Extension-Interweave-R4ValueInteger] 0..0
+//* valueBoolean.extension[Extension-Interweave-R4ValueInteger] 0..0

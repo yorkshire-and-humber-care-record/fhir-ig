@@ -25,12 +25,17 @@ Description: "Interweave Weight (Vital signs) resource profile."
 * basedOn ^short = "DISCOURAGED - This field does not appear to provide information which would be beneficial in a shared care record. It also allows references to a raft of request/order resources which introduces a lot of complexity for a data consumer."
 
 * category 1..1 MS
-* category.coding.system = "http://hl7.org/fhir/observation-category" (exactly)
-* category.coding[observationCategory].system = "http://hl7.org/fhir/observation-category" (exactly)
-* category.coding.code = #vital-signs (exactly)
-* category.coding[observationCategory].code = #vital-signs (exactly)
-* category.coding.display = "Vital Signs" (exactly)
-* category.coding[observationCategory].display = "Vital Signs" (exactly)
+* category[observationCategory].coding.system = "http://hl7.org/fhir/observation-category" (exactly)
+* category[observationCategory].coding.code = #vital-signs (exactly)
+* category[observationCategory].coding.display = "Vital Signs" (exactly)
+
+
+// * category.coding.system = "http://hl7.org/fhir/observation-category" (exactly)
+// * category.coding[observationCategory].system = "http://hl7.org/fhir/observation-category" (exactly)
+// * category.coding.code = #vital-signs (exactly)
+// * category.coding[observationCategory].code = #vital-signs (exactly)
+// * category.coding.display = "Vital Signs" (exactly)
+// * category.coding[observationCategory].display = "Vital Signs" (exactly)
 
 * status 1..1 MS
 * status = #final (exactly)
@@ -81,8 +86,8 @@ Description: "Interweave Weight (Vital signs) resource profile."
 * extension[Extension-CareConnect-ReasonCondition-1] 0..0
 * extension[Extension-Interweave-ValuePrecision] 0..0
 * category.coding[snomedCT] 0..0
-* value[x].extension[Extension-Interweave-R4ValueInteger] 0..0
-* valueQuantity.extension[Extension-Interweave-R4ValueInteger] 0..0
+// * value[x].extension[Extension-Interweave-R4ValueInteger] 0..0
+// * valueQuantity.extension[Extension-Interweave-R4ValueInteger] 0..0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Examples

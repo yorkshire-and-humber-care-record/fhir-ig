@@ -43,7 +43,7 @@ Description: "Interweave Condition resource profile."
 //  Essential to provide to describe what the condition actually is.
 //  We pre-adopt the UKCore code list - which extends the standard FHIR list by adding codes for social care and A&E
 * code 1..1 MS
-* code from Interweave-UkCoreCareConditionCode (preferred)
+* code from CareConnect-ConditionCode-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(code)
 
 

@@ -51,7 +51,7 @@ Description: "Interweave Flag resource profile"
 // --- Removed fields ---
 ///////////////////////////////////////
 * encounter 0..0 
-* code.coding[snomedCT] 0..0
+//* code.coding[snomedCT] 0..0
 
 ///////////////////////////////////////
 // --- Discouraged fields ---

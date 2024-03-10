@@ -1,8 +1,8 @@
 Profile: InterweaveQuestionnaireResponse
 Parent: CareConnect-QuestionnaireResponse-1
 Id: Interweave-QuestionnaireResponse
-Description: "Interweave QuestionnaireResponse resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave QuestionnaireResponse resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 

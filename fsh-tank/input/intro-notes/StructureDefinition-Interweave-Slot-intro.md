@@ -1,4 +1,4 @@
-      Status: Draft: For Review (STU)
+      Status: Active: Approved (STU)
 
 ## **Introduction**
 This profile sets minimum expectations for the Slot resource. A slot of time on a schedule that may be available for booking appointments.

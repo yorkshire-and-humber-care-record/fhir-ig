@@ -17,8 +17,15 @@ Description: "Interweave ACVPU Observation resource profile."
 * status ^short = "Fixed value of ‘final’."
 
 * category 1..1 MS
-* category.coding.code = #vital-signs (exactly)
-* category.coding.display = "Vital Signs" (exactly)
+* category ^slicing.discriminator.type = #value
+* category ^slicing.discriminator.path = "system"
+* category ^slicing.rules = #open
+* category contains observationCategory 1..1
+* category[observationCategory] ^binding.strength = #required
+
+* category[observationCategory].coding.system = "http://hl7.org/fhir/observation-category" (exactly)
+* category[observationCategory].coding.code = #vital-signs (exactly)
+* category[observationCategory].coding.display = "Vital Signs" (exactly)
 
 * code 1..1 MS
 

@@ -1,8 +1,8 @@
 Profile: InterweaveSchedule
 Parent: CareConnect-Schedule-1
 Id: Interweave-Schedule
-Description: "Interweave Schedule resource profile - DRAFT."
-* ^status = #draft
+Description: "Interweave Schedule resource profile."
+* ^status = #active
 
 * insert Ruleset-InterweaveBaseFields
 
