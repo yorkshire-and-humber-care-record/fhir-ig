@@ -208,7 +208,7 @@ RuleSet: Ruleset-Hospitalization
 // AdmitSource: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list)
 * hospitalization.admitSource MS
-* hospitalization.admitSource from CareConnect-SourceOfAdmission-1 (required)
+* hospitalization.admitSource from Interweave-AdmissionSource-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.admitSource)
 
 // Readmission: Optional.

@@ -11,8 +11,9 @@ Description: "Interweave Flag resource profile"
 ///////////////////////////////////////
 
 * status 1..1 MS
-* status = #active (exactly)
-* status ^short = "Only use 'active' - only active flags should be shared."
+// Updated after TDA Change Request Approval
+//* status = #active (exactly)
+* status ^short = "Indicates whether this flag is active or whether it is no longer active"
 
 * category 1..1 MS
 * category from Interweave-FlagCategory-1 (required)

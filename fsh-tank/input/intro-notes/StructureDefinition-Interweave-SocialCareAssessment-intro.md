@@ -17,7 +17,9 @@ We are primarily interested in recording that an assessment is being / has been 
 ### **Mandatory fields**
 The following fields are mandatory:
 
-- **status** A mandatory flag to indicate whether the assessment is active or not. We limit the valueset to accepted; in-progress; completed; entered-in-error.
+- **status** A mandatory flag to indicate whether the assessment is active or not. We limit the valueset to accepted; in-progress; completed; entered-in-error; cancelled.
+
+[ (where an OT Assessment was started, partially completed, before being cancelled because the patient refused to co-operate.  It would be useful for say a community OT to see Local Authority cancelled an OT halfway through ... e.g. give them a call to find out more details.)]: #
 
 - **intent** Although this field is not relevant to Social Care, it is mandatory within FHIR, therefore we default its value to 'plan'.
 

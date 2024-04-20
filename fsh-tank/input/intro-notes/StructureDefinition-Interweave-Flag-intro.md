@@ -11,14 +11,14 @@ This profile sets minimum expectations for the Flag resource.
 ### **Coverage and references**
 
 - Data Providers MUST offer Social Care Flag FHIR resources to represent flags against its own patients.
-- Only active flags should be made available for consumption.
+- Only active / inactive flags should be made available for consumption.
 - When referencing a Flag then the "reference" (URL of FHIR Resource) and "display" (The Flag type.display) MUST be populated.
 
 ### **Mandatory fields**
 The following fields are mandatory:
-- **status** only flags which are currently active against a person should be shared. Therefore the value in this field will always be 'active'. 
+- **status** only flags which are currently active and/or inactive flags that could benefit clinicians / users against a person should be shared. 
 
-- **category** this provides a level of categorisation, i.e. Risk to others, Risk to self, safeguarding concern and other. This should always be known and is vital for meaningful display purposes. Here We have defined a custom code list for the most common categories of flags used by Social Care. We fully expect that this list will need to be extended for use by healthcare providers. If you need further categories considering, please get in touch. 
+- **category** this provides a level of categorisation, i.e. Risk to others, Risk to self, safeguarding concern, leagal status of the patient and other. This should always be known and is vital for meaningful display purposes. Here We have defined a custom code list for the most common categories of flags used by Social Care. We fully expect that this list will need to be extended for use by healthcare providers. If you need further categories considering, please get in touch. 
 
 - **code** code is used to record the type of flag assigned to a patient. Here we specify a preferred list which was developed for Social Care. Again we expect that this list will need to expand to cater for healthcare providers. Please get in touch should you required further 'flag types' adding.
 

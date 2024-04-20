@@ -18,7 +18,7 @@ Description: "Interweave ACVPU Observation resource profile."
 
 * category 1..1 MS
 * category ^slicing.discriminator.type = #value
-* category ^slicing.discriminator.path = "system"
+* category ^slicing.discriminator.path = "coding.system"
 * category ^slicing.rules = #open
 * category contains observationCategory 1..1
 * category[observationCategory] ^binding.strength = #required

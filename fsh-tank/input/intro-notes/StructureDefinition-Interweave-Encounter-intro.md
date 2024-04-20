@@ -215,10 +215,13 @@ Fields in the Hospitalization structure are as follows:
       - Required at the “site” level if arriving from another institution
       - Optional if arriving from a residential address
    - **Admit Source** - Useful information about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
+
+      - Please note that the NHS Data Dictionary national codes for [Source of Admission](https://www.datadictionary.nhs.uk/attributes/source_of_admission.html) has been replaced with [Admission Source](https://www.datadictionary.nhs.uk/attributes/admission_source.html). The current Valueset contains codes from both codesystems, however please use the new Interweave code system for new data provision projects.
+   
    - **Destination** - Information about the location which the patient is discharged to (if relevant / known)
       - Required at the “site” level if discharged to another institution
       - Optional if discharged to a residential address
-   - **Discharge Disposition** - Useful information about the type of place the patient has been discharged to (eg home, other NHS hospital, care home, etc)). (We use a value set which updates that provided by CareConnect with the latest improved list from the [NHS Data Dictionary](https://www.datadictionary.nhs.uk/attributes/destination_of_discharge.html))
+   - **Discharge Disposition** - Useful information about the type of place the patient has been discharged to (eg home, other NHS hospital, care home, etc). (We use a value set which updates that provided by CareConnect with the latest improved list from the [NHS Data Dictionary](https://www.datadictionary.nhs.uk/attributes/destination_of_discharge.html))
    - **Medically Safe For Discharge** - This extension has been added to capture important information to assist with discharge planning and analysis. It contains a status code (ready, not ready, or unknown), plus the predicted and actual date when the patient is medically safe for discharge.
 
     *Note that Origin and Destination are likely to be external locations - please refer to guidance on the [Location profile](StructureDefinition-Interweave-Location.html) about use of References. For example the use of a Contained Resource may be appropriate.*

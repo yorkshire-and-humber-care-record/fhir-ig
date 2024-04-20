@@ -9,3 +9,4 @@ Description: "This valueset uses codes from the STU3 FHIR task-status code syste
 * $Status#in-progress "In Progress"
 * $Status#completed "Completed"
 * $Status#entered-in-error "Entered in Error"
+* $Status#cancelled "Cancelled"

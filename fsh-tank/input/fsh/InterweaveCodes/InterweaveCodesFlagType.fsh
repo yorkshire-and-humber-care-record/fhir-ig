@@ -20,7 +20,7 @@ Description: "Defines the set of codes that can be used to identify the type of 
 * include codes from system SNOMED_CT where concept is-a #225444004 //At risk for suicide
 * include codes from system SNOMED_CT where concept is-a #761571000000106 //At risk of financial abuse
 * include codes from system SNOMED_CT where concept is-a #1098411000000108 //Notification to adult safeguarding team of missing adult
-
+* include codes from system SNOMED_CT where concept is-a #365867006 //Finding of legal status of patient
 //Locally defined codes:
 * include codes from system Interweave-SocialCareFlagType-1
 
