@@ -19,3 +19,4 @@ Description: "EpisodeOfCare Type codes"
 * #SecondaryCare "Secondary Care"
 * #TertiaryCare "Tertiary Care"
 * #CommunityHealth "Community Health"
+* #VirtualWard "Virtual Ward" //Added after approval at TDA JUL 2024

@@ -9,3 +9,5 @@ Thumbs.db
 /fsh-tank/fsh-generated-STU3
 node_modules/
 /input-cache
+/fhir-interweave
+/scripts

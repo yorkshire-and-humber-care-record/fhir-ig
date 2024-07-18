@@ -54,6 +54,8 @@ These fields are optional and may be populated if known - on the understanding t
 
 - **performer** - Option to provide the Practitioner or Organizational Team or Organization, which fitted or placed the equipment with/on the person.
 
+- **reasonCode** - Reason or justification for the use of this device.
+
 ### **Discouraged or Removed fields**
 The following fields are not relevant to social care and have been removed.
     
@@ -64,7 +66,6 @@ The following fields are not relevant to social care and have been removed.
 - **priority** 
 - **context** 
 - **performerType**
-- **reasonCode**
 - **reasonReference**
 - **supportingInformation**
 - **relevantHistory**

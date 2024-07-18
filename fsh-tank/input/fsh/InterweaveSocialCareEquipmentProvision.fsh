@@ -67,6 +67,8 @@ Description: "Interweave Social Care Equipment Provision resource profile"
 * insert Ruleset-ReferenceWithReferenceAndDisplay(performer)
 * performer ^short = "The practitioner, organization or organizationalTeam who placed or fitted the equipment with/on the person."
 
+* reasonCode from http://hl7.org/fhir/ValueSet/condition-code (preferred)
+
 ///////////////////////////////////////
 // --- Discouraged fields ---
 ///////////////////////////////////////
@@ -84,7 +86,7 @@ Description: "Interweave Social Care Equipment Provision resource profile"
 * groupIdentifier 0..0
 * priority  0..0
 * performerType 0..0
-* reasonCode 0..0
+//* reasonCode 0..0 Changed as per TDA Approval JUL2024
 * priorRequest 0..0
 * reasonReference 0..0
 * supportingInfo 0..0
