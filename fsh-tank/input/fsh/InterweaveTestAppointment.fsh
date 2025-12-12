@@ -1,8 +1,8 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: InterweaveAppointment
+Profile: InterweaveTestAppointment
 Parent: CareConnect-Appointment-1
-Id: Interweave-Appointment
+Id: InterweaveTest-Appointment
 Description: "Interweave Appointment resource profile."
 * ^status = #active
 
@@ -63,14 +63,9 @@ Description: "Interweave Appointment resource profile."
 //    We also want to pre-adopt this value set from UK Core which is better than the original FHIR suggestion
 //    (More relevant to UK and better coverage of social care)
 //    It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
-
-// Note: CC removed mandatory part of validator phase 1 work. (19/11/2025)
-//* serviceType 1..* MS
-* serviceType MS
+* serviceType 1..* MS
 * serviceType from Interweave-UkCoreCareSettingType (preferred)
-
-// Note: CC removed ruleSet validator phase 1 work. (19/11/2025)
-//* insert Ruleset-CodingWithSystemCodeDisplay(serviceType)
+* insert Ruleset-CodingWithSystemCodeDisplay(serviceType)
 
 
 // Specialty: leave optional. Further describes the type of service / person so useful if known, 
@@ -175,10 +170,7 @@ Description: "Interweave Appointment resource profile."
 * participant[subject].type.coding.display =  "subject" (exactly)
 * participant[subject].actor 1..1 MS
 * participant[subject].actor only Reference(Patient)
-
-// Note: CC removed mandatory display as part of validator phase 1 work. (19/11/2025)
-//* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[subject].actor)
-* insert Ruleset-ReferenceWithReferenceOnly(participant[subject].actor)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[subject].actor)
 
 //* participant[location].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" (exactly)
 * participant[location].type.coding.system =  "http://hl7.org/fhir/v3/ParticipationType" (exactly)
@@ -186,9 +178,7 @@ Description: "Interweave Appointment resource profile."
 * participant[location].type.coding.display =  "location" (exactly)
 * participant[location].actor 1..1 MS
 * participant[location].actor only Reference(Location)
-// Note: CC removed mandatory display as part of validator phase 1 work. (19/11/2025)
-//* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[location].actor)
-* insert Ruleset-ReferenceWithReferenceOnly(participant[location].actor)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[location].actor)
 
 //* participant[primaryPerformer].type =  http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer" (exactly)
 * participant[primaryPerformer].type.coding.system =  "http://hl7.org/fhir/v3/ParticipationType" (exactly)
@@ -196,66 +186,65 @@ Description: "Interweave Appointment resource profile."
 * participant[primaryPerformer].type.coding.display =  "primary performer" (exactly)
 * participant[primaryPerformer].actor 1..1 MS
 * participant[primaryPerformer].actor only Reference(Practitioner)
-// Note: CC removed mandatory display as part of validator phase 1 work. (19/11/2025)
-//* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[primaryPerformer].actor)
-* insert Ruleset-ReferenceWithReferenceOnly(participant[primaryPerformer].actor)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(participant[primaryPerformer].actor)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXAMPLES
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Instance: InterweaveAppointmentExample
-// InstanceOf: InterweaveAppointment
-// Description: "Interweave Appointment example"
+Instance: InterweaveAppointmentExample
+InstanceOf: InterweaveAppointment
+Description: "Interweave Appointment example"
 
-// * insert Ruleset-ExampleMetaForHospital(Appointment)
+* insert Ruleset-ExampleMetaForHospital(Appointment)
 
-// // Text summary no longer needed
-// // (Start + Service Type + Location.display)
-// //* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
+// Text summary no longer needed
+// (Start + Service Type + Location.display)
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022-9:00 : Adult dermatology service : York Hospital: Ward 27 - Dermatology clinic"
 
-// * extension[Extension-Interweave-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
+* extension[Extension-Interweave-R4PatientInstruction].valueString = "The clinic is on the second floor. Please do not attend if you have covid symptoms."
 
-// * extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
-// * extension[Extension-Interweave-R4AppointmentCancellationReason].valueCodeableConcept = Interweave-R4AppointmentCancellationReason#pat "Patient"
+* extension[Extension-CareConnect-DeliveryChannel-1].valueCode = https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-DeliveryChannel-1#In-person "In-person"
+* extension[Extension-Interweave-R4AppointmentCancellationReason].valueCodeableConcept = Interweave-R4AppointmentCancellationReason#pat "Patient"
 
-// * insert Ruleset-ExampleLocalId(appointment, RCB.APPT-Q54321)
+* insert Ruleset-ExampleLocalId(appointment, RCB.APPT-Q54321)
 
-// * status = http://hl7.org/fhir/appointmentstatus#booked "Booked"
+* status = http://hl7.org/fhir/appointmentstatus#booked "Booked"
 
-// // Service Category: leave optional
-// * serviceType = $SCT#23871000087101 "Adult dermatology service"
-// // Specialty: leave optional
-// * appointmentType = http://hl7.org/fhir/v2/0276#FOLLOWUP "A follow up visit from a previous appointment"
+// Service Category: leave optional
+* serviceType = $SCT#23871000087101 "Adult dermatology service"
+// Specialty: leave optional
+* appointmentType = http://hl7.org/fhir/v2/0276#FOLLOWUP "A follow up visit from a previous appointment"
 
-// * reasonCode = $SCT#299007 "Paraffinoma of skin" // R4 - STU3 has "reason"
-
-
-// * description = "Outpatient dermatology clinic"
-
-// * start = "2022-01-09T09:00:00Z"
-// * end = "2022-01-09T09:30:00Z"
-// * minutesDuration = 30
-
-// * created = "2021-12-05T00:00:00Z"
+* reasonCode = $SCT#299007 "Paraffinoma of skin" // R4 - STU3 has "reason"
 
 
-// // For now take this out, as referral downgraded to optional (due to R4 changes)
-// //* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+* description = "Outpatient dermatology clinic"
 
-// * participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
-// * participant[0].actor = Reference(InterweavePatientExample-MustSupport) 
-// * participant[0].actor.display = "Mr Fred BLOGGS"
-// * participant[0].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
+* start = "2022-01-09T09:00:00Z"
+* end = "2022-01-09T09:30:00Z"
+* minutesDuration = 30
 
-// * participant[1].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" 
-// * participant[1].actor = Reference(InterweaveLocationWardExample1)
-// * participant[1].actor.display = "York Hospital: Ward 27 - Dermatology clinic"
-// * participant[1].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
+* created = "2021-12-05T00:00:00Z"
 
-// * participant[2].type = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-// * participant[2].actor = Reference(InterweavePractitionerExample)
-// * participant[2].actor.display = "Dr Jane BLOGGS"
-// //* participant[2].actor.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-// //* participant[2].actor.identifier.value = "ABC123"
-// * participant[2].status = http://hl7.org/fhir/participationstatus#tentative "Tentative" 
+
+// For now take this out, as referral downgraded to optional (due to R4 changes)
+//* basedOn.display = "2021-11-04: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+
+* participant[0].type =  http://hl7.org/fhir/v3/ParticipationType#SBJ "subject" 
+* participant[0].actor = Reference(InterweavePatientExample-MustSupport) 
+* participant[0].actor.display = "Mr Fred BLOGGS"
+* participant[0].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
+
+* participant[1].type =  http://hl7.org/fhir/v3/ParticipationType#LOC "location" 
+* participant[1].actor = Reference(InterweaveLocationWardExample1)
+* participant[1].actor.display = "York Hospital: Ward 27 - Dermatology clinic"
+* participant[1].status = http://hl7.org/fhir/participationstatus#accepted "Accepted" 
+
+* participant[2].type = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
+* participant[2].actor = Reference(InterweavePractitionerExample)
+* participant[2].actor.display = "Dr Jane BLOGGS"
+//* participant[2].actor.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* participant[2].actor.identifier.value = "ABC123"
+* participant[2].status = http://hl7.org/fhir/participationstatus#tentative "Tentative" 
+

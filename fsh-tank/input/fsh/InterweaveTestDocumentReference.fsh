@@ -1,8 +1,8 @@
 Alias: $SCT = http://snomed.info/sct
 
-Profile: InterweaveDocumentReference
+Profile: InterweaveTestDocumentReference
 Parent: CareConnect-DocumentReference-1
-Id: Interweave-DocumentReference
+Id: InterweaveTest-DocumentReference
 Description: "Interweave DocumentReference resource profile."
 * ^status = #active
 
@@ -56,9 +56,7 @@ Description: "Interweave DocumentReference resource profile."
 // But explain in words what we want
 * author    MS
 * author ^short = "Who and/or what authored the document. NB: For most use-cases this should contain a single practitioner who is the main contact for any further questions"
-// Note: CC removed mandatory display as part of validator phase 1 work. (19/11/2025)
-//* insert Ruleset-ReferenceWithReferenceAndDisplay(author)
-* insert Ruleset-ReferenceWithReferenceOnly(author)
+* insert Ruleset-ReferenceWithReferenceAndDisplay(author)
 
 // Authenticator - leave optional
 // More likely to be relevant for internal records rather than external sharing, but may be used if desired
@@ -106,39 +104,39 @@ Description: "Interweave DocumentReference resource profile."
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// Instance: InterweaveDocumentReferenceExample
-// InstanceOf: InterweaveDocumentReference
-// Description: "Interweave Document Reference example"
+Instance: InterweaveDocumentReferenceExample
+InstanceOf: InterweaveDocumentReference
+Description: "Interweave Document Reference example"
 
 
-// * insert Ruleset-ExampleMetaForHospital(DocumentReference)
+* insert Ruleset-ExampleMetaForHospital(DocumentReference)
 
-// // Text summary no longer needed
-// // (Date + Type)
-// //* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 : Discharge Letter"
+// Text summary no longer needed
+// (Date + Type)
+//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 : Discharge Letter"
 
-// * status = http://hl7.org/fhir/document-reference-status#current "Current"
-// * docStatus = http://hl7.org/fhir/composition-status#final "Final"
+* status = http://hl7.org/fhir/document-reference-status#current "Current"
+* docStatus = http://hl7.org/fhir/composition-status#final "Final"
 
-// * type = $SCT#8237010000001 "Discharge Letter"
+* type = $SCT#8237010000001 "Discharge Letter"
 
-// * subject = Reference(InterweavePatientExample-MustSupport) 
-// * subject.display = "Mr Fred BLOGGS"
+* subject = Reference(InterweavePatientExample-MustSupport) 
+* subject.display = "Mr Fred BLOGGS"
 
-// * date = "2022-01-09T00:00:00Z"  // "indexed" in STU3
+* date = "2022-01-09T00:00:00Z"  // "indexed" in STU3
 
-// * author = Reference(InterweavePractitionerExample)
-// * author.display = "Dr Jane BLOGGS"
-// //* author.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-// //* author.identifier.value = "ABC123"
+* author = Reference(InterweavePractitionerExample)
+* author.display = "Dr Jane BLOGGS"
+//* author.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+//* author.identifier.value = "ABC123"
 
-// // And then we have the "context" structure with numerous fields:
-// //  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
+// And then we have the "context" structure with numerous fields:
+//  Encounter (MS) It is extremely useful to link documents back to the encounter they relate to
 
-// * context.encounter = Reference(InterweaveEncounterExample-MaturityLevel1)
-// //* context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
+* context.encounter = Reference(InterweaveEncounterExample-MaturityLevel1)
+//* context.encounter.display = "09/01/2022 - inpatient acute - Seen in hospital ward"
 
-// // And finally the actual content. This and the attachment are already mandatory in FHIR, and we also need the content type
-// * content.attachment.contentType = #text/html
-// * content.attachment.url = "https://my.server.com/documents/21f51e78-a46d-402c-aa22-dd43e0fec530"
+// And finally the actual content. This and the attachment are already mandatory in FHIR, and we also need the content type
+* content.attachment.contentType = #text/html
+* content.attachment.url = "https://my.server.com/documents/21f51e78-a46d-402c-aa22-dd43e0fec530"
 

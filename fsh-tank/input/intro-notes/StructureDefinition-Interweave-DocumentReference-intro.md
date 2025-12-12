@@ -62,7 +62,7 @@ Other fields are optional and may be populated if known - on the understanding t
 
 
 ### **Approaches to document content**
-The DocumentReference this offers three different ways to transmit the document content and it is important to understand the details of this. The sections below cover each option in turn.
+The DocumentReference offers three different ways to transmit the document content and it is important to understand the details of this. The sections below cover each option in turn.
 
  - **(1) Embedded document (only supported for messaging NOT online query)**
 

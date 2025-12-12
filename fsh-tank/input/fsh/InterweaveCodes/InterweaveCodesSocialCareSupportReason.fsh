@@ -27,7 +27,4 @@ Description: "The social care support reason."
 * #SS #SS-SHI "Sensory Support: Support for hearing impairment"
 * #SS #SS-SDI "Sensory Support: Support for dual impairment"
 * #UNK "PSR Not Known"
-
-
-
-
+* #OTH "Other"

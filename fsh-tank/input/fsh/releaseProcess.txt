@@ -1,0 +1,33 @@
+cd C:\Dev\fhir-git\fhir-ig (this could be different as per individual setup)
+_genonceYHCR
+
+// if jekyll does not complete after generating
+
+cd C:\Dev\fhir-git\fhir-ig\fsh-tank\scripts\tweak-website
+node --max-old-space-size=7096 addMissingFiles.js 
+
+// Run jekyll again manually 
+cd C:\Dev\fhir-git\fhir-ig\temp\pages
+jekyll build --destination "C:\Dev\fhir-git\fhir-ig\output"
+
+//once completed, run tweak-website code 
+cd C:\Dev\fhir-git\fhir-ig\fsh-tank\scripts\tweak-website
+node index.js
+
+// run series of js files to update the version switch over
+cd C:\Dev\fhir-git\fhir-ig\scripts\publishBox
+node --max-old-space-size=7096 UpdateSDInterweave_1.js
+node --max-old-space-size=7096 UpdateSDInterweave_2.js
+node --max-old-space-size=7096 UpdateSDInterweave_3.js
+node --max-old-space-size=7096 UpdateInterweaveCS.js
+node --max-old-space-size=7096 UpdateInterweaveEXT.js
+node --max-old-space-size=7096 UpdateInterweaveVS.js
+node --max-old-space-size=7096 UpdateSDCareConnect_1.js
+node --max-old-space-size=7096 UpdateSDCareConnect_2.js
+node --max-old-space-size=7096 UpdateSDCareConnect_3.js
+node --max-old-space-size=7096 UpdateSDCareConnect_4.js
+node --max-old-space-size=7096 UpdateCareConnectCS.js
+node --max-old-space-size=7096 UpdateCareConnectEXT.js
+node --max-old-space-size=7096 UpdateCareConnectVS.js
+node --max-old-space-size=7096 UpdateInterweaveExample.js
+node --max-old-space-size=7096 UpdateBaseFiles.js

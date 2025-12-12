@@ -57,8 +57,7 @@ In addition the following fields are "Must Support" - ie they must be populated 
         >
         >   Other contentTypes should only be used with caution, as not all Data Consumers may be able to view them.
 
-   - As of this writing (Feb 2022) the actual content must be Base64 encoded and included in the "data" element
-   - Longer term it is anticipated that the messaging infrastructure will be enhanced to also support "url" links to a separately saved document - with this then becoming the preferred mechanism due to the reduced message size. (See [DocumentReference](StructureDefinition-Interweave-DocumentReference.html) for further guidance on providing url links)
+   - Please see the preferred mechanism for sharing Diagnostic Report content. (See [DocumentReference](https://fhir.interweavedigital.com/StructureDefinition-Interweave-DocumentReference.html#approaches-to-document-content) for further guidance on providing url links)
    - A particular issue for Diagnostic Reports is that the underlying source for many diagnostic reports is messages extracted from a text-based lab or RIS system.
      - The ***strongly preferred*** approach is to reformat textual reports as HTML - as this is an interoperable standard which guarantees consistent presentation across any consumer system
      - It is also important to ensure that any such text is HTML Encoded - for example to make sure that characters such as "<" in the report do not cause problems when displaying.   

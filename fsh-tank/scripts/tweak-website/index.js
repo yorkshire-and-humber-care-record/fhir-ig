@@ -27,7 +27,7 @@ const domArtifacts = new JSDOM(fileArtifactsData);
 artifactsTrElements = domArtifacts.window.document.getElementsByTagName("tr");
 for (let i = 0; i < artifactsTrElements.length; i++) {
   
-  if(artifactsTrElements[i].innerHTML.includes("CareConnect") || artifactsTrElements[i].innerHTML.includes("Extensioncodingsctdescid")) {
+  if(artifactsTrElements[i].innerHTML.includes("CareConnect") || artifactsTrElements[i].innerHTML.includes("Extensioncodingsctdescid") || artifactsTrElements[i].innerHTML.includes("InterweaveTest")) {
     //console.log(artifactsTrElements[i].innerHTML);
     artifactsTrElements[i].style.display = "none";
   } // If CareConnect

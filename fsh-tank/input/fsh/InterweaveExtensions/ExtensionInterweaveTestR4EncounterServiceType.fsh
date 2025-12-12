@@ -1,5 +1,5 @@
-Extension: ExtensionInterweaveR4EncounterServiceType
-Id: Extension-Interweave-R4EncounterServiceType
+Extension: ExtensionInterweaveTestR4EncounterServiceType
+Id: Extension-InterweaveTest-R4EncounterServiceType
 Description: "An extension to add Service Type to the Encounter. This is pre-adopting a field that is missing in STU3 but added in R4"
 * ^status = #draft
 
@@ -16,5 +16,4 @@ Description: "An extension to add Service Type to the Encounter. This is pre-ado
 // (More relevant to UK and better coverage of social care)
 // It is based on SNOMED refset 1127531000000102: Services Simple Reference Set
 * valueCodeableConcept from Interweave-UkCoreCareSettingType (preferred)
-// Note: CC removed mandatory code,system,display as part of validator phase 1 work. (19/11/2025)
-//* insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)
+* insert Ruleset-CodingWithSystemCodeDisplay(valueCodeableConcept)

@@ -199,4 +199,3 @@ RuleSet: Ruleset-ReferenceWithReferenceOnly(path)
 * {path}.reference ^short = "Reference to a resource (could be Contained)"
 * {path}.identifier 0..1
 * {path}.identifier ^short = "If relevant could include an id"
-

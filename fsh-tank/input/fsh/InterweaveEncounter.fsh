@@ -51,7 +51,9 @@ Description: "Interweave Encounter resource profile."
 //      (Use our own list in case we want to add to it - including to allow Encounter Grouping)
 //      However Class History we do not want.
 //      Each encounter should be of exactly one class. If the class changes then this is modelled as a separate encounter
-* class 1..1 MS //(R4 is already 1..1, so need to hack this in via script)
+// Note: CC removed mandatory part of validator phase 1 work. (19/11/2025)
+//* class 1..1 MS
+* class MS //(R4 is already 1..1, so need to hack this in via script)
 //* class from http://hl7.org/fhir/ValueSet/v3-ActEncounterCode (required)
 * class from Interweave-EncounterClass-1 (required)
 * class ^short = "Classification of the encounter. EXTENSIBLE on request, eg to cover other care settings"
@@ -100,15 +102,23 @@ Description: "Interweave Encounter resource profile."
 // (Note: Tried to do this with slicing, but the "type" is an array! Too hard, will just have to be text...)
 
 // Must be at least one participant - the Primary Performner
-* participant 1..* MS
+// Note: CC removed mandatory part of validator phase 1 work. (19/11/2025)
+//* participant 1..* MS
+* participant MS
 // Only one "type" per participant. Pick the main one. (Or list the whole participant several times)
-* participant.type 1..1 MS
+// Note: CC removed mandatory part of validator phase 1 work. (19/11/2025)
+//* participant.type 1..1 
+* participant.type MS
 * participant.type from http://hl7.org/fhir/ValueSet/encounter-participant-type (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(participant.type)
 // Must actually reference someone, and for this type of encounter they must be a practitioner
-* participant.individual 1..1 MS
+// Note: CC removed mandatory part of validator phase 1 work. (19/11/2025)
+//* participant.individual 1..1 MS
+* participant.individual MS
 * participant.individual only Reference(CareConnect-Practitioner-1)
-* insert Ruleset-ReferenceWithReferenceAndDisplay(participant.individual) 
+// Note: CC removed mandatory display as part of validator phase 1 work. (19/11/2025)
+* insert Ruleset-ReferenceWithReferenceOnly(participant.individual)
+//* insert Ruleset-ReferenceWithReferenceAndDisplay(participant.individual) 
 // Period is optional, may be useful if they were briefly involved, but most likely it matches the period of the encounter
 
 
@@ -157,7 +167,7 @@ Description: "Interweave Encounter resource profile."
 //   Depending on scenario it could include information on admission, discharge, both, or neither
 //   However where relevant it must be populated - all information must be available in these base encounters
 * hospitalization 0..1 MS
-* insert Ruleset-Hospitalization
+* insert Ruleset-Hospitalization1
 
 // Location: Mandatory.
 //   The location provides essential information about where the encounter took place. 
@@ -169,7 +179,9 @@ Description: "Interweave Encounter resource profile."
 * location.location MS
 * insert Ruleset-ReferenceWithReferenceAndDisplay(location.location)
 * location.status 1..1 MS
-* location.period 1..1 MS
+* location.period MS
+// Note: CC removed mandatory part of validator phase 1 work. (19/11/2025)
+//* location.period 1..1 MS
 
 // Service Provider: Discouraged
 //  This is covered via the provenance tags
@@ -185,7 +197,7 @@ Description: "Interweave Encounter resource profile."
 ////////////////////////////////////////////////////////////////////////////////////////
 // Hospitalization Ruleset
 ////////////////////////////////////////////////////////////////////////////////////////
-RuleSet: Ruleset-Hospitalization
+RuleSet: Ruleset-Hospitalization1
 
 // PreAdmissionIdentifier: Leave as optional (TODO confirm exactly what it is for)
 
@@ -228,7 +240,9 @@ RuleSet: Ruleset-Hospitalization
 // Discharge Disposition: MS. Useful categorisation about the type of place the patient came from (eg home, other NHS hospital, care home, etc)
 //   (Also tighten the code list, and use our own which updates CareConnect with the latest values from NHSDD)
 * hospitalization.dischargeDisposition MS
-* hospitalization.dischargeDisposition from Interweave-DischargeDestination-1 (required)
+* hospitalization.dischargeDisposition from Interweave-DischargeDestination-1 (preferred)
+//Note: CC removed changed binding as part of validator phase 1 work. (19/11/2025)
+//* hospitalization.dischargeDisposition from Interweave-DischargeDestination-1 (required)
 * insert Ruleset-CodingWithSystemCodeDisplay(hospitalization.dischargeDisposition)
 
 
@@ -237,355 +251,355 @@ RuleSet: Ruleset-Hospitalization
 // Examples
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Instance: InterweaveEncounterExample-MaturityLevel1
-InstanceOf: InterweaveEncounter
-Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
+// Instance: InterweaveEncounterExample-MaturityLevel1
+// InstanceOf: InterweaveEncounter
+// Description: "Interweave Encounter example - Maturity Level 1 (no grouping)"
 
-* insert Ruleset-ExampleMetaForHospital(Encounter)
+// * insert Ruleset-ExampleMetaForHospital(Encounter)
 
-// Text summary no longer needed
-// (Period.start - Period.end : Class description: Service Type description)
-//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
+// // Text summary no longer needed
+// // (Period.start - Period.end : Class description: Service Type description)
+// //* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
 
-// Extension to add the all-important Service Type that is missing from STU3!
-* extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
+// // Extension to add the all-important Service Type that is missing from STU3!
+// * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
 
-* contained[0] = InterweaveLocationHouseAdmissionExample
-* contained[1] = InterweavePractitionerBobExample
+// * contained[0] = InterweaveLocationHouseAdmissionExample
+// * contained[1] = InterweavePractitionerBobExample
 
-* insert Ruleset-ExampleLocalId(encounter, RCB.ENC-123-XYZ)
+// * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-123-XYZ)
 
-* status = #finished
-* statusHistory[+].status = #in-progress 
-* statusHistory[=].period.start = "2022-01-09T09:00:00Z"
-* statusHistory[=].period.end = "2022-01-11T14:30:00Z"
+// * status = #finished
+// * statusHistory[+].status = #in-progress 
+// * statusHistory[=].period.start = "2022-01-09T09:00:00Z"
+// * statusHistory[=].period.end = "2022-01-11T14:30:00Z"
 
-// (Note: Not using the "planned" status also helps the period make more sense)
-* period.start = "2022-01-09T09:00:00Z" 
-* period.end = "2022-01-11T14:30:00Z"
+// // (Note: Not using the "planned" status also helps the period make more sense)
+// * period.start = "2022-01-09T09:00:00Z" 
+// * period.end = "2022-01-11T14:30:00Z"
 
-* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute"
-* type.coding[0] = $SCT#185212007 "Seen in hospital ward"  //TODO - for some reason not valid??
-* priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EL "elective"
+// * class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute"
+// * type.coding[0] = $SCT#185212007 "Seen in hospital ward"  //TODO - for some reason not valid??
+// * priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EL "elective"
 
 
-* subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Mr Fred BLOGGS"
+// * subject = Reference(InterweavePatientExample-MustSupport) 
+// * subject.display = "Mr Fred BLOGGS"
 
 
-// For now take this out, as referral downgraded to optional (due to R4 changes)
-//* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+// // For now take this out, as referral downgraded to optional (due to R4 changes)
+// //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
-* appointment = Reference(InterweaveAppointmentExample)
-//* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
+// * appointment = Reference(InterweaveAppointmentExample)
+// //* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
-* participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[0].individual = Reference(InterweavePractitionerExample)
-* participant[0].individual.display = "Dr Jane BLOGGS"
-//* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[0].individual.identifier.value = "ABC123"
+// * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
+// * participant[0].individual = Reference(InterweavePractitionerExample)
+// * participant[0].individual.display = "Dr Jane BLOGGS"
+// //* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[0].individual.identifier.value = "ABC123"
 
-* participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
-* participant[1].individual = Reference(InterweavePractitionerExample)
-* participant[1].individual.display = "Dr Jane BLOGGS"
-//* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[1].individual.identifier.value = "ABC123"
+// * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
+// * participant[1].individual = Reference(InterweavePractitionerExample)
+// * participant[1].individual.display = "Dr Jane BLOGGS"
+// //* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[1].individual.identifier.value = "ABC123"
 
-* participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
-* participant[2].individual = Reference(InterweavePractitionerExample)
-* participant[2].individual.display = "Dr Jane BLOGGS"
-//* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[2].individual.identifier.value = "ABC123"
+// * participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
+// * participant[2].individual = Reference(InterweavePractitionerExample)
+// * participant[2].individual.display = "Dr Jane BLOGGS"
+// //* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[2].individual.identifier.value = "ABC123"
 
 
-* participant[3].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
-* participant[3].individual = Reference(InterweavePractitionerBobExample)
-* participant[3].individual.display = "Dr Bob SMITHSON"
-//* participant[3].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[3].individual.identifier.value = "XYZ987"
+// * participant[3].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
+// * participant[3].individual = Reference(InterweavePractitionerBobExample)
+// * participant[3].individual.display = "Dr Bob SMITHSON"
+// //* participant[3].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[3].individual.identifier.value = "XYZ987"
 
 
-* diagnosis[0].condition = Reference(InterweaveConditionExample)
-//* diagnosis[0].condition.display = "Purple rash"
-* diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
-* diagnosis[0].rank = 1
+// * diagnosis[0].condition = Reference(InterweaveConditionExample)
+// //* diagnosis[0].condition.display = "Purple rash"
+// * diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
+// * diagnosis[0].rank = 1
 
-* reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
+// * reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
 
-* location[0].location = Reference(InterweaveLocationWardExample1)
-* location[0].location.display = "York Hospital: Ward 27 - Dermatology clinic"
-* location[0].status = #completed
-* location[0].period.start = "2022-01-09T09:00:00Z"
-* location[0].period.end = "2022-01-09T10:30:00Z"
+// * location[0].location = Reference(InterweaveLocationWardExample1)
+// * location[0].location.display = "York Hospital: Ward 27 - Dermatology clinic"
+// * location[0].status = #completed
+// * location[0].period.start = "2022-01-09T09:00:00Z"
+// * location[0].period.end = "2022-01-09T10:30:00Z"
 
-* location[1].location = Reference(InterweaveLocationWardExample2)
-* location[1].location.display = "York Hospital: Ward 28 - Allergy clinic"
-* location[1].status = #completed
-* location[1].period.start = "2022-01-09T10:30:00Z"
-* location[1].period.end = "2022-01-11T14:30:00Z"
+// * location[1].location = Reference(InterweaveLocationWardExample2)
+// * location[1].location.display = "York Hospital: Ward 28 - Allergy clinic"
+// * location[1].status = #completed
+// * location[1].period.start = "2022-01-09T10:30:00Z"
+// * location[1].period.end = "2022-01-11T14:30:00Z"
 
-// No partOf for this basic maturity level, but a full set of admission / discharge information
+// // No partOf for this basic maturity level, but a full set of admission / discharge information
 
-* insert Ruleset-HospitalizationExample-AdmissionWaitingList
-* insert Ruleset-HospitalizationExample-Discharge
+// * insert Ruleset-HospitalizationExample-AdmissionWaitingList
+// * insert Ruleset-HospitalizationExample-Discharge
 
 
 
-////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////
 
-Instance: InterweaveEncounterExample-MaturityLevel2-Part1
-InstanceOf: InterweaveEncounter
-Description: "Interweave Encounter example - Maturity Level 2 (part 1 of grouping)"
+// Instance: InterweaveEncounterExample-MaturityLevel2-Part1
+// InstanceOf: InterweaveEncounter
+// Description: "Interweave Encounter example - Maturity Level 2 (part 1 of grouping)"
 
-* insert Ruleset-ExampleMetaForHospital(Encounter)
+// * insert Ruleset-ExampleMetaForHospital(Encounter)
 
-// Text summary no longer needed
-// (Period.start - Period.end : Class description: Service Type description)
-//* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 09/01/2022 09:00 : Emergency : Accident and Emergency service"
+// // Text summary no longer needed
+// // (Period.start - Period.end : Class description: Service Type description)
+// //* extension[Extension-Interweave-TextSummary].valueString = "08/01/2022 11:03 - 09/01/2022 09:00 : Emergency : Accident and Emergency service"
 
-// Extension to add the all-important Service Type that is missing from STU3!
-* extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#310000008 "Accident and Emergency service"
+// // Extension to add the all-important Service Type that is missing from STU3!
+// * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#310000008 "Accident and Emergency service"
 
-* contained[0] = InterweaveLocationHouseAdmissionExample
+// * contained[0] = InterweaveLocationHouseAdmissionExample
 
-* insert Ruleset-ExampleLocalId(encounter, RCB.ENC-321-XYZ)
+// * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-321-XYZ)
 
-* status = #finished
-* statusHistory[+].status = #in-progress 
-* statusHistory[=].period.start = "2022-01-08T11:03:00Z"
-* statusHistory[=].period.end = "2022-01-09T09:00:00Z"
+// * status = #finished
+// * statusHistory[+].status = #in-progress 
+// * statusHistory[=].period.start = "2022-01-08T11:03:00Z"
+// * statusHistory[=].period.end = "2022-01-09T09:00:00Z"
 
 
-// (Note: Not using the "planned" status also helps the period make more sense)
-* period.start = "2022-01-08T11:03:00Z" 
-* period.end = "2022-01-09T09:00:00Z"
+// // (Note: Not using the "planned" status also helps the period make more sense)
+// * period.start = "2022-01-08T11:03:00Z" 
+// * period.end = "2022-01-09T09:00:00Z"
 
-* class = http://hl7.org/fhir/v3/ActCode#EMER "emergency"
-* type.coding[0] = $SCT#113091000000109 "Seen in minor injuries department" 
-* priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EM "emergency"
+// * class = http://hl7.org/fhir/v3/ActCode#EMER "emergency"
+// * type.coding[0] = $SCT#113091000000109 "Seen in minor injuries department" 
+// * priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EM "emergency"
 
 
-* subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Mr Fred BLOGGS"
+// * subject = Reference(InterweavePatientExample-MustSupport) 
+// * subject.display = "Mr Fred BLOGGS"
 
 
-// For now take this out, as referral downgraded to optional (due to R4 changes)
-//* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+// // For now take this out, as referral downgraded to optional (due to R4 changes)
+// //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
-// No appointment as an emergency
+// // No appointment as an emergency
 
 
-* participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[0].individual = Reference(InterweavePractitionerExample)
-* participant[0].individual.display = "Dr Jane BLOGGS"
-//* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[0].individual.identifier.value = "ABC123"
+// * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
+// * participant[0].individual = Reference(InterweavePractitionerExample)
+// * participant[0].individual.display = "Dr Jane BLOGGS"
+// //* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[0].individual.identifier.value = "ABC123"
 
-* participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
-* participant[1].individual = Reference(InterweavePractitionerExample)
-* participant[1].individual.display = "Dr Jane BLOGGS"
-//* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[1].individual.identifier.value = "ABC123"
+// * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#ADM "admitter" 
+// * participant[1].individual = Reference(InterweavePractitionerExample)
+// * participant[1].individual.display = "Dr Jane BLOGGS"
+// //* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[1].individual.identifier.value = "ABC123"
 
-// No discharger or other participants
+// // No discharger or other participants
 
-* diagnosis[0].condition = Reference(InterweaveConditionExample)
-//* diagnosis[0].condition.display = "Purple rash"
-* diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
-* diagnosis[0].rank = 1
+// * diagnosis[0].condition = Reference(InterweaveConditionExample)
+// //* diagnosis[0].condition.display = "Purple rash"
+// * diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
+// * diagnosis[0].rank = 1
 
-* reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
+// * reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
 
-* location[0].location = Reference(InterweaveLocationWardExampleAandE)
-* location[0].location.display = "York Hospital: Accident and Emergency"
-* location[0].status = #completed
-* location[0].period.start = "2022-01-08T11:03:00Z"
-* location[0].period.end = "2022-01-09T09:00:00Z"
+// * location[0].location = Reference(InterweaveLocationWardExampleAandE)
+// * location[0].location.display = "York Hospital: Accident and Emergency"
+// * location[0].status = #completed
+// * location[0].period.start = "2022-01-08T11:03:00Z"
+// * location[0].period.end = "2022-01-09T09:00:00Z"
 
 
-* partOf = Reference(InterweaveEncounterGroupingExample)
-//* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
+// * partOf = Reference(InterweaveEncounterGroupingExample)
+// //* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
-// This encounter has the "admission" half of the hospitalization
-* insert Ruleset-HospitalizationExample-AdmissionEmergency
+// // This encounter has the "admission" half of the hospitalization
+// * insert Ruleset-HospitalizationExample-AdmissionEmergency
 
 
 
 
-////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////
 
 
-Instance: InterweaveEncounterExample-MaturityLevel2-Part2
-InstanceOf: InterweaveEncounter
-Description: "Interweave Encounter example - Maturity Level 2 (part 2 of grouping)"
+// Instance: InterweaveEncounterExample-MaturityLevel2-Part2
+// InstanceOf: InterweaveEncounter
+// Description: "Interweave Encounter example - Maturity Level 2 (part 2 of grouping)"
 
-* insert Ruleset-ExampleMetaForHospital(Encounter)
+// * insert Ruleset-ExampleMetaForHospital(Encounter)
 
-// Text summary no longer needed
-// (Period.start - Period.end : Class description: Service Type description)
-//* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
+// // Text summary no longer needed
+// // (Period.start - Period.end : Class description: Service Type description)
+// //* extension[Extension-Interweave-TextSummary].valueString = "09/01/2022 09:00 - 11/01/2022 14:30 : Inpatient Actute : Adult dermatology service"
 
-// Extension to add the all-important Service Type that is missing from STU3!
-* extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
+// // Extension to add the all-important Service Type that is missing from STU3!
+// * extension[Extension-Interweave-R4EncounterServiceType].valueCodeableConcept = $SCT#23871000087101 "Adult dermatology service"
 
-* contained[0] = InterweavePractitionerBobExample
+// * contained[0] = InterweavePractitionerBobExample
 
-* insert Ruleset-ExampleLocalId(encounter, RCB.ENC-456-XYZ)
+// * insert Ruleset-ExampleLocalId(encounter, RCB.ENC-456-XYZ)
 
-* status = #finished
-* statusHistory[+].status = #in-progress 
-* statusHistory[=].period.start = "2022-01-09T09:00:00Z"
-* statusHistory[=].period.end = "2022-01-11T14:30:00Z"
+// * status = #finished
+// * statusHistory[+].status = #in-progress 
+// * statusHistory[=].period.start = "2022-01-09T09:00:00Z"
+// * statusHistory[=].period.end = "2022-01-11T14:30:00Z"
 
 
-// (Note: Not using the "planned" status also helps the period make more sense)
-* period.start = "2022-01-09T09:00:00Z" 
-* period.end = "2022-01-11T14:30:00Z"
+// // (Note: Not using the "planned" status also helps the period make more sense)
+// * period.start = "2022-01-09T09:00:00Z" 
+// * period.end = "2022-01-11T14:30:00Z"
 
-* class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute"
-* type.coding[0] = $SCT#185212007 "Seen in hospital ward"  //TODO - for some reason not valid??
-* priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EM "emergency"
+// * class = http://hl7.org/fhir/v3/ActCode#ACUTE "inpatient acute"
+// * type.coding[0] = $SCT#185212007 "Seen in hospital ward"  //TODO - for some reason not valid??
+// * priority.coding[0] = http://hl7.org/fhir/v3/ActPriority#EM "emergency"
 
 
-* subject = Reference(InterweavePatientExample-MustSupport) 
-* subject.display = "Mr Fred BLOGGS"
+// * subject = Reference(InterweavePatientExample-MustSupport) 
+// * subject.display = "Mr Fred BLOGGS"
 
 
-// For now take this out, as referral downgraded to optional (due to R4 changes)
-//* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
+// // For now take this out, as referral downgraded to optional (due to R4 changes)
+// //* basedOn.display = "04/11/2021: Dr Jones: Rash on arm" // R4 - STU3 has "incomingReferral"
 
-* appointment = Reference(InterweaveAppointmentExample)
-//* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
+// * appointment = Reference(InterweaveAppointmentExample)
+// //* appointment.display = "09/01/2022 09:00 - 09/01/2022 09:30 : Inpatient Acture : Dermatology"
 
 
-* participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
-* participant[0].individual = Reference(InterweavePractitionerExample)
-* participant[0].individual.display = "Dr Jane BLOGGS"
-//* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[0].individual.identifier.value = "ABC123"
+// * participant[0].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PPRF "primary performer"
+// * participant[0].individual = Reference(InterweavePractitionerExample)
+// * participant[0].individual.display = "Dr Jane BLOGGS"
+// //* participant[0].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[0].individual.identifier.value = "ABC123"
 
-// No admitter here
+// // No admitter here
 
-* participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
-* participant[1].individual = Reference(InterweavePractitionerExample)
-* participant[1].individual.display = "Dr Jane BLOGGS"
-//* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[1].individual.identifier.value = "ABC123"
+// * participant[1].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#DIS "discharger"
+// * participant[1].individual = Reference(InterweavePractitionerExample)
+// * participant[1].individual.display = "Dr Jane BLOGGS"
+// //* participant[1].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[1].individual.identifier.value = "ABC123"
 
 
-* participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
-* participant[2].individual = Reference(InterweavePractitionerBobExample)
-* participant[2].individual.display = "Dr Bob SMITHSON"
-//* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
-//* participant[2].individual.identifier.value = "XYZ987"
+// * participant[2].type[0].coding = http://hl7.org/fhir/v3/ParticipationType#PART "Participation" 
+// * participant[2].individual = Reference(InterweavePractitionerBobExample)
+// * participant[2].individual.display = "Dr Bob SMITHSON"
+// //* participant[2].individual.identifier.system = "https://fhir.nhs.uk/Id/sds-user-id"
+// //* participant[2].individual.identifier.value = "XYZ987"
 
 
-* diagnosis[0].condition = Reference(InterweaveConditionExample)
-//* diagnosis[0].condition.display = "Purple rash"
-* diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
-* diagnosis[0].rank = 1
+// * diagnosis[0].condition = Reference(InterweaveConditionExample)
+// //* diagnosis[0].condition.display = "Purple rash"
+// * diagnosis[0].use = http://hl7.org/fhir/diagnosis-role#CC "Chief complaint"   //R4 - STU3 has "role"
+// * diagnosis[0].rank = 1
 
-* reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
+// * reasonCode = http://snomed.info/sct#299007 "Paraffinoma of skin"
 
-* location[0].location = Reference(InterweaveLocationWardExample1)
-* location[0].location.display = "York Hospital: Ward 27 - Dermatology clinic"
-* location[0].status = #completed
-* location[0].period.start = "2022-01-09T09:00:00Z"
-* location[0].period.end = "2022-01-09T10:30:00Z"
+// * location[0].location = Reference(InterweaveLocationWardExample1)
+// * location[0].location.display = "York Hospital: Ward 27 - Dermatology clinic"
+// * location[0].status = #completed
+// * location[0].period.start = "2022-01-09T09:00:00Z"
+// * location[0].period.end = "2022-01-09T10:30:00Z"
 
-* location[1].location = Reference(InterweaveLocationWardExample2)
-* location[1].location.display = "York Hospital: Ward 28 - Allergy clinic"
-* location[1].status = #completed
-* location[1].period.start = "2022-01-09T10:30:00Z"
-* location[1].period.end = "2022-01-11T14:30:00Z"
+// * location[1].location = Reference(InterweaveLocationWardExample2)
+// * location[1].location.display = "York Hospital: Ward 28 - Allergy clinic"
+// * location[1].status = #completed
+// * location[1].period.start = "2022-01-09T10:30:00Z"
+// * location[1].period.end = "2022-01-11T14:30:00Z"
 
 
-* partOf = Reference(InterweaveEncounterGroupingExample)
-//* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
+// * partOf = Reference(InterweaveEncounterGroupingExample)
+// //* partOf.display = "08/01/2022 11:03 - 11/01/2022 14:30 : Grouping of related Encounters"
 
-// This encounter has the "discharge" half of the hospitalization
-* insert Ruleset-HospitalizationExample-Discharge
+// // This encounter has the "discharge" half of the hospitalization
+// * insert Ruleset-HospitalizationExample-Discharge
 
 
 
-/////////////////////////////////////////////////////////////////////////
-Instance: InterweaveLocationHouseAdmissionExample
-InstanceOf: InterweaveLocation
-Description: "Interweave Location example - House for discharge"
-Usage: #inline
+// /////////////////////////////////////////////////////////////////////////
+// Instance: InterweaveLocationHouseAdmissionExample
+// InstanceOf: InterweaveLocation
+// Description: "Interweave Location example - House for discharge"
+// Usage: #inline
 
 
-// No meta tags or TextSummary as inline
+// // No meta tags or TextSummary as inline
 
-* status = http://hl7.org/fhir/location-status#active "Active"
-* name = "42 Grove Street, LS21 1PF"
+// * status = http://hl7.org/fhir/location-status#active "Active"
+// * name = "42 Grove Street, LS21 1PF"
 
-* mode = http://hl7.org/fhir/location-mode#instance "Instance"
-* type.coding = http://hl7.org/fhir/v3/RoleCode#PTRES "Patient's Residence"
-* physicalType.coding = http://hl7.org/fhir/location-physical-type#ho "House"
+// * mode = http://hl7.org/fhir/location-mode#instance "Instance"
+// * type.coding = http://hl7.org/fhir/v3/RoleCode#PTRES "Patient's Residence"
+// * physicalType.coding = http://hl7.org/fhir/location-physical-type#ho "House"
 
-* address[0].line[0] = "42 Grove Street"
-* address[0].line[1] = "Northville"
-* address[0].city = "Overtown"
-* address[0].district = "West Yorkshire"
-* address[0].postalCode = "LS21 1PF"
+// * address[0].line[0] = "42 Grove Street"
+// * address[0].line[1] = "Northville"
+// * address[0].city = "Overtown"
+// * address[0].district = "West Yorkshire"
+// * address[0].postalCode = "LS21 1PF"
 
 
-/////////////////////////////////////////////////////////////////////////
-Instance: InterweavePractitionerBobExample
-InstanceOf: InterweavePractitioner
-Description: "Interweave Practitioner Bob example"
-Usage: #inline
+// /////////////////////////////////////////////////////////////////////////
+// Instance: InterweavePractitionerBobExample
+// InstanceOf: InterweavePractitioner
+// Description: "Interweave Practitioner Bob example"
+// Usage: #inline
 
 
-// No meta tags or TextSummary as inline
+// // No meta tags or TextSummary as inline
 
-* identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
-* identifier[0].value = "XYZ987"
+// * identifier[0].system = "https://fhir.nhs.uk/Id/sds-user-id"
+// * identifier[0].value = "XYZ987"
 
-* active = true
-* name[0].given[0] = "Bob"
-* name[0].family = "Smithson"
-* name[0].prefix = "Dr"
+// * active = true
+// * name[0].given[0] = "Bob"
+// * name[0].family = "Smithson"
+// * name[0].prefix = "Dr"
 
-* telecom[0].system = #phone "Phone"
-* telecom[0].use = #work "Work"
-* telecom[0].value = "01234 9876512"
+// * telecom[0].system = #phone "Phone"
+// * telecom[0].use = #work "Work"
+// * telecom[0].value = "01234 9876512"
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////
-// Example Rulesets
-////////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////////
+// // Example Rulesets
+// ////////////////////////////////////////////////////////////////////////////////////////
 
-RuleSet: Ruleset-HospitalizationExample-AdmissionEmergency
+// RuleSet: Ruleset-HospitalizationExample-AdmissionEmergency
 
-* hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#21 "Accident and emergency or dental casualty department of the Health Care Provider"
-* hospitalization.origin = Reference(InterweaveLocationHouseAdmissionExample)
-* hospitalization.origin.display = "42 Grove Street, LS21 1PF"
-* hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
+// * hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#21 "Accident and emergency or dental casualty department of the Health Care Provider"
+// * hospitalization.origin = Reference(InterweaveLocationHouseAdmissionExample)
+// * hospitalization.origin.display = "42 Grove Street, LS21 1PF"
+// * hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
 
 
-RuleSet: Ruleset-HospitalizationExample-AdmissionWaitingList
+// RuleSet: Ruleset-HospitalizationExample-AdmissionWaitingList
 
-* hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#11 "Waiting list"
-* hospitalization.origin = Reference(InterweaveLocationHouseAdmissionExample)
-* hospitalization.origin.display = "42 Grove Street, LS21 1PF"
-* hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
+// * hospitalization.extension[Extension-CareConnect-AdmissionMethod-1].valueCodeableConcept =  CareConnect-AdmissionMethod-1#11 "Waiting list"
+// * hospitalization.origin = Reference(InterweaveLocationHouseAdmissionExample)
+// * hospitalization.origin.display = "42 Grove Street, LS21 1PF"
+// * hospitalization.admitSource = CareConnect-SourceOfAdmission-1#19 "Usual place of residence unless listed below, for example, a private dwelling whether owner occupied or owned by Local Authority, housing association or other landlord. This includes wardened accommodation but not residential accommodation where health care is provided. It also includes Patients with no fixed abode." 
 
 
 
-RuleSet: Ruleset-HospitalizationExample-Discharge
+// RuleSet: Ruleset-HospitalizationExample-Discharge
 
-* hospitalization.extension[Extension-CareConnect-DischargeMethod-1].valueCodeableConcept =  CareConnect-DischargeMethod-1#1 "Patient discharged on clinical advice or with clinical consent"
+// * hospitalization.extension[Extension-CareConnect-DischargeMethod-1].valueCodeableConcept =  CareConnect-DischargeMethod-1#1 "Patient discharged on clinical advice or with clinical consent"
 
-* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[status].valueCode = Interweave-MedicallySafeForDischargeStatus-1#ready "Ready"
-* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[predictedDate].valueDateTime = "2022-01-11T09:00:00Z"
-* hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[actualDate].valueDateTime = "2022-01-09T09:00:00Z"
+// * hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[status].valueCode = Interweave-MedicallySafeForDischargeStatus-1#ready "Ready"
+// * hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[predictedDate].valueDateTime = "2022-01-11T09:00:00Z"
+// * hospitalization.extension[Extension-Interweave-MedicallySafeForDischarge].extension[actualDate].valueDateTime = "2022-01-09T09:00:00Z"
 
-* hospitalization.destination = Reference(InterweaveLocationSocialCareExample)
-* hospitalization.destination.display = "St Hildas Care Home"
-* hospitalization.dischargeDisposition = Interweave-DischargeDestination-1#56 "Care Home Without Nursing"
+// * hospitalization.destination = Reference(InterweaveLocationSocialCareExample)
+// * hospitalization.destination.display = "St Hildas Care Home"
+// * hospitalization.dischargeDisposition = Interweave-DischargeDestination-1#56 "Care Home Without Nursing"
 
 

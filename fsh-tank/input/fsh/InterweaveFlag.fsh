@@ -6,6 +6,8 @@ Description: "Interweave Flag resource profile"
 
 * insert Ruleset-InterweaveBaseFields
 
+* extension contains Extension-Interweave-FlagNotes named FlagNotes 0..*
+
 ///////////////////////////////////////
 // --- MANDATORY FIELDS ---
 ///////////////////////////////////////
@@ -71,7 +73,7 @@ Description: "Interweave Flag Example - Must Support"
 
 * status = http://hl7.org/fhir/flag-status#active "Active"
 
-* category[0] = https://fhir.yhcr.nhs.uk/CodeSystem/Interweave-SocialCareFlagCategory-1#RTO "Risk to other"
+* category = https://fhir.yhcr.nhs.uk/CodeSystem/Interweave-SocialCareFlagCategory-1#RTO "Risk to other"
 
 * code = Interweave-SocialCareFlagType-1#ABUSIVE "Know to be abusive"
 
@@ -92,7 +94,7 @@ Description: "Interweave Flag Example - Full"
  
 * status = http://hl7.org/fhir/flag-status#active "Active"
 
-* category.coding[0] = Interweave-SocialCareFlagCategory-1#RTO "Risk to other"
+* category = Interweave-SocialCareFlagCategory-1#RTO "Risk to other"
 
 * code = Interweave-SocialCareFlagType-1#ABUSIVE "Know to be abusive"
 
@@ -104,5 +106,3 @@ Description: "Interweave Flag Example - Full"
 
 * author = Reference(InterweaveOrganizationExampleSocialCare) 
 * author.display = "Leeds City Council"
-
-

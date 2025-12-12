@@ -138,7 +138,7 @@ Description: "Interweave Social Care Assessment resource profile (modelled using
 // *************************************************************************************************************************
 // EXAMPLES -
 // *************************************************************************************************************************
-/*
+
 Instance: InterweaveSocialCareAssessmentExample-MS
 InstanceOf: InterweaveSocialCareAssessment
 Description: "Interweave Social Care Assessment example - Must Support"
@@ -170,7 +170,7 @@ Description: "Interweave Social Care Assessment example - Must Support"
 * owner.display = "The reablement team"
 
 * extension[Extension-Interweave-SocialCareAssessmentOutcome].valueCodeableConcept =  Interweave-SocialCareAssessmentOutcome-1#PRO-RASS "Progress to Re-assessment"
-
+/*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Instance: InterweaveSocialCareAssessmentExample-HD
 InstanceOf: InterweaveSocialCareAssessment

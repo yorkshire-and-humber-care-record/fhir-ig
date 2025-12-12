@@ -21,6 +21,8 @@ publisher:
   url: https://fhir.yhcr.nhs.uk/yhcr-publisher
   # email: test@example.org
 
+dependencies:
+  hl7.terminology.r3: 4.0.0
 # The dependencies property corresponds to IG.dependsOn. The key is the
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
@@ -61,7 +63,8 @@ publisher:
 # partial list of allowed parameters see:
 # https://confluence.hl7.org/display/FHIR/Implementation+Guide+Parameters
 #
-# parameters:
+#parameters:
+#  special-url: [https://fhir.nhs.uk/England/CodeSystem/England-FlagCategoryRA]
 #   excludettl: true
 #   validation: [allow-any-extensions, no-broken-links]
 #

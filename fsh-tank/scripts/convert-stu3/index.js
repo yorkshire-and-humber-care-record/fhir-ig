@@ -19,19 +19,23 @@ var regexEscapedDirR4=dirR4.replace(/([.*+?^=!:><${}()|\[\]\/\\])/g, "\\$1");
 
 // Clean out and recreate the STU3 output folder
 if (fs.existsSync(dirSTU3)) {
-    fs.rmdirSync(dirSTU3, { recursive: true });
+    //fs.rmdirSync(dirSTU3, { recursive: true });
+	fs.rmSync(dirSTU3, { recursive: true, force: true });
+
 }
 fs.mkdirSync(dirSTU3);
 // Go through all the R4 files output by fsh to the "fsh-generated" folder
 // Copy them across to "fsh-generated-STU3", converting the FHIR Version as we go
 fileArrayR4 = fileHelpers.getAllFiles(dirR4);
-fileArrayR4.forEach(function(filePathR4) {
 
+fileArrayR4.forEach(function(filePathR4) {
+	
       var fileData = fs.readFileSync(filePathR4,'utf8');
 
       var processContent = true;      
       
       if(filePathR4.includes("menu.xml")) processContent = false;
+	  if(filePathR4.includes("fsh-index.txt")) processContent = false;
       if(filePathR4.includes("CareConnect")) processContent = false;
 
       if(processContent) {
@@ -156,6 +160,10 @@ fileArrayR4.forEach(function(filePathR4) {
               if(jsonObject.id == "Interweave-SocialCareSupportReason"){
                 jsonObject = convertInterweaveSocialCareSupportReasonStructureDefinition(jsonObject);
               }
+
+              if(jsonObject.id == "Interweave-SocialCareSupportNeed"){
+                jsonObject = convertInterweaveSocialCareSupportNeedStructureDefinition(jsonObject);
+              }
             
               if(jsonObject.id == "Interweave-SocialCareAssessment"){
                 jsonObject = convertInterweaveSocialCareAssessmentStructureDefinition(jsonObject);
@@ -220,6 +228,10 @@ fileArrayR4.forEach(function(filePathR4) {
             if (jsonObject.resourceType == "RelatedPerson") {
               jsonObject = convertRelatedPersonInstance(jsonObject);
             }
+
+            if (jsonObject.resourceType == "Flag") {
+              jsonObject = convertFlagInstance(jsonObject);
+            }
            
             //InterweaveSocialCareDeviceRequest
             if((jsonObject.resourceType == "DeviceRequest" )
@@ -232,14 +244,7 @@ fileArrayR4.forEach(function(filePathR4) {
               && (jsonObject.id.includes("InterweaveSocialCareAssessment"))){
               jsonObject = convertSocialCareAssessmentInstance(jsonObject);
             }
-            /*
-            if((jsonObject.resourceType == "ServiceRequest")
-              && (jsonObject.id.includes("InterweaveSocialCareContact"))){
-              //Need to replace all occurrences of ServiceRequest with ReferralRequest
-              jsonObject = JSON.parse(JSON.stringify(jsonObject).replace(/ServiceRequest/g, "ReferralRequest"));
-              jsonObject = convertSocialCareContactInstance(jsonObject);
-            }
-            */
+           
             // Convert also any Contained instances! (realistically only Location and maybe Practitioner)
             if (jsonObject.contained) {
               jsonObject.contained.forEach(function(jsonContained) {
@@ -411,12 +416,10 @@ function convertInterweaveDocumentReferenceStructureDefinition(jsonObject) {
 
       };
 
-
   }); //Element
 
   return jsonObject;
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -443,12 +446,10 @@ function convertInterweaveAppointmentStructureDefinition(jsonObject) {
       objElement.path = objElement.id;
     };     
 
-
   }); //Element
 
   return jsonObject;
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -467,7 +468,6 @@ function convertInterweaveConditionStructureDefinition(jsonObject) {
       "targetProfile": "https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Observation-1"
     }
   
-    
     if(objElement.id.includes("Condition.stage.assessment"))  {
       objElement.type = [];    
       objElement.type.push(stageAssessmentReference1);
@@ -491,7 +491,6 @@ function convertInterweaveConditionStructureDefinition(jsonObject) {
 
   return jsonObject;
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -519,14 +518,12 @@ function convertInterweaveProcedureStructureDefinition(jsonObject) {
     if(objElement.id.includes("Procedure.statusReason"))  {
       objElement.id = objElement.id.replace("Procedure.statusReason", "Procedure.notDoneReason");
       objElement.path = objElement.id;
-    };
-    
+    };    
 
   }); //Element
 
   return jsonObject;
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function convertInterweaveObservationStructureDefinition(jsonObject) {
@@ -594,7 +591,6 @@ function convertInterweaveDiagnosticReportStructureDefinition(jsonObject) {
       objElement.path = objElement.id;
     };     
     
-
     // Convert "media" to "image"
     if(objElement.id.includes("DiagnosticReport.media"))  {
       objElement.id = objElement.id.replace("DiagnosticReport.media", "DiagnosticReport.image");
@@ -662,6 +658,25 @@ function convertInterweaveSocialCareSupportReasonStructureDefinition(jsonObject)
   return jsonObject;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+
+function convertInterweaveSocialCareSupportNeedStructureDefinition(jsonObject) {
+   
+  // * context 0..0 doesnt exist in R4
+  jsonObject = insertDeprectatedR4Field(jsonObject, "Condition.context");
+  
+  // Loop through the elements
+  jsonObject.differential.element.forEach(function(objElement) {
+
+    //convert recordedDate to assertedDate
+    if(objElement.id.includes("Condition.recordedDate"))  {
+      objElement.id = objElement.id.replace("Condition.recordedDate", "Condition.assertedDate");
+      objElement.path = objElement.id;
+    };           
+  }); 
+  return jsonObject;
+}
+////////////////////////////////////////////////////////////////////////////////////////
+
 
 function convertInterweaveSocialCareAssessmentStructureDefinition(jsonObject) {
   // * definition 0..0 doesnt exist in R4
@@ -883,6 +898,14 @@ function convertRelatedPersonInstance(jsonObject) {
   // Convert from an array in R4 to a single value in STU3
   if(jsonObject.relationship) {
     jsonObject.relationship = jsonObject.relationship[0];
+  }
+  return jsonObject;
+}
+
+function convertFlagInstance(jsonObject) {
+  // Convert from an array in R4 to a single value in STU3
+  if(jsonObject.category) {
+    jsonObject.category = jsonObject.category[0];
   }
   return jsonObject;
 }
